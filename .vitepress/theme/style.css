@@ -93,15 +93,15 @@
 :root {
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #bd34fe 30%,
-    #41d1ff
+    -64deg,
+    #f9bf65, #ffab6b, #ff9977, #fc8986, #ef7e95, #e47da6, #d37fb5, #bf83c1, #ab8dcf, #9597d8, #7fa0dc, #6ca7da
   );
 
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
-    #bd34fe 50%,
-    #47caff 50%
+    rgba(92,206,250,1) 0%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(244,169,183,1) 100%
   );
   --vp-home-hero-image-filter: blur(44px);
 }
@@ -116,6 +116,7 @@
   :root {
     --vp-home-hero-image-filter: blur(68px);
   }
+
 }
 
 /**

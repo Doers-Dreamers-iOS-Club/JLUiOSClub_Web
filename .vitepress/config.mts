@@ -43,9 +43,8 @@ export default defineConfig({
         {
           text: '社团竞赛',
           items: [
-            {text: 'Markdown Examples', link: '/'},
-            {text: 'Runtime API Examples', link: '/'},
-            {text: 'Element Plus Examples', link: '/'}
+            {text: 'Swift 学生挑战赛', link: '/competitions/Swift-Student-Challenge'},
+            {text: '移动应用创新赛', link: '/competitions/maic'}
           ]
         }
       ]
