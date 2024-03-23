@@ -12,7 +12,7 @@ hero:
   actions:
     - theme: brand
       text: 了解 iOS Club
-      link: /markdown-examples
+      link: /about-us/index
     - theme: alt
       text: 加入我们
       link: /api-examples
