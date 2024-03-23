@@ -11,6 +11,9 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' }],
     ['link', { rel: 'manifest', href: '/favicon/site.webmanifest' }]
   ],
+  sitemap: {
+    hostname: 'https://jluios.club'
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.png',
@@ -25,17 +28,17 @@ export default defineConfig({
         {
           text: '即将推出',
           items: [
-            {text: 'Markdown Examples', link: '/'},
-            {text: 'Runtime API Examples', link: '/'},
-            {text: 'Element Plus Examples', link: '/'}
+            {text: '解锁iPad生产力', link: '/'},
+            {text: '移动应用创新赛宣讲', link: '/'}
           ]
         },
         {
           text: '往期活动',
           items: [
-            {text: 'Markdown Examples', link: '/'},
-            {text: 'Runtime API Examples', link: '/'},
-            {text: 'Element Plus Examples', link: '/'}
+            {text: '2023冬季WWDC-Swift特训营', link: '/'},
+            {text: '购买Mac/iPad迎接高校生活——选购建议&经验分享', link: '/'},
+            {text: 'macOS初体验', link: '/'},
+            {text: '百团纳新', link: '/'}
           ]
         }
       ],
