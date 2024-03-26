@@ -2,6 +2,23 @@ import {LocalSearchTranslations} from "vitepress/types/local-search";
 import {DefaultTheme} from "vitepress";
 
 export const themeTranslations: DefaultTheme.Config = {
+    docFooter: {
+        prev: '上一篇',
+        next: '下一篇'
+    },
+    outline: {
+        label: '页面导航'
+    },
+    lastUpdated: {
+        text: '最后更新于',
+        formatOptions: {
+            forceLocale: true
+        }
+    },
+    editLink: {
+        text: '在 GitHub 上编辑此页',
+        pattern: 'https://github.com/AQiu-2003/JLUiOSClub_Web/edit/main/docs/:path'
+    },
     langMenuLabel: '多语言',
     returnToTopLabel: '返回顶部',
     sidebarMenuLabel: '目录',
