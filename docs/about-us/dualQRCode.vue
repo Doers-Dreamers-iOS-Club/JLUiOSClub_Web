@@ -1,7 +1,7 @@
 <template>
   <div class="demo-image__placeholder">
     <div v-for="code in qrCodes" :key='code.name' class="block">
-      <el-image :src="code.src" fit="contain" style="width: 16rem; height: 16rem"/>
+      <el-image :src="code.src" fit="contain"/>
       <span class="demonstration">{{ code.name }}</span>
     </div>
   </div>
@@ -26,7 +26,6 @@ const qrCodes = [
 .demo-image__placeholder .block {
   padding: 30px 0;
   text-align: center;
-  border-right: solid 1px var(--el-border-color);
   display: inline-block;
   width: 49%;
   box-sizing: border-box;
@@ -36,7 +35,20 @@ const qrCodes = [
 .demo-image__placeholder .demonstration {
   display: block;
   color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 20px;
+  font-size: 1rem;
 }
+
+@media screen and (min-width: 641px) {
+  .el-image {
+    width: 14rem;
+    height: 14rem;
+  }
+}
+@media screen and (max-width: 640px) {
+  .el-image {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
 </style>
