@@ -7,7 +7,7 @@ hero:
   text: 一个教你从零开始创作专属App的社团
   tagline: return Create_your_First_iOS_App
   image:
-    src: /LOGO-hero.png
+    src: /logo-hero.png
     alt: JLU iOS Club Logo
   actions:
     - theme: brand

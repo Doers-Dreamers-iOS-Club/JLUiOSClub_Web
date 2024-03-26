@@ -1,3 +1,8 @@
+<script setup>
+import dualQRCode from './dualQRCode.vue';
+</script>
+
+
 # 关于我们
 
 ::: tip
@@ -6,4 +11,4 @@
 
 # 关注我们
 
-![QR Code](/qr-code.png)
+<dualQRCode/>
