@@ -25,9 +25,8 @@ const viteConfig: UserConfig = {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.png',
     nav: [
-      { text: '主页', link: '/' },
-      { text: '社团活动', link: '/activities/' },
-      { text: '竞赛指导', link: '/competitions/' },
+      { text: '社团活动', link: '/activities/', activeMatch: '/activities/' },
+      { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions/' },
     ],
 
     sidebar: {
