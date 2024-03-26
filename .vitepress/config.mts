@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { UserConfig } from 'vitepress/dist/node'
+import { themeTranslations, searchTranslations } from './translations'
 import { inject } from '@vercel/analytics'
 
 inject();
@@ -10,6 +11,7 @@ const wechatIcon = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-
 // https://vitepress.dev/reference/site-config
 const viteConfig: UserConfig = {
   srcDir: 'docs',
+  lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "一个教你从零开始创作专属App的社团",
   head: [
@@ -23,6 +25,7 @@ const viteConfig: UserConfig = {
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    ...themeTranslations,
     logo: '/logo.png',
     nav: [
       { text: '社团活动', link: '/activities/', activeMatch: '/activities/' },
@@ -65,12 +68,15 @@ const viteConfig: UserConfig = {
     ],
 
     footer: {
-      message: 'Released under the <a href="https://github.com/AQiu-2003/JLUiOSClub_Web/blob/main/LICENSE">MIT License</a>.',
-      copyright: 'Copyright © 2017-2024 吉林大学 Doers & Dreamers iOS Club'
+      message: '基于 <a href="https://github.com/AQiu-2003/JLUiOSClub_Web/blob/main/LICENSE">MIT许可</a> 发布.',
+      copyright: `版权所有 © 2017-${ new Date().getFullYear() } 吉林大学 Doers & Dreamers iOS Club`
     },
 
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        translations: searchTranslations
+      }
     }
   },
 
