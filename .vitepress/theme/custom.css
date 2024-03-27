@@ -16,7 +16,7 @@ figure figcaption {
     max-height: 16rem;
 }
 
-/*title*/
+/*title style*/
 .vp-doc h1 {
     font-size: 25px;
     margin-bottom: 20px;
@@ -38,4 +38,33 @@ figure figcaption {
     font-size: 17px;
     margin-top: 20px;
     margin-bottom: 10px
+}
+
+/*侧边栏文字超出隐藏*/
+.VPSidebarItem .VPLink p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 200px;
+}
+/*翻页按钮标题文字超出隐藏*/
+.VPDocFooter .pager .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+/*文字加粗样式修改*/
+.vp-doc strong {
+    font-weight: normal;
+    color: #5571cb;
+    padding: 0 4px;
+}
+/*引用样式修改*/
+.vp-doc blockquote {
+    border-left: 4px solid #5571cb;
+    border-radius: 4px;
+    background-color: var(--vp-badge-tip-bg);
+}
+.vp-doc a {
+    padding: 0 4px;
 }

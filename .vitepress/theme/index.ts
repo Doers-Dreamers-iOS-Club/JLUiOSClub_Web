@@ -1,6 +1,8 @@
 // https://vitepress.dev/guide/custom-theme
-import {h} from 'vue'
+import {h, onMounted, watch, nextTick} from 'vue'
+import {useRoute} from "vitepress";
 import type {Theme} from 'vitepress'
+import mediumZoom from "medium-zoom";
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import './custom.css'
@@ -16,4 +18,18 @@ export default {
   enhanceApp({ app, router, siteData }) {
 
   },
+  setup() {
+    const route = useRoute()
+    const initZoom = () => {
+      // 不显式添加{data-zoomable}的情况下为所有图像启用此功能
+      mediumZoom('.main img', { background: 'var(--vp-c-bg)' })
+    }
+    onMounted(() => {
+      initZoom()
+    })
+    watch(
+      () => route.path,
+      () => nextTick(() => initZoom())
+    )
+  }
 } satisfies Theme
