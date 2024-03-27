@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
+import implicitFigures from 'markdown-it-implicit-figures'
 import { UserConfig } from 'vitepress/dist/node'
 import { themeTranslations, searchTranslations } from './translations'
 import { inject } from '@vercel/analytics'
@@ -85,6 +86,15 @@ const viteConfig: UserConfig = {
   },
   mermaidPlugin: {
     class: 'mermaid-container'
+  },
+
+  markdown: {
+    config: (md) => {
+      md.use(implicitFigures, {
+        figcaption: true,
+        copyAttrs: '^class$'
+      })
+    }
   }
 }
 

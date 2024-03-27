@@ -6,13 +6,14 @@
     "vue": "^3.4.21"
   },
   "scripts": {
-    "dev": "vitepress dev",
+    "dev": "vitepress dev --host 0.0.0.0",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@vercel/analytics": "^1.2.2",
-    "element-plus": "^2.6.1"
+    "element-plus": "^2.6.1",
+    "markdown-it-implicit-figures": "^0.12.0"
   }
 }

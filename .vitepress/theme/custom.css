@@ -1,0 +1,41 @@
+/*image*/
+figure figcaption {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--vp-c-text-3);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.main figure>img {
+    border-radius: .5rem;
+    box-shadow: 0 .5rem .8rem #d7d7d7;
+    margin-bottom: .8rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 16rem;
+}
+
+/*title*/
+.vp-doc h1 {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.vp-doc h2 {
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 20px
+}
+
+.vp-doc h3 {
+    font-size: 19px;
+    margin-top: 24px;
+    margin-bottom: 12px
+}
+
+.vp-doc h4 {
+    font-size: 17px;
+    margin-top: 20px;
+    margin-bottom: 10px
+}

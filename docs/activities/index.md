@@ -18,8 +18,6 @@ title: 这里是一些活动
 ---
 ```mermaid
 flowchart LR
-  Start --> Stop
-```
   subgraph 活动总流程
     direction LR
       before(活动前) --> running(活动中) --> after(活动后)
