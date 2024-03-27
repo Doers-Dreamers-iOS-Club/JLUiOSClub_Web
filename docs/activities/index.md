@@ -1,8 +1,9 @@
----
-title: 这里是一些活动
----
+# 社团活动
 
-# 一些活动
+::: warning
+此页面仍在建设中，敬请期待！
+:::
+
 ## 即将推出
 
 [//]: # (- [解锁iPad生产力]&#40;/activities/comingSoon/ExploreiPad&#41;)

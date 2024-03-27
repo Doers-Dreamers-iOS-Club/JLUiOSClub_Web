@@ -50,7 +50,7 @@ const viteConfig: UserConfig = {
       }
     }
   },
-
+  cleanUrls: true,
   mermaid: {
 
   },

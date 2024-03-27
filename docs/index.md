@@ -15,10 +15,10 @@ hero:
       link: /about-us/index
     - theme: alt
       text: 加入我们
-      link: /api-examples
+      link: /join-us/index
     - theme: alt
-      text: 🎉 Vision Pro
-      link: /api-examples
+      text: 🔥 移动应用创新赛招募令
+      link: /competitions/maic/recruitment
 
 features:
   - title: 社团背景

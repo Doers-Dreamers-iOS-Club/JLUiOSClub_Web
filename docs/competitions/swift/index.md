@@ -1,6 +1,6 @@
 # WWDC-Swift学生挑战赛
 
-![WWDC24](./Swift.webp)
+![WWDC24](Swift.webp)
 
 每年的二或三月份，苹果面向全球举办 WWDC-Swift 学生挑战赛，选拔 350 名开发者给予奖金，来支持和激励新一代开发者、创作者和企业家。学生只需要通过 App Playground **提交一份能在几分钟内完成演示的 App**，展现自身的创造力和编程能力，就有机会赢得为期一年的 Apple Developer Program 会员资格、参加 App Development with Swift 认证考试的免费凭证，以及 Apple 准备的特别礼物！
 

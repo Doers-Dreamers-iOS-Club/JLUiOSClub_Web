@@ -24,8 +24,8 @@ const sidebar: DefaultTheme.Config = {
         {
           text: '社团竞赛',
           items: [
-            {text: 'Swift 学生挑战赛', link: '/competitions/Swift-Student-Challenge'},
-            {text: '移动应用创新赛', link: '/competitions/maic'}
+            {text: 'Swift 学生挑战赛', link: '/competitions/swift/index'},
+            {text: '移动应用创新赛', link: '/competitions/maic/index'}
           ]
         }
       ]
