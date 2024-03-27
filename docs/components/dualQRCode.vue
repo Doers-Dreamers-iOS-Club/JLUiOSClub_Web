@@ -30,6 +30,7 @@ const qrCodes = [
   width: 49%;
   box-sizing: border-box;
   vertical-align: top;
+  pointer-events: none;
 }
 
 .demo-image__placeholder .demonstration {
