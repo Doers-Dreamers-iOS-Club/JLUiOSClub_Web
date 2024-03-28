@@ -33,8 +33,8 @@ const sidebar: DefaultTheme.Sidebar = {
           {
             text: '社团竞赛',
             items: [
-              {text: '移动应用创新赛', link: '/maic/'},
-              {text: 'Swift 学生挑战赛', link: '/swift/'}
+              {text: '移动应用创新赛', link: 'maic/'},
+              {text: 'Swift 学生挑战赛', link: 'swift/'}
             ]
           }
         ]
