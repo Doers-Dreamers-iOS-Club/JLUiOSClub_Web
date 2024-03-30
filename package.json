@@ -3,7 +3,13 @@
     "mermaid": "^10.9.0",
     "vitepress": "^1.0.1",
     "vitepress-plugin-mermaid": "^2.0.16",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+
+    "@braintree/sanitize-url": "^7.0.1",
+    "cytoscape": "^3.28.1",
+    "cytoscape-cose-bilkent": "^4.1.0",
+    "dayjs": "^1.11.10",
+    "debug": "^4.3.4"
   },
   "scripts": {
     "dev": "vitepress dev --host 0.0.0.0",
@@ -12,7 +18,6 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "@vercel/analytics": "^1.2.2",
     "element-plus": "^2.6.1",
     "markdown-it-implicit-figures": "^0.12.0",
     "medium-zoom": "^1.1.0"
