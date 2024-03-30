@@ -3,6 +3,11 @@ title: 跳转中……
 ---
 
 <script setup>
-// Redirect to recruitment page
-window.location.href = '/activities/240407_maic_and_vision_pro/'
+import {useRouter} from 'vitepress';
+import {onMounted} from "vue";
+
+let router = useRouter();
+onMounted(() => {
+    router.go('activities/240407_maic_and_vision_pro/')
+})
 </script>
