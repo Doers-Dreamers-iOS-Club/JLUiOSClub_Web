@@ -15,6 +15,11 @@ figure figcaption {
     margin-right: auto;
     max-height: 16rem;
 }
+
+.dark .main figure>img {
+    box-shadow: none;
+    background: var(--vp-c-default-1);
+}
 /* 图片点击放大优先级调整 */
 .medium-zoom-image, .medium-zoom-overlay {
     z-index: 100;
