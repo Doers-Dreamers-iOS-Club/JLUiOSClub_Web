@@ -4,23 +4,22 @@
 此页面仍在建设中，敬请期待！
 :::
 
-## 即将推出
+<div v-for="column in theme.sidebar['/activities/'].items" key="column.text">
+  <h2>{{column.text}}</h2>
+  <ul>
+    <li v-for="item in column.items" key="item.text">
+      <el-icon class="el-icon--right" v-if="item.link!='/'" style="transform: translateY(3px)">
+        <StarFilled />
+      </el-icon>
+      <el-link :href="item.link" :disabled="item.link=='/'" style="font-size: 1rem">
+        {{item.text}}
+      </el-link>
+    </li>
+  </ul>
+</div>
 
-[//]: # (- [解锁iPad生产力]&#40;/activities/comingSoon/ExploreiPad&#41;)
+## 活动流程
 
-[//]: # (- [移动应用创新赛宣讲]&#40;/activities/comingSoon/maic_speakers&#41;)
-
-## 往期活动
-
-[//]: # (- [2023百团纳新]&#40;/activities/pastEvents/biantuan&#41;)
-
-[//]: # (- [macOS初体验]&#40;/activities/pastEvents/macos_experience&#41;)
-
-[//]: # (- [Apple设备选购建议]&#40;/activities/pastEvents/device_suggestion&#41;)
-
-[//]: # (- [2023冬季WWDC-Swift特训营]&#40;/activities/pastEvents/wwdc_swift2023&#41;)
-
----
 ```mermaid
 flowchart LR
   subgraph 活动总流程
@@ -46,3 +45,12 @@ flowchart LR
   after --x C
 
 ```
+
+<script setup>
+
+import {useData} from 'vitepress'; 
+import {ElLink, ElIcon} from 'element-plus';
+import {StarFilled} from '@element-plus/icons-vue';
+const {theme} = useData();
+
+</script>

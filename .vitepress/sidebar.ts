@@ -9,7 +9,7 @@ const sidebar: DefaultTheme.Sidebar = {
           {
             text: '即将推出',
             items: [
-              {text: 'MAIC宣讲会暨Vision Pro体验会', link: '240407_maic_and_vision_pro/'},
+              {text: 'MAIC宣讲会暨Vision Pro体验会', link: '240407-maic-and-vision-pro/'},
               {text: '百团纳新', link: '/'}
             ]
           },
