@@ -10,16 +10,10 @@ title: 安诺希 × JLU iOS Club
 
 <el-carousel show-arrow autoplay motion-blur>
   <el-carousel-item>
-    <img
-      class="carousel-img"
-      src="./shop1.jpeg"
-    >
+    <el-image src="./shop1.jpeg" fit="cover" style="height: 100%; width: 100%"></el-image>
   </el-carousel-item>
   <el-carousel-item>
-    <img
-      class="carousel-img"
-      src="./shop2.jpeg"
-    >
+    <el-image src="./shop2.jpeg" fit="cover" style="height: 100%; width: 100%"></el-image>
   </el-carousel-item>
 </el-carousel>
 
@@ -41,7 +35,7 @@ title: 安诺希 × JLU iOS Club
 ![3号门外景](gate3.jpeg)
 
 <script setup>
-import {ElCarousel, ElCarouselItem} from 'element-plus';
+import {ElCarousel, ElCarouselItem, ElImage} from 'element-plus';
 </script>
 
 <style scoped>
