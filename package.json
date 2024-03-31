@@ -6,7 +6,6 @@
     "dayjs": "^1.11.10",
     "debug": "^4.3.4",
     "mermaid": "^10.9.0",
-    "naive-ui": "^2.38.1",
     "vitepress": "^1.0.1",
     "vitepress-plugin-mermaid": "^2.0.16",
     "vue": "^3.4.21"

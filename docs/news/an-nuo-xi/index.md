@@ -8,16 +8,20 @@ title: 安诺希 × JLU iOS Club
 
 体验中心内设一展台，包括 iPhone、iPad、Apple Watch、MacBook 等均可现场体验！
 
-<n-carousel show-arrow autoplay>
-  <img
-    class="carousel-img"
-    src="./shop1.jpeg"
-  >
-  <img
-    class="carousel-img"
-    src="./shop2.jpeg"
-  >
-</n-carousel>
+<el-carousel show-arrow autoplay motion-blur>
+  <el-carousel-item>
+    <img
+      class="carousel-img"
+      src="./shop1.jpeg"
+    >
+  </el-carousel-item>
+  <el-carousel-item>
+    <img
+      class="carousel-img"
+      src="./shop2.jpeg"
+    >
+  </el-carousel-item>
+</el-carousel>
 
 ## 营业资质
 
@@ -37,20 +41,15 @@ title: 安诺希 × JLU iOS Club
 ![3号门外景](gate3.jpeg)
 
 <script setup>
-import {NCarousel} from 'naive-ui'
+import {ElCarousel, ElCarouselItem} from 'element-plus';
 </script>
 
 <style scoped>
-.carousel-img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-}
-.n-carousel {
+.el-carousel {
   border-radius: .5rem;
   box-shadow: 0 .5rem .8rem #d7d7d7;
 }
-.dark .main .n-carousel {
+.dark .main .el-carousel {
     box-shadow: none;
     background: var(--vp-c-default-1);
 }
