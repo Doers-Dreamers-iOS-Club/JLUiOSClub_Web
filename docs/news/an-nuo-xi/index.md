@@ -10,10 +10,10 @@ title: 安诺希 × JLU iOS Club
 
 <el-carousel show-arrow autoplay motion-blur>
   <el-carousel-item>
-    <el-image src="./shop1.jpeg" fit="cover" style="height: 100%; width: 100%"></el-image>
+    <el-image src="https://pic.imgdb.cn/item/66099f909f345e8d0395a4b0.jpg" fit="cover" style="height: 100%; width: 100%"></el-image>
   </el-carousel-item>
   <el-carousel-item>
-    <el-image src="./shop2.jpeg" fit="cover" style="height: 100%; width: 100%"></el-image>
+    <el-image src="https://pic.imgdb.cn/item/66099f909f345e8d0395a59a.jpg" fit="cover" style="height: 100%; width: 100%"></el-image>
   </el-carousel-item>
 </el-carousel>
 
