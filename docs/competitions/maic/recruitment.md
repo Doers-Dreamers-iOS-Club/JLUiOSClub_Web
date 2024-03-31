@@ -21,7 +21,7 @@ title: 参加移动应用创新赛
 > 快来参加 **_移动应用创新赛_** 吧!
 
 ::: warning 特别鸣谢
-我社与[吉林大学安诺希校园体验中心](https://www.apple.com.cn/education/how-to-buy/aacs.html#6a)达成合作，免费向社团成员提供一台** Vision Pro**的借用权，以及联合Apple官方向参与竞赛的同学借用**Macbook Pro**用于开发！
+我社与[吉林大学安诺希校园体验中心](/news/an-nuo-xi/)达成合作，免费向社团成员提供一台** Vision Pro**的借用权，以及联合Apple官方向参与竞赛的同学借用**Macbook Pro**用于开发！
 :::
 
 这是由 Apple 和浙江大学联合举办的，一场以 iOS/iPadOS 系统设计开发应用程序的高端竞赛。学生组成一个两到三人的小队，在创新或创意赛道上提交自己的原创 App 原型，在决赛时最终实现并完善。

@@ -50,7 +50,7 @@ title: MAIC & Vision Pro
           <a href="https://docs.qq.com/form/page/DTFVvQWlxRlN2eFhL" target="_blank">4月6日场</a>
         </el-button>
         <el-button type="primary">
-          <a href="https://docs.qq.com/form/page/DTFVvQWlxRlN2eFhL" target="_blank">4月7日场</a>
+          <a href="https://docs.qq.com/form/page/DTHdnRVN1b0J4cG54" target="_blank">4月7日场</a>
         </el-button>
       </div>
     </template>
