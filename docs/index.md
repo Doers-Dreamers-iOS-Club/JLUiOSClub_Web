@@ -14,8 +14,8 @@ hero:
       text: 了解 iOS Club
       link: /about-us/index
     - theme: alt
-      text: 加入我们
-      link: /join-us/index
+      text: 🎉 最新活动
+      link: /new
     - theme: alt
       text: 🔥 移动应用创新赛招募令
       link: /competitions/maic/recruitment
@@ -31,8 +31,4 @@ features:
     icon: 📅
     details: 每学期定期举行iOS应用开发入门讲座、苹果设备使用技巧分享会等活动，为吉大果粉提供丰富多彩的学习交流机会。
 ---
-
-::: warning
-本社团官网仍在开发中，敬请期待！
-:::
 

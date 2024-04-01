@@ -1,19 +1,16 @@
 # 社团活动
 
 ::: warning
-此页面仍在建设中，敬请期待！
+此页面仍在建设中，部分内容还未完成，敬请期待！
 :::
-
 <div v-for="column in theme.sidebar['/activities/'].items" key="column.text">
   <h2>{{column.text}}</h2>
   <ul>
     <li v-for="item in column.items" key="item.text">
-      <el-icon class="el-icon--right" v-if="item.link!='/'" style="transform: translateY(3px)">
-        <StarFilled />
-      </el-icon>
       <el-link :href="item.link" :disabled="item.link=='/'" style="font-size: 1rem">
         {{item.text}}
       </el-link>
+      <Badge type="danger" text="NEW" v-if="item == theme.sidebar['/activities/'].items[0].items[0]"/>
     </li>
   </ul>
 </div>
@@ -49,8 +46,7 @@ flowchart LR
 <script setup>
 
 import {useData} from 'vitepress'; 
-import {ElLink, ElIcon} from 'element-plus';
-import {StarFilled} from '@element-plus/icons-vue';
+import {ElLink} from 'element-plus';
 const {theme} = useData();
 
 </script>

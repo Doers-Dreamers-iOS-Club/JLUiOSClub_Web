@@ -8,7 +8,7 @@ title: 安诺希 × JLU iOS Club
 
 体验中心内设一展台，包括 iPhone、iPad、Apple Watch、MacBook 等均可现场体验！
 
-<el-carousel show-arrow autoplay motion-blur>
+<el-carousel indicator-position="none" show-arrow autoplay motion-blur>
   <el-carousel-item>
     <el-image src="https://pic.imgdb.cn/item/66099f909f345e8d0395a4b0.jpg" fit="cover" style="height: 100%; width: 100%"></el-image>
   </el-carousel-item>
