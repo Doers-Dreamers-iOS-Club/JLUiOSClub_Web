@@ -7,7 +7,7 @@
 ## 为项目做贡献
 
 ```bash
-yarn install  # 安装依赖
-yarn dev      # 本地开发
-yarn build    # 构建项目（目前部署在 Vercel 上）
+pnpm install  # 安装依赖
+pnpm run dev      # 本地开发
+pnpm run build    # 构建项目（目前部署在 Cloudflare Pages 上）
 ```
