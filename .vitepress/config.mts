@@ -19,7 +19,8 @@ const viteConfig: UserConfig = {
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' }],
     ['link', { rel: 'manifest', href: '/favicon/site.webmanifest' }],
-    ['meta', { name: 'baidu-site-verification', content: 'codeva-QImGr6GPzt'}]
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-QImGr6GPzt'}],
+    ['meta', { name: 'google-site-verification', content: 'jIsu9AMup9671jCmwUv3HPEnckR57qCZmNrwE8_8aWU'}]
   ],
   sitemap: {
     hostname: 'https://jluios.club'
