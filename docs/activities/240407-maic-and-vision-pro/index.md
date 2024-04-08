@@ -60,7 +60,7 @@ JLU iOS Club核心社员们在试用了Vision Pro之后，对其震撼的画质�
 
 最重要的是，MAIC自2022年起，被列入**吉林大学B*类竞赛**，获奖同学享有**加分和推免**等政策！
 
-![MAIC与蓝桥杯等竞赛等均为吉林大学B类竞赛](maic-B*.png)
+![MAIC与蓝桥杯等竞赛等均为吉林大学B类竞赛](maic-grade.png)
 
 ## 如何获得 Vision Pro 体验资格
 
