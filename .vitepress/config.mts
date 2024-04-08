@@ -30,9 +30,10 @@ const viteConfig: UserConfig = {
     ...themeTranslations,
     logo: '/logo.png',
     nav: [
-      { text: '社团新闻', link: '/news/', activeMatch: '/news/' },
-      { text: '社团活动', link: '/activities/', activeMatch: '/activities/' },
-      { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions/' },
+      { text: '社团新闻', link: '/news/', activeMatch: '/news' },
+      { text: '社团活动', link: '/activities/', activeMatch: '/activities' },
+      { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions' },
+      { text: '资源导航', link: '/resources/', activeMatch: '/resources'}
     ],
     sidebar: sidebar,
 

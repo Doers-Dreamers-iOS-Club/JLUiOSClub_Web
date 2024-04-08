@@ -1,13 +1,14 @@
 ---
-title: MAIC & Vision Pro
+title: MAIC宣讲会暨Vision Pro体验会
+date: 2024.04.07
 ---
 
-# 移动应用创新赛宣讲会暨 Vision Pro 体验会 <Badge type="danger" text="NEW" />
+# 移动应用创新赛宣讲会暨 Vision Pro 体验会 <Badge type="tip" text="ARCHIVED" />
 
 :::danger 注意
 我们在校园网之窗投放的活动推广中，活动日期填写有误，请以官网时间为准。给您造成困扰，敬请谅解！
 
-_（不是26～27日，而是 **6～7日**）_
+_（本次活动已结束，敬请期待我们的下次活动～）_
 ::: 
 
 > 🗓️ 日期：2024年04月**06日-07日**
