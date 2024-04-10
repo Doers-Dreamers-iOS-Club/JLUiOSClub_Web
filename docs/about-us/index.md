@@ -5,12 +5,13 @@ import dualQRCode from '../components/dualQRCode.vue';
 
 # 关于我们
 
-我们的全称是：吉林大学Doers&Dreamers iOS Club，简称**JLU iOS Club**。
+我们是：「吉林大学Doers&Dreamers iOS Club」，简称**JLU iOS Club**。
 
 ## 我们是谁
 
-- 计算机学院下属社团，**iOS爱好者**的俱乐部！
-- 下设技术部、UI部、新媒体部。
+- JLU iOS Club 成立于 2017年12月，曾是吉林大学四星级社团
+- 吉林大学计算机科学与技术学院下属社团，**Apple 爱好者**的俱乐部！
+- 领导层下设技术部、美工部、新媒体部。
 - 成员涵盖计算机学院、软件学院、艺术学院、文学院等，**只要有爱，我们都欢迎！**
 - 一起探索新知，缔造创意之作！参加WWDC、移动应用创新赛，与全世界iOS爱好者同台竞技！
 
@@ -32,7 +33,7 @@ import dualQRCode from '../components/dualQRCode.vue';
 
 - 计算机科学与技术学院教师
 - 为社团、竞赛提供技术指导
-- JLU iOS Club指导老师
+- JLU iOS Club 指导老师
 
 ## 关注我们
 
