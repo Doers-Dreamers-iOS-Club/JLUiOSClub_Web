@@ -70,6 +70,11 @@ _（不过私以为我们的周边奖品储备已经相当饱和了🤔）_
 
 ![我们在 B13 摊位（点击图片可放大）](place.jpg)
 
+## 关注我们
+
+<dualQRCode/>
+
+
 > _和有梦想的人一起，改变世界。_
 > 
 > **JLU iOS Club** 与您不见不散！
@@ -77,6 +82,7 @@ _（不过私以为我们的周边奖品储备已经相当饱和了🤔）_
 <script setup>
 import { ElButton } from  'element-plus';
 import { useRouter } from 'vitepress';
+import dualQRCode from '/components/dualQRCode.vue';
 
 const router = useRouter()
 </script>
