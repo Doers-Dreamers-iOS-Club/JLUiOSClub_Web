@@ -96,9 +96,9 @@ figure figcaption {
     background: transparent !important;
 }
 
-.VPNav, .VPLocalNav {
+.VPNavBar, .VPLocalNav {
     background: var(--nav-c-bg) !important;
     border-bottom: none;
     backdrop-filter: var(--backdrop-filter);
-    -webkit-backdrop-filter: var(--backdrop-filter);
+    /*-webkit-backdrop-filter: var(--backdrop-filter);*/
 }
