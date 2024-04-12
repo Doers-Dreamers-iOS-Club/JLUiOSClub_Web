@@ -1,3 +1,9 @@
+/*font*/
+:root {
+    --vp-font-family-base: SF Pro SC,SF Pro Text,SF Pro Icons,PingFang SC,Helvetica Neue,Helvetica,Arial,sans-serif;
+    --vp-font-family-mono: SF Mono,SFMono-Regular,ui-monospace,Menlo,monospace;
+}
+
 /*image*/
 figure figcaption {
     margin-bottom: 1.5rem;

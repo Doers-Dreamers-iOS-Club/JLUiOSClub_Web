@@ -3,8 +3,9 @@ import {h, onMounted, watch, nextTick} from 'vue'
 import {useRoute} from "vitepress";
 import type {Theme} from 'vitepress'
 import mediumZoom from "medium-zoom";
-import DefaultTheme from 'vitepress/theme'
+import DefaultTheme from 'vitepress/theme-without-fonts'
 import './style.css'
+import './fontface.css'
 import './custom.css'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
