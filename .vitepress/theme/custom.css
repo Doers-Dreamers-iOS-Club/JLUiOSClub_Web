@@ -77,3 +77,31 @@ figure figcaption {
 .vp-doc a {
     padding: 0 4px;
 }
+
+/*blur navBar*/
+:root {
+    --nav-c-bg: rgba(255, 255, 255, 0.5);
+    --vp-c-gutter: rgba(226, 226, 227, 0);
+    --backdrop-filter: saturate(180%) blur(20px);
+}
+
+.dark {
+    --nav-c-bg: rgba(30, 30, 32, 0.5);
+    --vp-c-gutter: rgba(30, 30, 32, 0.5);
+}
+.curtain, .divider {
+    display: none !important;
+}
+
+.VPNavBar {
+    background: transparent !important;
+}
+.content-body, .VPLocalNav {
+    background: var(--nav-c-bg) !important;
+    border-bottom: none;
+}
+
+.content-body, .VPLocalNav {
+    backdrop-filter: var(--backdrop-filter);
+    -webkit-backdrop-filter: var(--backdrop-filter);
+}
