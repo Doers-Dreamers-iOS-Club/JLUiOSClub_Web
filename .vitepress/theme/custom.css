@@ -89,19 +89,16 @@ figure figcaption {
     --nav-c-bg: rgba(30, 30, 32, 0.5);
     --vp-c-gutter: rgba(30, 30, 32, 0.5);
 }
-.curtain, .divider {
+.divider {
     display: none !important;
 }
-
-.VPNavBar {
+.content-body, .VPNavBar {
     background: transparent !important;
 }
-.content-body, .VPLocalNav {
+
+.VPNav, .VPLocalNav {
     background: var(--nav-c-bg) !important;
     border-bottom: none;
-}
-
-.content-body, .VPLocalNav {
     backdrop-filter: var(--backdrop-filter);
     -webkit-backdrop-filter: var(--backdrop-filter);
 }
