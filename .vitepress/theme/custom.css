@@ -95,8 +95,12 @@ figure figcaption {
     --nav-c-bg: rgba(30, 30, 32, 0.5);
     --vp-c-gutter: rgba(30, 30, 32, 0.5);
 }
-.divider {
+.VPNavBar > .divider {
     display: none !important;
+}
+.VPLocalNavOutlineDropdown > .items {
+    /*gap: 0;*/
+    background-color: var(--vp-c-bg);
 }
 .content-body, .VPNavBar {
     background: transparent !important;
