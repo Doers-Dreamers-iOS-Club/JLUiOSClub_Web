@@ -3,18 +3,18 @@
 <div v-for="news in theme.sidebar['/news/'].items" key="column.text">
   <ul>
     <li>
-      <el-link :href="news.link" :disabled="news.link=='/'" style="font-size: 1rem">
+      <el-link @click="router.go('/news/'+news.link)" :disabled="news.link=='/'" style="font-size: 1rem">
         {{news.text}}
       </el-link>
-      <Badge type="danger" text="NEW" />
+      <Badge type="danger" text="NEW" v-if="news == theme.sidebar['/news/'].items[0]"/>
     </li>
   </ul>
 </div>
 
 <script setup>
 
-import {useData} from 'vitepress'; 
+import {useData, useRouter} from 'vitepress'; 
 import {ElLink} from 'element-plus';
 const {theme} = useData();
-
+const router = useRouter();
 </script>

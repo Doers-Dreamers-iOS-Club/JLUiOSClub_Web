@@ -7,7 +7,7 @@
   <h2>{{column.text}}</h2>
   <ul>
     <li v-for="item in column.items" key="item.text">
-      <el-link :href="item.link" :disabled="item.link=='/'" style="font-size: 1rem">
+      <el-link @click="router.go('/activities/'+item.link)" :disabled="item.link=='/'" style="font-size: 1rem">
         {{item.text}}
       </el-link>
       <Badge type="danger" text="NEW" v-if="item == theme.sidebar['/activities/'].items[0].items[0]"/>
@@ -45,8 +45,8 @@ flowchart LR
 
 <script setup>
 
-import {useData} from 'vitepress'; 
+import {useData, useRouter} from 'vitepress'; 
 import {ElLink} from 'element-plus';
 const {theme} = useData();
-
+const router = useRouter();
 </script>

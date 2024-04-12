@@ -1,17 +1,14 @@
-<script setup>
-import dualQRCode from '../components/dualQRCode.vue';
-</script>
-
-
 # 关于我们
+
+![](/logo-hero.png)
 
 我们是：「吉林大学Doers&Dreamers iOS Club」，简称**JLU iOS Club**。
 
 ## 我们是谁
 
-- JLU iOS Club 成立于 2017年12月，曾是吉林大学四星级社团
+- JLU iOS Club 成立于 2017年12月，曾是吉林大学四星级社团。
 - 吉林大学计算机科学与技术学院下属社团，**Apple 爱好者**的俱乐部！
-- 领导层下设技术部、美工部、新媒体部。
+- 领导层下设技术支持部、策划行动部、新媒体中心。
 - 成员涵盖计算机学院、软件学院、艺术学院、文学院等，**只要有爱，我们都欢迎！**
 - 一起探索新知，缔造创意之作！参加WWDC、移动应用创新赛，与全世界iOS爱好者同台竞技！
 
@@ -38,3 +35,21 @@ import dualQRCode from '../components/dualQRCode.vue';
 ## 关注我们
 
 <dualQRCode/>
+
+<el-button
+type="primary"
+size="large"
+@click="router.go('/join-us/')"
+style="display: block;width: 8rem;margin: 0 auto;"
+round
+>
+🥰 加入我们
+</el-button>
+
+<script setup>
+import { ElButton } from  'element-plus';
+import { useRouter } from 'vitepress';
+import dualQRCode from '../components/dualQRCode.vue';
+
+const router = useRouter()
+</script>

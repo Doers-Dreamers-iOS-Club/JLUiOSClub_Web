@@ -7,7 +7,7 @@ export const themeTranslations: DefaultTheme.Config = {
         next: '下一篇'
     },
     outline: {
-        label: '页面导航'
+        label: '页内导航'
     },
     lastUpdated: {
         text: '最后更新于',
@@ -29,8 +29,8 @@ export const themeTranslations: DefaultTheme.Config = {
 
 export const searchTranslations: LocalSearchTranslations = {
     button: {
-        buttonText: '搜索文档',
-        buttonAriaLabel: '搜索文档'
+        // buttonText: '搜索站点',
+        buttonAriaLabel: '搜索站点'
     },
     modal: {
         displayDetails: '显示详情',

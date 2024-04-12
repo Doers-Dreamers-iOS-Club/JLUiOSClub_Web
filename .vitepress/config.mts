@@ -30,10 +30,27 @@ const viteConfig: UserConfig = {
     ...themeTranslations,
     logo: '/logo.png',
     nav: [
-      { text: '社团新闻', link: '/news/', activeMatch: '/news' },
-      { text: '社团活动', link: '/activities/', activeMatch: '/activities' },
-      { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions' },
-      { text: '资源导航', link: '/resources/', activeMatch: '/resources'}
+      {
+        text: '社团动态',
+        items: [
+          { text: '社团新闻', link: '/news/', activeMatch: '/news' },
+          { text: '社团活动', link: '/activities/', activeMatch: '/activities' },
+        ]
+      },
+      {
+        text: '竞赛资源',
+        items: [
+          { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions' },
+          { text: '资源导航', link: '/resources/', activeMatch: '/resources'}
+        ]
+      },
+      {
+        text: '关于我们',
+        items: [
+          { text: '了解社团', link: '/about-us/', activeMatch: '/competitions' },
+          { text: '加入我们', link: '/join-us/', activeMatch: '/join-us' },
+        ]
+      }
     ],
     sidebar: sidebar,
 
