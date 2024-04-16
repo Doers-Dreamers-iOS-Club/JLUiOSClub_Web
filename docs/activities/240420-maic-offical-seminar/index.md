@@ -20,7 +20,7 @@ description: 移动应用赛官方宣讲会
 
 ## 活动概述
 
-![MAIC](..%2F..%2Fcompetitions%2Fmaic%2Fmaic.webp)
+![活动海报](poster.jpg)
 
 “移动应用创新赛”是 “中国高校计算机大赛” 所设立的四个竞赛模块之一，是由 Apple 与浙江大学联合举办、面向高校学员、供应链员工、K12 组别学生推出的基于 iOS/iPadOS 平台设计开发应用的竞赛。
 
