@@ -14,7 +14,7 @@ description: 移动应用赛官方宣讲会
 > 👩🏻‍💻 主讲人：上海交通大学-董员力、
 >           MAIC 组委会秘书-曹颖萍
 > 
-> ✋ 参与报名：[收集表链接](https://docs.qq.com/form/page/DTGV0Q1VHSnZnYWhS)
+> ✋ 参与报名：[报名链接](https://www.wjx.cn/vm/tUo0G8e.aspx)
 
 ## 活动概述
 
