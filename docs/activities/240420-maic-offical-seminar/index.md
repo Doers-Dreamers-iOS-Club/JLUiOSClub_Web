@@ -69,14 +69,18 @@ round
   </el-timeline-item>
 </el-timeline>
 
-### 🔥 加入2024-MAIC竞赛群
+## 🔥 加入2024-MAIC竞赛群
 
 ![点击图片可放大](/competitions/maic/maic-qr.jpg)
 
+## 关注 JLU iOS Club
+
+<dualQRCode/>
 
 <script setup>
 import {ElTimeline, ElTimelineItem, ElButton} from 'element-plus';
 import { useRouter } from 'vitepress';
+import dualQRCode from '/components/dualQRCode.vue';
 
 const steps = [
   {
