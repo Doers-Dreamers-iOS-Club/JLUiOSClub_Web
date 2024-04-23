@@ -1,5 +1,7 @@
 # [jluios.club](https://jluios.club/)
 
+![logo-hero.png](docs%2Fpublic%2Flogo-hero.png)
+
 ## 项目简介
 
 这是一个基于 [VitePress](https://vitepress.dev/) 的社团官网项目，用于展示社团的基本信息、活动信息、成员信息等。

@@ -6,6 +6,8 @@
 
 ## Swift 学习资源
 
+![](SwiftTransparent.png)
+
 如果您是初次接触编程，可以尝试一下 Apple 官方提供的 [Swift Playgrounds](https://developer.apple.com/cn/swift-playgrounds/)。
 
 对于编程初学者来说，以视频的方式学习可能更易于理解。这里我们推荐几个 up 主：
@@ -26,6 +28,8 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 :::
 
 ## SwiftUI 学习资源
+
+![](https://developer.apple.com/news/images/og/swiftui-og.png)
 
 如果您熟悉前端开发，或之前接触过安卓/鸿蒙平台的 App 开发，推荐阅读官方的两个入门教程：[旧版](https://developer.apple.com/tutorials/swiftui)/[新版](https://developer.apple.com/tutorials/develop-in-swift)，并参考一些[示例 Apps](https://developer.apple.com/tutorials/sample-apps)。若想更系统的入门 Swift 和 SwiftUI 以及 MVVM 设计模式，也可以尝试学习 [CS193p](https://cs193p.sites.stanford.edu/)，我们不推荐初学者学习这门课程。
 
@@ -50,6 +54,8 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 
 ### 原型设计工具
 
+![](Figma.png)
+
 - 👍[Figma](https://www.figma.com/)：国外最火的免费在线设计工具，国内网络访问较为缓慢，安装插件可以汉化界面。
 - [Sketch](https://www.sketch.com/)：macOS 上的老牌原型设计软件，学生可申请教育免费。
 - [即时设计](https://js.design/) / [Pixso](https://pixso.cn/)：国产在线 UI 设计工具，高仿 Figma，部分功能可能需要付费。
@@ -68,3 +74,10 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 
 - Swift 学生挑战赛：[Github](https://github.com/wwdc)
 - 移动应用创新赛：[2023年](https://sspai.com/post/82738) [2022年](https://sspai.com/post/75611) [2021年](https://sspai.com/post/70453)
+
+<style scoped>
+img {
+  box-shadow: none !important;
+}
+
+</style>
