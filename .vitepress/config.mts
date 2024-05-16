@@ -55,12 +55,12 @@ const viteConfig: UserConfig = {
     sidebar: sidebar,
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/AQiu-2003/JLUiOSClub_Web/' },
+      { icon: 'github', link: 'https://github.com/Doers-Dreamers-iOS-Club/JLUiOSClub_Web' },
       { icon: { svg: wechatIcon }, link: '/about-us/index'}
     ],
 
     footer: {
-      message: '本站点基于 <a href="https://github.com/AQiu-2003/JLUiOSClub_Web/blob/main/LICENSE">MIT License</a> 发布',
+      message: '本站点基于 <a href="https://github.com/Doers-Dreamers-iOS-Club/JLUiOSClub_Web/blob/main/LICENSE">MIT License</a> 发布',
       copyright: `Copyright © 2017-${ new Date().getFullYear() } JLU iOS Club`
     },
 
