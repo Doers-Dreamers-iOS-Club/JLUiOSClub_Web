@@ -2,7 +2,7 @@
 title: 深入了解 Vision Pro
 ---
 
-# 《深入了解 Vision Pro》系列活动
+# 《深入了解 Vision Pro》系列活动 <Badge type="info" text="第一期" />
 
 > 🚀 深入探索Apple Vision Pro，掌握Xcode编程，一起开启visionOS应用之旅！🚀
 
@@ -14,12 +14,24 @@ title: 深入了解 Vision Pro
 
 ## 📅 活动时间地点：
 
-### 第一期
+### 第二期活动 <Badge type="tip" text="NEW" />
+
+[🔗点击前往第二期活动详情](/activities/240601-learn-xcode-and-vision-pro/)
+
+- 📅 时间： 2024年6月1日（周六）15:00~17:00
+- 📍 地点： 前卫南区计算机楼 B110 苹果机房
+
+![第二期活动海报](poster2.jpg)
+
+<details>
+<summary style="font-weight: bold">第一期活动</summary>
 
 - 📅 时间： 2024年5月18日（周六）15:00~17:00
 - 📍 地点： 前卫南区计算机楼 B110 苹果机房
 
 ![第一期活动海报](poster1.jpeg)
+
+</details>
 
 ## 🌟 活动亮点：
 
