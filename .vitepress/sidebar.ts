@@ -13,6 +13,7 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '往期活动',
         items: [
+          {text: 'Learn Swift! 暑期学习打卡挑战', link: '240715-learn-swift-challenge/'},
           {text: '深入了解 Vision Pro [2]', link: '240601-learn-xcode-and-vision-pro/'},
           {text: '深入了解 Vision Pro [1]', link: '240519-learn-xcode-and-vision-pro/'},
           {text: '移动应用创新赛-官方宣讲会', link: '240420-maic-offical-seminar/'},
