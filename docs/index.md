@@ -17,8 +17,8 @@ hero:
       text: 🎉 最新活动
       link: /new
     - theme: alt
-      text: 🔥 Learn Swift! 暑期学习打卡挑战
-      link: /activities/240715-learn-swift-challenge/
+      text: 🔥 2025 移动应用创新赛宣讲
+      link: /activities/250511-maic-seminar/
 
 features:
   - title: 社团背景
