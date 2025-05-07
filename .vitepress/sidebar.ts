@@ -7,7 +7,7 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '即将推出',
         items: [
-          {text: 'Learn Swift! 暑期学习打卡挑战', link: '240715-learn-swift-challenge/'},
+          {text: 'MAIC移动应用创新赛宣讲会', link: '250511-maic-seminar/'},
         ]
       },
       {
