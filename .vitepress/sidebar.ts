@@ -7,12 +7,13 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '即将推出',
         items: [
-          {text: 'MAIC移动应用创新赛宣讲会', link: '250511-maic-seminar/'},
+          {text: 'AI工作坊', link: '250518-ai-workshop/'},
         ]
       },
       {
         text: '往期活动',
         items: [
+          {text: 'MAIC移动应用创新赛宣讲会', link: '250511-maic-seminar/'},
           {text: 'Learn Swift! 暑期学习打卡挑战', link: '240715-learn-swift-challenge/'},
           {text: '深入了解 Vision Pro [2]', link: '240601-learn-xcode-and-vision-pro/'},
           {text: '深入了解 Vision Pro [1]', link: '240519-learn-xcode-and-vision-pro/'},
