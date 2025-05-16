@@ -17,8 +17,8 @@ hero:
       text: 🎉 最新活动
       link: /new
     - theme: alt
-      text: 🔥 2025 移动应用创新赛宣讲
-      link: /activities/250511-maic-seminar/
+      text: 🔥 2025 AI工作坊活动开启！！
+      link: /activities/250518-ai-workshop/
 
 features:
   - title: 社团背景
