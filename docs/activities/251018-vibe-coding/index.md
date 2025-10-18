@@ -14,11 +14,18 @@ outline: [2, 3]
   --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
   --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.2);
+  
+  /* 深色模式变量 */
+  --dark-bg: #1a1a1a;
+  --dark-card-bg: #2d2d2d;
+  --dark-border: #404040;
+  --dark-text: #e0e0e0;
+  --dark-text-secondary: #b0b0b0;
 }
 
 /* 主横幅 - 增强视觉冲击 */
 .vibe-banner {
-  background: var(--primary-gradient);
+  background: linear-gradient(135deg, #5568d3 0%, #6b3fa0 100%);
   border-radius: 24px;
   padding: 4rem 2rem;
   color: white;
@@ -28,6 +35,14 @@ outline: [2, 3]
   position: relative;
   overflow: hidden;
   animation: bannerFadeIn 1s ease-out;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 深色模式下的横幅 */
+.dark .vibe-banner {
+  background: linear-gradient(135deg, #7c8ff5 0%, #9d6dd1 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(124, 143, 245, 0.3);
 }
 
 .vibe-banner::before {
@@ -37,7 +52,7 @@ outline: [2, 3]
   right: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
   animation: rotate 20s linear infinite;
 }
 
@@ -60,21 +75,27 @@ outline: [2, 3]
 .vibe-banner h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
   border: none;
   color: white;
   position: relative;
   z-index: 1;
   font-weight: 800;
   letter-spacing: -1px;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .vibe-banner p {
   font-size: 1.3rem;
-  opacity: 0.95;
+  opacity: 0.98;
   position: relative;
   z-index: 1;
   font-weight: 300;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 /* 信息卡片网格 - 更现代的设计 */
@@ -95,6 +116,26 @@ outline: [2, 3]
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   position: relative;
   overflow: hidden;
+}
+
+/* 深色模式 - 信息卡片 */
+.dark .info-card {
+  background: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.dark .info-card h3 {
+  color: var(--dark-text);
+}
+
+.dark .info-card p {
+  color: var(--dark-text-secondary);
+}
+
+.dark .info-card:hover {
+  border-color: #7c8ff5;
+  box-shadow: 0 20px 60px rgba(124, 143, 245, 0.3);
 }
 
 .info-card::before {
@@ -168,6 +209,19 @@ outline: [2, 3]
   transition: all 0.3s ease;
 }
 
+/* 深色模式 - 章节标题 */
+.dark .section-header h2 {
+  background: var(--dark-card-bg);
+  color: var(--dark-text);
+  border-color: #7c8ff5;
+  box-shadow: 0 8px 25px rgba(124, 143, 245, 0.3);
+}
+
+.dark .section-header h2:hover {
+  background: linear-gradient(135deg, #7c8ff5 0%, #9d6dd1 100%);
+  color: white;
+}
+
 .section-header h2::before {
   content: '';
   position: absolute;
@@ -201,6 +255,17 @@ outline: [2, 3]
   border: 3px solid transparent;
 }
 
+/* 深色模式 - 图片容器 */
+.dark .image-container {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  border-color: transparent;
+}
+
+.dark .image-container:hover {
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  border-color: #a78bfa;
+}
+
 .image-container:hover {
   transform: scale(1.03) translateY(-5px);
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
@@ -228,9 +293,30 @@ outline: [2, 3]
   transition: all 0.3s ease;
 }
 
+/* 深色模式 - 提示框 */
+.dark .tip-box {
+  background: linear-gradient(135deg, #3d3416 0%, #4a3f1a 100%);
+  border-left-color: #d4a017;
+  box-shadow: 0 5px 20px rgba(212, 160, 23, 0.2);
+}
+
+.dark .tip-box h3 {
+  color: #fbbf24;
+}
+
+.dark .tip-box p,
+.dark .tip-box ul,
+.dark .tip-box li {
+  color: #d4d4d8;
+}
+
 .tip-box:hover {
   transform: translateX(5px);
   box-shadow: 0 8px 30px rgba(255, 193, 7, 0.25);
+}
+
+.dark .tip-box:hover {
+  box-shadow: 0 8px 30px rgba(212, 160, 23, 0.3);
 }
 
 .tip-box h3 {
@@ -255,6 +341,24 @@ outline: [2, 3]
   border: 2px solid #e2e8f0;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
+}
+
+/* 深色模式 - 步骤容器 */
+.dark .step-container {
+  background: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.dark .step-container:hover {
+  border-color: #7c8ff5;
+  box-shadow: 0 8px 25px rgba(124, 143, 245, 0.3);
+  background: #353535;
+}
+
+.dark .step-container p,
+.dark .step-container h4 {
+  color: var(--dark-text-secondary);
 }
 
 .step-container:hover {
@@ -286,12 +390,23 @@ outline: [2, 3]
   z-index: 1;
 }
 
+/* 深色模式 - 步骤数字 */
+.dark .step-number {
+  background: var(--dark-card-bg);
+  color: #7c8ff5;
+  border-color: #7c8ff5;
+}
+
 .step-container:hover .step-number {
   transform: scale(1.1) rotate(5deg);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border-color: transparent;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.dark .step-container:hover .step-number {
+  background: linear-gradient(135deg, #7c8ff5 0%, #9d6dd1 100%);
 }
 
 .step-container h4 {
@@ -310,9 +425,30 @@ outline: [2, 3]
   transition: all 0.3s ease;
 }
 
+/* 深色模式 - 高亮框 */
+.dark .highlight-box {
+  background: linear-gradient(135deg, #1e3a4a 0%, #2d2438 100%);
+  border-color: #0891b2;
+  box-shadow: 0 5px 20px rgba(8, 145, 178, 0.2);
+}
+
+.dark .highlight-box h3 {
+  color: #22d3ee;
+}
+
+.dark .highlight-box p,
+.dark .highlight-box ul,
+.dark .highlight-box li {
+  color: var(--dark-text-secondary);
+}
+
 .highlight-box:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 35px rgba(0, 188, 212, 0.2);
+}
+
+.dark .highlight-box:hover {
+  box-shadow: 0 10px 35px rgba(8, 145, 178, 0.3);
 }
 
 .highlight-box h3 {
@@ -344,6 +480,30 @@ outline: [2, 3]
   border: 2px solid #f0f0f0;
   position: relative;
   overflow: hidden;
+}
+
+/* 深色模式 - 项目卡片 */
+.dark .project-card {
+  background: var(--dark-card-bg);
+  border-color: #404040;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.dark .project-card h3 {
+  color: #a78bfa;
+}
+
+.dark .project-card p {
+  color: var(--dark-text-secondary);
+}
+
+.dark .project-card strong {
+  color: var(--dark-text);
+}
+
+.dark .project-card:hover {
+  box-shadow: 0 25px 50px rgba(139, 92, 246, 0.3);
+  border-color: #a78bfa;
 }
 
 .project-card::before {
