@@ -5,14 +5,15 @@ const sidebar: DefaultTheme.Sidebar = {
     base: '/activities/',
     items: [
       {
-        text: '即将推出',
+        text: '最新活动',
         items: [
-          {text: 'AI工作坊', link: '250518-ai-workshop/'},
+          {text: 'Vibe Coding - AI辅助开发工作坊', link: '251018-vibe-coding/'},
         ]
       },
       {
         text: '往期活动',
         items: [
+          {text: 'AI工作坊', link: '250518-ai-workshop/'},
           {text: 'MAIC移动应用创新赛宣讲会', link: '250511-maic-seminar/'},
           {text: 'Learn Swift! 暑期学习打卡挑战', link: '240715-learn-swift-challenge/'},
           {text: '深入了解 Vision Pro [2]', link: '240601-learn-xcode-and-vision-pro/'},

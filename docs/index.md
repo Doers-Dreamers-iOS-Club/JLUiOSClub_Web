@@ -15,10 +15,10 @@ hero:
       link: /about-us/index
     - theme: alt
       text: 🎉 最新活动
-      link: /new
+      link: /activities/251018-vibe-coding/
     - theme: alt
-      text: 🔥 2025 AI工作坊活动开启！！
-      link: /activities/250518-ai-workshop/
+      text: 🔥 Vibe Coding - AI辅助开发工作坊
+      link: /activities/251018-vibe-coding/
 
 features:
   - title: 社团背景
