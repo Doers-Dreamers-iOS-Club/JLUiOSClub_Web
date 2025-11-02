@@ -14,10 +14,10 @@ hero:
       text: 了解 iOS Club
       link: /about-us/index
     - theme: alt
-      text: 🎉 最新活动
-      link: /activities/251018-vibe-coding/
+      text: 🤖 AI Agent 实战
+      link: /activities/251102-AI-Agent/
     - theme: alt
-      text: 🔥 Vibe Coding - AI辅助开发工作坊
+      text: � Vibe Coding
       link: /activities/251018-vibe-coding/
 
 features:
