@@ -14,10 +14,13 @@ hero:
       text: 了解 iOS Club
       link: /about-us/index
     - theme: alt
+      text: ❄️ Winter SwiftUI
+      link: /activities/260209-winter-swift/
+    - theme: alt
       text: 🤖 AI Agent 实战
       link: /activities/251102-AI-Agent/
     - theme: alt
-      text: � Vibe Coding
+      text: 💻 Vibe Coding
       link: /activities/251018-vibe-coding/
 
 features:
@@ -31,4 +34,3 @@ features:
     icon: 📅
     details: 每学期定期举行iOS应用开发入门讲座、苹果设备使用技巧分享会等活动，为吉大果粉提供丰富多彩的学习交流机会。
 ---
-

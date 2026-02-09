@@ -7,6 +7,7 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '最新活动',
         items: [
+          {text: 'Winter SwiftUI 入门工作坊', link: '260209-winter-swift/'},
           {text: '日常记录小能手 - AI Agent实战', link: '251102-AI-Agent/'},
           {text: 'Vibe Coding - AI辅助开发工作坊', link: '251018-vibe-coding/'},
         ]
