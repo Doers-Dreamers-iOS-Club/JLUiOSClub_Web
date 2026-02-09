@@ -108,15 +108,10 @@ outline: [2, 3]
   line-height: 1.7;
 }
 
-.section-header {
+.vp-doc h2 {
   margin: 3rem 0 1.2rem;
   padding-top: 0.2rem;
   border-top: 1px solid var(--mag-border);
-}
-
-.section-header h2 {
-  margin: 1rem 0 0;
-  border: 0;
   color: var(--mag-text);
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
   font-size: clamp(1.45rem, 2.6vw, 2rem);
@@ -262,7 +257,7 @@ outline: [2, 3]
     padding: 1rem 0.9rem;
   }
 
-  .section-header {
+  .vp-doc h2 {
     margin-top: 2.3rem;
   }
 }
@@ -319,9 +314,7 @@ outline: [2, 3]
 12. 任务与挑战  
 13. 实现约束
 
-<div class="section-header">
-  <h2>1) Swift 与 SwiftUI 的一句话理解</h2>
-</div>
+## 1) Swift 与 SwiftUI 的一句话理解
 
 <div class="step-container">
   <p><strong>Swift</strong> 是现代多范式语言，支持面向对象、面向协议和函数式特性。</p>
@@ -329,9 +322,9 @@ outline: [2, 3]
   <p>直观对比：UIKit 更像手工搬砖，SwiftUI 更像配置目标效果。</p>
 </div>
 
-<div class="section-header">
-  <h2>2) Xcode 三大区域：左中右怎么用</h2>
-</div>
+
+## 2) Xcode 三大区域：左中右怎么用
+
 
 <div class="step-container">
   <ul>
@@ -341,9 +334,9 @@ outline: [2, 3]
   </ul>
 </div>
 
-<div class="section-header">
-  <h2>3) SwiftUI 核心结构：App / Scene / View / struct / protocol</h2>
-</div>
+
+## 3) SwiftUI 核心结构：App / Scene / View / struct / protocol
+
 
 <div class="step-container">
   <div class="step-header">
@@ -358,9 +351,9 @@ outline: [2, 3]
   <p>关键理解：`some View` / `some Scene` 是不透明返回类型。你返回的是具体类型，但对外隐藏类型细节。</p>
 </div>
 
-<div class="section-header">
-  <h2>4) 布局容器：VStack / HStack / ZStack</h2>
-</div>
+
+## 4) 布局容器：VStack / HStack / ZStack
+
 
 <div class="step-container">
   <div class="step-header">
@@ -378,9 +371,9 @@ outline: [2, 3]
   </div>
 </div>
 
-<div class="section-header">
-  <h2>5) modifier 修饰符：顺序为何会改变结果</h2>
-</div>
+
+## 5) modifier 修饰符：顺序为何会改变结果
+
 
 <div class="step-container">
   <div class="step-header">
@@ -399,9 +392,9 @@ outline: [2, 3]
   </div>
 </div>
 
-<div class="section-header">
-  <h2>6) CodeBreaker 页面拆解</h2>
-</div>
+
+## 6) CodeBreaker 页面拆解
+
 
 <div class="step-container">
   <p>本次课堂先实现基础版 UI，可拆成两块：</p>
@@ -411,9 +404,9 @@ outline: [2, 3]
   </ul>
 </div>
 
-<div class="section-header">
-  <h2>7) 数据与珠子视图：let/var 与可扩展 Pegs</h2>
-</div>
+
+## 7) 数据与珠子视图：let/var 与可扩展 Pegs
+
 
 <div class="step-container">
   <div class="step-header">
@@ -440,9 +433,9 @@ func pegsView(colors: [Color]) -> some View {
 ```
 </div>
 
-<div class="section-header">
-  <h2>8) ForEach：循环与 id 的坑</h2>
-</div>
+
+## 8) ForEach：循环与 id 的坑
+
 
 <div class="step-container">
   <div class="step-header">
@@ -456,9 +449,9 @@ func pegsView(colors: [Color]) -> some View {
   </div>
 </div>
 
-<div class="section-header">
-  <h2>9) MatchPegs：黑钉/白钉/空 + 深色模式</h2>
-</div>
+
+## 9) MatchPegs：黑钉/白钉/空 + 深色模式
+
 
 <div class="step-container">
   <ul>
@@ -469,9 +462,9 @@ func pegsView(colors: [Color]) -> some View {
   <p>配色建议使用语义色（如 `.primary`），让 Light / Dark 自动适配，避免手写颜色在深色模式失真。</p>
 </div>
 
-<div class="section-header">
-  <h2>10) enum：让状态表达更清楚</h2>
-</div>
+
+## 10) enum：让状态表达更清楚
+
 
 <div class="step-container">
   <div class="step-header">
@@ -493,9 +486,9 @@ enum Match {
 ```
 </div>
 
-<div class="section-header">
-  <h2>11) 常见错误清单</h2>
-</div>
+
+## 11) 常见错误清单
+
 
 <div class="step-container">
   <ol>
@@ -506,9 +499,9 @@ enum Match {
   </ol>
 </div>
 
-<div class="section-header">
-  <h2>12) 任务与挑战</h2>
-</div>
+
+## 12) 任务与挑战
+
 
 <div class="project-grid">
   <div class="project-card">
@@ -543,9 +536,9 @@ enum Match {
   </div>
 </div>
 
-<div class="section-header">
-  <h2>13) 实现约束</h2>
-</div>
+
+## 13) 实现约束
+
 
 <div class="highlight-box">
   <ul>
@@ -560,3 +553,25 @@ enum Match {
   <h1>这节课真正要带走的能力</h1>
   <p>把界面拆成可复用小组件，用数据驱动状态，再用稳定 id 和清晰枚举保证可扩展。学会这套方法，后续任何 SwiftUI 页面都能独立搭起来。</p>
 </div>
+
+<script setup>
+import { useData } from 'vitepress'
+
+const { page } = useData()
+
+page.value.headers = [
+  { level: 2, title: '1) Swift 与 SwiftUI 的一句话理解', slug: '_1-swift-与-swiftui-的一句话理解', children: [] },
+  { level: 2, title: '2) Xcode 三大区域：左中右怎么用', slug: '_2-xcode-三大区域-左中右怎么用', children: [] },
+  { level: 2, title: '3) SwiftUI 核心结构：App / Scene / View / struct / protocol', slug: '_3-swiftui-核心结构-app-scene-view-struct-protocol', children: [] },
+  { level: 2, title: '4) 布局容器：VStack / HStack / ZStack', slug: '_4-布局容器-vstack-hstack-zstack', children: [] },
+  { level: 2, title: '5) modifier 修饰符：顺序为何会改变结果', slug: '_5-modifier-修饰符-顺序为何会改变结果', children: [] },
+  { level: 2, title: '6) CodeBreaker 页面拆解', slug: '_6-codebreaker-页面拆解', children: [] },
+  { level: 2, title: '7) 数据与珠子视图：let/var 与可扩展 Pegs', slug: '_7-数据与珠子视图-let-var-与可扩展-pegs', children: [] },
+  { level: 2, title: '8) ForEach：循环与 id 的坑', slug: '_8-foreach-循环与-id-的坑', children: [] },
+  { level: 2, title: '9) MatchPegs：黑钉/白钉/空 + 深色模式', slug: '_9-matchpegs-黑钉-白钉-空-深色模式', children: [] },
+  { level: 2, title: '10) enum：让状态表达更清楚', slug: '_10-enum-让状态表达更清楚', children: [] },
+  { level: 2, title: '11) 常见错误清单', slug: '_11-常见错误清单', children: [] },
+  { level: 2, title: '12) 任务与挑战', slug: '_12-任务与挑战', children: [] },
+  { level: 2, title: '13) 实现约束', slug: '_13-实现约束', children: [] }
+]
+</script>
