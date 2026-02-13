@@ -1,6 +1,18 @@
 import {DefaultTheme} from "vitepress";
 
 const sidebar: DefaultTheme.Sidebar = {
+  '/activities/260209-winter-swift/': {
+    base: '/activities/260209-winter-swift/',
+    items: [
+      {
+        text: '冬季 Swift 培训讲义专区',
+        items: [
+          {text: '第一讲：SwiftUI 入门与 CodeBreaker 基础界面', link: 'first/'},
+          {text: '第二讲：Swift 进阶与 CodeBreaker 实战', link: 'second/'},
+        ]
+      }
+    ]
+  },
   '/activities/': {
     base: '/activities/',
     items: [
