@@ -437,9 +437,10 @@ outline: [2, 3]
 7. 第五阶（上）：Skills
 8. 第五阶（下）：MCP
 9. vibe coding：一种工作方式
-10. 现代编程范式的四个转变
-11. 面向 iOS/Apple 的成长路径
-12. 总结：完整概念地图
+10. vibe coding 实战：六条对抗熵增的机制
+11. 现代编程范式的四个转变
+12. 面向 iOS/Apple 的成长路径
+13. 总结：完整概念地图
 
 ## 1) 这节课想解决什么问题
 
@@ -701,7 +702,71 @@ my-skill/
   <strong>实践建议：</strong> vibe coding 要配护栏，最低要求是 `看 diff + 跑测试 + 做代码审查`，否则技术债会非常快地累积。
 </div>
 
-## 10) 现代编程范式的四个转变
+## 10) vibe coding 实战：六条对抗熵增的机制
+
+<div class="highlight-box">
+  <p>以下六条机制，说来说去对抗的都是同一个东西——<strong>上下文的熵增</strong>。你不治这个，迭代越快，崩得越快。每一条都是可以立即落地的工程手段，而不是"写在 prompt 里祈祷 AI 听话"。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">①</span>
+    <h4>多模型对审：Plan 阶段就把坑填完</h4>
+  </div>
+  <p>用 Opencode 的 plan mode 生成方案文档，再把文档交给另一个高能力模型做评审。每一个需求点都要经过五六个来回的质疑和补全，这样打磨出来的 plan 交给执行模型，几乎一次性通过，不用返工。</p>
+  <p><strong>核心逻辑：</strong>写代码的成本远高于审方案的成本，把反复修改的循环前移到纯文本阶段，是最划算的投资。讨论一个普通的需求，都可以把上下文几乎吃光——把这些消耗花在 plan 阶段而不是代码阶段，性价比最高。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">②</span>
+    <h4>分形文档 + 强制同构</h4>
+  </div>
+  <p>根目录放一份全局地图，每个模块放一份成员清单和接口说明，每个文件头部声明依赖和职责。三层是折叠关系，AI 从任意文件进入，三次 Read 就能拿到完整上下文。</p>
+  <p>这个思路的本质是<strong>利用 Opencode 的 instructions 文件强制加载机制，播种一套文档</strong>。但光有文档不够——每次代码变更后必须强制回环检查：文件头的依赖声明还对不对，模块文档的成员清单要不要更新。文档和代码是同一事物的两个相，任何一相变了另一相没跟上，三轮会话后 AI 就在错误上下文上越写越离谱。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">③</span>
+    <h4>Hook 自动拦截，别靠 prompt 约束</h4>
+  </div>
+  <p>把项目规范写成自动检查脚本挂在 hook 里，AI 写出违规代码时写入瞬间被拦截打回。你在 system prompt 里写一百遍"不要这样做"，不如工程化拦它一次。<strong>AI 没有记忆力，但 hook 有。</strong></p>
+  <p>举个例子，利用 Hook 机制强制规范了需要使用特定 UI 组件库，结果整个项目生成的任何页面，完全没有逃逸。Opencode 支持自定义 hooks，在 <code>.opencode</code> 配置中设置 pre-commit、post-edit 等钩子脚本，实现同样的拦截效果。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">④</span>
+    <h4>Plan 文件持久化，别信对话记忆</h4>
+  </div>
+  <p>Opencode 的 plan mode 生成的 plan 文档，默认可能散落在系统文件夹下。通过配置 plan 的存储路径，就能让每个项目的 plan 落在每个项目的文件夹内。</p>
+  <p>另外 plan 文档默认是不带 checklist 的，在默认的 plan 中加入 checklist 跟踪进度，完成一项就回写文件。<strong>会话中断后，新会话读文件从断点恢复。文件系统才是唯一可靠的状态源。</strong>这点非常重要。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">⑤</span>
+    <h4>质量红线必须量化</h4>
+  </div>
+  <p>单文件 ≤ 800 行，单函数 ≤ 30 行，嵌套 ≤ 3 层，分支 ≤ 3 个。<strong>不是建议，是硬阈值。</strong>AI 对"函数要短"的理解飘忽不定，但对"不超过 30 行"执行得非常稳定。</p>
+  <p>所有审美判断都要降维成可判定谓词，这是跟 AI 协作的基本功。要有架构洁癖、代码洁癖——让 AI 有洁癖是一件几乎没有成本的事情。</p>
+</div>
+
+<div class="step-container">
+  <div class="step-header">
+    <span class="step-number">⑥</span>
+    <h4>渐进式上下文加载</h4>
+  </div>
+  <p>别每次把所有文档一股脑灌进去。改 bug 只加载目标模块文档，做架构决策才加载全局地图。上下文窗口是稀缺资源，信息过载和信息不足一样有害。</p>
+  <p>像设计数据库索引一样设计 AI 的信息检索路径——<strong>命中率比覆盖率重要</strong>。就算有了大上下文窗口，熵增问题可以缓解，但仍然不能根除，所以还是需要掌握渐进式加载的技巧。</p>
+</div>
+
+<div class="highlight-box">
+  <strong>总结：</strong> 这六条机制的共同敌人是"上下文熵增"。vibe coding 的速度越快，不加治理就崩得越快。用工程手段（文档、hook、持久化、量化指标、分层加载）替代"写 prompt 祈祷"，才是让 AI 协作可持续的关键。
+</div>
+
+## 11) 现代编程范式的四个转变
 
 <div class="project-grid">
   <div class="project-card">
@@ -722,7 +787,7 @@ my-skill/
   </div>
 </div>
 
-## 11) 面向 iOS/Apple 的成长路径
+## 12) 面向 iOS/Apple 的成长路径
 
 <div class="timeline-stack">
   <div class="timeline-card">
@@ -757,7 +822,7 @@ my-skill/
   </div>
 </div>
 
-## 12) 总结：完整概念地图
+## 13) 总结：完整概念地图
 
 <div class="highlight-box">
   <p><strong>一句话总览：</strong> 现代 AI 编程不是“让 AI 帮你写几段代码”，而是构建一个可计划、可执行、可验证、可复用的工程系统。</p>
