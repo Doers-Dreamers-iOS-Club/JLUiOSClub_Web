@@ -1,19 +1,18 @@
 ---
 title: MAIC 宣讲会
 description: 移动应用赛宣讲会
+icon: "🏆"
+tags: [MAIC, 宣讲会]
 ---
+<MagHero title="移动应用创新赛——宣讲会来啦！" />
 
-# 移动应用创新赛——宣讲会来啦！
-
-> 🗓️ 日期：2025年**05月11日**
->
-> 🕜 时间：晚 19:00
->
-> 🏢 地点：南区计算机楼 B110
->
-> 👩🏻‍💻 主讲人：吉林大学MAIC的指导教师谷方明
-> 
-> ✋ 竞赛官网：[竞赛官网](https://www.appcontext.net)
+<MagGrid :cols="4">
+  <MagCard icon="🗓️" title="日期">2025年<strong>05月11日</strong></MagCard>
+  <MagCard icon="🕜" title="时间">晚 19:00</MagCard>
+  <MagCard icon="🏢" title="地点">南区计算机楼 B110</MagCard>
+  <MagCard icon="👩🏻‍💻" title="主讲人">吉林大学MAIC的指导教师谷方明</MagCard>
+  <MagCard icon="✋" title="竞赛官网"><a href="https://www.appcontext.net">竞赛官网</a></MagCard>
+</MagGrid>
 
 ## 活动亮点
 
@@ -42,20 +41,3 @@ description: 移动应用赛宣讲会
 ## 🔥 加入2024-MAIC竞赛群
 
 ![竞赛群二维码](2.jpg){style="width:auto; height:auto;"}
-
-
-<script setup>
-import { ElButton } from 'element-plus'
-</script>
-
-<style scoped>
-.el-button a {
-    color: white;
-    text-decoration: none;
-}
-.el-button {
-    display: block;
-    width: 12rem;
-    margin: 0 auto;
-}
-</style>

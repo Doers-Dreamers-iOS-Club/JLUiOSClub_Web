@@ -6,9 +6,6 @@ hero:
   name: "JLU iOS Club"
   text: 一个教你从零开始创作专属App的社团
   tagline: return Create_your_First_iOS_App
-  image:
-    src: /logo-hero.png
-    alt: JLU iOS Club Logo
   actions:
     - theme: brand
       text: 了解 iOS Club
@@ -34,3 +31,11 @@ features:
     icon: 📅
     details: 每学期定期举行iOS应用开发入门讲座、苹果设备使用技巧分享会等活动，为吉大果粉提供丰富多彩的学习交流机会。
 ---
+
+<MagSection n="04" title="最新动态" />
+
+<MagArchive source="activities" :limit="3" :show-view-toggle="false" />
+
+<div class="mag-more">
+  <a href="/activities/">查看全部活动 →</a>
+</div>

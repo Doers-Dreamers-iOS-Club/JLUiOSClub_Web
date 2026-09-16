@@ -3,340 +3,35 @@ title: "Vibe Coding - AI时代的开发新方式"
 description: "探索AI辅助开发，用Qoder与AI一起编写代码，体验未来的编程方式！"
 date: 2025.10.18
 outline: [2, 3]
+icon: "💻"
+tags: [AI, 开发工具, 工作坊]
 ---
 
-<style scoped>
-:root {
-  --mag-bg: #f6f7f9;
-  --mag-card: #ffffff;
-  --mag-text: #1f2a37;
-  --mag-subtext: #5b6676;
-  --mag-border: #d8dde6;
-  --mag-accent: #2f5d8a;
-  --mag-accent-soft: #e8eff7;
-  --mag-shadow: 0 10px 30px rgba(20, 32, 53, 0.08);
-}
 
-.dark {
-  --mag-bg: #11161d;
-  --mag-card: #1a212b;
-  --mag-text: #e5eaf2;
-  --mag-subtext: #aeb8c6;
-  --mag-border: #2d3948;
-  --mag-accent: #8ab4e1;
-  --mag-accent-soft: #223246;
-  --mag-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
-}
+<MagHero title="🚀 Vibe Coding" subtitle="AI时代的开发新方式 - 让AI成为你的编程伙伴" />
 
-.vibe-banner {
-  margin: 2rem 0;
-  padding: 2.6rem 2rem;
-  border-radius: 20px;
-  border: 1px solid var(--mag-border);
-  background: linear-gradient(145deg, var(--mag-card) 0%, var(--mag-accent-soft) 100%);
-  box-shadow: var(--mag-shadow);
-  position: relative;
-  overflow: hidden;
-}
-
-.vibe-banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent 0 70%, rgba(47, 93, 138, 0.08) 100%);
-  pointer-events: none;
-}
-
-.vibe-banner h1 {
-  margin: 0;
-  border: 0;
-  color: var(--mag-text);
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-  font-weight: 700;
-  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
-  letter-spacing: 0.02em;
-  position: relative;
-  z-index: 1;
-}
-
-.vibe-banner p {
-  margin: 0.9rem 0 0;
-  color: var(--mag-subtext);
-  font-size: 1.05rem;
-  line-height: 1.8;
-  position: relative;
-  z-index: 1;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 2.2rem 0;
-}
-
-.info-card {
-  background: var(--mag-card);
-  border: 1px solid var(--mag-border);
-  border-radius: 14px;
-  padding: 1.2rem;
-  box-shadow: 0 4px 14px rgba(20, 32, 53, 0.05);
-  transition: transform 0.25s ease, border-color 0.25s ease;
-}
-
-.info-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--mag-accent);
-}
-
-.info-card-icon {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.info-card h3 {
-  margin: 0;
-  border: 0;
-  color: var(--mag-text);
-  font-size: 1.02rem;
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-}
-
-.info-card p {
-  margin: 0.45rem 0 0;
-  color: var(--mag-subtext);
-  line-height: 1.7;
-}
-
-.section-header {
-  margin: 3rem 0 1.2rem;
-  padding-top: 0.2rem;
-  border-top: 1px solid var(--mag-border);
-}
-
-.section-header h2 {
-  margin: 1rem 0 0;
-  border: 0;
-  color: var(--mag-text);
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-  font-size: clamp(1.45rem, 2.6vw, 2rem);
-  letter-spacing: 0.01em;
-}
-
-.step-container {
-  margin: 1rem 0 1.6rem;
-  padding: 1.3rem 1.1rem;
-  border-left: 3px solid var(--mag-accent);
-  background: var(--mag-card);
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(20, 32, 53, 0.05);
-}
-
-.step-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-  margin-bottom: 0.55rem;
-}
-
-.step-container h4,
-.step-header h3 {
-  margin: 0;
-  border: 0;
-  color: var(--mag-text);
-  font-size: 1.1rem;
-  line-height: 1.5;
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-}
-
-.step-container h4 {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.step-header > div p {
-  margin: 0.4rem 0 0;
-}
-
-.step-number {
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  background: var(--mag-accent);
-  font-size: 0.95rem;
-  flex-shrink: 0;
-}
-
-.step-container p,
-.step-container li,
-.tip-box,
-.highlight-box {
-  color: var(--mag-subtext);
-  line-height: 1.8;
-}
-
-.step-container ul,
-.tip-box ul,
-.highlight-box ul {
-  margin: 0.55rem 0 0;
-  padding-left: 1.2rem;
-}
-
-.tip-box,
-.highlight-box {
-  margin: 1.4rem 0;
-  padding: 1rem 1.05rem;
-  border-radius: 10px;
-  border: 1px solid var(--mag-border);
-  background: var(--mag-card);
-}
-
-.tip-box {
-  border-left: 3px solid var(--mag-accent);
-}
-
-.highlight-box {
-  background: linear-gradient(145deg, var(--mag-card), var(--mag-accent-soft));
-}
-
-.tip-box h3,
-.highlight-box h3 {
-  margin: 0 0 0.45rem;
-  border: 0;
-  color: var(--mag-text);
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-}
-
-.image-container {
-  margin: 1rem 0;
-  background: var(--mag-card);
-  border: 1px solid var(--mag-border);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.image-container img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.image-container em {
-  display: block;
-  padding: 0.65rem 0.85rem;
-  color: var(--mag-subtext);
-  font-size: 0.95rem;
-  font-style: normal;
-  border-top: 1px solid var(--mag-border);
-}
-
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin: 1rem 0;
-}
-
-.media-grid figure,
-.image-container figure {
-  margin: 0;
-}
-
-.media-grid img {
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--mag-border);
-}
-
-.media-grid figcaption {
-  margin-top: 0.35rem;
-  color: var(--mag-subtext);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1.2rem 0;
-}
-
-.project-card {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--mag-border);
-  background: var(--mag-card);
-}
-
-.project-card h3,
-.project-card h4 {
-  margin-top: 0;
-  border: 0;
-  color: var(--mag-text);
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
-}
-
-@media (max-width: 1100px) {
-  .info-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 780px) {
-  .vibe-banner {
-    padding: 1.8rem 1.2rem;
-    border-radius: 14px;
-  }
-
-  .info-grid,
-  .media-grid,
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .step-container {
-    padding: 1rem 0.9rem;
-  }
-
-  .section-header {
-    margin-top: 2.3rem;
-  }
-}
-</style>
-
-<div class="vibe-banner">
-  <h1>🚀 Vibe Coding</h1>
-  <p>AI时代的开发新方式 - 让AI成为你的编程伙伴</p>
-</div>
-
-<div class="info-grid">
-  <div class="info-card">
-    <div class="info-card-icon">🗓️</div>
+<MagGrid :cols="4">
+  <MagCard>
+    <span class="mag-icon">🗓️</span>
     <h3>活动日期</h3>
     <p>2025年10月18日</p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">📍</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">📍</span>
     <h3>活动地点</h3>
     <p>南区计算机楼 B110苹果机房</p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">👨‍💻</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">👨‍💻</span>
     <h3>主要内容</h3>
     <p>AI辅助开发实战</p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">🎯</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">🎯</span>
     <h3>适合人群</h3>
     <p>所有对编程感兴趣的同学</p>
-  </div>
-</div>
+  </MagCard>
+</MagGrid>
 
 ## 活动概述 <Badge type="tip" text="NEW" />
 
@@ -355,74 +50,68 @@ outline: [2, 3]
 
 ---
 
-<div class="section-header">
-  <h2>🎯 Part 1: 认识Xcode</h2>
-</div>
+<MagSection title="🎯 Part 1: 认识Xcode" />
 
 Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具。虽然我们主要使用Qoder进行开发，但了解Xcode的项目结构对于理解iOS开发至关重要。
 
 ### 创建你的第一个Xcode项目
 
-<div class="step-container">
-  <h4><span class="step-number">1</span>打开Xcode并创建新项目</h4>
-</div>
+<MagStep n="1" title="打开Xcode并创建新项目">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/1.png" alt="Xcode启动界面" />
-</div>
+</MagFigure>
 
 打开Xcode后，你会看到一个简洁的欢迎界面。点击 **Create New Project** 开始创建你的第一个iOS项目。
 
-<div class="step-container">
-  <h4><span class="step-number">2</span>选择项目模板</h4>
-</div>
+<MagStep n="2" title="选择项目模板">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/2.png" alt="选择App模板" />
-</div>
+</MagFigure>
 
 选择默认的 **App** 模板，这是最基础的iOS应用模板。
 
-<div class="step-container">
-  <h4><span class="step-number">3</span>配置项目信息</h4>
-</div>
+<MagStep n="3" title="配置项目信息">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/3.png" alt="输入项目名称" />
-</div>
+</MagFigure>
 
 输入你的项目名称，这里演示使用 `test` 作为项目名。建议使用有意义的英文名称。
 
-<div class="step-container">
-  <h4><span class="step-number">4</span>选择保存位置</h4>
-</div>
+<MagStep n="4" title="选择保存位置">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/4.png" alt="选择保存位置" />
-</div>
+</MagFigure>
 
 选择一个合适的文件夹保存项目，也可以点击左下角的 **New Folder** 创建新文件夹。
 
 ### 理解Xcode项目结构
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/5.png" alt="Xcode项目界面" />
-</div>
+</MagFigure>
 
 创建完成后，你会看到Xcode的主界面，包含了许多文件和配置选项。现阶段我们不需要深入了解每个文件的作用，重点是理解项目的整体结构。
 
-<div class="highlight-box">
+<MagNote>
   <h3>🔍 重要发现：xcodeproj文件</h3>
   
-<div class="image-container">
+<MagFigure>
   <img src="./shots/6.png" alt="Finder中的项目文件" />
-</div>
+</MagFigure>
 
 在Finder中打开项目文件夹，你会发现一个 `.xcodeproj` 文件。这个文件是什么呢？
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/8.png" alt="项目文件夹内容" />
-</div>
+</MagFigure>
 
 **xcodeproj文件是Xcode项目的大脑**，它定义了：
 - 项目中包含哪些源文件
@@ -432,27 +121,25 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 - 子项目关系
 
 双击这个文件，就能打开Xcode并加载整个项目！
-</div>
+</MagNote>
 
 :::tip 💡 快速定位文件
 如果找不到保存的项目位置，按下 **Command + 空格** 打开聚焦搜索，直接搜索项目文件夹名即可！
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/7.png" alt="使用聚焦搜索" />
-</div>
+</MagFigure>
 :::
 
 ---
 
-<div class="section-header">
-  <h2>🤖 Part 2: AI辅助开发实战</h2>
-</div>
+<MagSection title="🤖 Part 2: AI辅助开发实战" />
 
 ### 构思你的项目
 
 在开始动手之前，我们需要明确想要创建什么。但作为初学者，我们可能不清楚需要哪些技术栈、开发流程是怎样的。这时候，**AI就是你最好的老师**！
 
-<div class="tip-box">
+<MagNote type="tip">
   <h3>📝 编写高效的Prompt模板</h3>
   
 一个好的Prompt应该包含以下要素：
@@ -486,7 +173,7 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 - [比如：语言简洁、字数不超过××]
 - [风格、受众定位等]
 ```
-</div>
+</MagNote>
 
 :::info 🎓 深入学习Prompt工程
 想要系统学习Prompt编写技巧？推荐观看吴恩达的提示词工程教程：
@@ -495,33 +182,30 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 
 ### 使用Qoder开始开发
 
-<div class="step-container">
-  <h4><span class="step-number">1</span>打开Qoder并创建项目</h4>
-</div>
+<MagStep n="1" title="打开Qoder并创建项目">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/10.png" alt="Qoder启动界面" />
-</div>
+</MagFigure>
 
 打开Qoder，选择 **打开项目**，选择一个文件夹作为项目存储位置（建议使用英文命名）。
 
-<div class="step-container">
-  <h4><span class="step-number">2</span>信任作者</h4>
-</div>
+<MagStep n="2" title="信任作者">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/11.png" alt="信任此作者" />
-</div>
+</MagFigure>
 
 首次打开时，选择 **信任此作者** 以启用完整功能。
 
-<div class="step-container">
-  <h4><span class="step-number">3</span>了解Qoder工作区</h4>
-</div>
+<MagStep n="3" title="了解Qoder工作区">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/12.png" alt="Qoder工作区" />
-</div>
+</MagFigure>
 
 Qoder的界面分为三个主要区域：
 - **左侧**：文件资源管理器
@@ -531,16 +215,15 @@ Qoder的界面分为三个主要区域：
 :::tip ⚡ 提升效率小技巧
 厌倦了每次都要手动点击确认？
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/13.png" alt="Qoder设置" />
-</div>
+</MagFigure>
 
 点击右上角用户头像 → **Qoder设置** → **智能会话** → 将终端和Web工具改为 **自动执行**，让AI帮你自动处理！
 :::
 
-<div class="step-container">
-  <h4><span class="step-number">4</span>输入Prompt开始创建</h4>
-</div>
+<MagStep n="4" title="输入Prompt开始创建">
+</MagStep>
 
 将你精心准备的Prompt粘贴到对话框中，按Enter发送。接下来，就是见证奇迹的时刻——AI会为你自动生成完整的项目代码！
 
@@ -607,9 +290,7 @@ Qoder的界面分为三个主要区域：
 
 ---
 
-<div class="section-header">
-  <h2>🔧 Part 3: 调试与完善</h2>
-</div>
+<MagSection title="🔧 Part 3: 调试与完善" />
 
 AI虽然强大，但生成的代码可能存在一些问题。这时候就需要我们进行调试和优化。
 
@@ -627,29 +308,27 @@ AI会自动进行编译并修复可能出现的错误。
 
 有些视觉效果和交互细节，我们可以在Xcode中进行精细调整。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/14.png" alt="发现问题" />
-</div>
+</MagFigure>
 
 比如发现了一些UI布局问题：文字位置偏移、大小不合适、颜色不喜欢等。
 
-<div class="step-container">
-  <h4><span class="step-number">1</span>定位问题代码</h4>
-</div>
+<MagStep n="1" title="定位问题代码">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/15.png" alt="查找ContentView" />
-</div>
+</MagFigure>
 
 打开主文件，找到 `ContentView()`，右键选择 **Jump to Definition** 跳转到定义位置。
 
-<div class="step-container">
-  <h4><span class="step-number">2</span>使用实时预览</h4>
-</div>
+<MagStep n="2" title="使用实时预览">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/17.png" alt="Xcode界面布局" />
-</div>
+</MagFigure>
 
 Xcode的界面分为四个区域：
 - **左侧**：文件资源管理器
@@ -657,15 +336,14 @@ Xcode的界面分为四个区域：
 - **右侧中**：实时预览
 - **右侧右**：属性面板
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/18.png" alt="实时预览" />
-</div>
+</MagFigure>
 
 点击重试按钮启动实时预览，可以实时看到UI效果。
 
-<div class="step-container">
-  <h4><span class="step-number">3</span>使用选择工具定位组件</h4>
-</div>
+<MagStep n="3" title="使用选择工具定位组件">
+</MagStep>
 
 左下角有三个工具按钮：
 1. **交互模式**：直接与UI交互
@@ -674,13 +352,13 @@ Xcode的界面分为四个区域：
 
 使用选择模式点击有问题的UI元素，代码编辑器会自动高亮对应代码。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/23.png" alt="调整属性" />
-</div>
+</MagFigure>
 
 在右侧属性面板中可以直接调整大小、颜色、字体等属性，代码会自动更新！
 
-<div class="highlight-box">
+<MagNote>
   <h3>🎨 Xcode界面微调教程</h3>
 
 以下是完整的SwiftUI界面调整方法和示例，让你轻松掌握Xcode的界面微调技巧。
@@ -863,69 +541,65 @@ ZStack {
 | 内边距 | `.padding()` | `.padding(10)` |
 | 边框 | `.border(Color,width:)` | `.border(.white,width:2)` |
 
-</div>
+</MagNote>
 
 ---
 
-<div class="section-header">
-  <h2>🌐 Part 4: 静态网页开发与部署</h2>
-</div>
+<MagSection title="🌐 Part 4: 静态网页开发与部署" />
 
 除了iOS开发，我们还可以创建静态网页项目。这对于不熟悉Mac或想要快速搭建个人主页的同学特别友好！
 
-<div class="project-grid">
-  <div class="project-card">
+<MagGrid :cols="2">
+  <MagCard>
     <h3>💼 项目一：个人主页</h3>
     <p>创建一个炫酷的个人主页，展示你的作品集、技能和联系方式。</p>
     <p><strong>技术栈：</strong>HTML + CSS + JavaScript</p>
     <p><strong>部署平台：</strong>GitHub Pages（免费！）</p>
-  </div>
+  </MagCard>
   
-  <div class="project-card">
+  <MagCard>
     <h3>🎯 项目二：AI Quiz</h3>
     <p>基于AI的智能问答系统，可以上传PDF/PPT自动生成测验题目。</p>
     <p><strong>技术栈：</strong>Next.js + TypeScript + AI API</p>
     <p><strong>特色：</strong>集成智谱AI API</p>
-  </div>
-</div>
+  </MagCard>
+</MagGrid>
 
 ### 使用GitHub Pages部署网站
 
-<div class="step-container">
-  <h4><span class="step-number">1</span>创建GitHub仓库</h4>
-</div>
+<MagStep n="1" title="创建GitHub仓库">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/24.png" alt="GitHub新建仓库" />
-</div>
+</MagFigure>
 
 登录GitHub，点击 **new** 创建新仓库。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/25.png" alt="配置仓库" />
-</div>
+</MagFigure>
 
 输入仓库名称，点击 **Create repository** 创建。
 
-<div class="step-container">
-  <h4><span class="step-number">2</span>上传项目文件</h4>
-</div>
+<MagStep n="2" title="上传项目文件">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/26.png" alt="上传文件选项" />
-</div>
+</MagFigure>
 
 点击 **uploading an existing file** 上传现有文件。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/29.png" alt="拖拽上传" />
-</div>
+</MagFigure>
 
 将项目文件拖入上传区域。**重要：确保包含 `index.html` 文件！**
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/30.png" alt="上传示例" />
-</div>
+</MagFigure>
 
 :::warning ⚠️ 必须包含的文件
 - `index.html` - 网站入口文件（**必须**）
@@ -933,83 +607,76 @@ ZStack {
 - 其他CSS、JS、图片等资源文件
 :::
 
-<div class="step-container">
-  <h4><span class="step-number">3</span>配置GitHub Pages</h4>
-</div>
+<MagStep n="3" title="配置GitHub Pages">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/32.png" alt="进入Settings" />
-</div>
+</MagFigure>
 
 上传完成后，点击 **Settings** 进入设置页面。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/33.png" alt="配置Pages" />
-</div>
+</MagFigure>
 
 在左侧菜单找到 **Pages**，选择 **GitHub Actions** 作为部署方式。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/34.png" alt="选择Static HTML" />
-</div>
+</MagFigure>
 
 选择 **Static HTML** 模板，点击 **Configure**。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/35.png" alt="提交配置" />
-</div>
+</MagFigure>
 
 直接点击 **Commit changes** 保存配置。
 
-<div class="step-container">
-  <h4><span class="step-number">4</span>访问你的网站</h4>
-</div>
+<MagStep n="4" title="访问你的网站">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/37.png" alt="网站已部署" />
-</div>
+</MagFigure>
 
 等待几分钟后，你的网站就部署成功了！点击 **Visit site** 访问，分享给朋友吧！🎉
 
 ---
 
-<div class="section-header">
-  <h2>🔑 Part 5: API使用指南</h2>
-</div>
+<MagSection title="🔑 Part 5: API使用指南" />
 
 对于AI Quiz等需要调用AI服务的项目，我们需要获取API密钥。这里以智谱AI为例。
 
 ### 获取智谱AI API密钥
 
-<div class="step-container">
-  <h4><span class="step-number">1</span>注册并登录</h4>
-</div>
+<MagStep n="1" title="注册并登录">
+</MagStep>
 
 访问 [智谱AI开放平台](https://open.bigmodel.cn)，注册并登录账号。
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/38.png" alt="进入API Key页面" />
-</div>
+</MagFigure>
 
 鼠标移动到右上角头像，选择 **API Key**。
 
-<div class="step-container">
-  <h4><span class="step-number">2</span>创建API Key</h4>
-</div>
+<MagStep n="2" title="创建API Key">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/39.png" alt="API Key管理" />
-</div>
+</MagFigure>
 
 点击 **添加新的API Key**，给密钥取个名字，然后复制生成的API Key。
 
-<div class="step-container">
-  <h4><span class="step-number">3</span>查看API文档</h4>
-</div>
+<MagStep n="3" title="查看API文档">
+</MagStep>
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/39.png" alt="API文档" />
-</div>
+</MagFigure>
 
 在主页的 **开发者** 部分可以找到详细的API调用文档。
 
@@ -1019,9 +686,9 @@ ZStack {
 2. 告诉AI你想实现什么功能
 3. AI会自动生成完整的API调用代码
 
-<div class="image-container">
+<MagFigure>
   <img src="./shots/40.png" alt="告诉AI使用API" />
-</div>
+</MagFigure>
 :::
 
 ### AI Quiz项目完整Prompt示例
@@ -1189,7 +856,7 @@ npm run dev
 并告诉我如何在 macOS/Windows 上运行这个项目。
 ```
 
-<div class="highlight-box">
+<MagNote>
   <h3>📦 安装Node.js (macOS)</h3>
 
 如果你的电脑还没有安装Node.js，可以使用以下命令安装：
@@ -1211,9 +878,9 @@ npm -v
 ```
 
 当看到版本号输出时，说明安装成功！
-</div>
+</MagNote>
 
-<div class="highlight-box">
+<MagNote>
   <h3>📦 安装Node.js (Windows)</h3>
 
 Windows用户推荐直接下载安装包：
@@ -1227,15 +894,13 @@ Windows用户推荐直接下载安装包：
 node -v
 npm -v
 ```
-</div>
+</MagNote>
 
 ---
 
-<div class="section-header">
-  <h2>🎓 总结与思考</h2>
-</div>
+<MagSection title="🎓 总结与思考" />
 
-<div class="tip-box">
+<MagNote type="tip">
   <h3>🤔 AI能否完全替代程序员？</h3>
   
 通过这次活动，你可能会产生一个疑问：既然AI这么强大，我们还需要学习编程吗？
@@ -1259,9 +924,9 @@ AI确实能够：
 - 🎨 具备设计思维，才能指导AI创造出符合需求的作品
 - 🔍 培养问题分析能力，才能提出准确的需求
 - 💡 保持创新精神，AI只能辅助，创意来源于你
-</div>
+</MagNote>
 
-<div class="highlight-box">
+<MagNote>
   <h3>🚀 下一步学习建议</h3>
 
 **如果你对iOS开发感兴趣：**
@@ -1283,45 +948,37 @@ AI确实能够：
 - 探索AI在不同领域的应用
 
 记住：**AI是放大器，它会放大你的能力。** 你懂得越多，AI能帮你实现的就越多！
-</div>
+</MagNote>
 
 ---
 
-<div class="section-header">
-  <h2>📚 相关资源</h2>
-</div>
+<MagSection title="📚 相关资源" />
 
-<div class="info-grid">
-  <div class="info-card">
-    <div class="info-card-icon">📖</div>
+<MagGrid :cols="4">
+  <MagCard>
+    <span class="mag-icon">📖</span>
     <h3>学习资源</h3>
     <p><a href="/resources/">查看完整学习资源库</a></p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">🏆</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">🏆</span>
     <h3>竞赛信息</h3>
     <p><a href="/competitions/">了解MAIC等竞赛</a></p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">👥</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">👥</span>
     <h3>加入我们</h3>
     <p><a href="/join-us/">成为iOS Club成员</a></p>
-  </div>
-  <div class="info-card">
-    <div class="info-card-icon">💬</div>
+  </MagCard>
+  <MagCard>
+    <span class="mag-icon">💬</span>
     <h3>问题求助</h3>
     <p><a href="/questions/">访问问答社区</a></p>
-  </div>
-</div>
+  </MagCard>
+</MagGrid>
 
 ---
 
-<div class="vibe-banner">
-  <h1>🎉 期待你的作品！</h1>
-  <p>用AI赋能你的创意，让想法变为现实</p>
+<MagHero title="🎉 期待你的作品！" subtitle="用AI赋能你的创意，让想法变为现实">
   <p style="margin-top: 1rem; font-size: 1rem;">有任何问题？欢迎在活动群或社团群内讨论～</p>
-</div>
-
-<script setup>
-import { ElButton } from 'element-plus'
-</script>
+</MagHero>

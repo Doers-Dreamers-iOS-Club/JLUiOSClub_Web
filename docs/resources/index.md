@@ -1,12 +1,14 @@
-# 资源导航
+<MagHero eyebrow="Resources" title="资源导航" subtitle="学习设计与开发 Apple 平台 App 所需的教程与资源导航。" />
 
 ![Let's Swift!](developers.jpeg)
 
 我们整理了一些您在学习设计和开发 Apple 平台 Apps 过程中可能需要的教程和资源，希望能够帮到您。如您也希望分享一些资源，可以在 [GitHub](https://github.com/AQiu-2003/JLUiOSClub_Web/edit/main/docs/resources/index.md) 上提 PR 或是 issues，或与社团负责人联系。
 
-## Swift 学习资源
+<MagSection n="01" title="Swift 学习资源" />
 
-![](SwiftTransparent.png)
+<MagFigure plain maxHeight="10rem">
+  <img src="./SwiftTransparent.png" alt="Swift" />
+</MagFigure>
 
 如果您是初次接触编程，可以尝试一下 Apple 官方提供的 [Swift Playgrounds](https://developer.apple.com/cn/swift-playgrounds/)。
 
@@ -38,20 +40,11 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 
 :::
 
-[//]: # (::: details 视频教学：如何使用 Playgrounds 在 iPadOS 上编译 Swift <badge type="warning">NEW</badge>)
+<MagSection n="02" title="SwiftUI 学习资源" />
 
-[//]: # ()
-[//]: # (<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=112776244628317&bvid=BV1MFbaeNETr&cid=500001613611915&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" autoplay="false" width="100%" height="400px"></iframe>)
-
-[//]: # ()
-[//]: # (前往 bilibili 观看视频更清晰：<a href="https://www.bilibili.com/video/BV1MFbaeNETr/">跳转链接</a>)
-
-[//]: # ()
-[//]: # (:::)
-
-## SwiftUI 学习资源
-
-![](https://developer.apple.com/news/images/og/swiftui-og.png)
+<MagFigure maxHeight="10rem">
+  <img src="https://developer.apple.com/news/images/og/swiftui-og.png" alt="SwiftUI" />
+</MagFigure>
 
 如果您熟悉前端开发，或之前接触过安卓/鸿蒙平台的 App 开发，推荐阅读官方的两个入门教程：[旧版](https://developer.apple.com/tutorials/swiftui)/[新版](https://developer.apple.com/tutorials/develop-in-swift)，并参考一些[示例 Apps](https://developer.apple.com/tutorials/sample-apps)。若想更系统的入门 Swift 和 SwiftUI 以及 MVVM 设计模式，也可以尝试学习 [CS193p](https://cs193p.sites.stanford.edu/)，我们不推荐初学者学习这门课程。
 
@@ -59,13 +52,15 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 
 - 由 [ChaoCode](https://chaocode.co/) 制作的《SwiftUI 新手入门》系列视频：[Youtube](https://www.youtube.com/playlist?list=PLXM8k1EWy5khONZ9M9ytK8mMrcEOXvGsE) / [bilibili](https://space.bilibili.com/1911023449/channel/collectiondetail?sid=809115)
 - 由[陈鹏宇老师](https://space.bilibili.com/28238054)制作的《移动应用程序开发》：[bilibili](https://www.bilibili.com/video/BV19N4y1Z7EE/?vd_source=80241e7dddac0c1114813c308430060d)
-- - 由浙江大学[张克俊老师](https://www.icourse163.org/u/mooc43428885866153978?userId=1148803364)制作的《Swift 创新导论》系列课程：[中国大学MOOC](https://www.icourse163.org/course/ZJU-1450024180?tid=1470947506)（如当前学期已结束，可以选择其它学期自学）
+- 由浙江大学[张克俊老师](https://www.icourse163.org/u/mooc43428885866153978?userId=1148803364)制作的《Swift 创新导论》系列课程：[中国大学MOOC](https://www.icourse163.org/course/ZJU-1450024180?tid=1470947506)（如当前学期已结束，可以选择其它学期自学）
 
 以及一些 SwiftUI App 示例：[SwiftUI 训练营](https://space.bilibili.com/249603883)、[SwiftUI by Example](https://www.hackingwithswift.com/quick-start/swiftui)
 
-::: tip 
+<MagNote type="tip" title="学习建议">
+
 在 Swift 和 SwiftUI 的学习过程中，要善于利用网络资源，在 Google、Stack Overflow、GitHub、ChatGPT 上检索信息，并注意**检查资源的时效性**（每年 WWDC 都会更新很多新内容，这导致旧资料可能不适用于新情况）。这里推荐一个免费的 Swift 学习网站：[Hacking-with-Swift](https://www.hackingwithswift.com/)，在这个网站上也可以找到很多问题的解决方案。
-:::
+
+</MagNote>
 
 ::: details 在 Windows 或 Linux 上开发 SwiftUI Apps？
 目前没有有效的办法在非 macOS/iPadOS 上开发 SwiftUI 应用，SwiftUI 是 Apple 平台专有的 UI/UX 框架，暂时不具备更多跨平台能力。如果您有 iPad，也可以尝试 iPad 版的 [Swift Playgrounds](https://developer.apple.com/cn/swift-playgrounds/)，它应当能够满足您大部分 Swift & SwiftUI 学习需求，目前也能够开发可上架的 App。
@@ -73,11 +68,13 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 您可以在虚拟机内安装 macOS 或使用[黑苹果](https://blog.daliansky.net/)，也可以借助云解决方案来解决问题，比如[Mac In Cloud（推荐）](https://www.macincloud.com)或[Amazon 云 Mac 服务器](https://aws.amazon.com/cn/ec2/instance-types/mac/)。不过这超出了本篇资源导航的内容范畴，请自行查找解决方案。
 :::
 
-## App 原型设计
+<MagSection n="03" title="App 原型设计" />
 
 ### 原型设计工具
 
-![](Figma.png)
+<MagFigure plain maxHeight="8rem">
+  <img src="./Figma.png" alt="Figma" />
+</MagFigure>
 
 - 👍[Figma](https://www.figma.com/)：当红免费在线设计工具，国内网络访问较为缓慢，安装插件可以汉化界面。
 - [Sketch](https://www.sketch.com/)：macOS 上的老牌原型设计软件，学生可申请教育免费。
@@ -94,13 +91,7 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 - 图标库：[SF Symbols](https://developer.apple.com/cn/sf-symbols/)（自带部分 SF 字体）
 - 字体：[Fonts for Apple platforms](https://developer.apple.com/fonts/)
 
-## 部分往年获奖竞赛作品
+<MagSection n="04" title="部分往年获奖竞赛作品" />
 
 - Swift 学生挑战赛：[Github](https://github.com/wwdc)
 - 移动应用创新赛：[2023年](https://sspai.com/post/82738) [2022年](https://sspai.com/post/75611) [2021年](https://sspai.com/post/70453)
-
-<style scoped>
-img {
-  box-shadow: none !important;
-}
-</style>

@@ -1,10 +1,10 @@
 ---
 title: 深入了解 Vision Pro
+icon: "🥽"
+tags: [Vision Pro, Xcode]
+description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
 ---
-
-# 《深入了解 Vision Pro》系列活动 <Badge type="danger" text="第二期" />
-
-> 🚀 Xcode实操大挑战：用Xcode编写宇宙星系模拟的visionOS 应用！🚀
+<MagHero title="《深入了解 Vision Pro》系列活动" eyebrow="第二期" subtitle="🚀 Xcode实操大挑战：用Xcode编写宇宙星系模拟的visionOS 应用！🚀" />
 
 亲爱的同学们，
 
@@ -27,7 +27,6 @@ title: 深入了解 Vision Pro
 1. 提升技能：通过实操Xcode，你将获得宝贵的编程经验，提升你的编程能力和解决问题的能力。
 2. 跨学科学习：本次活动将编程与天文知识相结合，让你在学习的同时，也能拓宽视野，增长见识。
 3. 创新创造：你将有机会亲手打造一款独一无二的宇宙星系模拟小程序，展示你的创意和编程才华，赢得同学们的赞赏和认可。
-
 
 ## 🎁 活动福利：
 

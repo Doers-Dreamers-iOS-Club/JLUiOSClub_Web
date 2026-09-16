@@ -1,22 +1,19 @@
 ---
 title: MAIC 官方宣讲会
 description: 移动应用赛官方宣讲会
+icon: "🏆"
+tags: [MAIC, 官方宣讲]
 ---
+<MagHero title="移动应用创新赛——官方宣讲会来啦！" />
 
-# 移动应用创新赛——官方宣讲会来啦！
-
-> 🗓️ 日期：2024年**04月20日**
->
-> 🕜 时间：下午 13:30-15:00
->
-> 🏢 地点：南区计算机楼 B108 会议室
->
-> 👩🏻‍💻 主讲人：上海交通大学-董占勋
->           MAIC 组委会秘书-曹颖萍
-> 
-> ✋ 参与报名：[报名链接](https://www.wjx.cn/vm/tUo0G8e.aspx)
-> 
-> ❗️ 报名截止时间：4月19日 17:00，请同学们抓紧报名
+<MagGrid :cols="4">
+  <MagCard icon="🗓️" title="日期">2024年<strong>04月20日</strong></MagCard>
+  <MagCard icon="🕜" title="时间">下午 13:30-15:00</MagCard>
+  <MagCard icon="🏢" title="地点">南区计算机楼 B108 会议室</MagCard>
+  <MagCard icon="👩🏻‍💻" title="主讲人">上海交通大学-董占勋<br />MAIC 组委会秘书-曹颖萍</MagCard>
+  <MagCard icon="✋" title="参与报名"><a href="https://www.wjx.cn/vm/tUo0G8e.aspx">报名链接</a></MagCard>
+  <MagCard icon="❗️" title="报名截止时间">4月19日 17:00，请同学们抓紧报名</MagCard>
+</MagGrid>
 
 ## 活动概述
 
@@ -37,15 +34,7 @@ description: 移动应用赛官方宣讲会
 - 2022年起列入吉林大学 **B* 类竞赛**，享有加分和推免等政策
 - 参赛全程**完全免费**，奖励丰厚，国家一等奖可获 **Apple 全家桶**
 
-<el-button
-type="primary"
-size="large"
-@click="router.go('/competitions/maic/')"
-style="display: block;width: 12rem;margin: 0 auto;"
-round
->
-🔗 了解更多竞赛信息
-</el-button>
+<MagButton block href="/competitions/maic/">🔗 了解更多竞赛信息</MagButton>
 
 ## 活动奖励
 
@@ -57,17 +46,17 @@ round
 
 ## 活动流程
 
-<el-timeline style="max-width: 600px">
-  <el-timeline-item
-    v-for="(step, index) in steps"
-    :key="index"
-    :timestamp="step.time"
-    type="primary"
-  >
-    <span style="font-weight: bold;margin: 0;">{{ step.name }}</span>
-    <br></br>主讲人：{{ step.people }}
-  </el-timeline-item>
-</el-timeline>
+<MagTimeline>
+  <MagTimelineItem tag="13:30" title="活动开场">
+    主讲人：JLU iOS Club
+  </MagTimelineItem>
+  <MagTimelineItem tag="13:30～14:40" title="移动应用创新赛宣讲">
+    主讲人：上海交通大学 董占勋
+  </MagTimelineItem>
+  <MagTimelineItem tag="14:40～15:00" title="互动答疑 + 合影">
+    主讲人：组委会秘书 曹颖萍
+  </MagTimelineItem>
+</MagTimeline>
 
 ## 🔥 加入2024-MAIC竞赛群
 
@@ -78,32 +67,5 @@ round
 <dualQRCode/>
 
 <script setup>
-import {ElTimeline, ElTimelineItem, ElButton} from 'element-plus';
-import { useRouter } from 'vitepress';
 import dualQRCode from '/components/dualQRCode.vue';
-
-const steps = [
-  {
-    name: "活动开场",
-    people: "JLU iOS Club",
-    time: "13:30"
-  },
-  {
-    name: "移动应用创新赛宣讲",
-    people: "上海交通大学 董占勋",
-    time: "13:30～14:40"
-  },
-  {
-    name: "互动答疑+合影",
-    people: "组委会秘书 曹颖萍",
-    time: "14:40～15:00"
-  },
-];
-const router = useRouter();
 </script>
-
-<style scoped>
-ul.el-timeline {
-    list-style: none;
-}
-</style>

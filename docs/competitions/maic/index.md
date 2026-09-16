@@ -1,4 +1,12 @@
-# 中国高校计算机大赛——移动应用创新赛
+---
+title: 移动应用创新赛（MAIC）
+description: 中国高校计算机大赛四大模块之一，由 Apple 与浙江大学联合举办，参赛完全免费。
+date: 2024.04
+icon: "⭐️"
+tags: [竞赛, MAIC]
+---
+
+<MagHero eyebrow="MAIC" title="中国高校计算机大赛——移动应用创新赛" />
 
 ![移动应用创新赛](maic.webp)
 

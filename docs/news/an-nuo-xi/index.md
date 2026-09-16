@@ -1,21 +1,20 @@
 ---
 title: 安诺希 × JLU iOS Club
+icon: "🏬"
+tags: [合作, 校园体验中心]
+date: "2024.03.31"
+description: "吉大终于也有自己的 Apple 校园体验店：安诺希校园体验中心。"
 ---
-
-# 🎉 吉大终于也有自己的 Apple 校园体验店啦！
+<MagHero title="🎉 吉大终于也有自己的 Apple 校园体验店啦！" />
 
 ## 安诺希校园体验中心
 
 体验中心内设一展台，包括 iPhone、iPad、Apple Watch、MacBook 等均可现场体验！
 
-<el-carousel indicator-position="none" show-arrow autoplay motion-blur>
-  <el-carousel-item>
-    <el-image src="https://pic.imgdb.cn/item/66099f909f345e8d0395a4b0.jpg" fit="cover" style="height: 100%; width: 100%"></el-image>
-  </el-carousel-item>
-  <el-carousel-item>
-    <el-image src="https://pic.imgdb.cn/item/66099f909f345e8d0395a59a.jpg" fit="cover" style="height: 100%; width: 100%"></el-image>
-  </el-carousel-item>
-</el-carousel>
+<MagCarousel :autoplay="4000">
+  <img src="https://pic.imgdb.cn/item/66099f909f345e8d0395a4b0.jpg" alt="安诺希校园体验中心展台" />
+  <img src="https://pic.imgdb.cn/item/66099f909f345e8d0395a59a.jpg" alt="安诺希校园体验中心内部" />
+</MagCarousel>
 
 ## 营业资质
 
@@ -33,19 +32,3 @@ title: 安诺希 × JLU iOS Club
 从日新楼三号门进入，坐电梯直达六楼～
 
 ![3号门外景](gate3.jpeg)
-
-<script setup>
-import {ElCarousel, ElCarouselItem, ElImage} from 'element-plus';
-</script>
-
-<style scoped>
-.el-carousel {
-  border-radius: .5rem;
-  box-shadow: 0 .5rem .8rem #d7d7d7;
-}
-.dark .main .el-carousel {
-    box-shadow: none;
-    background: var(--vp-c-default-1);
-}
-
-</style>

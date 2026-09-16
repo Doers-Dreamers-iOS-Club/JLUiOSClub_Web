@@ -1,8 +1,10 @@
 ---
 title: 2024 百团纳新
+icon: "🎉"
+tags: [纳新]
+description: "2024 百团大战纳新：果粉们看过来，JLU iOS Club 等你加入。"
 ---
-
-# 😲 果粉们看过来！JLU iOS Club 纳新啦！
+<MagHero title="😲 果粉们看过来！JLU iOS Club 纳新啦！" />
 
 > 笔落于此 或许有些言不达意 
 > 
@@ -39,15 +41,7 @@ JLU iOS Club 原则上设有社长兼负责人 1 名，副社长 2~3 名，并�
 
 其余各部门职能，以及社团架构示意图，可点击下方链接查看：
 
-<el-button
-type="primary"
-size="large"
-@click="router.go('/join-us/#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84')"
-style="display: block;width: 12rem;margin: 0 auto;"
-round
->
-🔗 了解社员组织结构
-</el-button>
+<MagButton block href="/join-us/#%E7%BB%84%E7%BB%87%E6%9E%B6%E6%9E%84">🔗 了解社员组织结构</MagButton>
 
 ## 来找我们玩！
 
@@ -74,22 +68,10 @@ _（不过私以为我们的周边奖品储备已经相当饱和了🤔）_
 
 <dualQRCode/>
 
-
 > _和有梦想的人一起，改变世界。_
 > 
 > **JLU iOS Club** 与您不见不散！
 
 <script setup>
-import { ElButton } from  'element-plus';
-import { useRouter } from 'vitepress';
 import dualQRCode from '/components/dualQRCode.vue';
-
-const router = useRouter()
 </script>
-
-<style scoped>
-.vp-doc blockquote {
-text-align: center;
-padding: 1rem 0;
-}
-</style>

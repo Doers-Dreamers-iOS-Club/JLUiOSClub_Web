@@ -49,10 +49,11 @@
   --vp-c-default-3: var(--vp-c-gray-3);
   --vp-c-default-soft: var(--vp-c-gray-soft);
 
-  --vp-c-brand-1: var(--vp-c-indigo-1);
-  --vp-c-brand-2: var(--vp-c-indigo-2);
-  --vp-c-brand-3: var(--vp-c-indigo-3);
-  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+  /* 品牌色直接映射设计令牌的苹果蓝，全站单一强调色来源 */
+  --vp-c-brand-1: var(--mag-accent);
+  --vp-c-brand-2: var(--mag-accent-hover);
+  --vp-c-brand-3: var(--mag-accent);
+  --vp-c-brand-soft: var(--mag-accent-soft);
 
   --vp-c-tip-1: var(--vp-c-brand-1);
   --vp-c-tip-2: var(--vp-c-brand-2);
@@ -91,17 +92,14 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    -64deg,
-    #f9bf65, #ffab6b, #ff9977, #fc8986, #ef7e95, #e47da6, #d37fb5, #bf83c1, #ab8dcf, #9597d8, #7fa0dc, #6ca7da
-  );
+  /* 杂志刊头：名字用墨色衬线（字体在 base.css 指定），不再用彩虹渐变 */
+  --vp-home-hero-name-color: var(--mag-text);
 
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    rgba(92,206,250,1) 0%,
-    rgba(255,255,255,0.5) 50%,
-    rgba(244,169,183,1) 100%
+  /* logo 光晕收敛为单一的强调色柔光，配合纸面 */
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle at 50% 45%,
+    var(--mag-accent-soft) 0%,
+    transparent 70%
   );
   --vp-home-hero-image-filter: blur(44px);
 }

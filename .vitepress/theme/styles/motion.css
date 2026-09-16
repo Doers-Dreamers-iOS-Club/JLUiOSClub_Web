@@ -1,0 +1,77 @@
+/**
+ * 动效层 —— 滚动揭示（"翻阅杂志"的手感来源）
+ * ---------------------------------------------------------------------------
+ * 渐进增强：隐藏态由 JS 加 .mag-reveal 触发，CSS 不预先隐藏任何东西。
+ * 这样 JS 失败或被禁用时，内容依然完整可见，只是没有动画。
+ * 揭示逻辑见 composables/useReveal.ts。
+ */
+
+.mag-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--mag-reveal-shift), 0);
+  transition:
+    opacity var(--mag-duration) var(--mag-ease),
+    transform var(--mag-duration) var(--mag-ease);
+  transition-delay: var(--mag-reveal-delay, 0ms);
+  /* 提前建层，避免揭示瞬间的文字重排闪烁 */
+  will-change: opacity, transform;
+}
+
+.mag-reveal.mag-in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* 卡片入场时额外带一点缩放，比纯位移更有"翻页"的体积感 */
+.mag-reveal-scale {
+  transform: translate3d(0, var(--mag-reveal-shift), 0) scale(0.985);
+}
+
+.mag-reveal-scale.mag-in {
+  transform: none;
+}
+
+/* ---- 路由进入转场 ---------------------------------------------------------
+   只做 enter：useRouteEnter 在新页面挂载后给 <html> 加 .mag-enter，
+   隐藏态里 transition: none 保证瞬间隐藏（不会播一段淡出），
+   移除 class 时才经由这里的 transition 淡入上滑。 */
+.VPContent {
+  transition:
+    opacity 0.35s var(--mag-ease),
+    transform 0.35s var(--mag-ease);
+}
+
+html.mag-enter .VPContent {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: none;
+}
+
+/* ---- 尊重系统的"减弱动态效果" ------------------------------------------
+   动效全部取消，内容立即可见。CursorWave / AsciiHero 另有 JS 侧的同名判断。  */
+@media (prefers-reduced-motion: reduce) {
+  .mag-reveal,
+  .mag-reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html.mag-enter .VPContent {
+    opacity: 1;
+    transform: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

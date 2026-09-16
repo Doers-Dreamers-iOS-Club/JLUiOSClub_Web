@@ -1,18 +1,25 @@
-# 社团活动
+---
+title: 社团活动
+description: JLU iOS Club 历次活动与讲义的完整记录。
+---
 
-::: warning
-此页面仍在建设中，部分内容还未完成，敬请期待！
-:::
-<div v-for="column in theme.sidebar['/activities/'].items" key="column.text">
-  <h2>{{column.text}}</h2>
-  <ul>
-    <li v-for="item in column.items" key="item.text">
-      <el-link @click="router.go('/activities/'+item.link)" :disabled="item.link=='/'" style="font-size: 1rem">
-        {{item.text}}
-      </el-link>
-      <Badge type="danger" text="NEW" v-if="item == theme.sidebar['/activities/'].items[0].items[0]"/>
-    </li>
-  </ul>
+<MagHero
+  eyebrow="Archive"
+  title="社团活动"
+  subtitle="从入门讲座到实战工作坊，这里是社团历次活动的完整记录。点击任意封面进入当期讲义。"
+/>
+
+<MagArchive source="activities" />
+
+## 更早期的活动
+
+以下活动早于本站建立，暂未整理成记录页。
+
+<div class="mag-badge-row">
+  <MagBadge>解锁 iPad 生产力</MagBadge>
+  <MagBadge>2023 冬季 WWDC - Swift 特训营</MagBadge>
+  <MagBadge>购买 Mac / iPad 迎接高校生活</MagBadge>
+  <MagBadge>macOS 初体验</MagBadge>
 </div>
 
 ## 活动流程
@@ -36,17 +43,9 @@ flowchart LR
     direction TB
       summary[社内总结] --> archive[资料存档]
   end
-  
+
   before --x A
   running --x B
   after --x C
 
 ```
-
-<script setup>
-
-import {useData, useRouter} from 'vitepress'; 
-import {ElLink} from 'element-plus';
-const {theme} = useData();
-const router = useRouter();
-</script>

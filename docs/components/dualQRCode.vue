@@ -1,54 +1,54 @@
 <template>
-  <div class="demo-image__placeholder">
-    <div v-for="code in qrCodes" :key='code.name' class="block">
-      <el-image :src="code.src" fit="contain"/>
-      <span class="demonstration">{{ code.name }}</span>
+  <div class="dual-qr">
+    <div v-for="code in qrCodes" :key="code.name" class="dual-qr__block">
+      <img class="dual-qr__img" :src="code.src" :alt="code.name" loading="lazy" />
+      <span class="dual-qr__name">{{ code.name }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ElImage } from 'element-plus'
-
 const qrCodes = [
   {
     name: 'QQ群',
-    src: '/QR-code/qq-group.png',
+    src: '/QR-code/qq-group.png'
   },
   {
     name: '微信公众号',
-    src: '/QR-code/wechat.png',
+    src: '/QR-code/wechat.png'
   }
 ]
 </script>
 
 <style scoped>
-.demo-image__placeholder .block {
-  padding: 30px 0;
-  text-align: center;
-  display: inline-block;
-  width: 49%;
-  box-sizing: border-box;
-  vertical-align: top;
+.dual-qr {
+  display: flex;
+  justify-content: center;
+  gap: var(--mag-space-lg, 2rem);
+  padding: var(--mag-space-lg, 1.75rem) 0;
 }
 
-.demo-image__placeholder .demonstration {
+.dual-qr__block {
+  text-align: center;
+}
+
+.dual-qr__img {
+  width: 14rem;
+  height: 14rem;
+  object-fit: contain;
+}
+
+.dual-qr__name {
   display: block;
-  color: var(--el-text-color-secondary);
+  margin-top: 0.5rem;
+  color: var(--mag-text-secondary, #555);
   font-size: 1rem;
 }
 
-@media screen and (min-width: 641px) {
-  .el-image {
-    width: 14rem;
-    height: 14rem;
-  }
-}
 @media screen and (max-width: 640px) {
-  .el-image {
+  .dual-qr__img {
     width: 10rem;
     height: 10rem;
   }
 }
-
 </style>

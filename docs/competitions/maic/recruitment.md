@@ -37,28 +37,10 @@ title: 参加移动应用创新赛
 - 参赛**完全免费**，国家一等奖可获**Apple全家桶**，更有机会与Apple公司CEO库克面对面交流。
 - 自2022年起列入**吉林大学B*类竞赛**，享有加分和推免等政策！
 
-<el-button tag="div" type="primary" size="large" round>
-    <a href="/competitions/maic/">👉 了解更多竞赛信息</a>
-</el-button>
+<MagButton block href="/competitions/maic/">👉 了解更多竞赛信息</MagButton>
 
 ---
 
 ### 🔥 加入2024-MAIC竞赛群
 
 ![点击图片可放大](./maic-qr.jpg)
-
-<script setup>
-import { ElButton } from 'element-plus'
-</script>
-
-<style scoped>
-.el-button a {
-    color: white;
-    text-decoration: none;
-}
-.el-button {
-    display: block;
-    width: 12rem;
-    margin: 0 auto;
-}
-</style>

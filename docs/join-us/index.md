@@ -2,7 +2,7 @@
 import dualQRCode from '../components/dualQRCode.vue';
 </script>
 
-# 加入我们
+<MagHero eyebrow="Join us" title="加入我们" subtitle="社团架构、社员权益与加入方式。" />
 
 > 社团纳新火热进行中：[2024 百团纳新](/activities/240414-club-recruitment/)
 

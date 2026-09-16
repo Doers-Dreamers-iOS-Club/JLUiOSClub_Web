@@ -1,17 +1,17 @@
 ---
 title: AI工作坊
 description: AI Agent揭秘&低代码实践
+icon: "🧠"
+tags: [AI, 工作坊]
 ---
+<MagHero title="🤖 2025 | AI工作坊活动开启 🎉🎉" />
 
-# 🤖 2025 | AI工作坊活动开启 🎉🎉
-
-> 🗓️ **日期：** 2025年**05月18日** (周日)
->
-> 🕜 **时间：** 下午 15:00
->
-> 🏢 **地点：** 南区计算机楼 B110
->
-> 👩🏻‍💻 **主讲人：** iOS club技术支持部 季楷昊、黄子轩、李天麟
+<MagGrid :cols="4">
+  <MagCard icon="🗓️" title="日期">2025年<strong>05月18日</strong> (周日)</MagCard>
+  <MagCard icon="🕜" title="时间">下午 15:00</MagCard>
+  <MagCard icon="🏢" title="地点">南区计算机楼 B110</MagCard>
+  <MagCard icon="👩🏻‍💻" title="主讲人">iOS club技术支持部 季楷昊、黄子轩、李天麟</MagCard>
+</MagGrid>
 
 ## ✨ 活动亮点 ✨
 
@@ -73,19 +73,3 @@ description: AI Agent揭秘&低代码实践
 这一环节将揭示“指令微调”的真正力量，并展示如何让模型从通用走向定制。你将不仅理解大模型，更能让它为你所用！
 
 ---
-
-<script setup>
-import { ElButton } from 'element-plus'
-</script>
-
-<style scoped>
-.el-button a {
-    color: white;
-    text-decoration: none;
-}
-.el-button {
-    display: block;
-    width: 12rem;
-    margin: 0 auto;
-}
-</style>

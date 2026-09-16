@@ -1,9 +1,11 @@
 ---
 title: "Learn Swift! 暑期学习打卡挑战"
 description: "参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift吧！"
+icon: "📚"
+tags: [Swift, 打卡挑战]
 ---
 
-# _Learn Swift!_ 暑期学习打卡挑战 <badge type="warning">Summer Challenge</badge>
+<MagHero eyebrow="Summer Challenge" title="Learn Swift! 暑期学习打卡挑战" />
 
 来参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift吧！
 
@@ -23,9 +25,7 @@ Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护
 2. 学习 ChaoCode 的 [Swift 课程（中级篇）](/resources/#swift-学习资源)
 3. 学习 [原型设计工具](/resources/#app-原型设计)（如 Figma）
 
-<el-button tag="div" type="primary" size="large" round>
-    <a href="/resources/">📑 相关学习资源</a>
-</el-button>
+<MagButton block href="/resources/">📑 相关学习资源</MagButton>
 
 ::: warning 打卡要求
 
@@ -56,19 +56,3 @@ QQ 群号：[722408047](https://qm.qq.com/q/q57WUAgMYS)
 每日在群内打卡，即可获得奖励。并有社团同学助你学习～
 
 ![点击可放大二维码](qrcode.jpg)
-
-<script setup>
-import { ElButton } from 'element-plus'
-</script>
-
-<style scoped>
-.el-button a {
-    color: white;
-    text-decoration: none;
-}
-.el-button {
-    display: block;
-    width: 12rem;
-    margin: 0 auto;
-}
-</style>
