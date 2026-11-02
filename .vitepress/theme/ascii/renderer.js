@@ -210,7 +210,10 @@ export class AsciiLogoRenderer {
     this.#cellTarget.setSize(cols, rows);
 
     this.#camera.aspect = sceneWidth / sceneHeight;
-    this.#camera.setViewOffset(sceneWidth, sceneHeight, 0, Math.min(48, height * 0.06) * scale, sceneWidth, sceneHeight);
+    const compact = width <= 700;
+    const artworkSize = compact ? Math.min(width * 0.86, height * 0.44) : Math.min(width * 0.40, height * 0.65, 590);
+    this.#camera.zoom = artworkSize / (height * 0.76);
+    this.#camera.setViewOffset(sceneWidth, sceneHeight, compact ? 0 : -sceneWidth * 0.18, sceneHeight * (compact ? 0.20 : 0.10), sceneWidth, sceneHeight);
     this.#camera.updateProjectionMatrix();
 
     this.#cellMaterial.uniforms.uResolution.value.set(sceneWidth, sceneHeight);
