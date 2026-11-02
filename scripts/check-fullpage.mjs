@@ -1,0 +1,93 @@
+import assert from 'node:assert/strict'
+import fs from 'node:fs/promises'
+import puppeteer from 'puppeteer-core'
+const base = process.argv[2] || 'http://localhost:4173'
+const out = 'output/design-fullpage-2026-11-02'
+await fs.mkdir(out, { recursive: true })
+const browser = await puppeteer.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader'] })
+const page = await browser.newPage()
+const errors = []
+page.on('pageerror', error => errors.push(error.message))
+page.on('response', response => { if (response.url().startsWith(base) && response.status() >= 400) errors.push(response.url()) })
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
+const settled = () => page.waitForFunction(() => !document.querySelector('.club-home')?.classList.contains('is-changing'))
+const current = () => page.$eval('.club-pager [aria-current]', e => e.getAttribute('aria-label'))
+async function select(label) { await page.click(`.club-pager [aria-label="${label}"]`); await settled(); await wait(100) }
+async function assertPanel(label) {
+  assert.equal(await current(), label)
+  const result = await page.evaluate(() => {
+    const active = [...document.querySelectorAll('[data-club-page]')].filter(e => !e.inert)
+    return { count: active.length, hidden: active.filter(e => getComputedStyle(e).visibility !== 'visible').length, overflow: document.documentElement.scrollWidth > innerWidth, transform: active[0]?.querySelector('.club-page__inner').style.transform }
+  })
+  assert.equal(result.count, 1)
+  assert.equal(result.hidden, 0)
+  assert.equal(result.overflow, false)
+  assert(!result.transform)
+}
+try {
+  await page.setViewport({ width: 1440, height: 900 })
+  await page.goto(base + '/', { waitUntil: 'networkidle0' })
+  await page.waitForSelector('.mag-ascii-hero__canvas:not(.is-hidden)')
+  await assertPanel('开场')
+  await page.mouse.move(700, 400)
+  for (let i = 0; i < 10; i++) { await page.mouse.wheel({ deltaY: 120 }); await wait(50) }
+  await settled(); await assertPanel('学习')
+  await wait(250)
+  await page.mouse.wheel({ deltaY: 200 }); await wait(350)
+  assert(await page.$eval('.club-home', e => e.classList.contains('is-changing')))
+  await page.screenshot({ path: out + '/transition.png' })
+  await settled(); await assertPanel('活动')
+  await page.evaluate(() => document.activeElement?.blur())
+  await page.keyboard.press('ArrowDown'); await settled(); await assertPanel('加入')
+  await page.keyboard.press('PageUp'); await settled(); await assertPanel('活动')
+  await page.keyboard.press('Home'); await settled(); await assertPanel('开场')
+  await page.click('.mag-ascii-hero__hint'); await settled(); await assertPanel('学习')
+  for (const [label, file] of [['学习', 'learning'], ['活动', 'activities'], ['加入', 'community']]) {
+    await select(label)
+    await page.waitForFunction(() => { const img = document.querySelector('[data-club-page][aria-hidden="false"] img'); return img.complete && img.naturalWidth > 0 })
+    const dimensions = await page.$eval('[data-club-page][aria-hidden="false"] .club-art', e => ({width:e.clientWidth,height:e.clientHeight}))
+    assert.equal(dimensions.width,1440);assert.equal(dimensions.height,836)
+    await page.screenshot({ path: `${out}/${file}-desktop.png` })
+  }
+  await page.mouse.move(700,400);await wait(250);await page.mouse.wheel({deltaY:300});await wait(300)
+  assert(await page.evaluate(()=>scrollY>0),'Footer must remain reachable')
+  await select('学习')
+  await page.click('.club-path')
+  await page.waitForSelector('.ai-course-home')
+  assert.equal(await page.$('.club-pager'), null)
+  await page.mouse.move(800,500);await page.mouse.wheel({deltaY:500});await wait(300)
+  assert(await page.evaluate(()=>scrollY>100),'Pager leaked into inner page')
+  await page.goBack({waitUntil:'networkidle0'});await settled();await assertPanel('学习')
+  await page.goto(base + '/#activities', { waitUntil: 'networkidle0' });await settled();await assertPanel('活动')
+  assert.equal(await page.evaluate(()=>scrollY),0,'Deep link should align viewport')
+  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}])
+  await select('加入');assert.equal(await page.$eval('.club-home',e=>e.classList.contains('is-changing')),false)
+  await page.evaluate(()=>localStorage.setItem('vitepress-theme-appearance','dark'))
+  await page.reload({waitUntil:'networkidle0'});await assertPanel('加入')
+  assert.equal(await page.evaluate(()=>scrollY),0,'Reloading the last panel should not jump to footer')
+  await page.screenshot({path:out+'/community-dark.png'})
+  for(const width of [390,320]) {
+    await page.setViewport({width,height:844,isMobile:true,hasTouch:true})
+    await page.goto(base+'/#start',{waitUntil:'networkidle0'})
+    await assertPanel('学习')
+    await page.screenshot({path:`${out}/learning-${width}-dark.png`})
+    const client=await page.createCDPSession()
+    await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:width/2,y:600}]})
+    await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:width/2,y:450}]})
+    await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]})
+    await wait(200);await assertPanel('活动')
+    await client.detach()
+  }
+  await page.setViewport({width:844,height:390,isMobile:false,hasTouch:false});await wait(200)
+  assert.equal(await page.$('.club-pager'),null)
+  assert(await page.$$eval('[data-club-page]',els=>els.every(e=>!e.inert&&getComputedStyle(e).visibility==='visible')))
+  await page.setViewport({width:1440,height:900});await wait(200);await assertPanel('活动')
+  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'no-preference'}])
+  await page.click('.club-pager [aria-label="加入"]');await wait(200)
+  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await settled();await assertPanel('加入')
+  await page.setJavaScriptEnabled(false);await page.goto(base+'/',{waitUntil:'networkidle0'})
+  assert.equal(await page.$('.club-pager'),null)
+  assert(await page.$$eval('.club-section',els=>els.every(e=>getComputedStyle(e).visibility==='visible')))
+  assert.deepEqual(errors,[])
+  console.log('PASS wheel inertia, directional wipe, keyboard, touch, image coverage, inert panels, deep links, history, footer, route cleanup, dark mode, reduced motion, short-screen fallback and SSR')
+} finally { await browser.close() }

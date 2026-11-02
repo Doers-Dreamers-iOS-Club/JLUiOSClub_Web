@@ -18,6 +18,13 @@ page.on('response', response => { if (response.url().startsWith(base) && respons
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 async function go(route) { await page.goto(base + route, { waitUntil: 'networkidle0' }); await delay(850) }
 async function scrollPage() {
+  if (await page.$('.club-pager')) {
+    for (const label of ['学习', '活动', '加入']) {
+      await page.click(`.club-pager [aria-label="${label}"]`)
+      await page.waitForFunction(() => !document.querySelector('.club-home').classList.contains('is-changing'))
+    }
+    return
+  }
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += innerHeight * .75) {
       scrollTo({ top: y, behavior: 'instant' }); await new Promise(resolve => setTimeout(resolve, 90))
@@ -29,7 +36,7 @@ async function check(label) {
   const result = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth > innerWidth + 1,
     tiny: [...document.querySelectorAll('.VPContent *')].filter(e => e.getClientRects().length && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 11).map(e => e.className),
-    hidden: [...document.querySelectorAll('[data-mag-enter],[data-mag-reveal],[data-mag-stagger] > *')].filter(e => getComputedStyle(e).visibility === 'hidden' || Number(getComputedStyle(e).opacity) < .99).length
+    hidden: [...document.querySelectorAll('[data-mag-enter],[data-mag-reveal],[data-mag-stagger] > *')].filter(e => !e.closest('[inert]') && (getComputedStyle(e).visibility === 'hidden' || Number(getComputedStyle(e).opacity) < .99)).length
   }))
   assert(!result.overflow, label + ': horizontal overflow')
   assert.deepEqual(result.tiny, [], label + ': text smaller than 11px')
@@ -55,10 +62,13 @@ try {
   await page.waitForFunction(() => !document.querySelector('.mag-archive__timeline'))
   await page.goBack({waitUntil:'networkidle0'}); await delay(700); await scrollPage(); await check('history back')
   await go('/')
+  await page.click('.club-pager [aria-label="加入"]')
+  await page.waitForFunction(() => !document.querySelector('.club-home').classList.contains('is-changing'))
   await page.focus('.club-community a')
   await delay(150)
   assert.equal(await page.$eval('.club-community', e => getComputedStyle(e).opacity), '1', 'Keyboard focus must reveal content')
-  await page.evaluate(() => scrollTo({top:0,behavior:'instant'}))
+  await page.click('.club-pager [aria-label="学习"]')
+  await page.waitForFunction(() => !document.querySelector('.club-home').classList.contains('is-changing'))
   await page.click('.club-path')
   await page.waitForSelector('.ai-course-home')
   assert.equal(await page.$('.mag-note--tearing'), null, 'Old tearing transition still runs')
@@ -84,7 +94,7 @@ try {
   await page.screenshot({path:path.join(out,'home-mobile-dark.png'),fullPage:true})
   await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]); await go('/'); await check('reduced motion load')
   await page.setJavaScriptEnabled(false); await go('/')
-  assert((await page.$eval('h1',e=>e.textContent)).includes('第一个 App'))
+  assert((await page.$eval('h1',e=>e.textContent)).includes('从这里开始'))
   assert(await page.$eval('.club-community',e=>getComputedStyle(e).visibility==='visible'),'SSR content hidden')
   assert.deepEqual(errors,[])
   console.log('PASS 8 routes, 320/390px layouts, light/dark, view persistence, route/history, live reduced motion, SSR readability, font minimum and console checks')

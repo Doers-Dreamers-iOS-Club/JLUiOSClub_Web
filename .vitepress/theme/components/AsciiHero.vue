@@ -9,10 +9,12 @@
  * SSR 安全：所有 window / WebGL 访问都在 onMounted 内；SSR 只输出一个空 section。
  * WebGL 不可用时首屏折叠为普通高度，下方内容自然上移，不留空白。
  */
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import { Color, LinearSRGBColorSpace } from 'three'
 import { loadGlyphAtlas } from '../ascii/glyph-atlas'
 import { AsciiLogoRenderer } from '../ascii/renderer'
+
+const props = withDefaults(defineProps<{ active?: boolean }>(), { active: true })
 
 /** Frame-rate independent exponential lerp. */
 const damp = (current: number, target: number, tau: number, dt: number) =>
@@ -146,7 +148,7 @@ onMounted(async () => {
   }
 
   function applyMotion() {
-    if (!renderer || !visible) {
+    if (!renderer || !visible || !props.active) {
       stop()
       return
     }
@@ -192,6 +194,10 @@ onMounted(async () => {
 
   function onPointerMove(event: PointerEvent) {
     if (event.pointerId !== pointer) return
+    if (event.pointerType === 'touch' && Math.abs(event.clientY - pointerY) > Math.abs(event.clientX - pointerX)) {
+      releasePointer()
+      return
+    }
     // The camera moves against the drag, so the mark turns with it.
     aimAzimuth -= (event.clientX - pointerX) * CONFIG.dragScale
     aimElevation = Math.max(
@@ -225,7 +231,10 @@ onMounted(async () => {
     draw()
   }
 
+  const stopActiveWatch = watch(() => props.active, () => { applyMotion(); if (props.active) draw() })
+
   dispose = () => {
+    stopActiveWatch()
     motionQuery.removeEventListener('change', onMotionChange)
     stop()
     clearTimeout(settle)
@@ -324,7 +333,7 @@ onMounted(async () => {
   height: calc(100vh - var(--vp-nav-height, 64px));
   height: calc(100svh - var(--vp-nav-height, 64px));
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   user-select: none;
   -webkit-user-select: none;
   color: var(--mag-text);

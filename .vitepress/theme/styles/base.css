@@ -68,6 +68,7 @@ figure:not(.mag-figure) figcaption { margin: .75rem 0 1.5rem; text-align: center
   .vp-doc h2 { margin-top: 2.5rem; }
 }
 .VPHome > .vp-doc.container { max-width: none; padding: 0; }
+.VPHome:has(.club-home) { margin-bottom: 0; }
 .VPHome .club-home a { text-decoration: none; color: inherit; }
 .VPHome .club-home .club-button--primary { color: var(--mag-on-accent); }
 .VPHome .club-home h2 { border: 0; padding: 0; }

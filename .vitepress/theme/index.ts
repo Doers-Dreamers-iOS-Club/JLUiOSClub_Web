@@ -1,5 +1,5 @@
 // https://vitepress.dev/guide/custom-theme
-import { h, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vitepress'
 import type { Theme } from 'vitepress'
 import mediumZoom from 'medium-zoom'
@@ -14,7 +14,6 @@ import './styles/learning.css'
 import { initReveal, teardownReveal } from './composables/useReveal'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
 import ClubHome from './components/ClubHome.vue'
-import AsciiHero from './components/AsciiHero.vue'
 
 import MagHero from './components/MagHero.vue'
 import MagSection from './components/MagSection.vue'
@@ -68,9 +67,6 @@ const components = {
 
 export default {
   extends: DefaultTheme,
-  Layout: () => h(DefaultTheme.Layout, null, {
-    'home-hero-before': () => h(AsciiHero)
-  }),
   enhanceApp({ app }) {
     for (const [name, component] of Object.entries(components)) {
       app.component(name, component)

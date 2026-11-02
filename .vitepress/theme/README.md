@@ -4,7 +4,7 @@
 
 **新增一个页面时不需要写任何 CSS**，也不需要 `import`——直接用下面的组件即可。
 
-视觉方向为克制阅读：保留白灰蓝配色与深浅模式，以统一无衬线字体、400/500 字重、细描边和留白组织内容。正文标题为 22/18/16px，首页允许 36–60px 的展示标题。代码使用等宽字体。卡片无阴影、无纸角，仅展示标题与入口；链接立即跳转。首页恢复全屏可拖拽 ASCII Swift 标识，取消装饰性说明小字。图标使用 Tabler outline。
+视觉方向为克制阅读：保留白灰蓝配色与深浅模式，以统一无衬线字体、400/500 字重、细描边和留白组织内容。正文标题为 22/18/16px，首页使用全屏图像与简洁的 22px 标题。代码使用等宽字体。卡片无阴影、无纸角，仅展示标题与入口；链接立即跳转。首页恢复全屏可拖拽 ASCII Swift 标识，取消装饰性说明小字。图标使用 Tabler outline。
 
 设计令牌在 `styles/tokens.css`，默认主题覆写在 `styles/base.css`，教学交互在 `components/learning/illustrations/lab.css`。背景、文字与边框只消费主题变量。
 
@@ -145,7 +145,7 @@ tags: [Swift, 工作坊]
 
 ## 动效
 
-`useReveal.ts` 统一管理 GSAP 与 IntersectionObserver。`AsciiHero.vue` 独立管理首屏 WebGL，卸载时释放资源，并实时响应减少动态效果偏好。SSR 默认可见；首页整行标题短暂上移、页头淡入。正文段落不隐藏，鼠标点击不等待离场动画。
+`useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒；背景覆盖全屏，由右向左渐隐。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。
 
 | 标记 | 行为 |
 | --- | --- |
@@ -158,7 +158,7 @@ tags: [Swift, 工作坊]
 
 官方参考：[gsap.matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/)。
 
-验证：`npm run build` 后运行 `npm run preview -- --port 4173`，再执行、`node scripts/check-design.mjs http://localhost:4173` 和 `node scripts/check-ai-course.mjs http://localhost:5173`。设计截图默认输出到 `/private/tmp/club-design-qa`。
+验证：`npm run build` 后运行 `npm run preview -- --port 4173`，再执行 `node scripts/check-fullpage.mjs`、`node scripts/check-design.mjs`。课程交互另用 `node scripts/check-ai-course.mjs http://localhost:4173`。整屏截图输出到 `output/design-fullpage-2026-11-02`，通用设计截图输出到 `/private/tmp/club-design-qa`。
 
 ## AI 编程入门：内容交互
 

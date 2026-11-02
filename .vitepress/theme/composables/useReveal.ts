@@ -17,7 +17,7 @@ export function initReveal(): void {
     const lines = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-line]'))
     const intro = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-enter]'))
     const targets = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-reveal], [data-mag-stagger] > *'))
-      .filter(el => !el.closest('.mag-hero, .learning-illustration'))
+      .filter(el => !el.closest('.mag-hero, .learning-illustration, .club-home'))
     const timeline = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity,visibility' } })
     if (lines.length) timeline.from(lines, { yPercent: 105, duration: .75, stagger: .09 }, 0)
     if (intro.length) timeline.from(intro, { autoAlpha: 0, y: 8, duration: .55, stagger: .08 }, .1)
