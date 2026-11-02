@@ -28,7 +28,7 @@ const paths = [
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
           <AsciiHero ref="opening" :active="!enabled || active === 0" />
-          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell">dwell in</span> <span class="club-opening__possibility">Possibility</span></p>
+          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell"><span>dwell</span> <span>in</span></span> <span class="club-opening__possibility">Possibilit<span class="club-opening__final-y">y</span></span></p>
         </div>
       </section>
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
@@ -93,12 +93,15 @@ const paths = [
   --poem-upper-room: calc(var(--poem-height) - var(--poem-title-size) * .84);
   --poem-i-size: min(calc(var(--poem-title-size) * .95),calc(var(--poem-upper-room) / 1.231));
   --poem-middle-size: min(calc(var(--poem-i-size) * .75),calc((var(--poem-upper-room) - var(--poem-i-size) * .72) / .73));
-  position: absolute; z-index: 0; inset: 5% 5vw 8% 5vw; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; margin: 0; font-family: 'Club Instrument Serif', var(--mag-font-serif); font-weight: 400; font-synthesis: none; line-height: .88; letter-spacing: -.025em; pointer-events: none;
+  position: absolute; z-index: 0; inset: 5% auto 8% 5vw; width: max-content; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; margin: 0; font-family: 'Club Instrument Serif', var(--mag-font-serif); font-weight: 400; font-synthesis: none; line-height: .88; letter-spacing: -.025em; pointer-events: none;
 }
 .club-opening__poem > span { display: block; flex: none; }
 .club-opening__i { font-size: var(--poem-i-size); line-height: .72; }
 .club-opening__dwell { font-size: var(--poem-middle-size); line-height: .76; margin-bottom: calc(var(--poem-middle-size) * -.03 - var(--poem-title-size) * .04); white-space: nowrap; }
+.club-opening__poem > .club-opening__dwell { display: flex; align-self: stretch; justify-content: space-between; gap: .25em; }
+.club-opening__dwell > span:last-child { letter-spacing: 0; }
 .club-opening__possibility { font-size: var(--poem-title-size); letter-spacing: -.025em; }
+.club-opening__final-y { display: inline-block; margin-left: .035em; letter-spacing: 0; }
 @supports (-webkit-text-stroke: 1px currentColor) {
   .club-opening__possibility { -webkit-text-stroke: 1px var(--mag-text); -webkit-text-fill-color: transparent; }
 }
@@ -106,7 +109,7 @@ const paths = [
   .club-opening__possibility { -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor; }
 }
 @media (max-width: 960px) and (orientation: portrait) {
-  .club-opening__poem { --poem-title-size: 24vw; --poem-i-size: 19.2vw; --poem-middle-size: 12vw; inset: 5% 16px 12% 20px; }
+  .club-opening__poem { --poem-title-size: 24vw; --poem-i-size: 19.2vw; --poem-middle-size: 12vw; inset: 5% auto 12% 20px; }
 }
 @media (max-height: 700px) and (orientation: landscape) {
   .club-opening__poem { --poem-title-size: min(24vw,39svh); }
