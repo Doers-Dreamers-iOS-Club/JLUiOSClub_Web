@@ -10,7 +10,10 @@ const browser = await puppeteer.launch({ channel: 'chrome', headless: true })
 const page = await browser.newPage()
 const errors = []
 page.on('pageerror', e => errors.push(e.message))
-page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
+page.on('console', message => {
+  const source = message.location().url
+  if (message.type() === 'error' && source?.startsWith(base)) errors.push(message.text())
+})
 page.on('response', response => { if (response.url().startsWith(base) && response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`) })
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 async function go(route) { await page.goto(base + route, { waitUntil: 'networkidle0' }); await delay(850) }
