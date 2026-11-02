@@ -76,7 +76,6 @@ const paths = [
       <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__label" aria-hidden="true">{{ page }}</span><span class="club-pager__mark" aria-hidden="true" /></button>
       <button type="button" aria-label="下一屏" :disabled="busy || active === pages.length - 1" @click="navigate(active + 1)"><i class="ti ti-chevron-down" aria-hidden="true" /></button>
     </nav>
-    <span v-if="enabled" class="club-page-count" aria-hidden="true">{{ String(active + 1).padStart(2, '0') }} <span>/ 04</span></span>
     <span class="club-sr-only" aria-live="polite">{{ enabled ? pages[active] : '' }}</span>
   </div>
 </template>
@@ -185,8 +184,6 @@ const paths = [
 @media (prefers-reduced-motion: reduce) {
   .club-pager button, .club-pager__mark, .club-pager__label, .club-pager button::after, .club-pager button > i { transition: none; }
 }
-.club-page-count { position: absolute; z-index: 5; bottom: 24px; left: max(7vw, calc((100vw - 1240px) / 2)); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--mag-text-secondary); }
-.club-page-count > span { padding-left: 10px; color: var(--mag-text-tertiary); }
 .club-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 960px) {
   .club-section__content { width: calc(100% - 140px); margin-left: 48px; }
@@ -221,7 +218,6 @@ const paths = [
   .club-actions { flex-direction: column; gap: 24px; margin-top: 28px; }
   .club-pager { right: 8px; }
   .club-pager button { width: 32px; height: 34px; }
-  .club-page-count { left: 24px; bottom: 20px; }
 }
 @media (max-height: 740px) and (min-width: 701px) {
   .club-section__content { padding-block: 32px 48px; }
@@ -238,7 +234,7 @@ const paths = [
   .is-paged, .is-paged .club-pages { height: auto; overflow: visible; }
   .is-paged .club-page { position: relative; height: auto; visibility: visible !important; opacity: 1 !important; transform: none !important; break-inside: avoid; }
   .club-page__inner { transform: none !important; }
-  .club-pager, .club-page-count, .club-opening { display: none; }
+  .club-pager, .club-opening { display: none; }
 }
 
 .club-learning .club-section__content { overflow: visible; }

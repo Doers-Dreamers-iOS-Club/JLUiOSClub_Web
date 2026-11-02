@@ -5,8 +5,8 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
   <figure class="course-art mag-no-reveal" :class="{ 'course-art--compact': compact }">
     <svg viewBox="0 0 800 420" role="img" aria-label="从想法到作品：一张需求便签、一份代码和可以试玩的贪吃蛇，用线连接成一次创作过程">
       <rect width="800" height="420" rx="16" class="art-bg" />
-      <path d="M242 222 C288 222 264 124 314 124 M488 124 C553 124 483 243 546 243" fill="none" class="art-line" stroke-width="2" stroke-dasharray="5 6" />
-      <path d="M307 118l8 6-8 6 M537 237l9 6-9 6" fill="none" class="art-line" stroke-width="2" />
+      <path d="M242 222 C288 222 264 124 302 124 M488 124 C553 124 483 243 546 243" fill="none" class="art-line" stroke-width="2" stroke-dasharray="5 6" />
+      <path d="M294 118l8 6-8 6 M537 237l9 6-9 6" fill="none" class="art-line" stroke-width="2" />
       <g transform="translate(55 112)">
         <rect width="192" height="210" rx="4" class="art-paper" stroke="currentColor" stroke-opacity=".18" />
         <text x="22" y="42" class="art-small">01 / 想法</text>
