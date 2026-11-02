@@ -166,16 +166,16 @@ tags: [Swift, 工作坊]
 
 | scene | 内容 |
 | --- | --- |
-| project | 规则选择与作品预览 |
-| context | 上下文桌面，点选或拖入材料 |
+| project | 开始、碰壁与清零的自动分镜 |
+| context | 材料逐步汇入上下文 |
 | pause | 暂停、继续、结束与重开的状态剖面 |
 | timers | 正常与重复计时器的对照实验 |
-| versions | 版本画面、真实节选差异与模拟恢复 |
+| versions | 三个版本的自动画面对比 |
 | skill | 方法、事实、任务与工具能力归类 |
 | mcp | MCP 接线台，模拟连接故障与返回结果 |
-| api | 预设请求信封、失败路径与分段响应 |
+| api | 预设请求、失败路径与响应 |
 | observe / feedback | 试玩与反馈的短分镜 |
 
-组件位于 `components/learning/illustrations/`。`LabFrame` 与 `lab.css` 管理纸面、控件和观察笔记，`useLabPlayback` 管理用户启动的单时钟与停止条件，`SnakeScene` 提供共用 SVG。新增动画使用主题令牌，遵守减少动态效果；离屏、切页与标签隐藏会停止播放。状态改变独立于 CSS 动画完成事件。
+组件位于 `components/learning/illustrations/`，均为辅助正文的自动图解，不再提供选项、拖拽、下拉框或任务操作。`LabFrame` 与 `lab.css` 管理简洁外框和唯一的暂停图标，`useLabPlayback` 管理进入视口后的单时钟循环，`SnakeScene` 提供共用 SVG。至少 15% 可见时运行，离屏与后台暂停，返回后继续；用户主动暂停会保持。结束画面停留后重播。减少动态效果时显示有代表性的静态帧，不运行计时器；卸载时释放全部监听与计时器。标题与标签尽量简短，解释保留在正文，图解不播报每一帧。
 
 所有场景都是教学模拟，不发送模型请求、连接真实 MCP 服务或操作仓库。旧 SnakeLab / FlowExplorer 文件保留作参考，已不在章节或全局组件注册中使用。验证入口：`node scripts/check-ai-course.mjs <本地预览地址>`。

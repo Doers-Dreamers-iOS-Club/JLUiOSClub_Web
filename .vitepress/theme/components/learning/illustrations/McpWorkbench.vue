@@ -3,66 +3,27 @@ import { computed, ref } from 'vue'
 import LabFrame from './LabFrame.vue'
 import { useLabPlayback } from './useLabPlayback'
 const root = ref<HTMLElement | null>(null)
-const connected = ref(false)
-const pageReady = ref(false)
 const phase = ref(0)
-const result = ref('')
-const inspected = ref(0)
-const names = ['Agent 所在应用','MCP 服务','浏览器工具','本地网页']
-const details = [
-  ['输入：检查开始与暂停。', '输出：选择可用工具，交给宿主中的 MCP Client 调用。'],
-  ['输入：客户端的工具调用。', '输出：调用浏览器能力，将结果交回客户端。'],
-  ['输入：打开网址或点击按钮。', '输出：页面信息、操作结果，或页面不可达的错误。'],
-  ['输入：浏览器发来的访问和操作。', '输出：实际的游戏界面及当前按钮状态。'],
-]
-const messages = ['先接入服务、启动网页，再执行一次检查。','Agent 选择浏览器工具，宿主客户端准备发出调用。','调用到达 MCP 服务，由服务处理工具请求。','浏览器尝试打开本地游戏地址。','页面已打开，找到开始、暂停和重开按钮。','点击开始：示意游戏进入运行中。','点击暂停：画面停止，工具把观察结果沿原路返回。','Agent 收到实际操作的结果，再判断是否符合任务。']
-function advance() {
-  if (result.value) return false
-  phase.value++
-  if (phase.value === 2 && !connected.value) { result.value = '服务未连接：应用尚无这项浏览器工具可调用。先检查 MCP 服务连接。'; return false }
-  if (phase.value === 4 && !pageReady.value) { result.value = '网页未启动：工具连接正常，但浏览器打不开本地地址。请检查网页服务、端口和目录。'; return false }
-  if (phase.value === 7) { result.value = '检查完成：开始后进入运行中，暂停后停止更新。工具结果已返回给 Agent。'; return false }
-  return phase.value < 7
-}
-const { playing, reduced, play, pause, step } = useLabPlayback(root, advance, 750)
-function clearRun() { pause(); phase.value = 0; result.value = '' }
-function preset(service: boolean, page: boolean) { clearRun(); connected.value = service; pageReady.value = page }
-function execute() { clearRun(); if (reduced.value) advance(); else play() }
-function reset() { preset(false,false); inspected.value = 0 }
-const error = computed(() => !!result.value && phase.value < 7)
-const point = computed(() => error.value && phase.value === 2 ? [130,100] : error.value && phase.value === 4 ? [450,100] : [[68,100],[68,100],[220,100],[372,100],[524,100],[524,100],[372,196],[68,196]][Math.min(phase.value,7)])
-const active = computed(() => phase.value >= 6 ? 0 : Math.min(3, Math.max(0,phase.value-1)))
+const scenario = ref(0)
+const nodes = [{ name: 'Agent', icon: 'ti-message' }, { name: 'MCP', icon: 'ti-server' }, { name: '浏览器', icon: 'ti-browser' }, { name: '网页', icon: 'ti-layout' }]
+const failed = computed(() => scenario.value === 1 && phase.value >= 2 || scenario.value === 2 && phase.value >= 4)
+const result = computed(() => failed.value ? scenario.value === 1 ? '未连接' : '网页离线' : phase.value >= 7 ? '检查完成' : phase.value >= 5 ? '返回结果' : '调用工具')
+const active = computed(() => [0,0,1,2,3,3,2,0][phase.value])
+const point = computed(() => [12.5,12.5,37.5,62.5,87.5,87.5,62.5,12.5][phase.value])
+function nextRun() { phase.value = 0; scenario.value = (scenario.value + 1) % 3 }
+useLabPlayback(root, () => { phase.value++; return phase.value < 7 && !failed.value }, 900, { reset: nextRun, static: () => { scenario.value = 0; phase.value = 7 } })
 </script>
 <template>
-  <div ref="root" class="mcp-workbench">
-    <LabFrame eyebrow="06 / FOLLOW THE CONNECTION" title="连上工具，为什么页面还是打不开？" hint="换一种连接情境，再跟随调用点找到结果或故障所在的那一层。">
-      <div class="lab-controls mcp-presets" aria-label="连接情境"><button type="button" :aria-pressed="!connected && !pageReady" @click="preset(false,false)">服务未连接</button><button type="button" :aria-pressed="connected && !pageReady" @click="preset(true,false)">网页未启动</button><button type="button" :aria-pressed="connected && pageReady" @click="preset(true,true)">全部就绪</button></div>
+  <div ref="root" class="mcp-workbench" :data-demo-frame="`${scenario}:${phase}`">
+    <LabFrame title="工具调用的往返">
       <div class="lab-stage">
-        <div class="mcp-status"><span :class="{ ready: connected }">MCP 服务：{{ connected ? '已接入' : '未接入' }}</span><span :class="{ ready: pageReady }">本地网页：{{ pageReady ? '已启动' : '未启动' }}</span></div>
-        <svg viewBox="0 0 592 240" role="img" :aria-label="`应用通过 MCP 服务调用浏览器，浏览器操作本地网页。${result || messages[phase]}`">
-          <path d="M68 100H524" fill="none" stroke="var(--mag-hairline-strong)" stroke-width="2" :stroke-dasharray="connected ? undefined : '5 6'" />
-          <path d="M524 140V196H68V140" fill="none" stroke="var(--mag-accent-border)" stroke-width="2" />
-          <path d="m145 95 7 5-7 5m152-10 7 5-7 5m152-10 7 5-7 5m-150 86-7 5 7 5m-152-10-7 5 7 5" fill="none" stroke="var(--lab-blue)" stroke-width="2" />
-          <g v-for="(name,i) in names" :key="name" :transform="`translate(${i*152+20},52)`">
-            <rect width="96" height="88" rx="12" :fill="active === i && phase ? 'var(--mag-accent-soft)' : 'var(--lab-paper)'" :stroke="active === i && phase ? 'var(--lab-blue)' : 'var(--mag-hairline-strong)'" />
-            <g v-if="i === 0" stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="25" y="16" width="46" height="32" rx="4" /><path d="M36 55h24m-12-7v7M32 27h12m-12 7h26" /></g>
-            <g v-else-if="i === 1" stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="26" y="16" width="44" height="18" rx="4" /><rect x="26" y="40" width="44" height="18" rx="4" /><path d="M34 25h4m-4 24h4m10-24h15m-15 24h15" /></g>
-            <g v-else-if="i === 2" stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="23" y="16" width="50" height="40" rx="4" /><path d="M23 27h50m-41-6h2m5 0h2m5 14 14 6-8 3-4 8z" /></g>
-            <g v-else stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="24" y="16" width="48" height="40" rx="4" /><path d="M32 44h13V32h14" stroke-width="5" stroke-linecap="round" /></g>
-            <text x="48" y="75" text-anchor="middle" font-size="11" fill="var(--lab-muted)">{{ ['Host / Client','MCP Server','Browser','Local page'][i] }}</text>
-          </g>
-          <g v-if="phase" class="mcp-packet" :style="{ transform: `translate(${point[0]}px,${point[1]}px)` }"><circle r="9" :fill="phase >= 6 ? 'var(--lab-paper)' : error ? 'var(--mag-warn)' : 'var(--lab-blue)'" :stroke="error ? 'var(--mag-warn)' : 'var(--lab-blue)'" stroke-width="3" /></g>
-          <text x="296" y="226" text-anchor="middle" font-size="11" fill="var(--lab-muted)">实心点：调用 · 空心点：结果返回</text>
-        </svg>
-        <div class="lab-tabs mcp-nodes" aria-label="查看节点的输入与输出"><button v-for="(name,i) in names" :key="name" type="button" :aria-pressed="inspected === i" @click="inspected = i">{{ name }}</button></div>
-        <div class="lab-paper"><p v-for="line in details[inspected]" :key="line" class="lab-caption">{{ line }}</p><p v-if="phase >= 5 && !error" class="lab-caption">示意网页：{{ phase === 5 ? '运行中' : '已暂停' }}</p></div>
+        <div class="mcp-nodes"><div v-for="(node,index) in nodes" :key="node.name" class="mcp-node" :class="{ active: active === index, failed: failed && active === index }"><i :class="['ti', node.icon]" aria-hidden="true" /><span>{{ node.name }}</span></div></div>
+        <div class="mcp-track" aria-hidden="true"><span class="mcp-packet" :class="{ returning: phase >= 5, failed }" :style="{ left: point + '%' }" /></div>
+        <div class="mcp-result" :class="{ failed }" data-result><i :class="['ti', failed ? 'ti-plug-x' : phase === 7 ? 'ti-check' : phase >= 5 ? 'ti-arrow-left' : 'ti-arrow-right']" aria-hidden="true" />{{ result }}</div>
       </div>
-      <template #controls><button type="button" :aria-pressed="connected" @click="clearRun(); connected = !connected">{{ connected ? '断开服务' : '接入服务' }}</button><button type="button" :aria-pressed="pageReady" @click="clearRun(); pageReady = !pageReady">{{ pageReady ? '停止网页' : '启动本地网页' }}</button><button type="button" @click="execute">{{ result ? '重新检查' : '执行检查' }}</button><button type="button" :disabled="!playing" @click="pause">暂停动画</button><button type="button" :disabled="!!result" @click="step">下一步</button><button type="button" @click="reset">重置</button></template>
-      <template #observation><p :class="{ 'mcp-error': error }" data-result>{{ result || messages[phase] }}</p></template>
-      <template #footer>连接过程示意，不会连接真实服务或操作你的浏览器。{{ reduced ? '减少动态效果下，执行检查只推进一步；继续点“下一步”查看。' : '连接正常不等于作品正确，仍要查看实际操作返回的结果。' }}</template>
     </LabFrame>
   </div>
 </template>
 <style scoped>
-.mcp-presets { padding-top: 0; }.mcp-status { display: flex; flex-wrap: wrap; gap: .5rem; font-size: 14px; }.mcp-status span { background: var(--lab-paper); border: var(--mag-rule); border-radius: 6px; padding: .3rem .55rem; }.mcp-status .ready { color: var(--lab-blue); }.mcp-packet { transition: transform .6s ease-in-out; }.mcp-nodes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }.mcp-error { color: var(--mag-warn); }
+.mcp-nodes { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }.mcp-node { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px 4px; border: var(--mag-rule); border-radius: 8px; font-size: 13px; color: var(--lab-muted); }.mcp-node > i { font-size: 32px; }.mcp-node.active { color: var(--lab-blue); border-color: var(--mag-accent-border); background: var(--mag-accent-soft); }.mcp-node.failed { color: var(--mag-warn); border-color: var(--mag-warn); }.mcp-track { position: relative; margin: 32px 0; height: 2px; background: var(--mag-hairline); }.mcp-packet { position: absolute; width: 12px; height: 12px; top: -5px; transform: translateX(-50%); border-radius: 50%; background: var(--lab-blue); border: 2px solid var(--lab-blue); transition: left .65s ease; }.mcp-packet.returning { background: var(--lab-paper); }.mcp-packet.failed { background: var(--mag-warn); border-color: var(--mag-warn); }.mcp-result { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--lab-blue); min-height: 28px; }.mcp-result.failed { color: var(--mag-warn); }@media(max-width:420px) { .mcp-nodes { gap: 6px; }.mcp-node { font-size: 12px; padding-block: 18px; }.mcp-node > i { font-size: 24px; } }
 </style>

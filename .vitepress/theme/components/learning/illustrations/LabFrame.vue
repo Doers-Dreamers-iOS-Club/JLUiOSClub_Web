@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+import { labPlaybackKey } from './useLabPlayback'
 import './lab.css'
-defineProps<{ title: string; eyebrow: string; hint: string }>()
+defineProps<{ title: string; hint?: string }>()
+const playback = inject(labPlaybackKey)
 </script>
 <template>
-  <section class="lesson-lab mag-no-reveal" :aria-label="title" :aria-description="hint">
-    <header class="lab-heading"><h3>{{ title }}</h3></header>
+  <section class="lesson-lab mag-no-reveal" :aria-label="title" :aria-description="hint" :data-playing="playback?.playing.value">
+    <header class="lab-heading">
+      <h3>{{ title }}</h3>
+      <button v-if="playback && !playback.reduced.value" class="lab-playback" type="button" :aria-label="playback.playing.value ? '暂停演示' : '播放演示'" :title="playback.playing.value ? '暂停演示' : '播放演示'" @click="playback.toggle"><i :class="['ti', playback.playing.value ? 'ti-player-pause' : 'ti-player-play']" aria-hidden="true" /></button>
+    </header>
     <slot />
-    <div v-if="$slots.controls" class="lab-controls"><slot name="controls" /></div>
-    <div v-if="$slots.observation" class="lab-observation" role="status" aria-atomic="true"><slot name="observation" /></div>
   </section>
 </template>

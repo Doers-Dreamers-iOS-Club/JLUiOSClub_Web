@@ -8,7 +8,7 @@ const segments = computed(() => Array.from({ length: 4 }, (_, i) => route[((prop
   <svg class="lab-snake" viewBox="0 0 320 220" role="img" :aria-label="`${label}，位置 ${position}，分数 ${score}`">
     <rect x="1" y="1" width="318" height="218" rx="10" fill="var(--lab-paper, var(--mag-surface))" stroke="var(--mag-hairline-strong)" />
     <path d="M1 32h318" stroke="var(--mag-hairline)" /><circle cx="14" cy="17" r="3" fill="var(--mag-text-tertiary)" /><circle cx="25" cy="17" r="3" fill="var(--mag-hairline-strong)" />
-    <text x="306" y="21" text-anchor="end" font-size="11" fill="var(--mag-text-secondary)">snake-lab / {{ score }}</text>
+    <text v-if="food" x="306" y="21" text-anchor="end" font-size="12" fill="var(--mag-text-secondary)">{{ score }} 分</text>
     <rect x="22" y="48" width="276" height="148" rx="5" fill="var(--mag-surface-sunken)" />
     <path d="M48 64H272V176H48Z" stroke="var(--mag-hairline-strong)" stroke-dasharray="3 5" fill="none" />
     <rect v-for="(xy,i) in segments" :key="i" :x="38 + xy[0]*28" :y="54+xy[1]*28" width="20" height="20" rx="5" fill="var(--mag-accent)" :opacity="1-i*.18" />
