@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import HomeGeometry from './HomeGeometry.vue'
+import AsciiNarrative from './AsciiNarrative.vue'
+import AsciiPoster from './AsciiPoster.vue'
 import { data as activities } from '../../data/activities.data.mts'
 import AsciiHero from './AsciiHero.vue'
 import { useFullPage } from '../composables/useFullPage'
 const root = ref<HTMLElement | null>(null)
 const { active, enabled, busy, asciiAvailable, navigate } = useFullPage(root)
 const pages = ['开场', '学习', '活动', '加入']
-const selectedPath = ref(0)
+const opening = ref<InstanceType<typeof AsciiHero> | null>(null)
+const asciiReady = ref(false)
+const coveringOpening = ref(false)
+const captureOpening = () => opening.value?.snapshot() ?? null
 const latest = activities.slice(0,3)
 const dateParts = (date: string) => ({ year: date.slice(0,4), day: date.slice(5) })
 const paths = [
@@ -19,26 +23,19 @@ const paths = [
 </script>
 
 <template>
-  <div ref="root" class="club-home" :class="{ 'is-paged': enabled, 'is-changing': busy }">
+  <div ref="root" class="club-home" :class="{ 'is-paged': enabled, 'is-changing': busy, 'has-ascii-canvas': asciiReady && enabled, 'is-ascii-transition': coveringOpening }">
     <div class="club-pages">
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
-        <div class="club-page__inner"><AsciiHero :active="!enabled || active === 0" /></div>
+        <div class="club-page__inner"><AsciiHero ref="opening" :active="!enabled || active === 0" /></div>
       </section>
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
             <header class="club-section__head"><h1 id="club-title" tabindex="-1">从这里开始</h1><a href="/resources/">全部资源 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
-            <div class="club-learning__main">
-              <a :href="paths[0].href" class="club-path club-path--lead" @mouseenter="selectedPath = 0" @focus="selectedPath = 0">
-                <span class="club-path__number">01</span>
-                <h3>{{ paths[0].title }}</h3>
-                <span class="club-path__open"><i class="ti ti-arrow-up-right" aria-hidden="true" /></span>
-              </a>
-              <HomeGeometry :active="!enabled || active === 1" :mode="selectedPath" />
-            </div>
+            <AsciiPoster :scene="1" />
             <div class="club-paths">
-              <a v-for="(path,index) in paths.slice(1)" :key="path.href" :href="path.href" class="club-path" @mouseenter="selectedPath = index+1" @focus="selectedPath = index+1">
-                <span class="club-path__number">0{{ index+2 }}</span><h3>{{ path.title }}</h3><i class="ti ti-arrow-up-right club-path__arrow" aria-hidden="true" />
+              <a v-for="(path,index) in paths" :key="path.href" :href="path.href" class="club-path">
+                <span class="club-path__number">0{{ index+1 }}</span><h3>{{ path.title }}</h3><i class="ti ti-arrow-up-right club-path__arrow" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -48,6 +45,7 @@ const paths = [
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
             <header class="club-section__head"><h2 id="activity-title" tabindex="-1">最近在做什么</h2><a href="/activities/">全部活动 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
+            <div class="club-making"><AsciiPoster :scene="2" /><div class="club-making__records">
             <a v-if="latest[0]" :href="latest[0].url" class="club-latest">
               <time class="club-latest__date" :datetime="latest[0].date.replaceAll('.', '-')"><span>{{ dateParts(latest[0].date).year }}</span><span>{{ dateParts(latest[0].date).day }}</span></time>
               <div class="club-latest__title"><span class="club-latest__label"><span />最近一次</span><h3>{{ latest[0].title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></div>
@@ -55,19 +53,21 @@ const paths = [
             <div class="club-activity-history">
               <a v-for="entry in latest.slice(1)" :key="entry.url" :href="entry.url" class="club-activity-row"><time :datetime="entry.date.replaceAll('.', '-')">{{ entry.date }}</time><h3>{{ entry.title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></a>
             </div>
+            </div></div>
           </div>
         </div>
       </section>
       <section id="community" class="club-page club-section club-community" data-club-page tabindex="-1" aria-labelledby="community-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
-            <HomeGeometry :active="!enabled || active === 3" community />
+            <AsciiPoster :scene="3" />
             <h2 id="community-title" tabindex="-1">好奇心，<br />是共同的起点。</h2>
             <div class="club-actions"><a class="club-button" href="/join-us/">加入我们 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" href="/about-us/">了解社团 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
           </div>
         </div>
       </section>
     </div>
+    <AsciiNarrative :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
     <nav v-if="enabled" class="club-pager" aria-label="首页栏目">
       <button type="button" aria-label="上一屏" :disabled="busy || active <= (asciiAvailable ? 0 : 1)" @click="navigate(active - 1)"><i class="ti ti-chevron-up" aria-hidden="true" /></button>
       <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__mark" /></button>
@@ -96,7 +96,7 @@ const paths = [
 .club-path--lead h3 { font-size: 22px; }
 .club-path__open { display: grid; place-items: center; width: 44px; height: 44px; border: var(--mag-rule); border-radius: 50%; font-size: 20px; transition: color .2s, border-color .2s; }
 .club-path--lead:hover .club-path__open { color: var(--mag-accent); border-color: var(--mag-accent-border); }
-.club-paths { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 40px; }
+.club-paths { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 32px; }
 .club-paths .club-path { display: grid; grid-template-columns: 1fr 20px; gap: 20px 12px; border-top: var(--mag-rule); padding-top: 20px; padding-bottom: 16px; }
 .club-paths .club-path__number { grid-column: 1/-1; }
 .club-path__arrow { color: var(--mag-text-secondary); font-size: 20px; align-self: center; transition: transform .35s var(--mag-ease); }
@@ -192,4 +192,38 @@ const paths = [
   .club-page__inner { transform: none !important; }
   .club-pager, .club-page-count, .club-opening { display: none; }
 }
+
+.club-learning :deep(.ascii-slot) { height: clamp(250px,37vh,380px); margin: 12px 0 44px; }
+.club-making { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
+.club-making :deep(.ascii-slot) { height: 390px; }
+.club-making__records { min-width: 0; }
+.club-latest { grid-template-columns: 1fr; gap: 24px; padding: 16px 0 28px; }
+.club-latest__date > span:last-child { font-size: 64px; }
+.club-latest h3 { font-size: 20px; }
+.club-activity-history { width: 100%; margin-top: 8px; }
+.club-activity-row { grid-template-columns: 1fr 20px; gap: 8px 16px; padding: 18px 0; }
+.club-activity-row time { grid-column: 1/-1; }
+.club-activity-row h3 { font-size: 14px; }
+.club-community :deep(.ascii-slot) { height: 290px; max-width: 400px; margin: 0 auto 24px; }
+.has-ascii-canvas :deep(.ascii-poster) { visibility: hidden; }
+.is-ascii-transition :deep(.mag-ascii-hero__canvas) { visibility: hidden; transition: none; }
+@media(max-width:700px) {
+ .club-learning :deep(.ascii-slot) { height: 180px; margin: 12px 0 24px; }
+ .club-paths { grid-template-columns: 1fr; gap: 0; }
+ .club-making { grid-template-columns: 1fr; gap: 12px; }
+ .club-making :deep(.ascii-slot) { height: 170px; }
+ .club-latest { grid-template-columns: 95px minmax(0,1fr); gap: 16px; padding: 12px 0 20px; }
+ .club-latest__date > span:last-child { font-size: 32px; }
+ .club-latest__date > span:first-child { font-size: 12px; margin-left: 0; }
+ .club-latest h3 { font-size: 16px; }
+ .club-latest__title { grid-template-columns: 1fr; gap: 8px; }
+ .club-latest__title > i { display: none; }
+ .club-community :deep(.ascii-slot) { height: 230px; }
+}
+@media(max-height:740px) and (min-width:701px) {
+ .club-learning :deep(.ascii-slot) { height: 230px; margin-bottom: 28px; }
+ .club-making :deep(.ascii-slot) { height: 300px; }
+ .club-community :deep(.ascii-slot) { height: 200px; }
+}
+@media print { .has-ascii-canvas :deep(.ascii-poster) { visibility: visible; } }
 </style>

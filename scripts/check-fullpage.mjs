@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import puppeteer from 'puppeteer-core'
 const base = process.argv[2] || 'http://localhost:4173'
-const out = process.env.QA_OUT || 'output/design-geometric-home-2026-11-02'
+const out = process.env.QA_OUT || 'output/design-ascii-creation-2026-11-02'
 await fs.mkdir(out, { recursive: true })
 const browser = await puppeteer.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader'] })
 const page = await browser.newPage()
@@ -48,18 +48,18 @@ try {
     await wait(1600)
     await page.screenshot({ path: `${out}/${file}-desktop.png` })
   }
-  await select('学习')
-  const transforms = () => page.$$eval('.club-learning .geometry-piece', els => els.map(e => e.getAttribute('transform')).join('|'))
-  await wait(1700)
-  const initialGeometry = await transforms()
-  await page.hover('.club-paths .club-path:nth-child(2)');await wait(850)
-  assert.equal(await page.$eval('.club-learning .home-geometry',e=>e.dataset.mode),'2')
-  assert.notEqual(await transforms(),initialGeometry,'Hover must rearrange the geometry')
-  await page.focus('.club-paths .club-path:nth-child(3)');await wait(850)
-  assert.equal(await page.$eval('.club-learning .home-geometry',e=>e.dataset.mode),'3','Keyboard focus must match hover')
-  await select('加入');await wait(1700)
-  const offscreenGeometry=await transforms();await wait(200)
-  assert.equal(await transforms(),offscreenGeometry,'Inactive geometry must stay still')
+  await select('开场');await wait(1700)
+  await page.click('.club-pager [aria-label="学习"]');await wait(250)
+  const transfer=await page.$eval('.ascii-narrative',e=>({...e.dataset}))
+  assert.equal(transfer.from,'0');assert.equal(transfer.to,'1')
+  assert.equal(transfer.morphing,'true');assert(Number(transfer.sourcePoints)>100,'Transition must read actual Swift glyph cells')
+  await page.screenshot({path:out+'/opening-scatter.png'})
+  await page.waitForFunction(()=>document.querySelector('.ascii-narrative').dataset.morphing==='false')
+  assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),2000)
+  await select('活动');await wait(1600)
+  assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),688)
+  await select('加入');await wait(1600)
+  assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),1080)
   await page.mouse.move(700,400);await wait(250);await page.mouse.wheel({deltaY:300});await wait(300)
   assert(await page.evaluate(()=>scrollY>0),'Footer must remain reachable')
   await select('学习')
@@ -103,6 +103,7 @@ try {
   await page.setJavaScriptEnabled(false);await page.goto(base+'/',{waitUntil:'networkidle0'})
   assert.equal(await page.$('.club-pager'),null)
   assert(await page.$$eval('.club-section',els=>els.every(e=>getComputedStyle(e).visibility==='visible')))
+  assert.equal(await page.$$eval('.ascii-poster',els=>els.filter(e=>getComputedStyle(e).visibility==='visible'&&getComputedStyle(e).display!=='none').length),3,'SSR must contain all three ASCII drawings')
   assert.deepEqual(errors,[])
-  console.log('PASS wheel inertia, directional wipe, keyboard, touch, geometric layouts, hover/focus reactions, inert panels, deep links, history, footer, route cleanup, dark mode, reduced motion, short-screen fallback and SSR')
+  console.log('PASS wheel inertia, directional wipe, keyboard, touch, ASCII glyph capture and morphs, inert panels, deep links, history, footer, route cleanup, dark mode, reduced motion, short-screen fallback and SSR')
 } finally { await browser.close() }

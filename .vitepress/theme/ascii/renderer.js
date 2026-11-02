@@ -171,6 +171,19 @@ export class AsciiLogoRenderer {
     return this.#renderer;
   }
 
+  captureCells(width, height, cellW, cellH) {
+    const cols = this.#cellTarget.width;
+    const rows = this.#cellTarget.height;
+    const bytes = new Uint8Array(cols * rows * 4);
+    this.#renderer.readRenderTargetPixels(this.#cellTarget, 0, 0, cols, rows, bytes);
+    const points = [];
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const glyph = bytes[(y * cols + x) * 4 + 3];
+      if (glyph > 0 && glyph < 95) points.push({ x: (x + .5) * cellW, y: height - (y + .5) * cellH, char: String.fromCharCode(32 + glyph), size: Math.min(cellH * .92, cellW / .58), alpha: 1 });
+    }
+    return { points, width, height };
+  }
+
   setInk(color) {
     this.#postMaterial.uniforms.uColor.value.copy(color);
   }

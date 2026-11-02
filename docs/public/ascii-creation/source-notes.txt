@@ -1,0 +1,8 @@
+ASCII creation narrative, 2026-11-02
+
+hands-source.png was generated with the built-in image generation tool as a monochrome sampling reference. Prompt: two anatomically elegant reaching hands inspired by Michelangelo's public-domain Creation of Adam, Adam's relaxed hand from the left and the purposeful pointing hand from the right, index fingertips nearly meeting, isolated forearms and hands, black and medium-gray flat ink on pure white, no realistic skin, no photographic lighting, no gradients, shadows, text, or background. Only the derived character matrix is rendered on the website.
+
+making.svg and growing.svg are project-native vector drawings for character sampling: a pen and canvas, and a growing tree. They are illustrative artwork, not interface icons.
+
+Rebuild matrices: node scripts/build-ascii-creation.mjs
+Output: .vitepress/theme/ascii/creation/{hands,making,growing}.json

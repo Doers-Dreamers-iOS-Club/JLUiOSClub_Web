@@ -4,7 +4,7 @@
 
 **新增一个页面时不需要写任何 CSS**，也不需要 `import`——直接用下面的组件即可。
 
-视觉方向为克制阅读：保留白灰蓝配色与深浅模式，以统一无衬线字体、400/500 字重、细描边和留白组织内容。正文标题为 22/18/16px，首页采用几何实验室风格和简洁的 22px 标题。代码使用等宽字体。卡片无阴影、无纸角，仅展示标题与入口；链接立即跳转。首页保留全屏可拖拽 ASCII Swift 标识，取消装饰性说明小字。图标使用 Tabler outline。
+视觉方向为克制阅读：保留白灰蓝配色与深浅模式，以统一无衬线字体、400/500 字重、细描边和留白组织内容。正文标题为 22/18/16px，首页采用 ASCII 创造叙事和简洁的 22px 标题。代码使用等宽字体。卡片无阴影、无纸角，仅展示标题与入口；链接立即跳转。首页保留全屏可拖拽 ASCII Swift 标识，取消装饰性说明小字。图标使用 Tabler outline。
 
 设计令牌在 `styles/tokens.css`，默认主题覆写在 `styles/base.css`，教学交互在 `components/learning/illustrations/lab.css`。背景、文字与边框只消费主题变量。
 
@@ -147,7 +147,11 @@ tags: [Swift, 工作坊]
 
 `useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。
 
-后三屏不再使用摄影背景。学习屏为主入口、可重组几何图形和三个横向次入口；活动屏直接读取活动索引，突出最近日期，下方保留两条记录；加入屏采用居中邀请。`HomeGeometry.vue` 以原生 SVG 绘制六个几何元素，GSAP 入场组装一次后停止，悬停或聚焦学习入口时重新排列。只在所在屏可见且文档前台时运行，离屏暂停，减少动态效果即时呈现最终状态，卸载时清理动画、观察器与监听。历史图片仍保留在素材目录，首页不请求这些文件。
+首页以 ASCII 串起创造主题：Swift 开场、相触的双手、笔尖与画布、生长的树。`AsciiNarrative.vue` 使用共享二维 Canvas，在翻页时让字符散开后重组，约 1.45 秒后停止。首屏通过 `AsciiHero.snapshot()` 读取当前 WebGL 字符单元，保留原字形和位置；后续三个形状来自本地字符矩阵。过渡时隐藏原首屏画布，避免重复显示，反向翻页同样支持重组。
+
+`AsciiPoster.vue` 在服务端直接输出字符 SVG，供关闭 JavaScript、二维 Canvas 不可用和短屏自然滚动使用。桌面与手机分别采样字符密度，避免窄屏过密。深浅模式切换重绘，后台暂停，减少动态效果直接切换终态，路由卸载清理 GSAP、观察器和监听。学习页四个入口横排；活动页作品图与日期档案分列；加入页居中，保持原有链接与简短文案。
+
+字符底稿在 `docs/public/ascii-creation/`：双手为内置图片工具生成，笔尖和树为原生 SVG；首页只使用 `.vitepress/theme/ascii/creation/*.json` 的字符数据，不请求底稿图片。执行 `node scripts/build-ascii-creation.mjs` 可重新采样。旧摄影和几何组件保留在仓库，首页不再使用。
 
 | 标记 | 行为 |
 | --- | --- |
@@ -160,7 +164,7 @@ tags: [Swift, 工作坊]
 
 官方参考：[gsap.matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/)。
 
-验证：`npm run build` 后运行 `npm run preview -- --port 4173`，再执行 `node scripts/check-fullpage.mjs`、`node scripts/check-design.mjs`。课程交互另用 `node scripts/check-ai-course.mjs http://localhost:4173`。整屏截图输出到 `output/design-fullpage-2026-11-02`，通用设计截图输出到 `/private/tmp/club-design-qa`。
+验证：`npm run build` 后运行 `npm run preview -- --port 4173`，再执行 `node scripts/check-fullpage.mjs`、`node scripts/check-design.mjs`。课程交互另用 `node scripts/check-ai-course.mjs http://localhost:4173`。整屏截图输出到 `output/design-ascii-creation-2026-11-02`，通用设计截图输出到 `/private/tmp/club-design-qa`。
 
 ## AI 编程入门：内容交互
 

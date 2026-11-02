@@ -70,6 +70,8 @@ function inkOf(element: HTMLElement): Color {
 const isDark = () => document.documentElement.classList.contains('dark')
 
 let dispose = () => {}
+let snapshot = () => null as ReturnType<AsciiLogoRenderer['captureCells']> | null
+defineExpose({ snapshot: () => snapshot() })
 onBeforeUnmount(() => dispose())
 
 onMounted(async () => {
@@ -246,6 +248,7 @@ onMounted(async () => {
     releasePointer()
     renderer?.destroy()
     renderer = null
+    snapshot = () => null
   }
 
   measure()
@@ -276,6 +279,7 @@ onMounted(async () => {
   }
 
   canvas.classList.remove('is-hidden')
+  snapshot = () => renderer?.captureCells(width, height, cellW, cellH) ?? null
 
   // Wired only once there is something to turn, so a page without WebGL never grabs a gesture.
   root.addEventListener('pointerdown', onPointerDown)
