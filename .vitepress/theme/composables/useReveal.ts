@@ -26,6 +26,8 @@ export function initReveal(): void {
     if ('IntersectionObserver' in window) {
       context.add('reveal', (elements: HTMLElement[]) => {
         gsap.fromTo(elements, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .55, stagger: { amount: .14 }, ease: 'power3.out', clearProps: 'transform,opacity,visibility', overwrite: 'auto' })
+        const artwork = elements.filter(el => el.hasAttribute('data-mag-art')).flatMap(el => Array.from(el.querySelectorAll('img')))
+        if (artwork.length) gsap.fromTo(artwork, { scale: 1.045 }, { scale: 1, duration: 1.1, ease: 'power3.out', clearProps: 'transform' })
       })
       observer = new IntersectionObserver(entries => {
         const arrived = entries.filter(entry => entry.isIntersecting).map(entry => entry.target as HTMLElement).filter(el => pending.has(el))
