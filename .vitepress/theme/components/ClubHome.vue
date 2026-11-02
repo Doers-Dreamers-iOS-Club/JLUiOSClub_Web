@@ -193,7 +193,8 @@ const paths = [
   .club-pager, .club-page-count, .club-opening { display: none; }
 }
 
-.club-learning :deep(.ascii-slot) { height: clamp(250px,37vh,380px); margin: 12px 0 44px; }
+.club-learning .club-section__content { overflow: visible; }
+.club-learning :deep(.ascii-slot) { width: 100vw; height: min(440px,32vw,calc(100svh - 400px)); margin: 12px 0 44px calc(50% - 50vw); }
 .club-making { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
 .club-making :deep(.ascii-slot) { height: 390px; }
 .club-making__records { min-width: 0; }
@@ -207,8 +208,9 @@ const paths = [
 .club-community :deep(.ascii-slot) { height: 290px; max-width: 400px; margin: 0 auto 24px; }
 .has-ascii-canvas :deep(.ascii-poster) { visibility: hidden; }
 .is-ascii-transition :deep(.mag-ascii-hero__canvas) { visibility: hidden; transition: none; }
+@media(max-width:960px) and (min-width:701px) { .club-learning :deep(.ascii-slot) { margin-left: -48px; } }
 @media(max-width:700px) {
- .club-learning :deep(.ascii-slot) { height: 180px; margin: 12px 0 24px; }
+ .club-learning :deep(.ascii-slot) { height: clamp(100px,32vw,180px); margin: 12px 0 24px -24px; }
  .club-paths { grid-template-columns: 1fr; gap: 0; }
  .club-making { grid-template-columns: 1fr; gap: 12px; }
  .club-making :deep(.ascii-slot) { height: 170px; }
@@ -221,9 +223,10 @@ const paths = [
  .club-community :deep(.ascii-slot) { height: 230px; }
 }
 @media(max-height:740px) and (min-width:701px) {
- .club-learning :deep(.ascii-slot) { height: 230px; margin-bottom: 28px; }
+ .club-learning :deep(.ascii-slot) { height: min(230px,calc(100svh - 330px)); margin-bottom: 28px; }
  .club-making :deep(.ascii-slot) { height: 300px; }
  .club-community :deep(.ascii-slot) { height: 200px; }
 }
 @media print { .has-ascii-canvas :deep(.ascii-poster) { visibility: visible; } }
+@media(max-height:559px) { .club-learning :deep(.ascii-slot) { height: min(32vw,350px); } }
 </style>

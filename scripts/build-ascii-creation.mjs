@@ -6,7 +6,7 @@ try {
  for(const [name,file,cols] of [['hands','hands-source.png',160],['making','making.svg',100],['growing','growing.svg',100],['hands-mobile','hands-source.png',80],['making-mobile','making.svg',60],['growing-mobile','growing.svg',60]]) {
   const bytes=await fs.readFile('docs/public/ascii-creation/'+file)
   const src='data:image/'+(file.endsWith('.svg')?'svg+xml':'png')+';base64,'+bytes.toString('base64')
-  const result=await page.evaluate(async({src,cols})=>{
+  const result=await page.evaluate(async({src,cols,vector})=>{
    const image=new Image();image.src=src;await image.decode()
    const c=document.createElement('canvas');c.width=image.width;c.height=image.height
    const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0)
@@ -19,8 +19,22 @@ try {
    const small=ctx.getImageData(0,0,cols,rows).data
    const ramp=' .:-=+*#%@';const lines=[]
    for(let y=0;y<rows;y++){let line='';for(let x=0;x<cols;x++){const v=small[(y*cols+x)*4];const density=v>233?0:(255-v)/255;line+=ramp[Math.min(9,Math.ceil(density*9))]}lines.push(line)}
-   return {cols,rows,lines}
-  },{src,cols})
+   const bounds={x:x0,y:y0,width:x1-x0,height:y1-y0}
+   if(!vector)return {cols,rows,lines,bounds}
+   const svg=new DOMParser().parseFromString(vector,'image/svg+xml')
+   const leaves=Array.from(svg.querySelectorAll('g[fill="#777"] > path')).map(el=>{
+    const d=el.getAttribute('d'),[,x,y]=d.match(/^M([\d.]+) ([\d.]+)/)
+    return {path:new Path2D(d),u:(Number(x)-x0)/(x1-x0),v:(Number(y)-y0)/(y1-y0)}
+   })
+   const growth=lines.map((line,row)=>Array.from(line).map((char,col)=>{
+    if(char===' ')return '0'
+    const x=x0+(col+.5)*(x1-x0)/cols,y=y0+(row+.5)*(y1-y0)/rows
+    const dx=(x1-x0)/cols*.45,dy=(y1-y0)/rows*.45
+    const leaf=leaves.findIndex(leaf=>[[0,0],[-dx,-dy],[dx,-dy],[-dx,dy],[dx,dy]].some(([ox,oy])=>ctx.isPointInPath(leaf.path,x+ox,y+oy)))
+    return String(leaf+1)
+   }).join(''))
+   return {cols,rows,lines,bounds,growth,anchors:leaves.map(({u,v})=>({u,v}))}
+  },{src,cols,vector:name.startsWith('growing')?bytes.toString('utf8'):null})
   await fs.writeFile('.vitepress/theme/ascii/creation/'+name+'.json',JSON.stringify(result))
   console.log(name,result.cols,result.rows,result.lines.join('').replaceAll(' ','').length)
  }

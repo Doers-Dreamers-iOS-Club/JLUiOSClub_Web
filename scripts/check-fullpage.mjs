@@ -45,7 +45,7 @@ try {
   for (const [label, file] of [['学习', 'learning'], ['活动', 'activities'], ['加入', 'community']]) {
     await select(label)
     assert.equal(await page.$$eval('.club-section img', els => els.length),0,'Home sections use native geometry, not photography')
-    await wait(1600)
+    await wait(label==='加入'?5000:2500)
     await page.screenshot({ path: `${out}/${file}-desktop.png` })
   }
   await select('开场');await wait(1700)
