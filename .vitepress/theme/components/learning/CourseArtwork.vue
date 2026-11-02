@@ -30,7 +30,6 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
       </g>
       <text x="400" y="385" text-anchor="middle" class="art-small" letter-spacing="3">想法 · 行动 · 观察 · 再试一次</text>
     </svg>
-    <figcaption>从一句想法到可以试玩的作品，每一次观察都带来下一步。</figcaption>
   </figure>
 </template>
 <style scoped>

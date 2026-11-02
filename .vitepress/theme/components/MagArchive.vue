@@ -44,7 +44,7 @@ watch(currentView, view => {
     <div v-if="limit" class="mag-archive__preview" data-mag-stagger>
       <a v-for="entry in entries" :key="entry.url" class="mag-archive__row" :href="entry.url">
         <time class="mag-archive__date">{{ entry.date }}</time>
-        <div class="mag-archive__row-main"><h3>{{ entry.title }}</h3><p v-if="entry.summary">{{ entry.summary }}</p></div>
+        <div class="mag-archive__row-main"><h3>{{ entry.title }}</h3></div>
         <i class="ti ti-arrow-up-right mag-archive__arrow" aria-hidden="true" />
       </a>
     </div>
@@ -54,18 +54,18 @@ watch(currentView, view => {
         <div class="mag-archive__entries" data-mag-stagger>
           <a v-for="entry in group.items" :key="entry.url" class="mag-archive__row" :href="entry.url">
             <time class="mag-archive__date">{{ entry.date }}</time>
-            <div class="mag-archive__row-main"><h3>{{ entry.title }}</h3><p v-if="entry.summary">{{ entry.summary }}</p></div>
+            <div class="mag-archive__row-main"><h3>{{ entry.title }}</h3></div>
             <i class="ti ti-arrow-up-right mag-archive__arrow" aria-hidden="true" />
           </a>
         </div>
       </section>
     </div>
     <div v-else class="mag-archive__grid">
-      <a v-for="(entry, i) in entries" :key="entry.url" class="mag-archive__item" :href="entry.url">
+      <a v-for="entry in entries" :key="entry.url" class="mag-archive__item" :href="entry.url">
         <div v-if="entry.cover" class="mag-archive__cover"><img :src="entry.cover" alt="" loading="lazy" decoding="async" /></div>
         <div class="mag-archive__item-content">
-          <div class="mag-archive__meta"><time>{{ entry.date }}</time><span v-if="highlightLatest && i === 0">最近更新</span></div>
-          <h3>{{ entry.title }}</h3><p v-if="entry.summary">{{ entry.summary }}</p>
+          <div class="mag-archive__meta"><time>{{ entry.date }}</time></div>
+          <h3>{{ entry.title }}</h3>
           <i class="ti ti-arrow-up-right mag-archive__arrow" aria-hidden="true" />
         </div>
       </a>

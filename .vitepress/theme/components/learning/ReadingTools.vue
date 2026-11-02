@@ -22,13 +22,12 @@ function toggle() {
 </script>
 <template>
   <div class="reading-tools mag-no-reveal">
-    <div class="reading-tools__meta"><span>JLU iOS Club · AI 编程入门</span><span>约 {{ minutes }} 分钟阅读 · 不含练习</span></div>
     <div class="reading-tools__actions">
       <a :href="courseBase">全部章节</a>
       <a :href="courseBase + 'materials/'">配套材料</a>
       <button v-if="main" type="button" :aria-pressed="complete" @click="toggle">{{ complete ? '已读 · 点击取消' : '标记为已读' }}</button>
     </div>
-    <p class="reading-tools__status" role="status">{{ message || (main ? '阅读标记仅保存在当前浏览器。' : '补充学习 · 按需要阅读。') }}</p>
+    <p v-if="message" class="reading-tools__status" role="status">{{ message }}</p>
   </div>
 </template>
 <style scoped>

@@ -13,7 +13,6 @@ onUnmounted(() => { window.removeEventListener('storage', sync); window.removeEv
     <div class="course-progress__top"><span>你的阅读足迹</span><span>{{ completed.length }} / 6 章已读</span></div>
     <div class="course-progress__track" role="progressbar" :aria-valuenow="completed.length" :aria-valuemin="0" :aria-valuemax="6" aria-label="已读章节"><span :style="{ width: `${completed.length / 6 * 100}%` }" /></div>
     <a :href="courseBase + 'chapters/' + next.id">{{ completed.length === 6 ? '回顾第一章' : last ? '继续阅读' : '从第一章开始' }}：{{ next.title }} <span aria-hidden="true">→</span></a>
-    <small>在章节中标记已读，进度会保存在当前浏览器。</small>
   </section>
 </template>
 <style scoped>

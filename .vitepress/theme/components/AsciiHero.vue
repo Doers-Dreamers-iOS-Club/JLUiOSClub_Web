@@ -67,6 +67,9 @@ function inkOf(element: HTMLElement): Color {
 
 const isDark = () => document.documentElement.classList.contains('dark')
 
+let dispose = () => {}
+onBeforeUnmount(() => dispose())
+
 onMounted(async () => {
   const root = rootRef.value
   const canvas = canvasRef.value
@@ -88,7 +91,9 @@ onMounted(async () => {
   let last = 0
   let elapsed = Math.PI
   let visible = false
-  const reduced = prefersReducedMotion()
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  let reduced = prefersReducedMotion()
+  const onMotionChange = () => { reduced = motionQuery.matches; applyMotion(); draw() }
 
   let azimuth = 0
   let elevation = REST_ELEVATION
@@ -172,6 +177,7 @@ onMounted(async () => {
   }
 
   function onPointerDown(event: PointerEvent) {
+    if ((event.target as Element).closest('a')) return
     if (pointer !== -1 || !event.isPrimary) return
     pointer = event.pointerId
     pointerX = event.clientX
@@ -217,6 +223,20 @@ onMounted(async () => {
     renderer.setPaper(!isDark())
     // Drawn here rather than left to the loop: under reduced motion there is no loop.
     draw()
+  }
+
+  dispose = () => {
+    motionQuery.removeEventListener('change', onMotionChange)
+    stop()
+    clearTimeout(settle)
+    resizeObserver?.disconnect()
+    visibilityObserver?.disconnect()
+    themeObserver?.disconnect()
+    canvas.removeEventListener('webglcontextlost', onContextLost)
+    root.removeEventListener('pointerdown', onPointerDown)
+    releasePointer()
+    renderer?.destroy()
+    renderer = null
   }
 
   measure()
@@ -271,27 +291,16 @@ onMounted(async () => {
   themeObserver = new MutationObserver(applyTheme)
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 
-  const onContextLost = (event: Event) => {
+  function onContextLost(event: Event) {
     event.preventDefault()
     stop()
     canvas.classList.add('is-hidden')
   }
   canvas.addEventListener('webglcontextlost', onContextLost)
 
+  motionQuery.addEventListener('change', onMotionChange)
   applyMotion()
 
-  onBeforeUnmount(() => {
-    stop()
-    clearTimeout(settle)
-    resizeObserver?.disconnect()
-    visibilityObserver?.disconnect()
-    themeObserver?.disconnect()
-    canvas.removeEventListener('webglcontextlost', onContextLost)
-    root.removeEventListener('pointerdown', onPointerDown)
-    releasePointer()
-    renderer?.destroy()
-    renderer = null
-  })
 })
 </script>
 
@@ -303,11 +312,7 @@ onMounted(async () => {
     aria-label="Swift 标志，以 ASCII 字符打印的可拖拽立体"
   >
     <canvas ref="canvasRef" class="mag-ascii-hero__canvas is-hidden" />
-    <p class="mag-ascii-hero__hint" aria-hidden="true">
-      <span class="mag-ascii-hero__drag">drag to orbit</span>
-      <span class="mag-ascii-hero__chevron">↓</span>
-      <span>scroll</span>
-    </p>
+    <a class="mag-ascii-hero__hint" href="#club-title" aria-label="浏览社团内容"><i class="ti ti-arrow-down" aria-hidden="true" /></a>
   </section>
 </template>
 
@@ -361,7 +366,7 @@ onMounted(async () => {
   font-size: var(--mag-fs-micro);
   letter-spacing: var(--mag-tracking-eyebrow);
   text-transform: uppercase;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .mag-ascii-hero__drag {

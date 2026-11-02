@@ -32,7 +32,6 @@ async function copy() {
 <template>
   <section class="prompt-workshop mag-no-reveal" aria-label="六轮提示词工作坊">
     <div class="prompt-workshop__heading"><strong>把“加个速度”拆成六轮对话</strong></div>
-    <p class="prompt-workshop__intro">点击轮次查看示例。把项目文件名和实际观察补进去，再交给 AI。</p>
     <div class="prompt-workshop__rounds" role="group" aria-label="选择对话轮次">
       <button v-for="(item, index) in rounds" :key="item.title" type="button" :aria-pressed="selected === index" @click="select(index)"><span>{{ String(index + 1).padStart(2, '0') }}</span>{{ item.title }}</button>
     </div>
