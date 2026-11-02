@@ -24,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Generated design output and macOS metadata
+/output/
+._*
