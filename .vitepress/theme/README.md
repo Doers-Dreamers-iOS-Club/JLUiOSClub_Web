@@ -145,7 +145,7 @@ tags: [Swift, 工作坊]
 
 ## 动效
 
-`useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。首屏以右上 ASCII 标识与左下两行诗句组成错位构图：`I dwell in` 实心衬线体，`Possibility` 细描边大字。相机按可用宽高缩放与偏移，字符快照保持实际位置；手机改为上图下文，低高度桌面缩小字级。配色沿用主题变量，强制颜色模式回退实心字，无额外文案或字体请求。
+`useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。首屏 ASCII 标识水平居中并略微上移；左侧诗句分为 `I`、`dwell in`、`Possibility` 三行，纵向展开。`I` 使用超大实心衬线字，`Possibility` 使用放大描边字。相机按可用宽高缩放，字符快照保持实际位置；手机将 Logo 置于首行和后两行之间，低高度桌面缩小字级。右侧导航悬停时短线延展、栏目名浮现，键盘聚焦同样展示；减少动态效果直接显示状态。配色沿用主题变量，强制颜色模式回退实心字，无额外文案或字体请求。
 
 首页以 ASCII 串起创造主题：Swift 开场、相触的双手、笔尖与画布、生长的树。`AsciiNarrative.vue` 使用共享二维 Canvas，在翻页时让字符散开后重组，约 1.45 秒后进入各屏动作。首屏通过 `AsciiHero.snapshot()` 读取当前 WebGL 字符单元，保留原字形和位置；后续三个形状来自本地字符矩阵。过渡时隐藏原首屏画布，避免重复显示，反向翻页同样支持重组。
 

@@ -28,7 +28,7 @@ const paths = [
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
           <AsciiHero ref="opening" :active="!enabled || active === 0" />
-          <p class="club-opening__poem" lang="en"><span>I dwell in</span> <span class="club-opening__possibility">Possibility</span></p>
+          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell">dwell in</span> <span class="club-opening__possibility">Possibility</span></p>
         </div>
       </section>
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
@@ -73,7 +73,7 @@ const paths = [
     <AsciiNarrative :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
     <nav v-if="enabled" class="club-pager" aria-label="首页栏目">
       <button type="button" aria-label="上一屏" :disabled="busy || active <= (asciiAvailable ? 0 : 1)" @click="navigate(active - 1)"><i class="ti ti-chevron-up" aria-hidden="true" /></button>
-      <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__mark" /></button>
+      <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__label" aria-hidden="true">{{ page }}</span><span class="club-pager__mark" aria-hidden="true" /></button>
       <button type="button" aria-label="下一屏" :disabled="busy || active === pages.length - 1" @click="navigate(active + 1)"><i class="ti ti-chevron-down" aria-hidden="true" /></button>
     </nav>
     <span v-if="enabled" class="club-page-count" aria-hidden="true">{{ String(active + 1).padStart(2, '0') }} <span>/ 04</span></span>
@@ -86,18 +86,22 @@ const paths = [
 .club-page { min-height: var(--page-height); scroll-margin-top: var(--vp-nav-height, 64px); }
 .club-page__inner { position: relative; display: flex; align-items: center; min-height: var(--page-height); width: 100%; background: var(--vp-c-bg); }
 .club-opening .club-page__inner { display: block; }
-.club-opening__poem { position: absolute; z-index: 2; left: 8vw; top: 51%; margin: 0; font-family: var(--mag-font-serif); font-size: clamp(56px,6vw,96px); font-weight: 400; line-height: 1.08; letter-spacing: -.055em; pointer-events: none; }
+.club-opening__poem { position: absolute; z-index: 2; left: 5vw; top: 6%; bottom: 10%; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; margin: 0; font-family: var(--mag-font-serif); font-size: clamp(48px,6.8vw,116px); font-weight: 400; line-height: 1; letter-spacing: -.055em; pointer-events: none; }
 .club-opening__poem > span { display: block; }
-.club-opening__possibility { margin-top: .05em; font-size: 1.24em; letter-spacing: -.04em; }
+.club-opening__i { font-size: clamp(140px,29svh,340px); line-height: .75; }
+.club-opening__possibility { font-size: clamp(64px,8.8vw,152px); letter-spacing: -.04em; }
 @supports (-webkit-text-stroke: 1px currentColor) {
   .club-opening__possibility { -webkit-text-stroke: 1px var(--mag-text); -webkit-text-fill-color: transparent; }
 }
 @media (max-width: 700px) {
-  .club-opening__poem { left: 24px; top: 62%; font-size: clamp(40px,12vw,76px); }
-  .club-opening__possibility { font-size: 1.25em; margin-top: .12em; }
+  .club-opening__poem { left: 24px; top: 5%; bottom: 11%; display: block; font-size: clamp(40px,9vw,60px); }
+  .club-opening__i { font-size: clamp(110px,22svh,200px); }
+  .club-opening__dwell { position: absolute; bottom: 1.9em; white-space: nowrap; }
+  .club-opening__possibility { position: absolute; bottom: 0; font-size: clamp(54px,12vw,80px); }
 }
 @media (max-height: 700px) and (min-width: 701px) {
-  .club-opening__poem { top: 48%; font-size: clamp(48px,9vh,64px); }
+  .club-opening__poem { font-size: clamp(48px,10svh,70px); }
+  .club-opening__possibility { font-size: clamp(64px,13svh,96px); }
 }
 @media (forced-colors: active) {
   .club-opening__possibility { -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor; }
@@ -151,11 +155,28 @@ const paths = [
 .is-paged :deep(.mag-ascii-hero) { touch-action: pan-x pinch-zoom; }
 .is-paged .club-section__content { max-height: 100%; overflow-y: auto; scrollbar-width: thin; }
 .club-pager { position: absolute; z-index: 5; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; padding: 8px 0; border: var(--mag-rule); border-radius: 24px; background: var(--vp-c-bg); }
-.club-pager button { display: flex; align-items: center; justify-content: center; width: 40px; height: 36px; color: var(--mag-text-secondary); }
+.club-pager button { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 36px; color: var(--mag-text-secondary); transition: color .25s var(--mag-ease); }
 .club-pager button:disabled { opacity: .35; }
 .club-pager button[aria-current] { opacity: 1; color: var(--mag-accent); }
-.club-pager__mark { display: block; width: 4px; height: 4px; border-radius: 4px; background: currentColor; transition: height .3s var(--mag-ease); }
+.club-pager__mark { display: block; width: 4px; height: 4px; border-radius: 4px; background: currentColor; transition: height .3s var(--mag-ease), transform .3s var(--mag-ease); }
 .club-pager button[aria-current] .club-pager__mark { height: 20px; }
+.club-pager__label { position: absolute; right: calc(100% + 18px); padding: 4px 8px; font-size: 13px; line-height: 1.5; white-space: nowrap; color: var(--mag-text); background: var(--vp-c-bg); opacity: 0; transform: translateX(8px); pointer-events: none; transition: opacity .25s var(--mag-ease), transform .35s var(--mag-ease); }
+.club-pager button:has(.club-pager__mark)::after { content: ''; position: absolute; top: calc(50% - .5px); right: calc(50% + 5px); width: 24px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s var(--mag-ease); }
+.club-pager button > i { transition: transform .3s var(--mag-ease); }
+.club-pager button:focus-visible { color: var(--mag-accent); outline: 1px solid var(--mag-accent); outline-offset: 2px; border-radius: 6px; }
+.club-pager button:focus-visible .club-pager__label { opacity: 1; transform: translateX(0); }
+.club-pager button:focus-visible::after { transform: scaleX(1); }
+@media (hover: hover) {
+  .club-pager button:not(:disabled):hover { color: var(--mag-accent); }
+  .club-pager button:not(:disabled):hover .club-pager__label { opacity: 1; transform: translateX(0); }
+  .club-pager button:not(:disabled):hover::after { transform: scaleX(1); }
+  .club-pager button:not(:disabled):hover .club-pager__mark { transform: scale(1.35); }
+  .club-pager button:first-child:not(:disabled):hover > i { transform: translateY(-3px); }
+  .club-pager button:last-child:not(:disabled):hover > i { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .club-pager button, .club-pager__mark, .club-pager__label, .club-pager button::after, .club-pager button > i { transition: none; }
+}
 .club-page-count { position: absolute; z-index: 5; bottom: 24px; left: max(7vw, calc((100vw - 1240px) / 2)); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--mag-text-secondary); }
 .club-page-count > span { padding-left: 10px; color: var(--mag-text-tertiary); }
 .club-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
