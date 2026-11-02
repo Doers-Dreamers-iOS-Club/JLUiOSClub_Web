@@ -167,15 +167,17 @@ tags: [Swift, 工作坊]
 | scene | 内容 |
 | --- | --- |
 | project | 开始、碰壁与清零的自动分镜 |
-| context | 材料逐步汇入上下文 |
+| context | 定位文件、读取代码，再补齐需求与实际反馈 |
 | pause | 暂停、继续、结束与重开的状态剖面 |
 | timers | 正常与重复计时器的对照实验 |
-| versions | 三个版本的自动画面对比 |
-| skill | 方法、事实、任务与工具能力归类 |
-| mcp | MCP 接线台，模拟连接故障与返回结果 |
-| api | 预设请求、失败路径与响应 |
+| versions | 游戏加速、暂停，暂存提交后回看历史 |
+| skill | 同一套检查方法用于贪吃蛇与打砖块 |
+| mcp | 浏览器打开游戏、点击开始与暂停，再返回观察结果 |
+| api | 对话请求打包、服务验证与回答逐段返回 |
 | observe / feedback | 试玩与反馈的短分镜 |
 
 组件位于 `components/learning/illustrations/`，均为辅助正文的自动图解，不再提供选项、拖拽、下拉框或任务操作。`LabFrame` 与 `lab.css` 管理简洁外框和唯一的暂停图标，`useLabPlayback` 管理进入视口后的单时钟循环，`SnakeScene` 提供共用 SVG。至少 15% 可见时运行，离屏与后台暂停，返回后继续；用户主动暂停会保持。结束画面停留后重播。减少动态效果时显示有代表性的静态帧，不运行计时器；卸载时释放全部监听与计时器。标题与标签尽量简短，解释保留在正文，图解不播报每一帧。
 
 所有场景都是教学模拟，不发送模型请求、连接真实 MCP 服务或操作仓库。旧 SnakeLab / FlowExplorer 文件保留作参考，已不在章节或全局组件注册中使用。验证入口：`node scripts/check-ai-course.mjs <本地预览地址>`。
+
+`DemoGame` 提供新分镜中的蛇与砖块运动。上述五幅情境动画另用 `node scripts/check-contextual-demos.mjs` 验证文件读取、提交历史保留、跨游戏复用、工具操作前后状态与响应顺序。截图保存在 `output/design-contextual-demos-2026-11-02`。
