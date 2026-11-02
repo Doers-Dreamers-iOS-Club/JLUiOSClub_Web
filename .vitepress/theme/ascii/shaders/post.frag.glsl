@@ -4,6 +4,7 @@ precision highp float;
 in vec2 vUv;
 out vec4 outColor;
 uniform sampler2D tCells;
+uniform sampler2D tScene;
 uniform sampler2D tAtlas;
 uniform vec2 uCellsPerUv;
 uniform vec2 uGrid;
@@ -11,6 +12,7 @@ uniform vec2 uAtlasGrid;
 uniform vec2 uAtlasPad;
 uniform vec2 uAtlasInner;
 uniform vec3 uColor;
+uniform vec3 uPaperColor;
 
 void main() {
   vec2 cellPos = vUv * uCellsPerUv;
@@ -26,5 +28,6 @@ void main() {
   vec2 atlasStep = uAtlasInner / uAtlasGrid;
   float mask = textureGrad(tAtlas, atlasUv, dFdx(cellPos) * atlasStep, dFdy(cellPos) * atlasStep).a;
 
-  outColor = vec4(uColor * mask, mask);
+  float paper = texture(tScene, vUv).a * (1.0 - mask);
+  outColor = vec4(uColor * mask + uPaperColor * paper, mask + paper);
 }

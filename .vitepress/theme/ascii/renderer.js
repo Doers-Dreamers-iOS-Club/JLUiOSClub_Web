@@ -116,6 +116,7 @@ export class AsciiLogoRenderer {
     });
 
     this.#postMaterial = fullFrameMaterial(debug.postShader ?? POST_FRAG, {
+      tScene: { value: this.#sceneTarget.texture },
       tCells: { value: this.#cellTarget.texture },
       tAtlas: { value: atlas.sheet },
       uCellsPerUv: { value: new Vector2(1, 1) },
@@ -124,6 +125,7 @@ export class AsciiLogoRenderer {
       uAtlasPad: { value: atlas.pad },
       uAtlasInner: { value: atlas.inner },
       uColor: { value: new Color(1, 1, 1) },
+      uPaperColor: { value: new Color(1, 1, 1) },
     });
 
     this.#quad = new Mesh(new PlaneGeometry(2, 2), this.#cellMaterial);
@@ -189,8 +191,9 @@ export class AsciiLogoRenderer {
   }
 
   /** Ink on paper, or light on a dark ground. Decides whether the scene tone is inverted. */
-  setPaper(light) {
+  setPaper(light, color) {
     this.#mesh.material.uniforms.uPaper.value = light ? 1 : 0;
+    if (color) this.#postMaterial.uniforms.uPaperColor.value.copy(color);
   }
 
   /** Cell sizes are CSS pixels. The scene target is sized off the cell grid rather than the canvas,
@@ -210,10 +213,10 @@ export class AsciiLogoRenderer {
     this.#cellTarget.setSize(cols, rows);
 
     this.#camera.aspect = sceneWidth / sceneHeight;
-    const compact = width <= 700;
-    const artworkSize = compact ? Math.min(width * 0.60, height * 0.38) : Math.min(width * 0.40, height * 0.58, 620);
+    const compact = width <= 960 && height + 64 >= width;
+    const artworkSize = compact ? Math.min(width * 0.76, height * 0.48) : Math.min(width * 0.50, height * 0.72, 820);
     this.#camera.zoom = artworkSize / (height * 0.76);
-    this.#camera.setViewOffset(sceneWidth, sceneHeight, 0, sceneHeight * (compact ? 0.07 : 0.06), sceneWidth, sceneHeight);
+    this.#camera.setViewOffset(sceneWidth, sceneHeight, 0, sceneHeight * (compact ? 0 : 0.02), sceneWidth, sceneHeight);
     this.#camera.updateProjectionMatrix();
 
     this.#cellMaterial.uniforms.uResolution.value.set(sceneWidth, sceneHeight);

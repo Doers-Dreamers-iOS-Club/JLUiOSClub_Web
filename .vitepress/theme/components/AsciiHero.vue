@@ -54,14 +54,14 @@ const prefersReducedMotion = () =>
 
 /** Read back through a 1x1 canvas rather than parsed: the cascade can hand down any
  * computed form, and only the browser reliably knows what it resolved to. */
-function inkOf(element: HTMLElement): Color {
+function inkOf(element: HTMLElement, color = getComputedStyle(element).color): Color {
   const probe = document.createElement('canvas')
   probe.width = 1
   probe.height = 1
   const ctx = probe.getContext('2d', { willReadFrequently: true })
   if (!ctx) return new Color(1, 1, 1)
 
-  ctx.fillStyle = getComputedStyle(element).color
+  ctx.fillStyle = color
   ctx.fillRect(0, 0, 1, 1)
   const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
   return new Color().setRGB(r / 255, g / 255, b / 255, LinearSRGBColorSpace)
@@ -228,7 +228,7 @@ onMounted(async () => {
   function applyTheme() {
     if (!renderer) return
     renderer.setInk(inkOf(canvas!))
-    renderer.setPaper(!isDark())
+    renderer.setPaper(!isDark(), inkOf(root!, getComputedStyle(root!).getPropertyValue('--vp-c-bg')))
     // Drawn here rather than left to the loop: under reduced motion there is no loop.
     draw()
   }

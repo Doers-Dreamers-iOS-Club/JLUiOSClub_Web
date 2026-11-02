@@ -28,7 +28,7 @@ const paths = [
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
           <AsciiHero ref="opening" :active="!enabled || active === 0" />
-          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell">dwell in</span> <span class="club-opening__possibility">Possibility</span></p>
+          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell"><span>dwell</span> <span>in</span></span> <span class="club-opening__possibility">Possibility</span></p>
         </div>
       </section>
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
@@ -86,25 +86,22 @@ const paths = [
 .club-page { min-height: var(--page-height); scroll-margin-top: var(--vp-nav-height, 64px); }
 .club-page__inner { position: relative; display: flex; align-items: center; min-height: var(--page-height); width: 100%; background: var(--vp-c-bg); }
 .club-opening .club-page__inner { display: block; }
-.club-opening__poem { position: absolute; z-index: 2; left: 5vw; top: 6%; bottom: 10%; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; margin: 0; font-family: var(--mag-font-serif); font-size: clamp(48px,6.8vw,116px); font-weight: 400; line-height: 1; letter-spacing: -.055em; pointer-events: none; }
+.club-opening__poem { position: absolute; z-index: 0; inset: 4% 5vw 8% 4vw; margin: 0; font-family: var(--mag-font-serif); font-weight: 400; line-height: .88; letter-spacing: -.055em; pointer-events: none; }
 .club-opening__poem > span { display: block; }
-.club-opening__i { font-size: clamp(140px,29svh,340px); line-height: .75; }
-.club-opening__possibility { font-size: clamp(64px,8.8vw,152px); letter-spacing: -.04em; }
-@supports (-webkit-text-stroke: 1px currentColor) {
-  .club-opening__possibility { -webkit-text-stroke: 1px var(--mag-text); -webkit-text-fill-color: transparent; }
+.club-opening__i { position: absolute; top: 0; font-size: clamp(180px,34svh,440px); line-height: .75; }
+.club-opening__dwell { position: absolute; top: 38%; font-size: clamp(90px,12.5vw,240px); font-style: italic; white-space: nowrap; }
+.club-opening__poem > .club-opening__dwell { display: flex; justify-content: space-between; width: 100%; }
+.club-opening__possibility { position: absolute; bottom: 0; font-size: 21vw; letter-spacing: -.065em; }
+@media (max-width: 960px) and (orientation: portrait) {
+  .club-opening__poem { inset: 5% 16px 12% 20px; }
+  .club-opening__i { font-size: clamp(80px,calc(var(--page-height) * .35 - 25vw),26svh); }
+  .club-opening__dwell { top: calc(var(--page-height) * .45 - min(38vw,calc(var(--page-height) * .24)) - 9vw); font-size: 16vw; }
+  .club-opening__possibility { font-size: 21vw; }
 }
-@media (max-width: 700px) {
-  .club-opening__poem { left: 24px; top: 5%; bottom: 11%; display: block; font-size: clamp(40px,9vw,60px); }
-  .club-opening__i { font-size: clamp(110px,22svh,200px); }
-  .club-opening__dwell { position: absolute; bottom: 1.9em; white-space: nowrap; }
-  .club-opening__possibility { position: absolute; bottom: 0; font-size: clamp(54px,12vw,80px); }
-}
-@media (max-height: 700px) and (min-width: 701px) {
-  .club-opening__poem { font-size: clamp(48px,10svh,70px); }
-  .club-opening__possibility { font-size: clamp(64px,13svh,96px); }
-}
-@media (forced-colors: active) {
-  .club-opening__possibility { -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor; }
+@media (max-height: 700px) and (orientation: landscape) {
+  .club-opening__i { font-size: 30svh; }
+  .club-opening__dwell { top: 32%; font-size: min(12.5vw,22svh); }
+  .club-opening__possibility { font-size: min(21vw,37svh); }
 }
 .club-section__content { position: relative; width: min(1120px, 82vw); margin-inline: auto; padding: 48px 0 64px; }
 .club-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
