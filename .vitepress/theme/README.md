@@ -5,6 +5,8 @@
 **新增一个页面时不需要写任何 CSS**，也不需要 `import`——直接用下面的组件即可。
 
 视觉方向是**编辑杂志风**：衬线大标题、纸面背景、期号/年份编号、细规则线。
+卡片的交互语言是**便利贴**：索引网格项是完整的彩色便签（纸面颜色由标题散列、
+顶部胶带、静止翘角、错落倾斜），hover 掀起一角，点击撕下后淡化跳转到对应页面。
 所有颜色、字号、间距、阴影都来自 `styles/tokens.css`（亮/暗两套），
 **改主题只需要动那一个文件**，不要在组件里写死颜色值。
 
@@ -21,7 +23,8 @@
 │   ├── composables/
 │   │   ├── useReveal.ts      # IntersectionObserver 揭示逻辑（markdown 原生 DOM）
 │   │   ├── useMotionReady.ts # SSG 安全的动效开关（水合 + prefers-reduced-motion）
-│   │   └── useRouteEnter.ts  # 路由进入转场
+│   │   ├── useRouteEnter.ts  # 路由进入转场（撕下转场的淡化入场也在这里分流）
+│   │   └── useNoteTear.ts    # 「撕下便签 → 淡化」点击转场编排（MagArchive 网格 / MagCard 使用）
 │   └── components/           # 下表中的所有组件
 └── data/
     ├── shared.ts             # RecordEntry 类型 + toEntries() 派生（year/issue）
@@ -151,6 +154,7 @@ tags: [Swift, 工作坊]
 | --- | --- | --- |
 | `useReveal`（IntersectionObserver + CSS） | markdown 原生 DOM 的滚动揭示 | 对 `.vp-doc` 顶层区块和 `[data-mag-stagger]` 子元素自动生效，页面零配置 |
 | motion-v（`<Motion>` / `useScroll` / `animate()`） | 组件级编排 | MagHero 首屏入场、MagArchive 时间线 scrub、首页 hero、路由转场 |
+| `useNoteTear`（模块级编排 + CSS keyframes） | 便签卡片的点击转场 | 被点卡片克隆为挂在 body 上的「幽灵」独立播撕下动画（拽角→脱胶回弹→甩出），同时其余内容淡出 → 切路由 → 新页在幽灵下方纯淡入（`mag-enter-tear`，useRouteEnter 分流），幽灵飞完才消散 |
 
 规则：
 
@@ -164,3 +168,24 @@ tags: [Swift, 工作坊]
 
 - **衬线**（`--mag-font-serif`，系统栈零加载）：只用于 display 标题（vp-doc h1/h2、刊头、年份、期号）；
 - **无衬线**：正文、小标、卡片、按钮等一切界面文字。
+
+
+## AI 编程入门：内容交互
+
+`components/learning/` 提供静态封面、阅读标记、六轮对话和章节小题。新增图解统一通过 `<LearningIllustration scene="..." />` 按需加载，章节只引用需要的场景，首页不加载这些图解。
+
+| scene | 内容 |
+| --- | --- |
+| project | 规则选择与作品预览 |
+| context | 上下文桌面，点选或拖入材料 |
+| pause | 暂停、继续、结束与重开的状态剖面 |
+| timers | 正常与重复计时器的对照实验 |
+| versions | 版本画面、真实节选差异与模拟恢复 |
+| skill | 方法、事实、任务与工具能力归类 |
+| mcp | MCP 接线台，模拟连接故障与返回结果 |
+| api | 预设请求信封、失败路径与分段响应 |
+| observe / feedback | 试玩与反馈的短分镜 |
+
+组件位于 `components/learning/illustrations/`。`LabFrame` 与 `lab.css` 管理纸面、控件和观察笔记，`useLabPlayback` 管理用户启动的单时钟与停止条件，`SnakeScene` 提供共用 SVG。新增动画使用主题令牌，遵守减少动态效果；离屏、切页与标签隐藏会停止播放。状态改变独立于 CSS 动画完成事件。
+
+所有场景都是教学模拟，不发送模型请求、连接真实 MCP 服务或操作仓库。旧 SnakeLab / FlowExplorer 文件保留作参考，已不在章节或全局组件注册中使用。验证入口：`node scripts/check-ai-course.mjs <本地预览地址>`。

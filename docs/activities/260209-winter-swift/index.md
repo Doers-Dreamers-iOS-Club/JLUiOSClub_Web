@@ -9,6 +9,13 @@ icon: "❄️"
 tags: [Swift, SwiftUI, 培训]
 ---
 
+<MagNote type="tip" title="新的入门起点">
+
+如果想先体验与 Agent 一起做项目，可以阅读 [从想法到作品：AI 编程入门](/resources/ai-programming/)。它从贪吃蛇出发，偏重动手协作；本专题的 AI 补充讲座继续提供概念与工程视角。
+
+</MagNote>
+
+
 
 <MagHero title="iOS Club 冬季 Swift 培训" subtitle="这里是本期培训总导航页。已将讲义入口拆分为“数字正课”与“补充讲座”，便于按学习目的快速进入。" />
 

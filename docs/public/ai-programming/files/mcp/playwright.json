@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "--registry=https://registry.npmmirror.com",
+        "-y",
+        "@playwright/mcp@latest",
+        "--browser",
+        "msedge"
+      ]
+    }
+  }
+}

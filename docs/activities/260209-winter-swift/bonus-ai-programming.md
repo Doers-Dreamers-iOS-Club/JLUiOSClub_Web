@@ -5,6 +5,13 @@ date: 2026.02.22
 outline: [2, 3]
 ---
 
+<MagNote type="tip" title="先动手，再回来看全景">
+
+第一次接触 AI 编程，可以先读 [从想法到作品](/resources/ai-programming/)，沿贪吃蛇项目认识协作、Skill 与 MCP，再用本讲座补齐概念关系。
+
+</MagNote>
+
+
 
 <MagHero title="主线之外 · 现代 AI 编程全景" subtitle="这份讲义是主线之外的补充版本，目标不是“再背几个名词”，而是建立一张能直接指导你做项目的 AI 编程路线图。">
   <div class="mag-badge-row">

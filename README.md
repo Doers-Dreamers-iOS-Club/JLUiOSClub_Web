@@ -132,3 +132,20 @@ pnpm preview
 ## License
 
 本项目基于 [MIT License](./LICENSE) 开源。
+
+
+## AI 编程入门专题
+
+入口：`/resources/ai-programming/`。包含六章主线、API 补充、五篇随查、配套材料与连续阅读版。
+
+- 在线正文只维护 `docs/resources/ai-programming/_content/`，分章页与连续阅读通过 Markdown include 共用。
+- 页面元信息、相关阅读与小题放在 `chapters/`；交互组件位于 `.vitepress/theme/components/learning/`，专题样式为 `styles/learning.css`。
+- `docs/public/ai-programming/files/` 保存可下载原文件。完整讲义 ZIP 保留原始目录；修改原材料后需要同步更新下载包。
+- 静态托管会隐藏点文件，因此 API 环境变量样例通过 `files/api/env.example` 提供，下载属性保留 `.env.example` 文件名；ZIP 内保留原名。
+- 阅读进度仅存于本机浏览器，交互演示不调用模型 API。
+- 新入口同时维护顶栏、侧栏、首页、资源页及相关讲座。`_content` 和 `docs/superpowers` 为非独立页面，已在站点配置排除。
+- 校验：`npm run build`；交互与链接回归见 `scripts/check-ai-course.mjs`。
+
+### 章节可操作图解
+
+八种图解与两段短分镜嵌入原正文，分别演示规则、上下文、暂停、重复计时器、版本、Skill、MCP 和 API。通过 `LearningIllustration` 按需加载，共用 `illustrations/useLabPlayback.ts` 控制生命周期；首页保持原布局。所有网络/版本操作均为模拟。验证脚本覆盖状态变化、故障/修复、拖拽替代、320 px 布局、暗色、减少动态效果、阅读进度与下载内容。

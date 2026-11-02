@@ -9,17 +9,20 @@
 .mag-reveal {
   opacity: 0;
   transform: translate3d(0, var(--mag-reveal-shift), 0);
+  filter: blur(var(--mag-reveal-blur));
   transition:
     opacity var(--mag-duration) var(--mag-ease),
-    transform var(--mag-duration) var(--mag-ease);
+    transform var(--mag-duration) var(--mag-ease),
+    filter var(--mag-duration) var(--mag-ease);
   transition-delay: var(--mag-reveal-delay, 0ms);
   /* 提前建层，避免揭示瞬间的文字重排闪烁 */
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
 
 .mag-reveal.mag-in {
   opacity: 1;
   transform: none;
+  filter: blur(0);
   will-change: auto;
 }
 
@@ -38,13 +41,93 @@
    移除 class 时才经由这里的 transition 淡入上滑。 */
 .VPContent {
   transition:
-    opacity 0.35s var(--mag-ease),
-    transform 0.35s var(--mag-ease);
+    opacity 0.45s var(--mag-ease),
+    transform 0.45s var(--mag-ease);
 }
 
 html.mag-enter .VPContent {
   opacity: 0;
   transform: translateY(10px);
+  transition: none;
+}
+
+/* ---- 便签撕下 + 淡化转场 ---------------------------------------------------
+   点击便签卡片后的转场（编排见 composables/useNoteTear.ts，
+   时长需与其中的 TEAR_MS / LEAVE_FADE_MS 常量保持一致）：
+     1. .mag-note--tearing —— 加在「幽灵便签」（卡片克隆体，挂在 body 上）
+        而非原卡片上：幽灵脱离页面 DOM 独立播完整的撕下动画，
+        拽住翘起的角向下撕（胶带还粘着、有阻力感）→ 脱胶回弹 → 甩出并消散；
+     2. html.mag-tear-leave —— 页面上除便签外的一切淡出；
+     3. html.mag-enter-tear —— 新页面纯淡入（useRouteEnter 播），
+        幽灵在新页面上方飞完最后一段，换页显得是自然显现。 */
+
+.mag-note--tearing {
+  position: relative;
+  z-index: 5;
+  pointer-events: none;
+  /* 绕着顶部胶条撕 */
+  transform-origin: 50% 0%;
+  animation: mag-note-tear 0.75s both;
+}
+
+/* 撕下瞬间被捏住的角迅速变大，之后保持——它就是被手捏着的那一角 */
+.mag-note--tearing::before,
+.mag-note--tearing::after {
+  animation: mag-note-peel 0.28s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+@keyframes mag-note-tear {
+  0% {
+    transform: rotate(0deg) translate(0, 0) scale(1);
+    animation-timing-function: cubic-bezier(0.3, 0.7, 0.4, 1);
+    opacity: 1;
+  }
+  /* 捏住角向下拽：胶条还粘着，纸张被拉长一点 */
+  22% {
+    transform: rotate(5deg) translate(6px, 10px) scale(1.02);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1);
+    opacity: 1;
+  }
+  /* 脱胶回弹：向反方向小幅度弹一下 */
+  38% {
+    transform: rotate(-1.5deg) translate(2px, -4px) scale(1.01) skew(1deg, 0.5deg);
+    animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+    opacity: 1;
+  }
+  /* 换页期间幽灵仍在飞，前 62% 保持不透明，甩出末段才消散 */
+  62% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(18deg) translate(64%, 48%) scale(0.95) skew(3deg, 1deg);
+    opacity: 0;
+  }
+}
+
+@keyframes mag-note-peel {
+  from {
+    width: 30px;
+    height: 30px;
+  }
+  to {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* 撕下转场的旧页淡出：除便签外的其余内容（时长与 useNoteTear.ts 的
+   LEAVE_FADE_MS 同步）；便签本体已被克隆到 body 上，不受这条规则影响 */
+html.mag-tear-leave .VPContent {
+  opacity: 0;
+  transition: opacity 0.32s var(--mag-ease-soft);
+}
+
+/* 撕下转场的新页入场：纯淡入，没有上滑位移。
+   隐藏态 transition: none 保证瞬间隐藏，class 摘除时经由
+   .VPContent 自身的 transition 淡入。 */
+html.mag-enter-tear .VPContent {
+  opacity: 0;
+  transform: none;
   transition: none;
 }
 
@@ -55,10 +138,13 @@ html.mag-enter .VPContent {
   .mag-reveal-scale {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
     transition: none !important;
   }
 
-  html.mag-enter .VPContent {
+  html.mag-enter .VPContent,
+  html.mag-enter-tear .VPContent,
+  html.mag-tear-leave .VPContent {
     opacity: 1;
     transform: none;
   }

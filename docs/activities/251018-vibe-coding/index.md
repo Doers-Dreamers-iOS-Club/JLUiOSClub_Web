@@ -7,6 +7,13 @@ icon: "💻"
 tags: [AI, 开发工具, 工作坊]
 ---
 
+<MagNote type="tip" title="继续学习 · 新的入门讲义">
+
+这篇保留了 2025 年工作坊的内容。如果希望沿一个完整案例学习与 Agent 协作，可以接着读 [从想法到作品](/resources/ai-programming/)，试试里面的动态图与练习。
+
+</MagNote>
+
+
 
 <MagHero title="🚀 Vibe Coding" subtitle="AI时代的开发新方式 - 让AI成为你的编程伙伴" />
 

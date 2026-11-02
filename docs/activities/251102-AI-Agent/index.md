@@ -7,6 +7,13 @@ icon: "🤖"
 tags: [AI, Agent, 工作坊]
 ---
 
+<MagNote type="tip" title="从使用智能体，到与编程 Agent 协作">
+
+想进一步让 Agent 读取代码、修改作品并操作浏览器，可以阅读 [从想法到作品：AI 编程入门](/resources/ai-programming/)。本篇继续保留 Coze 与飞书的原实战路线。
+
+</MagNote>
+
+
 
 <MagHero title="🤖 日常记录小能手工作坊" subtitle="从零到一搭建你的第一个 AI 智能助手，让 AI 自动帮你整理通知、记录待办！" />
 

@@ -9,6 +9,7 @@ import './style.css'
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/motion.css'
+import './styles/learning.css'
 
 import { initReveal, teardownReveal } from './composables/useReveal'
 import { initRouteEnter } from './composables/useRouteEnter'
@@ -34,7 +35,20 @@ import MagModal from './components/MagModal.vue'
  * 全局注册 —— markdown 里可直接使用，无需 import。
  * 这是"新增一个界面"成本最低的关键：写 frontmatter + 拼组件，不碰 CSS。
  */
+import CourseArtwork from './components/learning/CourseArtwork.vue'
+import ReadingTools from './components/learning/ReadingTools.vue'
+import CourseProgress from './components/learning/CourseProgress.vue'
+import LearningIllustration from './components/learning/LearningIllustration.vue'
+import PromptWorkshop from './components/learning/PromptWorkshop.vue'
+import RecallQuiz from './components/learning/RecallQuiz.vue'
+
 const components = {
+  CourseArtwork,
+  ReadingTools,
+  CourseProgress,
+  LearningIllustration,
+  PromptWorkshop,
+  RecallQuiz,
   CursorWave,
   AsciiHero,
   MagHero,
@@ -78,18 +92,12 @@ export default {
       })
     }
 
-    /** 首页路由标记：纯白色底只给首页，正文页保持暖纸 */
-    const markHomeRoute = () => {
-      document.documentElement.classList.toggle('mag-route-home', route.path === '/')
-    }
-
     const refresh = () => {
       initZoom()
       initReveal()
     }
 
     onMounted(() => {
-      markHomeRoute()
       refresh()
     })
 
@@ -97,7 +105,6 @@ export default {
       () => route.path,
       () =>
         nextTick(() => {
-          markHomeRoute()
           initRouteEnter()
           refresh()
         })

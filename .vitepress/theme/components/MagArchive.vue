@@ -15,7 +15,9 @@
  */
 import { computed, onMounted, ref, watch } from 'vue'
 import { useScroll, useMotionValueEvent } from 'motion-v'
+import { useRouter } from 'vitepress'
 import { useMotionReady } from '../composables/useMotionReady'
+import { useNoteTear } from '../composables/useNoteTear'
 import { data as activities } from '../../data/activities.data.mts'
 import { data as news } from '../../data/news.data.mts'
 import { data as competitions } from '../../data/competitions.data.mts'
@@ -105,6 +107,23 @@ function hue(title: string): number {
   let h = 0
   for (const ch of title) h = (h * 31 + ch.codePointAt(0)!) % 360
   return h
+}
+
+/* ---- 网格便签：点击 = 撕下 + 换页 -------------------------------------------
+   被点的卡片会被克隆成挂在 body 上的「幽灵」独立播撕下动画（见
+   useNoteTear.ts），原元素原地隐藏——旧页淡出、路由切换都不影响幽灵。 */
+const router = useRouter()
+const { tearTo } = useNoteTear()
+/** 正在撕下的条目；非空期间挡住重复点击 */
+const tearingUrl = ref('')
+
+function onPick(entry: RecordEntry, e: MouseEvent) {
+  // 修饰键 / 非左键：交给浏览器默认行为（新标签打开等）
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+  e.preventDefault()
+  if (tearingUrl.value) return
+  tearingUrl.value = entry.url
+  void tearTo(() => router.go(entry.url), e.currentTarget as HTMLElement)
 }
 </script>
 
@@ -214,7 +233,11 @@ function hue(title: string): number {
         class="mag-archive__item"
         :href="entry.url"
         :style="{ '--h': `${hue(entry.title)}deg` }"
+        @click="onPick(entry, $event)"
       >
+        <!-- 顶部胶带：撕下动画的旋转支点就在这儿 -->
+        <span class="mag-archive__tape" aria-hidden="true" />
+
         <div
           class="mag-archive__cover"
           :class="{ 'mag-archive__cover--generated': !entry.cover }"
@@ -474,7 +497,7 @@ function hue(title: string): number {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s var(--mag-ease);
+  transition: transform var(--mag-duration) var(--mag-ease);
 }
 
 .mag-archive__row:hover .mag-archive__thumb img {
@@ -485,89 +508,175 @@ function hue(title: string): number {
   font-size: 1.9rem;
 }
 
-/* ---- 网格视图（原卡片流） -------------------------------------------------- */
+/* ---- 网格视图（便签墙） ------------------------------------------------------
+   每张卡片是一张真正的便利贴：彩色纸面（--h 由标题散列，每张颜色稳定）、
+   顶部一截胶带、静止时右下角翘起、各张错落倾斜；
+   有封面的条目封面是贴上去的照片（白边、微歪），
+   无封面的条目把字形直接写在纸面上。
+   点击的撕下动画是全局类 .mag-note--tearing（见 motion.css）。 */
 .mag-archive__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--mag-gap-grid);
+  /* 胶带探出贴纸顶缘，网格上方留一点空间 */
+  padding-top: 10px;
 }
 
 .mag-archive__item {
+  /* 静止时翘起的角尺寸；hover 时加大 */
+  --mag-peel: 10px;
+  /* 静止倾斜角，由 nth-child 错落地赋小角度 */
+  --mag-note-tilt: 0deg;
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   padding: var(--mag-space-md);
-  border: 1px solid var(--mag-hairline);
-  border-radius: var(--mag-radius-sm);
-  background: var(--mag-surface);
-  box-shadow: var(--mag-shadow-sm);
+  border: 0;
+  border-radius: 4px;
+  /* 纸面：顶光微亮的彩色便签 + 胶条压在纸面上的暗部 */
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.035), transparent 14%),
+    linear-gradient(
+      168deg,
+      hsl(var(--h, 55deg) 92% 93%),
+      hsl(var(--h, 55deg) 88% 88.5%)
+    );
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.07),
+    0 10px 22px rgba(0, 0, 0, 0.1);
   color: inherit;
   text-decoration: none;
+  /* 注意：这里不写 transform。网格项会带 .mag-reveal 播入场动画，
+     基础 transform 会抢掉 reveal 的位移；静止倾斜由下方 .mag-in 规则补上 */
   transition:
-    box-shadow var(--mag-duration-fast) var(--mag-ease),
-    border-color var(--mag-duration-fast) var(--mag-ease);
+    transform 0.38s cubic-bezier(0.34, 1.3, 0.64, 1),
+    box-shadow var(--mag-duration-fast) var(--mag-ease);
 }
 
+.mag-archive__item:nth-child(odd) {
+  --mag-note-tilt: -1deg;
+}
+
+.mag-archive__item:nth-child(even) {
+  --mag-note-tilt: 0.8deg;
+}
+
+/* 揭示结束（.mag-in）后 motion.css 会把 transform 归零，这里恢复便签的静止倾斜。
+   注意要写在 :hover 之前，让 hover 规则赢下同优先级竞争 */
+.mag-archive__item.mag-in {
+  transform: rotate(var(--mag-note-tilt));
+}
+
+/* 减弱动效时 reveal 不启用，便签直接以静止倾斜呈现 */
+@media (prefers-reduced-motion: reduce) {
+  .mag-archive__item {
+    transform: rotate(var(--mag-note-tilt));
+  }
+}
+
+/* 顶部胶带：半透，透出纸面颜色；偶数张贴纸胶带换个角度 */
+.mag-archive__tape {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  z-index: 3;
+  width: 74px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-1.6deg);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.62),
+    rgba(255, 255, 255, 0.38)
+  );
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.mag-archive__item:nth-child(even) .mag-archive__tape {
+  transform: translateX(-50%) rotate(1.3deg);
+}
+
+/* 掀开的角（下半）：纸被掀起后露出的页面底色 + 折痕在纸面上的投影 */
 .mag-archive__item::before {
   content: '';
   position: absolute;
-  top: -1px;
-  left: var(--mag-space-md);
-  right: var(--mag-space-md);
-  z-index: 1;
-  height: 2px;
-  background: var(--mag-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--mag-duration) var(--mag-ease);
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: var(--mag-peel);
+  height: var(--mag-peel);
+  border-bottom-right-radius: 4px;
+  background:
+    linear-gradient(315deg, transparent 50%, rgba(0, 0, 0, 0.15) 51%, transparent 64%),
+    linear-gradient(315deg, var(--vp-c-bg) 50%, transparent 50.5%);
+  transition:
+    width 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+    height 0.4s cubic-bezier(0.34, 1.45, 0.64, 1);
 }
 
+/* 掀开的角（上半）：翻折过来的纸张背面三角——用贴纸自己的色相，比纸面更浅 */
+.mag-archive__item::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: var(--mag-peel);
+  height: var(--mag-peel);
+  border-bottom-right-radius: 4px;
+  background: linear-gradient(
+    315deg,
+    transparent 50%,
+    hsl(var(--h, 55deg) 88% 95%) 50.5%,
+    hsl(var(--h, 55deg) 82% 90%) 100%
+  );
+  filter: drop-shadow(-2px -2px 3px rgba(0, 0, 0, 0.12));
+  transition:
+    width 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+    height 0.4s cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+/* hover：贴纸回正、抬起，角掀得更大（回弹式缓动，像被轻轻抠起） */
 .mag-archive__item:hover {
-  border-color: var(--mag-hairline-strong);
-  box-shadow: var(--mag-shadow-md);
+  --mag-peel: 34px;
+  transform: rotate(0deg) translateY(-5px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 18px 34px rgba(0, 0, 0, 0.14);
 }
 
-.mag-archive__item:hover::before {
-  transform: scaleX(1);
-}
-
+/* 有封面的条目：封面是贴在便签上的照片——白边、微歪 */
 .mag-archive__cover {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 var(--mag-space-sm);
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  transform: rotate(-0.7deg);
+  transition: transform 0.38s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+/* 无封面的条目：不要色块，字形直接写在纸面上 */
+.mag-archive__cover--generated {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  margin: calc(-1 * var(--mag-space-md)) calc(-1 * var(--mag-space-md))
-    var(--mag-space-md);
-  background: var(--mag-surface-sunken);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
-.mag-archive__cover--generated {
-  background: linear-gradient(
-    140deg,
-    hsl(var(--h, 210deg) 70% 92%),
-    hsl(calc(var(--h, 210deg) + 40deg) 65% 84%)
-  );
-}
-
-.dark .mag-archive__cover--generated {
-  background: linear-gradient(
-    140deg,
-    hsl(var(--h, 210deg) 32% 22%),
-    hsl(calc(var(--h, 210deg) + 40deg) 30% 16%)
-  );
+.mag-archive__item:hover .mag-archive__cover {
+  transform: rotate(0deg);
 }
 
 .mag-archive__cover img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s var(--mag-ease);
-}
-
-.mag-archive__item:hover .mag-archive__cover img {
-  transform: scale(1.04);
 }
 
 .mag-archive__placeholder {
@@ -575,7 +684,19 @@ function hue(title: string): number {
   font-size: 2.6rem;
   font-weight: 700;
   line-height: 1;
-  transition: transform 0.5s var(--mag-ease);
+  transition: transform var(--mag-duration) var(--mag-ease);
+}
+
+/* 写在便签上的字形：用贴纸色相的深色，带一点纸面高光 */
+.mag-archive__cover--generated .mag-archive__placeholder {
+  color: hsl(var(--h, 55deg) 45% 38%);
+  font-size: 2.5rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.dark .mag-archive__cover--generated .mag-archive__placeholder {
+  color: hsl(var(--h, 55deg) 55% 76%);
+  text-shadow: none;
 }
 
 .dark .mag-archive__placeholder {
@@ -584,6 +705,63 @@ function hue(title: string): number {
 
 .mag-archive__item:hover .mag-archive__placeholder {
   transform: scale(1.08);
+}
+
+/* ---- 便签的暗色模式与纸上配色 --------------------------------------------- */
+.dark .mag-archive__item {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 14%),
+    linear-gradient(
+      168deg,
+      hsl(var(--h, 55deg) 30% 24%),
+      hsl(var(--h, 55deg) 28% 19%)
+    );
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 10px 22px rgba(0, 0, 0, 0.5);
+}
+
+.dark .mag-archive__item:hover {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    0 18px 34px rgba(0, 0, 0, 0.55);
+}
+
+.dark .mag-archive__tape {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.09)
+  );
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.dark .mag-archive__item::after {
+  background: linear-gradient(
+    315deg,
+    transparent 50%,
+    hsl(var(--h, 55deg) 28% 31%) 50.5%,
+    hsl(var(--h, 55deg) 25% 25%) 100%
+  );
+}
+
+/* 期号与标签用贴纸自己的色相，像用同色的笔写在便签上 */
+.mag-archive__item .mag-archive__issue {
+  color: hsl(var(--h, 55deg) 48% 32%);
+}
+
+.dark .mag-archive__item .mag-archive__issue {
+  color: hsl(var(--h, 55deg) 62% 72%);
+}
+
+.mag-archive__item .mag-archive__tag {
+  background: rgba(255, 255, 255, 0.45);
+  color: hsl(var(--h, 55deg) 40% 30%);
+}
+
+.dark .mag-archive__item .mag-archive__tag {
+  background: rgba(255, 255, 255, 0.09);
+  color: hsl(var(--h, 55deg) 45% 75%);
 }
 
 .mag-archive__meta {

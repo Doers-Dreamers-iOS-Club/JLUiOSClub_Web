@@ -63,14 +63,14 @@
   --mag-gap-grid: 1.15rem;
 
   /* ---- 表面与描边 ---------------------------------------------------- */
-  /* 纸面杂志：暖纸底色 + 发丝边框分层，不靠投影也不靠模糊。
+  /* 纯白极简：整站纯白底 + 中性灰发丝边框分层，不靠投影也不靠模糊。
      backdrop-filter 只保留给导航栏（背后确实有滚动内容）。 */
-  --mag-surface: #faf9f6;
-  --mag-surface-solid: #fffdf9;
-  --mag-surface-raised: #fffdf9;
-  --mag-surface-sunken: #f3f1ec;
-  --mag-hairline: rgba(28, 26, 23, 0.12);
-  --mag-hairline-strong: rgba(28, 26, 23, 0.24);
+  --mag-surface: #ffffff;
+  --mag-surface-solid: #ffffff;
+  --mag-surface-raised: #ffffff;
+  --mag-surface-sunken: #f5f5f7;
+  --mag-hairline: rgba(0, 0, 0, 0.1);
+  --mag-hairline-strong: rgba(0, 0, 0, 0.18);
   --mag-blur: saturate(180%) blur(20px);
 
   /* 杂志规则线：刊头、分节、条目分隔全靠它们 */
@@ -78,10 +78,10 @@
   --mag-rule-strong: 1px solid var(--mag-hairline-strong);
   --mag-rule-double: 3px double var(--mag-hairline-strong);
 
-  /* ---- 文字色 -------------------------------------------------------- */
-  --mag-text: #1c1a17;
-  --mag-text-secondary: #55514a;
-  --mag-text-tertiary: #8a857c;
+  /* ---- 文字色（中性灰阶，不带暖调） ----------------------------------- */
+  --mag-text: #1d1d1f;
+  --mag-text-secondary: #6e6e73;
+  --mag-text-tertiary: #86868b;
 
   /* ---- 强调色 -------------------------------------------------------- */
   --mag-accent: #0071e3;
@@ -93,39 +93,45 @@
   --mag-warn-soft: rgba(245, 158, 11, 0.12);
   --mag-warn-border: rgba(245, 158, 11, 0.3);
 
-  /* ---- 阴影：三级景深 ------------------------------------------------ */
-  /* 纸面风把阴影压到最轻：分层主要靠 hairline，阴影只在 hover 抬升时给一点 */
-  --mag-shadow-sm: 0 1px 2px rgba(28, 26, 23, 0.05);
-  --mag-shadow-md: 0 2px 6px rgba(28, 26, 23, 0.06),
-    0 10px 24px rgba(28, 26, 23, 0.06);
-  --mag-shadow-lg: 0 4px 12px rgba(28, 26, 23, 0.07),
-    0 20px 48px rgba(28, 26, 23, 0.1);
+  /* ---- 便签（sticky note） --------------------------------------------- */
+  /* 掀起的角露出的纸张背面：比纸面略灰、偏冷，像便签的未涂胶面 */
+  --mag-note-back: #eef0f3;
+
+  /* ---- 阴影：三级景深（中性黑，不带暖调） ---------------------------- */
+  /* 纯白底把阴影压到最轻：分层主要靠 hairline，阴影只在 hover 抬升时给一点 */
+  --mag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --mag-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.05),
+    0 10px 24px rgba(0, 0, 0, 0.06);
+  --mag-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.06),
+    0 20px 48px rgba(0, 0, 0, 0.09);
 
   /* ---- 首页波纹网格（CursorWave 从这里读色，自动适配主题） ----------- */
-  --mag-wave-ink: 28, 26, 23;
+  --mag-wave-ink: 29, 29, 31;
   --mag-wave-accent: 0, 113, 227;
 
   /* ---- 动效 ---------------------------------------------------------- */
-  /* 苹果惯用的缓出曲线：起步快、收尾慢 */
+  /* 苹果惯用的缓出曲线：起步快、收尾慢。全站 hover / 揭示共用这一套，
+     时长与位移都从这里取，保证手感统一、丝滑。 */
   --mag-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --mag-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-  --mag-duration: 0.62s;
-  --mag-duration-fast: 0.28s;
-  --mag-reveal-shift: 18px;
-  --mag-stagger: 65ms;
+  --mag-duration: 0.72s;
+  --mag-duration-fast: 0.32s;
+  --mag-reveal-shift: 14px;
+  --mag-reveal-blur: 6px;
+  --mag-stagger: 55ms;
 }
 
 .dark {
-  --mag-surface: #1c1b19;
-  --mag-surface-solid: #232220;
-  --mag-surface-raised: #262421;
-  --mag-surface-sunken: #151413;
-  --mag-hairline: rgba(236, 232, 225, 0.14);
-  --mag-hairline-strong: rgba(236, 232, 225, 0.28);
+  --mag-surface: #161617;
+  --mag-surface-solid: #1c1c1e;
+  --mag-surface-raised: #1f1f21;
+  --mag-surface-sunken: #0f0f10;
+  --mag-hairline: rgba(255, 255, 255, 0.12);
+  --mag-hairline-strong: rgba(255, 255, 255, 0.22);
 
-  --mag-text: #ece8e1;
-  --mag-text-secondary: #b8b3a9;
-  --mag-text-tertiary: #8a857c;
+  --mag-text: #f5f5f7;
+  --mag-text-secondary: #a1a1a6;
+  --mag-text-tertiary: #86868b;
 
   --mag-accent: #2997ff;
   --mag-accent-hover: #47a6ff;
@@ -136,6 +142,8 @@
   --mag-warn-soft: rgba(245, 181, 68, 0.13);
   --mag-warn-border: rgba(245, 181, 68, 0.3);
 
+  --mag-note-back: #2b2b2f;
+
   /* 暗色下阴影改为轻微的纯黑环境影，仍然保持克制 */
   --mag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --mag-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4),
@@ -143,6 +151,6 @@
   --mag-shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.45),
     0 24px 56px rgba(0, 0, 0, 0.4);
 
-  --mag-wave-ink: 236, 232, 225;
+  --mag-wave-ink: 245, 245, 247;
   --mag-wave-accent: 41, 151, 255;
 }

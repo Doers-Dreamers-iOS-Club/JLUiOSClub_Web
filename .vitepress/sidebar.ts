@@ -1,6 +1,33 @@
 import { DefaultTheme } from "vitepress";
 
 const sidebar: DefaultTheme.Sidebar = {
+  '/resources/ai-programming/': {
+    base: '/resources/ai-programming/',
+    items: [
+      { text: '从想法到作品', link: '' },
+      { text: '六章主线', items: [
+        { text: '01 · 先让想法动起来', link: 'chapters/01' },
+        { text: '02 · 让 Agent 沿着想法做', link: 'chapters/02' },
+        { text: '03 · 为了改好它而学习', link: 'chapters/03' },
+        { text: '04 · 排错、恢复与继续', link: 'chapters/04' },
+        { text: '05 · 把方法变成 Skill', link: 'chapters/05' },
+        { text: '06 · 用 MCP 操作作品', link: 'chapters/06' },
+      ] },
+      { text: '补充学习', items: [
+        { text: '在 DSH 中接入模型', link: 'chapters/api-setup' },
+        { text: '选读 · Python 调用 API', link: 'reference/python-api' },
+      ] },
+      { text: '随用随查', collapsed: false, items: [
+        { text: '工具准备', link: 'reference/tools' },
+        { text: '常用操作', link: 'reference/operations' },
+        { text: '术语与例子', link: 'reference/glossary' },
+        { text: '案例与文档', link: 'reference/sources' },
+      ] },
+      { text: '配套材料与下载', link: 'materials/' },
+      { text: '连续阅读版', link: 'read-all' },
+    ]
+  },
+
   '/activities/260209-winter-swift/': {
     base: '/activities/260209-winter-swift/',
     items: [

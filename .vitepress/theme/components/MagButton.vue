@@ -43,9 +43,14 @@ withDefaults(
   cursor: pointer;
   text-decoration: none;
   transition:
+    transform var(--mag-duration-fast) var(--mag-ease),
     background var(--mag-duration-fast) var(--mag-ease),
     border-color var(--mag-duration-fast) var(--mag-ease),
     color var(--mag-duration-fast) var(--mag-ease);
+}
+
+.mag-btn:hover {
+  transform: translateY(-2px);
 }
 
 .mag-btn--primary {

@@ -11,6 +11,7 @@ const wechatIcon = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-
 // https://vitepress.dev/reference/site-config
 const viteConfig: UserConfig = {
   srcDir: 'docs',
+  srcExclude: ['**/_content/**', 'superpowers/**', 'public/ai-programming/**'],
   lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "吉林大学Doers&Dreamers iOS CLub社团官方网站",
@@ -41,7 +42,8 @@ const viteConfig: UserConfig = {
         text: '竞赛资源',
         items: [
           { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions' },
-          { text: '资源导航', link: '/resources/', activeMatch: '/resources'}
+          { text: '资源导航', link: '/resources/', activeMatch: '^/resources/$' },
+          { text: 'AI 编程入门', link: '/resources/ai-programming/', activeMatch: '/resources/ai-programming/' }
         ]
       },
       {

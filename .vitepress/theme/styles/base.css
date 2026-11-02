@@ -13,18 +13,18 @@ html {
   --vp-font-family-base: var(--mag-font-display);
   --vp-font-family-mono: var(--mag-font-mono);
 
-  /* 整站底色换成暖纸（令牌里定义表面，这里挂接 VitePress 的背景变量） */
-  --vp-c-bg: #faf9f6;
-  --vp-c-bg-alt: #f3f1ec;
-  --vp-c-bg-soft: #f3f1ec;
-  --vp-c-bg-elv: #fffdf9;
+  /* 整站纯白底（令牌里定义表面，这里挂接 VitePress 的背景变量） */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-alt: #f5f5f7;
+  --vp-c-bg-soft: #f5f5f7;
+  --vp-c-bg-elv: #ffffff;
 }
 
 .dark {
-  --vp-c-bg: #171614;
-  --vp-c-bg-alt: #151413;
-  --vp-c-bg-soft: #1c1b19;
-  --vp-c-bg-elv: #232220;
+  --vp-c-bg: #0f0f10;
+  --vp-c-bg-alt: #131314;
+  --vp-c-bg-soft: #161617;
+  --vp-c-bg-elv: #1c1c1e;
 }
 
 body {
@@ -130,15 +130,15 @@ figure:not(.mag-figure) figcaption {
   text-underline-offset: 3px;
 }
 
-/* ---- 导航栏毛玻璃（保留，底色换成暖纸调） -------------------------------- */
+/* ---- 导航栏毛玻璃（保留，底色换成纯白调） ------------------------------ */
 :root {
-  --nav-c-bg: rgba(250, 249, 246, 0.55);
+  --nav-c-bg: rgba(255, 255, 255, 0.6);
   --vp-c-gutter: rgba(226, 226, 227, 0);
   --backdrop-filter: var(--mag-blur);
 }
 
 .dark {
-  --nav-c-bg: rgba(23, 22, 20, 0.6);
+  --nav-c-bg: rgba(15, 15, 16, 0.65);
   --vp-c-gutter: rgba(30, 30, 32, 0.5);
 }
 
@@ -177,18 +177,32 @@ figure:not(.mag-figure) figcaption {
   white-space: nowrap;
 }
 
-/* 翻页按钮做成卡片，呼应"翻阅杂志"的前后页 */
+/* 翻页按钮做成卡片，hover 与全站卡片统一：上浮 + 阴影加深 */
 .VPDocFooter .pager-link {
   border-radius: var(--mag-radius-md);
   border-color: var(--mag-hairline);
   background: var(--mag-surface);
   transition: transform var(--mag-duration-fast) var(--mag-ease),
-    box-shadow var(--mag-duration-fast) var(--mag-ease);
+    box-shadow var(--mag-duration-fast) var(--mag-ease),
+    border-color var(--mag-duration-fast) var(--mag-ease);
 }
 
 .VPDocFooter .pager-link:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  border-color: var(--mag-hairline-strong);
   box-shadow: var(--mag-shadow-md);
+}
+
+/* 首页 hero 行动按钮：hover 轻微上浮，与卡片同一曲线 */
+.VPHome .VPHero .actions .VPButton {
+  transition: transform var(--mag-duration-fast) var(--mag-ease),
+    background-color var(--mag-duration-fast) var(--mag-ease),
+    border-color var(--mag-duration-fast) var(--mag-ease),
+    color var(--mag-duration-fast) var(--mag-ease);
+}
+
+.VPHome .VPHero .actions .VPButton:hover {
+  transform: translateY(-2px);
 }
 
 /* ---- 首页 ----------------------------------------------------------------
@@ -205,23 +219,6 @@ figure:not(.mag-figure) figcaption {
   z-index: 1;
 }
 
-/* 首页底色纯白（仅首页，由 theme/index.ts 的 mag-route-home 标记控制） */
-.mag-route-home {
-  --vp-c-bg: #ffffff;
-  --vp-c-bg-alt: #fafafa;
-  --vp-c-bg-soft: #fafafa;
-  --vp-c-bg-elv: #ffffff;
-  --nav-c-bg: rgba(255, 255, 255, 0.55);
-}
-
-.dark.mag-route-home {
-  --vp-c-bg: #0d0d0c;
-  --vp-c-bg-alt: #131211;
-  --vp-c-bg-soft: #131211;
-  --vp-c-bg-elv: #1a1918;
-  --nav-c-bg: rgba(13, 13, 12, 0.6);
-}
-
 .VPHome .VPHero .name,
 .VPHome .VPHero .text {
   font-family: var(--mag-font-serif);
@@ -234,14 +231,16 @@ figure:not(.mag-figure) figcaption {
   letter-spacing: var(--mag-tracking-eyebrow);
 }
 
-/* 特性卡片改为纸面 hairline 卡片，hover 用 accent 顶线而非大投影 */
+/* 特性卡片改为纯白 hairline 卡片，hover 统一为「轻微上浮 + accent 顶线划入」 */
 .VPHome .VPFeature {
   position: relative;
   border-radius: var(--mag-radius-sm);
   border: 1px solid var(--mag-hairline);
   background: var(--mag-surface);
   box-shadow: var(--mag-shadow-sm);
-  transition: border-color var(--mag-duration-fast) var(--mag-ease),
+  transition:
+    transform var(--mag-duration-fast) var(--mag-ease),
+    border-color var(--mag-duration-fast) var(--mag-ease),
     box-shadow var(--mag-duration-fast) var(--mag-ease);
 }
 
@@ -259,6 +258,7 @@ figure:not(.mag-figure) figcaption {
 }
 
 .VPHome .VPFeature:hover {
+  transform: translateY(-3px);
   border-color: var(--mag-hairline-strong);
   box-shadow: var(--mag-shadow-md);
 }

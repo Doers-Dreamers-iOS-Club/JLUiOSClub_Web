@@ -1,10 +1,21 @@
-<MagHero eyebrow="Resources" title="资源导航" subtitle="学习设计与开发 Apple 平台 App 所需的教程与资源导航。" />
+<MagHero eyebrow="Resources" title="资源导航" subtitle="从 AI 编程入门到 Swift / SwiftUI，找到适合你的学习起点。" />
+
+<MagSection n="01" title="社团原创讲义" />
+
+<MagGrid :cols="2">
+<MagCard tag="新生入门 · 交互阅读" title="从想法到作品" href="/resources/ai-programming/">
+从一个贪吃蛇开始，沿六章主线学习与 Agent 协作、排错、Skill 和 MCP。配有动态图、小练习和资料下载。
+</MagCard>
+<MagCard tag="Swift / SwiftUI" title="Winter Swift 培训" href="/activities/260209-winter-swift/">
+用 CodeBreaker 项目学习 SwiftUI 基础与 Swift 进阶，配套课程视频与代码。
+</MagCard>
+</MagGrid>
 
 ![Let's Swift!](developers.jpeg)
 
 我们整理了一些您在学习设计和开发 Apple 平台 Apps 过程中可能需要的教程和资源，希望能够帮到您。如您也希望分享一些资源，可以在 [GitHub](https://github.com/AQiu-2003/JLUiOSClub_Web/edit/main/docs/resources/index.md) 上提 PR 或是 issues，或与社团负责人联系。
 
-<MagSection n="01" title="Swift 学习资源" />
+<MagSection n="02" title="Swift 学习资源" />
 
 <MagFigure plain maxHeight="10rem">
   <img src="./SwiftTransparent.png" alt="Swift" />
@@ -40,7 +51,7 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 
 :::
 
-<MagSection n="02" title="SwiftUI 学习资源" />
+<MagSection n="03" title="SwiftUI 学习资源" />
 
 <MagFigure maxHeight="10rem">
   <img src="https://developer.apple.com/news/images/og/swiftui-og.png" alt="SwiftUI" />
@@ -68,7 +79,7 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 您可以在虚拟机内安装 macOS 或使用[黑苹果](https://blog.daliansky.net/)，也可以借助云解决方案来解决问题，比如[Mac In Cloud（推荐）](https://www.macincloud.com)或[Amazon 云 Mac 服务器](https://aws.amazon.com/cn/ec2/instance-types/mac/)。不过这超出了本篇资源导航的内容范畴，请自行查找解决方案。
 :::
 
-<MagSection n="03" title="App 原型设计" />
+<MagSection n="04" title="App 原型设计" />
 
 ### 原型设计工具
 
@@ -91,7 +102,7 @@ Swift 是一个开源项目，能够兼容各种主流的操作系统。虽然�
 - 图标库：[SF Symbols](https://developer.apple.com/cn/sf-symbols/)（自带部分 SF 字体）
 - 字体：[Fonts for Apple platforms](https://developer.apple.com/fonts/)
 
-<MagSection n="04" title="部分往年获奖竞赛作品" />
+<MagSection n="05" title="部分往年获奖竞赛作品" />
 
 - Swift 学生挑战赛：[Github](https://github.com/wwdc)
 - 移动应用创新赛：[2023年](https://sspai.com/post/82738) [2022年](https://sspai.com/post/75611) [2021年](https://sspai.com/post/70453)

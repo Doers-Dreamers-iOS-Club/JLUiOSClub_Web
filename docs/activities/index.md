@@ -9,6 +9,12 @@ description: JLU iOS Club 历次活动与讲义的完整记录。
   subtitle="从入门讲座到实战工作坊，这里是社团历次活动的完整记录。点击任意封面进入当期讲义。"
 />
 
+<MagNote title="想从一个小作品开始？" type="tip">
+
+[从想法到作品：AI 编程入门](/resources/ai-programming/) 是面向新生的长期讲义专题。六章主线配有交互演示、随查和下载材料，可以按自己的节奏阅读。
+
+</MagNote>
+
 <MagArchive source="activities" />
 
 ## 更早期的活动
