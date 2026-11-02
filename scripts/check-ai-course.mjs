@@ -42,6 +42,13 @@ try{
   await show(selector);await changing(selector)
   console.log('PASS autoplay, pause, offscreen stop/resume: '+name+' '+chapter)
  }
+ await go(root+'chapters/02');await show('.lesson-story')
+ await page.waitForFunction(()=>Number(document.querySelector('.lesson-story').dataset.demoFrame)>=9,{timeout:9000})
+ await page.click('.lesson-story .lab-playback')
+ const distances=await page.$$eval('.feedback-distance b',els=>els.map(e=>Number(e.textContent)))
+ assert(distances[0]>0);assert.equal(distances[1],distances[0]*2,'Feedback must visibly compare different speeds')
+ assert.equal(await page.$eval('.feedback-setting span',e=>e.textContent),'标准')
+ await stable('.lesson-story')
  await go(root+'chapters/01');await show('.project-preview')
  await page.waitForFunction(()=>document.querySelector('.project-preview').dataset.demoFrame==='4',{timeout:9000})
  await page.waitForFunction(()=>document.querySelector('.project-preview').dataset.demoFrame==='0',{timeout:4500})
