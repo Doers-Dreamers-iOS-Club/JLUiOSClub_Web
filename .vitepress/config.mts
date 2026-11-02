@@ -11,7 +11,7 @@ const wechatIcon = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-
 // https://vitepress.dev/reference/site-config
 const viteConfig: UserConfig = {
   srcDir: 'docs',
-  srcExclude: ['**/_content/**', 'superpowers/**', 'public/ai-programming/**'],
+  srcExclude: ['**/_content/**', 'public/ai-programming/**'],
   lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "吉林大学Doers&Dreamers iOS CLub社团官方网站",

@@ -144,7 +144,7 @@ pnpm preview
 - `docs/public/ai-programming/files/` 保存可下载原文件。完整讲义 ZIP 保留原始目录；修改原材料后需要同步更新下载包。
 - 静态托管会隐藏点文件，因此 API 环境变量样例通过 `files/api/env.example` 提供，下载属性保留 `.env.example` 文件名；ZIP 内保留原名。
 - 阅读进度仅存于本机浏览器，交互演示不调用模型 API。
-- 新入口同时维护顶栏、侧栏、首页、资源页及相关讲座。`_content` 和 `docs/superpowers` 为非独立页面，已在站点配置排除。
+- 新入口同时维护顶栏、侧栏、首页、资源页及相关讲座。`_content` 为非独立页面，已在站点配置排除。
 - 校验：`npm run build`；交互与链接回归见 `scripts/check-ai-course.mjs`。
 
 ### 章节可操作图解
