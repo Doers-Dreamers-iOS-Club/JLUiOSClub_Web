@@ -28,7 +28,7 @@ const paths = [
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
           <AsciiHero ref="opening" :active="!enabled || active === 0" />
-          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell"><span>dwell</span> <span>in</span></span> <span class="club-opening__possibility">Possibility</span></p>
+          <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell">dwell in</span> <span class="club-opening__possibility">Possibility</span></p>
         </div>
       </section>
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
@@ -82,26 +82,32 @@ const paths = [
 </template>
 
 <style scoped>
+@font-face { font-family: 'Club Instrument Serif'; src: url('/fonts/instrument-serif/instrument-serif-latin.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
 .club-home { --page-height: calc(100svh - var(--vp-nav-height, 64px)); position: relative; width: 100%; color: var(--mag-text); }
 .club-page { min-height: var(--page-height); scroll-margin-top: var(--vp-nav-height, 64px); }
 .club-page__inner { position: relative; display: flex; align-items: center; min-height: var(--page-height); width: 100%; background: var(--vp-c-bg); }
 .club-opening .club-page__inner { display: block; }
-.club-opening__poem { position: absolute; z-index: 0; inset: 4% 5vw 8% 4vw; margin: 0; font-family: var(--mag-font-serif); font-weight: 400; line-height: .88; letter-spacing: -.055em; pointer-events: none; }
+.club-opening__poem { position: absolute; z-index: 0; inset: 5% 5vw 8% 5vw; margin: 0; font-family: 'Club Instrument Serif', var(--mag-font-serif); font-weight: 400; font-synthesis: none; line-height: .88; letter-spacing: -.025em; pointer-events: none; }
 .club-opening__poem > span { display: block; }
-.club-opening__i { position: absolute; top: 0; font-size: clamp(180px,34svh,440px); line-height: .75; }
-.club-opening__dwell { position: absolute; top: 38%; font-size: clamp(90px,12.5vw,240px); font-style: italic; white-space: nowrap; }
-.club-opening__poem > .club-opening__dwell { display: flex; justify-content: space-between; width: 100%; }
-.club-opening__possibility { position: absolute; bottom: 0; font-size: 21vw; letter-spacing: -.065em; }
+.club-opening__i { position: absolute; top: 0; font-size: clamp(200px,37svh,480px); line-height: .75; }
+.club-opening__dwell { position: absolute; top: 42%; font-size: clamp(60px,8vw,128px); white-space: nowrap; }
+.club-opening__possibility { position: absolute; bottom: 0; font-size: min(24vw,480px); letter-spacing: -.025em; }
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .club-opening__possibility { -webkit-text-stroke: 1px var(--mag-text); -webkit-text-fill-color: transparent; }
+}
+@media (forced-colors: active) {
+  .club-opening__possibility { -webkit-text-stroke: 0; -webkit-text-fill-color: currentColor; }
+}
 @media (max-width: 960px) and (orientation: portrait) {
   .club-opening__poem { inset: 5% 16px 12% 20px; }
   .club-opening__i { font-size: clamp(80px,calc(var(--page-height) * .35 - 25vw),26svh); }
-  .club-opening__dwell { top: calc(var(--page-height) * .45 - min(38vw,calc(var(--page-height) * .24)) - 9vw); font-size: 16vw; }
-  .club-opening__possibility { font-size: 21vw; }
+  .club-opening__dwell { top: calc(var(--page-height) * .45 - min(38vw,calc(var(--page-height) * .24)) - 9vw); font-size: 12vw; }
+  .club-opening__possibility { font-size: 24vw; }
 }
 @media (max-height: 700px) and (orientation: landscape) {
   .club-opening__i { font-size: 30svh; }
-  .club-opening__dwell { top: 32%; font-size: min(12.5vw,22svh); }
-  .club-opening__possibility { font-size: min(21vw,37svh); }
+  .club-opening__dwell { top: 38%; font-size: min(8vw,16svh); }
+  .club-opening__possibility { font-size: min(24vw,39svh); }
 }
 .club-section__content { position: relative; width: min(1120px, 82vw); margin-inline: auto; padding: 48px 0 64px; }
 .club-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }

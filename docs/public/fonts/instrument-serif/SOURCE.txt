@@ -1,0 +1,4 @@
+Instrument Serif, regular 400.
+CSS source: https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap
+Font source: https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjnTLgNs.woff2
+License source: https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/OFL.txt

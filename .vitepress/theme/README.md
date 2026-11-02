@@ -145,7 +145,7 @@ tags: [Swift, 工作坊]
 
 ## 动效
 
-`useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。首屏采用封面叠印：超大 `I`、两侧斜体 `dwell` / `in`、横贯底部的实心 `Possibility`，居中的 ASCII 标识在前景遮挡部分文字。最终 WebGL 合成读取场景透明度，在字形间隙绘制主题底色，遮挡随真实轮廓与转动变化，Swift 留空区域仍可透出文字。相机按可用宽高缩放，字符快照不包含底色；保留原有重组。竖屏将词组抬至图形上缘，横屏低高度缩小字级。右侧导航保留悬停短线和栏目名，键盘聚焦、减少动态效果也支持。无额外文案、字体请求或图片。
+`useReveal.ts` 管理内页 GSAP 与 IntersectionObserver。`useFullPage.ts` 管理首页四屏：ASCII、学习、活动、加入。滚轮一次手势一屏，支持触摸、键盘、右侧导航及 hash 深链接。双层反向 transform 实现水平揭幕，桌面约 0.9 秒、移动端约 0.6 秒。非当前屏使用 inert；减少动态效果时立即切换；高度低于 560px 或关闭 JavaScript 时按普通长页阅读。`AsciiHero.vue` 管理 WebGL，卸载释放资源，触屏横拖旋转、竖滑翻页。首屏采用克制的封面叠印：大字 `I`、左侧完整词组 `dwell in`，以及横贯底部的细描边 `Possibility`。三行统一使用本地 Instrument Serif 400 字体，取消分散在左右两侧的大斜体。字体 Latin WOFF2 约 15 KB，来源与 OFL 许可在 `docs/public/fonts/instrument-serif/`；仅在首屏使用。Logo 保持上一版的大小与位置。最终 WebGL 合成读取场景透明度，在字形间隙绘制主题底色，遮挡随真实轮廓与转动变化，Swift 留空区域仍可透出文字。字符快照不包含底色，保留原有重组。竖屏与低高度横屏各自调整文字比例；强制颜色模式恢复实心文字。右侧导航保留悬停短线和栏目名，键盘聚焦、减少动态效果也支持。
 
 首页以 ASCII 串起创造主题：Swift 开场、相触的双手、笔尖与画布、生长的树。`AsciiNarrative.vue` 使用共享二维 Canvas，在翻页时让字符散开后重组，约 1.45 秒后进入各屏动作。首屏通过 `AsciiHero.snapshot()` 读取当前 WebGL 字符单元，保留原字形和位置；后续三个形状来自本地字符矩阵。过渡时隐藏原首屏画布，避免重复显示，反向翻页同样支持重组。
 
