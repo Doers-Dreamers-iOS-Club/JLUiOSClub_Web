@@ -87,11 +87,20 @@ const paths = [
 .club-page { min-height: var(--page-height); scroll-margin-top: var(--vp-nav-height, 64px); }
 .club-page__inner { position: relative; display: flex; align-items: center; min-height: var(--page-height); width: 100%; background: var(--vp-c-bg); }
 .club-opening .club-page__inner { display: block; }
-.club-opening__poem { position: absolute; z-index: 0; inset: 5% 5vw 8% 5vw; margin: 0; font-family: 'Club Instrument Serif', var(--mag-font-serif); font-weight: 400; font-synthesis: none; line-height: .88; letter-spacing: -.025em; pointer-events: none; }
+.club-opening__poem {
+  --poem-height: calc(var(--page-height) * .87);
+  --poem-gap: clamp(12px,1.6svh,20px);
+  --poem-title-size: min(24vw,480px);
+  --poem-line-size: clamp(60px,8vw,128px);
+  --poem-i-limit: min(30svh,calc(var(--poem-title-size) * .8),400px);
+  --poem-i-size: min(var(--poem-i-limit),calc((var(--poem-height) - var(--poem-title-size) * .88 - var(--poem-gap) * 2) / 1.41));
+  --poem-middle-size: min(var(--poem-line-size),calc(var(--poem-i-size) * .75),calc((var(--poem-height) - var(--poem-title-size) * .88 - var(--poem-i-size) * .75 - var(--poem-gap) * 2) / .88));
+  position: absolute; z-index: 0; inset: 5% 5vw 8% 5vw; margin: 0; font-family: 'Club Instrument Serif', var(--mag-font-serif); font-weight: 400; font-synthesis: none; line-height: .88; letter-spacing: -.025em; pointer-events: none;
+}
 .club-opening__poem > span { display: block; }
-.club-opening__i { position: absolute; top: 0; font-size: clamp(200px,37svh,480px); line-height: .75; }
-.club-opening__dwell { position: absolute; top: 42%; font-size: clamp(60px,8vw,128px); white-space: nowrap; }
-.club-opening__possibility { position: absolute; bottom: 0; font-size: min(24vw,480px); letter-spacing: -.025em; }
+.club-opening__i { position: absolute; top: 0; font-size: var(--poem-i-size); line-height: .75; }
+.club-opening__dwell { position: absolute; top: calc((var(--poem-i-size) * .75 + var(--poem-height) - var(--poem-title-size) * .88 - var(--poem-middle-size) * .88) / 2); font-size: var(--poem-middle-size); white-space: nowrap; }
+.club-opening__possibility { position: absolute; bottom: 0; font-size: var(--poem-title-size); letter-spacing: -.025em; }
 @supports (-webkit-text-stroke: 1px currentColor) {
   .club-opening__possibility { -webkit-text-stroke: 1px var(--mag-text); -webkit-text-fill-color: transparent; }
 }
@@ -100,14 +109,12 @@ const paths = [
 }
 @media (max-width: 960px) and (orientation: portrait) {
   .club-opening__poem { inset: 5% 16px 12% 20px; }
-  .club-opening__i { font-size: clamp(80px,calc(var(--page-height) * .35 - 25vw),26svh); }
+  .club-opening__i { font-size: min(19.2vw,clamp(80px,calc(var(--page-height) * .35 - 25vw),26svh)); }
   .club-opening__dwell { top: calc(var(--page-height) * .45 - min(38vw,calc(var(--page-height) * .24)) - 9vw); font-size: 12vw; }
   .club-opening__possibility { font-size: 24vw; }
 }
 @media (max-height: 700px) and (orientation: landscape) {
-  .club-opening__i { font-size: 30svh; }
-  .club-opening__dwell { top: 38%; font-size: min(8vw,16svh); }
-  .club-opening__possibility { font-size: min(24vw,39svh); }
+  .club-opening__poem { --poem-line-size: min(8vw,16svh); --poem-title-size: min(24vw,39svh); }
 }
 .club-section__content { position: relative; width: min(1120px, 82vw); margin-inline: auto; padding: 48px 0 64px; }
 .club-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
