@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import puppeteer from 'puppeteer-core'
 const base = process.argv[2] || 'http://localhost:4173'
-const out = 'output/design-fullpage-2026-11-02'
+const out = process.env.QA_OUT || 'output/design-geometric-home-2026-11-02'
 await fs.mkdir(out, { recursive: true })
 const browser = await puppeteer.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader'] })
 const page = await browser.newPage()
@@ -44,11 +44,22 @@ try {
   await page.click('.mag-ascii-hero__hint'); await settled(); await assertPanel('学习')
   for (const [label, file] of [['学习', 'learning'], ['活动', 'activities'], ['加入', 'community']]) {
     await select(label)
-    await page.waitForFunction(() => { const img = document.querySelector('[data-club-page][aria-hidden="false"] img'); return img.complete && img.naturalWidth > 0 })
-    const dimensions = await page.$eval('[data-club-page][aria-hidden="false"] .club-art', e => ({width:e.clientWidth,height:e.clientHeight}))
-    assert.equal(dimensions.width,1440);assert.equal(dimensions.height,836)
+    assert.equal(await page.$$eval('.club-section img', els => els.length),0,'Home sections use native geometry, not photography')
+    await wait(1600)
     await page.screenshot({ path: `${out}/${file}-desktop.png` })
   }
+  await select('学习')
+  const transforms = () => page.$$eval('.club-learning .geometry-piece', els => els.map(e => e.getAttribute('transform')).join('|'))
+  await wait(1700)
+  const initialGeometry = await transforms()
+  await page.hover('.club-paths .club-path:nth-child(2)');await wait(850)
+  assert.equal(await page.$eval('.club-learning .home-geometry',e=>e.dataset.mode),'2')
+  assert.notEqual(await transforms(),initialGeometry,'Hover must rearrange the geometry')
+  await page.focus('.club-paths .club-path:nth-child(3)');await wait(850)
+  assert.equal(await page.$eval('.club-learning .home-geometry',e=>e.dataset.mode),'3','Keyboard focus must match hover')
+  await select('加入');await wait(1700)
+  const offscreenGeometry=await transforms();await wait(200)
+  assert.equal(await transforms(),offscreenGeometry,'Inactive geometry must stay still')
   await page.mouse.move(700,400);await wait(250);await page.mouse.wheel({deltaY:300});await wait(300)
   assert(await page.evaluate(()=>scrollY>0),'Footer must remain reachable')
   await select('学习')
@@ -77,6 +88,10 @@ try {
     await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]})
     await wait(200);await assertPanel('活动')
     await client.detach()
+    await page.screenshot({path:`${out}/activities-${width}-dark.png`})
+    await select('加入');await assertPanel('加入')
+    await page.screenshot({path:`${out}/community-${width}-dark.png`})
+    await select('活动')
   }
   await page.setViewport({width:844,height:390,isMobile:false,hasTouch:false});await wait(200)
   assert.equal(await page.$('.club-pager'),null)
@@ -89,5 +104,5 @@ try {
   assert.equal(await page.$('.club-pager'),null)
   assert(await page.$$eval('.club-section',els=>els.every(e=>getComputedStyle(e).visibility==='visible')))
   assert.deepEqual(errors,[])
-  console.log('PASS wheel inertia, directional wipe, keyboard, touch, image coverage, inert panels, deep links, history, footer, route cleanup, dark mode, reduced motion, short-screen fallback and SSR')
+  console.log('PASS wheel inertia, directional wipe, keyboard, touch, geometric layouts, hover/focus reactions, inert panels, deep links, history, footer, route cleanup, dark mode, reduced motion, short-screen fallback and SSR')
 } finally { await browser.close() }
