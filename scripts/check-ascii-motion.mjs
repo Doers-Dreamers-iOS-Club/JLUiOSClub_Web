@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import puppeteer from 'puppeteer-core'
 const base=process.argv[2]||'http://localhost:4173'
-const out='output/design-ascii-motion-2026-11-02'
+const out=process.env.QA_OUT||'output/design-ascii-motion-2026-11-02'
 await fs.mkdir(out,{recursive:true})
 const browser=await puppeteer.launch({channel:'chrome',headless:true,args:['--enable-unsafe-swiftshader']})
 const page=await browser.newPage()
@@ -17,12 +17,12 @@ try{
  await page.setViewport({width:1440,height:900})
  await page.goto(base+'/#start',{waitUntil:'domcontentloaded'})
  await page.waitForFunction(()=>Number(document.querySelector('.ascii-narrative')?.dataset.points)>0)
- const early=await shape();await page.screenshot({path:out+'/hands-entering.png'})
+ const early=await shape();await page.screenshot({path:out+'/hands-initial.png'})
  await at(2)
  const reached=await shape()
  assert(reached.leftEdge>0&&reached.rightEdge>0,'Both forearms must reach the viewport edges')
- assert(reached.gap<early.gap-80,'Fingertips must move inward from both edges')
- const flowing=await pixels();await wait(550);assert.notEqual(await pixels(),flowing,'Glyph flow should continue after reaching')
+ assert(Math.abs(reached.gap-early.gap)<12,'Hands must stay in place without a reaching entrance')
+ const flowing=await pixels();await wait(550);assert.notEqual(await pixels(),flowing,'Glyph flow should continue with stationary hands')
  await page.screenshot({path:out+'/hands-flow.png'})
  await page.click('.club-ascii-playback');await wait(80)
  const paused=await pixels(),time=(await state()).sceneTime;await wait(450)
@@ -31,7 +31,7 @@ try{
  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))})
  const hidden=(await state()).sceneTime;await wait(450);assert.equal((await state()).sceneTime,hidden)
  await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'))})
- console.log('PASS full-bleed reaching hands, ongoing flow, pause/resume and background suspension')
+ console.log('PASS stationary full-bleed hands, ongoing flow, pause/resume and background suspension')
  await select('活动');await at(.2)
  const paper=await pixels();await wait(800);assert.notEqual(await pixels(),paper,'Paper should gently move')
  const area=await shape(),recordLeft=await page.$eval('.club-making__records',e=>e.getBoundingClientRect().left)

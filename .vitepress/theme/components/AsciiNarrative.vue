@@ -85,7 +85,6 @@ function target(page: number): Point[] {
  return result
 }
 function scenePose(page: number,source: Point[],time: number,staticScene=false): Point[] {
- const entering=staticScene?1:smooth(time/1.65)
  const centerX=box.x+box.width/2,centerY=box.y+box.height/2
  return source.map((p,i)=>{
   const u=p.u??.5,v=p.v??.5
@@ -95,7 +94,7 @@ function scenePose(page: number,source: Point[],time: number,staticScene=false):
    const wave=Math.sin(distance*26-time*2.15)
    const stream=staticScene?0:Math.max(0,wave)**3
    const glyphs=p.char==='@'||p.char==='%'?'@%':p.char==='#'||p.char==='*'?'#*':p.char==='+'||p.char==='='?'+=':p.char===':'||p.char==='-'?':-':p.char
-   return {...p,x:p.x+side*width*.34*(1-entering)-side*stream*1.4,y:p.y+(staticScene?0:Math.sin(distance*18-time*1.3)*.65),char:stream>.55?glyphs[(Math.floor(time*3)+i)%glyphs.length]:p.char,alpha:staticScene?1:.67+stream*.33}
+   return {...p,x:p.x-side*stream*1.4,y:p.y+(staticScene?0:Math.sin(distance*18-time*1.3)*.65),char:stream>.55?glyphs[(Math.floor(time*3)+i)%glyphs.length]:p.char,alpha:staticScene?1:.67+stream*.33}
   }
   if(page===2){
    const angle=-.105+(staticScene?0:Math.sin(time*.65)*.014)

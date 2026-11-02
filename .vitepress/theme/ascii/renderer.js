@@ -210,6 +210,7 @@ export class AsciiLogoRenderer {
     this.#cellTarget.setSize(cols, rows);
 
     this.#camera.aspect = sceneWidth / sceneHeight;
+    this.#camera.setViewOffset(sceneWidth, sceneHeight, 0, Math.min(48, height * 0.06) * scale, sceneWidth, sceneHeight);
     this.#camera.updateProjectionMatrix();
 
     this.#cellMaterial.uniforms.uResolution.value.set(sceneWidth, sceneHeight);
