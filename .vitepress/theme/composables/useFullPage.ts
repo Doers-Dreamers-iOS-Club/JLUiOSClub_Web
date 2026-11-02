@@ -40,6 +40,7 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
       const inners = pages.map(page => page.querySelector<HTMLElement>('.club-page__inner')!)
       const contents = pages.flatMap(page => Array.from(page.querySelectorAll<HTMLElement>('[data-page-content]')))
       const images = pages.flatMap(page => Array.from(page.querySelectorAll<HTMLElement>('.club-art img')))
+      const poemLines = Array.from(host.querySelectorAll<HTMLElement>('.club-opening__poem > span'))
       const minimum = () => asciiAvailable.value ? 0 : 1
       const updateHash = () => history.replaceState(history.state, '', `#${ids[active.value]}`)
       const settle = () => {
@@ -51,6 +52,7 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
         })
         gsap.set(inners, { clearProps: 'transform,willChange' })
         gsap.set([...contents, ...images], { clearProps: 'transform,opacity,visibility' })
+        gsap.set(poemLines, { clearProps: 'transform,opacity,visibility,willChange' })
         busy.value = false
       }
       context.add('settle', settle)
@@ -89,6 +91,16 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
           .to(inners[previous], { xPercent: direction * 100 }, 0)
           .to(newPage, { xPercent: 0 }, 0)
           .to(inners[next], { xPercent: 0 }, 0)
+        if (previous === 0 || next === 0) gsap.set(poemLines, { willChange: 'transform,opacity' })
+        if (previous === 0) timeline.to(poemLines, {
+          yPercent: -18, x: -24, autoAlpha: 0, duration: duration * .48,
+          stagger: duration * .065, ease: 'power2.in'
+        }, 0)
+        if (next === 0) timeline.fromTo(poemLines,
+          { yPercent: 24, x: 18, autoAlpha: 0 },
+          { yPercent: 0, x: 0, autoAlpha: 1, duration: duration * .62, stagger: duration * .08, ease: 'power3.out' },
+          duration * .2
+        )
         const content = newPage.querySelector<HTMLElement>('[data-page-content]')
         const image = newPage.querySelector<HTMLElement>('.club-art img')
         if (content) timeline.fromTo(content, { y: direction * 18, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: 'power3.out' }, duration * .55)
