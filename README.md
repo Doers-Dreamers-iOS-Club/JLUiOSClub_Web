@@ -17,7 +17,8 @@
 - 框架：`vitepress`（本地搜索、静态构建）
 - 主题增强：`medium-zoom`、自定义主题样式（`/.vitepress/theme`）
 - 图表：`mermaid` + `vitepress-plugin-mermaid`
-- UI 组件：`element-plus`、`@element-plus/icons-vue`
+- UI 组件：Vue 自定义组件、Tabler outline 图标
+- 动效：GSAP（首页与栏目入场，支持减少动态效果）
 - Markdown 能力：`markdown-it-implicit-figures`
 
 ## 快速开始
@@ -148,4 +149,4 @@ pnpm preview
 
 ### 章节可操作图解
 
-八种图解与两段短分镜嵌入原正文，分别演示规则、上下文、暂停、重复计时器、版本、Skill、MCP 和 API。通过 `LearningIllustration` 按需加载，共用 `illustrations/useLabPlayback.ts` 控制生命周期；首页保持原布局。所有网络/版本操作均为模拟。验证脚本覆盖状态变化、故障/修复、拖拽替代、320 px 布局、暗色、减少动态效果、阅读进度与下载内容。
+八种图解与两段短分镜嵌入原正文，分别演示规则、上下文、暂停、重复计时器、版本、Skill、MCP 和 API。通过 `LearningIllustration` 按需加载，共用 `illustrations/useLabPlayback.ts` 控制生命周期；首页采用简洁的学习入口与活动列表。所有网络/版本操作均为模拟。验证脚本覆盖状态变化、故障/修复、拖拽替代、320 px 布局、暗色、减少动态效果、阅读进度与下载内容。

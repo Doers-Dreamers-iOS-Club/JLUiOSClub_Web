@@ -52,7 +52,7 @@ withDefaults(
   margin: 0 0 var(--mag-space-xs);
   color: var(--mag-text);
   font-size: var(--mag-fs-body);
-  font-weight: 650;
+  font-weight: 500;
   letter-spacing: var(--mag-tracking-title);
 }
 
@@ -80,6 +80,6 @@ withDefaults(
 
 .mag-note__body :deep(strong) {
   color: var(--mag-text);
-  font-weight: 650;
+  font-weight: 500;
 }
 </style>

@@ -49,7 +49,7 @@ const active = computed(() => phase.value >= 6 ? 0 : Math.min(3, Math.max(0,phas
             <g v-else-if="i === 1" stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="26" y="16" width="44" height="18" rx="4" /><rect x="26" y="40" width="44" height="18" rx="4" /><path d="M34 25h4m-4 24h4m10-24h15m-15 24h15" /></g>
             <g v-else-if="i === 2" stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="23" y="16" width="50" height="40" rx="4" /><path d="M23 27h50m-41-6h2m5 0h2m5 14 14 6-8 3-4 8z" /></g>
             <g v-else stroke="var(--lab-blue)" fill="none" stroke-width="2"><rect x="24" y="16" width="48" height="40" rx="4" /><path d="M32 44h13V32h14" stroke-width="5" stroke-linecap="round" /></g>
-            <text x="48" y="75" text-anchor="middle" font-size="10" fill="var(--lab-muted)">{{ ['Host / Client','MCP Server','Browser','Local page'][i] }}</text>
+            <text x="48" y="75" text-anchor="middle" font-size="11" fill="var(--lab-muted)">{{ ['Host / Client','MCP Server','Browser','Local page'][i] }}</text>
           </g>
           <g v-if="phase" class="mcp-packet" :style="{ transform: `translate(${point[0]}px,${point[1]}px)` }"><circle r="9" :fill="phase >= 6 ? 'var(--lab-paper)' : error ? 'var(--mag-warn)' : 'var(--lab-blue)'" :stroke="error ? 'var(--mag-warn)' : 'var(--lab-blue)'" stroke-width="3" /></g>
           <text x="296" y="226" text-anchor="middle" font-size="11" fill="var(--lab-muted)">实心点：调用 · 空心点：结果返回</text>
@@ -64,5 +64,5 @@ const active = computed(() => phase.value >= 6 ? 0 : Math.min(3, Math.max(0,phas
   </div>
 </template>
 <style scoped>
-.mcp-presets { padding-top: 0; }.mcp-status { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .75rem; }.mcp-status span { background: var(--lab-paper); border: var(--mag-rule); border-radius: 6px; padding: .3rem .55rem; }.mcp-status .ready { color: var(--lab-blue); }.mcp-packet { transition: transform .6s ease-in-out; }.mcp-nodes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }.mcp-error { color: var(--mag-warn); }
+.mcp-presets { padding-top: 0; }.mcp-status { display: flex; flex-wrap: wrap; gap: .5rem; font-size: 14px; }.mcp-status span { background: var(--lab-paper); border: var(--mag-rule); border-radius: 6px; padding: .3rem .55rem; }.mcp-status .ready { color: var(--lab-blue); }.mcp-packet { transition: transform .6s ease-in-out; }.mcp-nodes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }.mcp-error { color: var(--mag-warn); }
 </style>

@@ -31,5 +31,5 @@ function reset() { pause(); count.value = 1; clean.value = 0; buggy.value = 0; t
   </div>
 </template>
 <style scoped>
-.timer-column > .lab-tag { margin-bottom: .65rem; }.timer-tracks { display: flex; align-items: center; gap: .5rem; margin-top: .6rem; font-size: .7rem; color: var(--lab-muted); }.timer-tracks > div { display: flex; flex: 1; gap: 4px; }.timer-tracks i { flex: 1; height: 12px; border-radius: 3px; background: var(--mag-hairline); }.timer-tracks i.on { background: var(--lab-blue); }
+.timer-column > .lab-tag { margin-bottom: .65rem; }.timer-tracks { display: flex; align-items: center; gap: .5rem; margin-top: .6rem; font-size: 14px; color: var(--lab-muted); }.timer-tracks > div { display: flex; flex: 1; gap: 4px; }.timer-tracks i { flex: 1; height: 12px; border-radius: 3px; background: var(--mag-hairline); }.timer-tracks i.on { background: var(--lab-blue); }
 </style>

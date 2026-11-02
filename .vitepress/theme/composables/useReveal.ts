@@ -1,105 +1,57 @@
-/**
- * 滚动揭示 —— 全站统一的入场动效
- * ---------------------------------------------------------------------------
- * 为什么用选择器扫描而不是 Vue 指令：markdown 生成的 h2 / p / ul 是由
- * markdown-it 渲染出来的原生元素，挂不上指令，只能在挂载后扫描 DOM。
- *
- * 两类目标：
- *   1. `.vp-doc > *`            —— markdown 的顶层区块
- *   2. `[data-mag-stagger] > *` —— 组件自己声明的错落分组（如 MagGrid 的卡片）
- *
- * 渐进增强：隐藏态（.mag-reveal）由本文件添加，CSS 不预先隐藏。
- * JS 挂了或被禁用时页面照常可读。
- */
+import { gsap } from 'gsap'
 
-const REVEAL = 'mag-reveal'
-const REVEAL_IN = 'mag-in'
-const MARK = 'data-mag-observed'
+let media: ReturnType<typeof gsap.matchMedia> | undefined
 
-/** 一批同时进入视口的元素，最多错落几级——再多就显得拖沓 */
-const MAX_STAGGER_STEPS = 5
-
-/** 这些标签不参与动效：要么不可见，要么动了会出问题 */
-const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'TEMPLATE', 'BR', 'HR'])
-
-let observer: IntersectionObserver | null = null
-
-function prefersReducedMotion(): boolean {
-  return (
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
-  )
+export function teardownReveal(): void {
+  media?.revert()
+  media = undefined
 }
 
-function stagger(el: HTMLElement, step: number): void {
-  const capped = Math.min(step, MAX_STAGGER_STEPS)
-  el.style.setProperty('--mag-reveal-delay', `${capped * 65}ms`)
-}
-
-function collectTargets(root: ParentNode): HTMLElement[] {
-  const seen = new Set<HTMLElement>()
-  const push = (el: Element) => {
-    if (!(el instanceof HTMLElement)) return
-    if (SKIP_TAGS.has(el.tagName)) return
-    if (el.hasAttribute(MARK)) return
-    if (el.classList.contains('mag-no-reveal')) return
-    seen.add(el)
-  }
-
-  root.querySelectorAll('.vp-doc > *').forEach(push)
-  root.querySelectorAll('[data-mag-stagger] > *').forEach(push)
-  // 首页刊头与特性卡：首屏被 ASCII logo 独占，它们滚动进入视口才出现
-  root.querySelectorAll('.VPHome .VPHero, .VPHome .VPFeature').forEach(push)
-
-  return [...seen]
-}
-
-/**
- * 扫描并开始观察当前页面。可重复调用（路由切换时会重新扫描）。
- */
 export function initReveal(): void {
   if (typeof window === 'undefined') return
-
-  // 系统要求减弱动效时，什么都不做——内容保持原样，完全可见
-  if (prefersReducedMotion()) return
-
-  if (!('IntersectionObserver' in window)) return
-
-  observer ??= new IntersectionObserver(
-    (entries) => {
-      // 同一批进入视口的元素按文档顺序错落，形成"翻页"的节奏。
-      // 单个元素滚入时 batch 只有 1 个，延迟为 0，不会显得迟钝。
-      const arrived = entries
-        .filter((e) => e.isIntersecting)
-        .map((e) => e.target as HTMLElement)
-        .sort((a, b) =>
-          a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING
-            ? -1
-            : 1
-        )
-
-      arrived.forEach((el, i) => {
-        stagger(el, i)
-        el.classList.add(REVEAL_IN)
-        observer?.unobserve(el)
+  teardownReveal()
+  const root = document.querySelector<HTMLElement>('.VPContent')
+  if (!root) return
+  media = gsap.matchMedia()
+  media.add('(prefers-reduced-motion: no-preference)', context => {
+    const lines = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-line]'))
+    const intro = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-enter]'))
+    const targets = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-reveal], [data-mag-stagger] > *'))
+      .filter(el => !el.closest('.mag-hero, .learning-illustration'))
+    const timeline = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity,visibility' } })
+    if (lines.length) timeline.from(lines, { yPercent: 105, duration: .75, stagger: .09 }, 0)
+    if (intro.length) timeline.from(intro, { autoAlpha: 0, y: 8, duration: .55, stagger: .08 }, .1)
+    let observer: IntersectionObserver | undefined
+    const pending = new Set<HTMLElement>()
+    if ('IntersectionObserver' in window) {
+      context.add('reveal', (elements: HTMLElement[]) => {
+        gsap.fromTo(elements, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .55, stagger: { amount: .14 }, ease: 'power3.out', clearProps: 'transform,opacity,visibility', overwrite: 'auto' })
       })
-    },
-    {
-      // 元素露出约 8% 即触发，配合底部负 margin，避免刚冒头就播完动画
-      threshold: 0.08,
-      rootMargin: '0px 0px -6% 0px'
+      observer = new IntersectionObserver(entries => {
+        const arrived = entries.filter(entry => entry.isIntersecting).map(entry => entry.target as HTMLElement).filter(el => pending.has(el))
+        if (arrived.length) context.reveal(arrived)
+        arrived.forEach(el => { pending.delete(el); observer?.unobserve(el) })
+      }, { threshold: 0, rootMargin: '0px 0px 24px 0px' })
+      const bounds = targets.map(el => ({ el, top: el.getBoundingClientRect().top }))
+      bounds.forEach(({ el, top }) => {
+        if (top >= window.innerHeight) {
+          pending.add(el)
+          gsap.set(el, { opacity: 0, y: 12 })
+          observer?.observe(el)
+        }
+      })
     }
-  )
-
-  for (const el of collectTargets(document)) {
-    el.setAttribute(MARK, '')
-    el.classList.add(REVEAL)
-    observer.observe(el)
-  }
-}
-
-/** 路由离开 / 组件卸载时释放观察器 */
-export function teardownReveal(): void {
-  observer?.disconnect()
-  observer = null
+    const revealFocus = (event: FocusEvent) => {
+      if (!(event.target instanceof Element)) return
+      for (const el of pending) {
+        if (el.contains(event.target)) {
+          gsap.set(el, { clearProps: 'transform,opacity,visibility' })
+          pending.delete(el)
+          observer?.unobserve(el)
+        }
+      }
+    }
+    root.addEventListener('focusin', revealFocus)
+    return () => { observer?.disconnect(); root.removeEventListener('focusin', revealFocus) }
+  }, root)
 }

@@ -18,9 +18,9 @@ onUnmounted(() => { window.removeEventListener('storage', sync); window.removeEv
 </template>
 <style scoped>
 .course-progress { padding: 1.3rem 1.5rem; border: var(--mag-rule); border-radius: var(--mag-radius-sm); background: var(--mag-surface); }
-.course-progress__top { display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--mag-text-secondary); }
+.course-progress__top { display: flex; justify-content: space-between; gap: 1rem; font-size: 14px; color: var(--mag-text-secondary); }
 .course-progress__track { height: 4px; margin: 1rem 0 .5rem; background: var(--mag-surface-sunken); border-radius: 4px; overflow: hidden; }
 .course-progress__track span { display: block; height: 100%; background: var(--mag-accent); }
-.course-progress a { display: inline-flex; align-items: center; min-height: 44px; font-size: .95rem; }
-.course-progress small { display: block; font-size: .75rem; color: var(--mag-text-secondary); }
+.course-progress a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+.course-progress small { display: block; font-size: 14px; color: var(--mag-text-secondary); }
 </style>

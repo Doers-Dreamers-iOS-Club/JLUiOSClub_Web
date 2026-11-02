@@ -1,305 +1,79 @@
-/**
- * 基础层 —— VitePress 默认主题的覆写
- * ---------------------------------------------------------------------------
- * 由原 custom.css 演进而来：保留导航模糊、figure、侧边栏截断等既有处理，
- * 并把字阶、表面、圆角换成 tokens.css 的令牌，统一到苹果风。
- */
-
-html {
-  scroll-behavior: smooth;
-}
-
 :root {
   --vp-font-family-base: var(--mag-font-display);
   --vp-font-family-mono: var(--mag-font-mono);
-
-  /* 整站纯白底（令牌里定义表面，这里挂接 VitePress 的背景变量） */
   --vp-c-bg: #ffffff;
   --vp-c-bg-alt: #f5f5f7;
   --vp-c-bg-soft: #f5f5f7;
   --vp-c-bg-elv: #ffffff;
+  --vp-home-hero-image-background-image: none;
+  --vp-home-hero-image-filter: none;
 }
-
 .dark {
   --vp-c-bg: #0f0f10;
   --vp-c-bg-alt: #131314;
   --vp-c-bg-soft: #161617;
   --vp-c-bg-elv: #1c1c1e;
 }
-
-body {
-  letter-spacing: var(--mag-tracking-body);
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+body { font-weight: 400; letter-spacing: 0; -webkit-font-smoothing: antialiased; }
+.vp-doc { color: var(--mag-text); font-size: 16px; }
+.vp-doc :is(h1,h2,h3,h4,h5,h6) { font-family: var(--mag-font-display); font-weight: 500; letter-spacing: -.015em; line-height: 1.5; }
+.vp-doc h1 { font-size: 22px; margin-bottom: 1.5rem; }
+.vp-doc h2 { font-size: 18px; margin: 3rem 0 1.25rem; padding-top: 1.5rem; border-top: var(--mag-rule); }
+.vp-doc h3 { font-size: 16px; margin: 2rem 0 1rem; }
+.vp-doc h4 { font-size: 16px; margin: 1.5rem 0 .75rem; }
+.vp-doc :is(p,li) { line-height: 1.7; }
+.vp-doc :is(strong,b) { font-weight: 500; color: inherit; }
+.vp-doc a { text-underline-offset: 4px; font-weight: 400; }
+.vp-doc blockquote { margin: 1.5rem 0; padding: .25rem 1.25rem; border-left: 2px solid var(--mag-hairline-strong); color: var(--mag-text-secondary); background: transparent; border-radius: 0; }
+.vp-doc blockquote p { margin: .5rem 0; }
+.vp-doc :is(th,summary,.custom-block-title) { font-weight: 500; }
+.vp-doc .custom-block { border: var(--mag-rule); border-radius: 8px; }
+.vp-doc .custom-block.details { background: transparent; }
+.vp-doc :is(div[class*='language-'],.vp-code-group) { border-radius: 8px; }
+.vp-doc button, .vp-doc select, .vp-doc textarea, .vp-doc input { font-family: var(--mag-font-display); }
+:where(a,button,summary,input,select,textarea):focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 4px; }
+figure:not(.mag-figure) figcaption { margin: .75rem 0 1.5rem; text-align: center; color: var(--mag-text-secondary); font-size: 13px; font-weight: 400; }
+.main figure:not(.mag-figure) > img { border-radius: 12px; margin: 0 auto .75rem; max-height: 24rem; }
+.medium-zoom-image, .medium-zoom-overlay { z-index: 100; }
+.VPNavBar, .VPNavBar .content-body, .VPLocalNav { background: var(--vp-c-bg) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.VPNavBar { border-bottom: var(--mag-rule); }
+.VPNavBar > .divider { display: none; }
+.VPNavBarTitle .title { font-weight: 500; letter-spacing: -.025em; }
+.VPNavBarMenuLink, .VPNavBarMenuGroup .button { font-weight: 400 !important; }
+.VPNavBarSearch .DocSearch-Button { border: var(--mag-rule); border-radius: 8px; background: transparent; }
+.VPFlyout .menu { filter: none; }
+.VPMenu { border: var(--mag-rule); box-shadow: none !important; border-radius: 12px; }
+.VPLocalNavOutlineDropdown > .items { background: var(--vp-c-bg); box-shadow: none; }
+.VPSidebar { border-right: var(--mag-rule); }
+.VPSidebarItem .VPLink p { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 200px; }
+.VPSidebarItem .text { font-weight: 400 !important; }
+.VPSidebarItem.level-0 > .item > .text { font-weight: 500 !important; }
+.VPDocAsideOutline .outline-title { font-weight: 500; }
+.VPDocFooter .pager .title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.VPDocFooter .pager-link { border-radius: 12px; border: var(--mag-rule); background: transparent; transition: border-color .2s, background .2s; }
+.VPDocFooter .pager-link:hover { border-color: var(--mag-hairline-strong); background: var(--mag-surface-sunken); }
+.VPFooter { border-top: var(--mag-rule); }
+.VPFooter .message, .VPFooter .copyright { font-size: 13px; line-height: 1.7; color: var(--mag-text-secondary); }
+.mag-badge-row { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0; }
+.mag-more { margin: 1.5rem 0 3rem; }
+.mag-more a { color: var(--mag-accent); font-size: 14px; text-decoration: none; }
+.vp-doc .mag-btn { padding: .6rem 1.1rem; }
+.mag-btn, .VPButton { border-radius: 8px !important; min-height: 40px; }
+.mag-btn:hover { transform: none !important; }
+.mag-note, .mag-step { border-width: .5px; border-radius: 12px; }
+.mag-badge { border-width: .5px; border-radius: 6px; font-size: 13px; }
+@media (max-width: 640px) {
+  .VPDoc { padding-top: 28px !important; }
+  .vp-doc h2 { margin-top: 2.5rem; }
 }
-
-/* ---- 标题字阶 ------------------------------------------------------------
-   杂志风：h1/h2 用衬线做「文章标题」，h3/h4 保持无衬线作为内文小标。       */
-.vp-doc h1,
-.vp-doc h2 {
-  font-family: var(--mag-font-serif);
-  font-weight: 700;
-  letter-spacing: var(--mag-tracking-serif);
-  line-height: var(--mag-leading-tight);
-}
-
-.vp-doc h3,
-.vp-doc h4 {
-  font-weight: 700;
-  letter-spacing: var(--mag-tracking-title);
-  line-height: var(--mag-leading-tight);
-}
-
-.vp-doc h1 {
-  font-size: var(--mag-fs-h1);
-  margin-bottom: var(--mag-space-lg);
-}
-
-.vp-doc h2 {
-  font-size: var(--mag-fs-h2);
-  margin-top: var(--mag-space-2xl);
-  margin-bottom: var(--mag-space-md);
-  padding-top: var(--mag-space-lg);
-  border-top: var(--mag-rule);
-}
-
-.vp-doc h3 {
-  font-size: var(--mag-fs-h3);
-  margin-top: var(--mag-space-xl);
-  margin-bottom: var(--mag-space-sm);
-}
-
-.vp-doc h4 {
-  font-size: var(--mag-fs-h4);
-  margin-top: var(--mag-space-lg);
-  margin-bottom: var(--mag-space-xs);
-}
-
-.vp-doc p,
-.vp-doc li {
-  line-height: var(--mag-leading-body);
-}
-
-/* ---- 图片 ---------------------------------------------------------------- */
-figure:not(.mag-figure) figcaption {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: var(--mag-text-tertiary);
-  font-size: var(--mag-fs-small);
-  font-weight: 400;
-}
-
-.main figure:not(.mag-figure) > img {
-  border-radius: var(--mag-radius-md);
-  box-shadow: var(--mag-shadow-md);
-  margin-bottom: 0.8rem;
-  margin-left: auto;
-  margin-right: auto;
-  max-height: 16rem;
-}
-
-.dark .main figure:not(.mag-figure) > img {
-  background: var(--mag-surface-solid);
-}
-
-/* 图片点击放大优先级调整 */
-.medium-zoom-image,
-.medium-zoom-overlay {
-  z-index: 100;
-}
-
-/* ---- 行内元素 ------------------------------------------------------------
-   沿用站点既有约定：strong 不加粗、改用强调色标记。                        */
-.vp-doc strong {
-  font-weight: normal;
-  color: var(--mag-accent);
-  padding: 0 4px;
-}
-
-.vp-doc blockquote {
-  border-left: 3px solid var(--mag-accent);
-  border-radius: var(--mag-radius-sm);
-  background-color: var(--mag-accent-soft);
-  padding: var(--mag-space-sm) var(--mag-space-md);
-}
-
-.vp-doc blockquote p {
-  margin: 0.4rem 0;
-}
-
-.vp-doc a {
-  padding: 0 4px;
-  text-underline-offset: 3px;
-}
-
-/* ---- 导航栏毛玻璃（保留，底色换成纯白调） ------------------------------ */
-:root {
-  --nav-c-bg: rgba(255, 255, 255, 0.6);
-  --vp-c-gutter: rgba(226, 226, 227, 0);
-  --backdrop-filter: var(--mag-blur);
-}
-
-.dark {
-  --nav-c-bg: rgba(15, 15, 16, 0.65);
-  --vp-c-gutter: rgba(30, 30, 32, 0.5);
-}
-
-.VPNavBar > .divider {
-  display: none !important;
-}
-
-.VPLocalNavOutlineDropdown > .items {
-  background-color: var(--vp-c-bg);
-}
-
-.content-body,
-.VPNavBar {
-  background: transparent !important;
-}
-
-.VPNavBar,
-.VPLocalNav {
-  background: var(--nav-c-bg) !important;
-  border-bottom: none;
-  backdrop-filter: var(--backdrop-filter);
-  -webkit-backdrop-filter: var(--backdrop-filter);
-}
-
-/* ---- 文字截断（保留） ---------------------------------------------------- */
-.VPSidebarItem .VPLink p {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  max-width: 200px;
-}
-
-.VPDocFooter .pager .title {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-/* 翻页按钮做成卡片，hover 与全站卡片统一：上浮 + 阴影加深 */
-.VPDocFooter .pager-link {
-  border-radius: var(--mag-radius-md);
-  border-color: var(--mag-hairline);
-  background: var(--mag-surface);
-  transition: transform var(--mag-duration-fast) var(--mag-ease),
-    box-shadow var(--mag-duration-fast) var(--mag-ease),
-    border-color var(--mag-duration-fast) var(--mag-ease);
-}
-
-.VPDocFooter .pager-link:hover {
-  transform: translateY(-3px);
-  border-color: var(--mag-hairline-strong);
-  box-shadow: var(--mag-shadow-md);
-}
-
-/* 首页 hero 行动按钮：hover 轻微上浮，与卡片同一曲线 */
-.VPHome .VPHero .actions .VPButton {
-  transition: transform var(--mag-duration-fast) var(--mag-ease),
-    background-color var(--mag-duration-fast) var(--mag-ease),
-    border-color var(--mag-duration-fast) var(--mag-ease),
-    color var(--mag-duration-fast) var(--mag-ease);
-}
-
-.VPHome .VPHero .actions .VPButton:hover {
-  transform: translateY(-2px);
-}
-
-/* ---- 首页 ----------------------------------------------------------------
-   首屏由 home-hero-before 插槽注入：CursorWave 固定画布垫底（z-index 0），
-   ASCII Swift logo 独占一屏；其余内容抬到 z-index 1 并滚动揭示。          */
-.VPHome {
-  position: relative;
-}
-
-.VPHome .VPHero,
-.VPHome .VPFeatures,
-.VPHome .VPHomeContent {
-  position: relative;
-  z-index: 1;
-}
-
-.VPHome .VPHero .name,
-.VPHome .VPHero .text {
-  font-family: var(--mag-font-serif);
-  letter-spacing: var(--mag-tracking-serif);
-  line-height: var(--mag-leading-tight);
-}
-
-.VPHome .VPHero .tagline {
-  color: var(--mag-text-secondary);
-  letter-spacing: var(--mag-tracking-eyebrow);
-}
-
-/* 特性卡片改为纯白 hairline 卡片，hover 统一为「轻微上浮 + accent 顶线划入」 */
-.VPHome .VPFeature {
-  position: relative;
-  border-radius: var(--mag-radius-sm);
-  border: 1px solid var(--mag-hairline);
-  background: var(--mag-surface);
-  box-shadow: var(--mag-shadow-sm);
-  transition:
-    transform var(--mag-duration-fast) var(--mag-ease),
-    border-color var(--mag-duration-fast) var(--mag-ease),
-    box-shadow var(--mag-duration-fast) var(--mag-ease);
-}
-
-.VPHome .VPFeature::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: var(--mag-space-md);
-  right: var(--mag-space-md);
-  height: 2px;
-  background: var(--mag-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--mag-duration) var(--mag-ease);
-}
-
-.VPHome .VPFeature:hover {
-  transform: translateY(-3px);
-  border-color: var(--mag-hairline-strong);
-  box-shadow: var(--mag-shadow-md);
-}
-
-.VPHome .VPFeature:hover::before {
-  transform: scaleX(1);
-}
-
-.VPHome .VPFeature .title {
-  letter-spacing: var(--mag-tracking-title);
-}
-
-.VPHome .VPFeature .details {
-  color: var(--mag-text-secondary);
-  line-height: var(--mag-leading-body);
-}
-
-/* 胶囊标签行（原 .badge-row） */
-.mag-badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin: var(--mag-space-md) 0;
-}
-
-/* 首页「最新动态」末尾的查看全部链接 */
-.mag-more {
-  margin: var(--mag-space-lg) 0 var(--mag-space-2xl);
-  text-align: center;
-}
-
-.mag-more a {
-  color: var(--mag-accent);
-  font-size: var(--mag-fs-small);
-  letter-spacing: var(--mag-tracking-caps);
-  text-decoration: none;
-  border-bottom: 1px solid var(--mag-accent-border);
-  padding-bottom: 2px;
-  transition: border-color var(--mag-duration-fast) var(--mag-ease);
-}
-
-.mag-more a:hover {
-  border-bottom-color: var(--mag-accent);
-}
+.VPHome > .vp-doc.container { max-width: none; padding: 0; }
+.VPHome .club-home a { text-decoration: none; color: inherit; }
+.VPHome .club-home .club-button--primary { color: var(--mag-on-accent); }
+.VPHome .club-home h2 { border: 0; padding: 0; }
+.VPHome .club-home .club-section__head h2 { margin: 20px 0 12px; }
+.VPHome .club-home .club-community h2 { margin: 0 0 16px; }
+.VPHome .club-home .club-section__head > a { color: var(--mag-text-secondary); }
+.VPHome .club-home .club-section__head > a:hover { color: var(--mag-accent); }
+.VPHome .club-home .club-intro__index { color: var(--mag-text-secondary); }
+.VPHome .club-home .mag-archive h3 { margin: 0 0 6px; }

@@ -73,11 +73,11 @@ const note = computed(() => {
   </div>
 </template>
 <style scoped>
-.preview-number { display: inline-block; border: 1px solid var(--mag-hairline-strong); border-radius: 50%; width: 19px; text-align: center; }.preview-focus legend, .preview-rule-active { color: var(--lab-blue); }.preview-focus .preview-number { background: var(--mag-accent-soft); border-color: var(--lab-blue); }.preview-wire { animation: trace-rule .8s ease-out; }@keyframes trace-rule { from { stroke-dashoffset: 50; opacity: .2; } to { stroke-dashoffset: 0; opacity: 1; } }.preview-note { transform: rotate(-1deg); border-top: 3px solid var(--mag-accent-border); }
-.preview-note p { font-family: var(--mag-font-serif); font-size: 1.1rem; }
+.preview-number { display: inline-block; border: 1px solid var(--mag-hairline-strong); border-radius: 50%; width: 19px; text-align: center; }.preview-focus legend, .preview-rule-active { color: var(--lab-blue); }.preview-focus .preview-number { background: var(--mag-accent-soft); border-color: var(--lab-blue); }.preview-wire { animation: trace-rule .8s ease-out; }@keyframes trace-rule { from { stroke-dashoffset: 50; opacity: .2; } to { stroke-dashoffset: 0; opacity: 1; } }.preview-note {  border-top: 3px solid var(--mag-accent-border); }
+.preview-note p { font-family: var(--mag-font-display); font-size: 1.1rem; }
 .preview-note fieldset { border: 0; padding: 0; margin: .9rem 0 0; min-width: 0; }
-.preview-note legend { font-size: .78rem; color: var(--lab-muted); margin-bottom: .4rem; }
-.preview-options { display: flex; flex-wrap: wrap; gap: .35rem; }.preview-options button { font-size: .75rem; padding: .4rem .55rem; }
-.preview-script { padding: 0; list-style: none; font-size: .75rem; line-height: 1.8; color: var(--lab-muted); }
+.preview-note legend { font-size: 14px; color: var(--lab-muted); margin-bottom: .4rem; }
+.preview-options { display: flex; flex-wrap: wrap; gap: .35rem; }.preview-options button { font-size: 14px; padding: .4rem .55rem; }
+.preview-script { padding: 0; list-style: none; font-size: 14px; line-height: 1.8; color: var(--lab-muted); }
 .preview-script li { border-bottom: var(--mag-rule); padding: .3rem 0; }.preview-set { color: var(--lab-blue); }
 </style>

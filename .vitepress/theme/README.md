@@ -4,27 +4,23 @@
 
 **新增一个页面时不需要写任何 CSS**，也不需要 `import`——直接用下面的组件即可。
 
-视觉方向是**编辑杂志风**：衬线大标题、纸面背景、期号/年份编号、细规则线。
-卡片的交互语言是**便利贴**：索引网格项是完整的彩色便签（纸面颜色由标题散列、
-顶部胶带、静止翘角、错落倾斜），hover 掀起一角，点击撕下后淡化跳转到对应页面。
-所有颜色、字号、间距、阴影都来自 `styles/tokens.css`（亮/暗两套），
-**改主题只需要动那一个文件**，不要在组件里写死颜色值。
+视觉方向为克制阅读：保留白灰蓝配色与深浅模式，以统一无衬线字体、400/500 字重、细描边和留白组织内容。正文标题为 22/18/16px，首页允许 36–60px 的展示标题。代码使用等宽字体。卡片无阴影、无纸角；链接立即跳转。图标使用 Tabler outline。
+
+设计令牌在 `styles/tokens.css`，默认主题覆写在 `styles/base.css`，教学交互在 `components/learning/illustrations/lab.css`。背景、文字与边框只消费主题变量。
 
 ## 目录结构
 
 ```
 .vitepress/
 ├── theme/
-│   ├── index.ts              # 全局注册组件、挂载动效、注入首页首屏（ASCII logo + CursorWave）
+│   ├── index.ts              # 全局注册组件、挂载 GSAP 动效及图片缩放
 │   ├── styles/
 │   │   ├── tokens.css        # 设计令牌（颜色/字阶/间距/阴影/动效曲线）
 │   │   ├── base.css          # VitePress 默认主题覆写
-│   │   └── motion.css        # 滚动揭示 + 路由转场
+│   │   └── motion.css        # 减少动态效果和打印样式
 │   ├── composables/
-│   │   ├── useReveal.ts      # IntersectionObserver 揭示逻辑（markdown 原生 DOM）
+│   │   ├── useReveal.ts      # GSAP 入场 + IntersectionObserver 栏目揭示
 │   │   ├── useMotionReady.ts # SSG 安全的动效开关（水合 + prefers-reduced-motion）
-│   │   ├── useRouteEnter.ts  # 路由进入转场（撕下转场的淡化入场也在这里分流）
-│   │   └── useNoteTear.ts    # 「撕下便签 → 淡化」点击转场编排（MagArchive 网格 / MagCard 使用）
 │   └── components/           # 下表中的所有组件
 └── data/
     ├── shared.ts             # RecordEntry 类型 + toEntries() 派生（year/issue）
@@ -46,7 +42,7 @@
 title: "活动标题"
 description: "一句话简介，会作为索引页的摘要"
 date: 2026.03.01          # 可省略，省略时从目录名推断
-icon: "🚀"                 # 索引页封面上的字形
+cover: "/example.jpg"     # 可选的活动照片
 tags: [Swift, 工作坊]
 ---
 ```
@@ -69,10 +65,11 @@ tags: [Swift, 工作坊]
 
 | 组件 | 用途 | 主要 props |
 | --- | --- | --- |
-| `MagHero` | 刊头页头（首屏入场编排） | `title` `subtitle` `eyebrow` `issue` `date` `entrance` |
-| `MagSection` | 章节分隔标题 | `title` `icon` `n`（渲染 `01 /` 编号） |
+| `ClubHome` | 首页介绍、学习入口、活动和社团入口 | 无 |
+| `MagHero` | 阅读页页头（短淡入） | `title` `subtitle` `eyebrow` `issue` `date` `entrance` |
+| `MagSection` | 章节分隔标题 | `title` `n`（轻量编号） |
 | `MagGrid` | 响应式网格容器 | `cols`（桌面列数）`media`（图集模式） |
-| `MagCard` | 卡片 | `icon` `title` `tag` `href` `compact` |
+| `MagCard` | 卡片（icon 参数兼容保留，不展示装饰 emoji） | `title` `tag` `href` `compact` |
 | `MagStep` | 编号步骤 | `n` `title`（都省略时退化为普通内容块） |
 | `MagNote` | 提示 / 强调块 | `type`: `highlight` \| `tip` \| `warn`，`title` `icon` |
 | `MagFigure` | 配图 | `caption` `maxHeight` `plain`（无装裱，用于 logo）；相对路径图片放插槽，见下 |
@@ -82,8 +79,6 @@ tags: [Swift, 工作坊]
 | `MagButton` | 按钮（替代 el-button） | `href` `variant`: `primary` \| `ghost`，`block` |
 | `MagCarousel` | 轮播图（替代 el-carousel） | `autoplay`（间隔毫秒）；图片放插槽 |
 | `MagModal` | 弹窗（原生 `<dialog>`） | `title` `width`；插槽 `trigger`（拿 `open`）/ 默认 / `footer`（拿 `close`） |
-| `AsciiHero` | 首页首屏：Swift 徽章的 3D ASCII 打印（可拖拽） | 无 |
-| `CursorWave` | 首页全屏背景：跟随光标的网格波纹 | 无 |
 
 ## 写法示例
 
@@ -148,27 +143,22 @@ tags: [Swift, 工作坊]
 - **组件的 `<style scoped>` 管不到插槽内容**（插槽带的是父组件的 scope id）。
   给插槽内容加样式必须用 `:deep()`，各组件里已经处理了常见的 `p` / `ul` / `h3` / `a`。
 
-## 动效：两套系统各管各的
+## 动效
 
-| 系统 | 负责 | 用法 |
-| --- | --- | --- |
-| `useReveal`（IntersectionObserver + CSS） | markdown 原生 DOM 的滚动揭示 | 对 `.vp-doc` 顶层区块和 `[data-mag-stagger]` 子元素自动生效，页面零配置 |
-| motion-v（`<Motion>` / `useScroll` / `animate()`） | 组件级编排 | MagHero 首屏入场、MagArchive 时间线 scrub、首页 hero、路由转场 |
-| `useNoteTear`（模块级编排 + CSS keyframes） | 便签卡片的点击转场 | 被点卡片克隆为挂在 body 上的「幽灵」独立播撕下动画（拽角→脱胶回弹→甩出），同时其余内容淡出 → 切路由 → 新页在幽灵下方纯淡入（`mag-enter-tear`，useRouteEnter 分流），幽灵飞完才消散 |
+`useReveal.ts` 统一管理 GSAP 与 IntersectionObserver。SSR 默认可见；首页整行标题短暂上移、页头淡入。正文段落不隐藏，鼠标点击不等待离场动画。
 
-规则：
+| 标记 | 行为 |
+| --- | --- |
+| `data-mag-line` | 首页整行上移显现，0.75 秒 |
+| `data-mag-enter` | 页头短淡入，0.55 秒、8px |
+| `data-mag-reveal` | 栏目滚动入场，0.55 秒、12px |
+| `data-mag-stagger` | 子项滚动入场，批次错开最多 0.14 秒 |
 
-- 想让某个元素不参与动效，加 `class="mag-no-reveal"`；
-- **凡被 motion-v 接管的组件根元素必须有 `mag-no-reveal`**，且不能放进 `data-mag-stagger` 容器；
-- 组件里写 motion-v 动画必须过 `useMotionReady()` 的 `animate` 守卫——SSR 永远输出可见终态，
-  隐藏态只在水合后启用，**绝不把 `opacity: 0` 写进 SSR 输出**；
-- 系统开启「减弱动态效果」时，所有动效与背景动画都会自动停用。
+`gsap.matchMedia` 响应运行时减少动态效果偏好；路由变化时 revert 动画并断开观察器。页面卸载时释放动画与图片缩放实例。不要同时动画父子节点，不对正文逐段隐藏，不增加 blur 或循环背景动效。
 
-## 字体分工
+官方参考：[gsap.matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/)。
 
-- **衬线**（`--mag-font-serif`，系统栈零加载）：只用于 display 标题（vp-doc h1/h2、刊头、年份、期号）；
-- **无衬线**：正文、小标、卡片、按钮等一切界面文字。
-
+验证：`npm run build` 后运行 `npm run preview -- --port 4173`，再执行、`node scripts/check-design.mjs http://localhost:4173` 和 `node scripts/check-ai-course.mjs http://localhost:5173`。设计截图默认输出到 `/private/tmp/club-design-qa`。
 
 ## AI 编程入门：内容交互
 

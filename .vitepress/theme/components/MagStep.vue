@@ -64,9 +64,9 @@ const hasHeader = computed(() => props.n !== undefined || !!props.title || !!slo
   height: 1.75rem;
   border-radius: var(--mag-radius-pill);
   background: var(--mag-accent);
-  color: #fff;
+  color: var(--mag-on-accent);
   font-size: var(--mag-fs-small);
-  font-weight: 600;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
@@ -76,7 +76,7 @@ const hasHeader = computed(() => props.n !== undefined || !!props.title || !!slo
   padding: 0;
   color: var(--mag-text);
   font-size: var(--mag-fs-h4);
-  font-weight: 650;
+  font-weight: 500;
   letter-spacing: var(--mag-tracking-title);
 }
 

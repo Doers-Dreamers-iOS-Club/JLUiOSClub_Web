@@ -1,17 +1,5 @@
-/**
- * 设计令牌 —— 全站唯一的视觉真理来源
- * ---------------------------------------------------------------------------
- * 迁移前每个记录页都硬编码了一份 --mag-* 变量（6 个页面各一份）。
- * 现在统一收敛到这里，并挂接 VitePress 的 --vp-* 变量，自动跟随亮/暗主题。
- *
- * 约定：组件只消费这里的令牌，不要在组件里写死颜色 / 阴影 / 圆角。
- */
-
 :root {
-  /* ---- 字体 ---------------------------------------------------------- */
-  /* 编辑杂志风的分工：
-     - serif（衬线）  = display 大标题 / 期号 / 年份数字，营造「刊头」气质
-     - display（无衬线）= 正文与 UI，中文小字号下衬线可读性差，正文不用衬线 */
+  --mag-on-accent: #ffffff;
   --mag-font-serif: Georgia, "Times New Roman", "Songti SC", "STSong",
     "Noto Serif CJK SC", "Source Han Serif SC", serif;
   --mag-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
@@ -20,32 +8,29 @@
   --mag-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco,
     Consolas, "Liberation Mono", monospace;
 
-  /* 字阶：大标题用 clamp 做流体排版，移动端不至于撑破 */
-  --mag-fs-masthead: clamp(2.6rem, 6.5vw, 4.4rem);
-  --mag-fs-display: clamp(2.1rem, 5.2vw, 3.4rem);
-  --mag-fs-year: clamp(3rem, 8vw, 5.5rem);
-  --mag-fs-h1: clamp(1.9rem, 3.6vw, 2.6rem);
-  --mag-fs-h2: clamp(1.5rem, 2.6vw, 1.95rem);
-  --mag-fs-h3: clamp(1.2rem, 2vw, 1.4rem);
-  --mag-fs-h4: 1.1rem;
+  --mag-fs-masthead: clamp(2.25rem, 4.5vw, 3.75rem);
+  --mag-fs-display: 22px;
+  --mag-fs-year: 18px;
+  --mag-fs-h1: 22px;
+  --mag-fs-h2: 18px;
+  --mag-fs-h3: 16px;
+  --mag-fs-h4: 16px;
   --mag-fs-body: 1rem;
-  --mag-fs-small: 0.875rem;
-  --mag-fs-micro: 0.78rem;
+  --mag-fs-small: 14px;
+  --mag-fs-micro: 13px;
 
-  /* 字距：衬线大标题不适合负字距（中文笔画会挤），改为轻微放宽 */
-  --mag-tracking-display: -0.028em;
-  --mag-tracking-title: -0.02em;
-  --mag-tracking-serif: 0.01em;
-  --mag-tracking-body: -0.003em;
-  --mag-tracking-caps: 0.08em;
-  --mag-tracking-eyebrow: 0.22em;
-  --mag-tracking-num: 0.04em;
+  --mag-tracking-display: -0.035em;
+  --mag-tracking-title: -0.015em;
+  --mag-tracking-serif: -0.015em;
+  --mag-tracking-body: 0;
+  --mag-tracking-caps: 0;
+  --mag-tracking-eyebrow: 0.02em;
+  --mag-tracking-num: 0;
 
-  --mag-leading-tight: 1.15;
+  --mag-leading-tight: 1.4;
   --mag-leading-snug: 1.4;
-  --mag-leading-body: 1.75;
+  --mag-leading-body: 1.7;
 
-  /* ---- 间距与圆角 ---------------------------------------------------- */
   --mag-space-2xs: 0.25rem;
   --mag-space-xs: 0.5rem;
   --mag-space-sm: 0.75rem;
@@ -54,36 +39,30 @@
   --mag-space-xl: 2.5rem;
   --mag-space-2xl: 4rem;
 
-  --mag-radius-sm: 10px;
-  --mag-radius-md: 16px;
-  --mag-radius-lg: 22px;
-  --mag-radius-xl: 28px;
+  --mag-radius-sm: 8px;
+  --mag-radius-md: 12px;
+  --mag-radius-lg: 12px;
+  --mag-radius-xl: 16px;
   --mag-radius-pill: 999px;
 
   --mag-gap-grid: 1.15rem;
 
-  /* ---- 表面与描边 ---------------------------------------------------- */
-  /* 纯白极简：整站纯白底 + 中性灰发丝边框分层，不靠投影也不靠模糊。
-     backdrop-filter 只保留给导航栏（背后确实有滚动内容）。 */
   --mag-surface: #ffffff;
   --mag-surface-solid: #ffffff;
   --mag-surface-raised: #ffffff;
   --mag-surface-sunken: #f5f5f7;
   --mag-hairline: rgba(0, 0, 0, 0.1);
   --mag-hairline-strong: rgba(0, 0, 0, 0.18);
-  --mag-blur: saturate(180%) blur(20px);
+  --mag-blur: none;
 
-  /* 杂志规则线：刊头、分节、条目分隔全靠它们 */
-  --mag-rule: 1px solid var(--mag-hairline);
-  --mag-rule-strong: 1px solid var(--mag-hairline-strong);
-  --mag-rule-double: 3px double var(--mag-hairline-strong);
+  --mag-rule: 0.5px solid var(--mag-hairline);
+  --mag-rule-strong: 0.5px solid var(--mag-hairline-strong);
+  --mag-rule-double: 0.5px solid var(--mag-hairline-strong);
 
-  /* ---- 文字色（中性灰阶，不带暖调） ----------------------------------- */
   --mag-text: #1d1d1f;
   --mag-text-secondary: #6e6e73;
   --mag-text-tertiary: #86868b;
 
-  /* ---- 强调色 -------------------------------------------------------- */
   --mag-accent: #0071e3;
   --mag-accent-hover: #0077ed;
   --mag-accent-soft: rgba(0, 113, 227, 0.1);
@@ -93,35 +72,26 @@
   --mag-warn-soft: rgba(245, 158, 11, 0.12);
   --mag-warn-border: rgba(245, 158, 11, 0.3);
 
-  /* ---- 便签（sticky note） --------------------------------------------- */
-  /* 掀起的角露出的纸张背面：比纸面略灰、偏冷，像便签的未涂胶面 */
   --mag-note-back: #eef0f3;
 
-  /* ---- 阴影：三级景深（中性黑，不带暖调） ---------------------------- */
-  /* 纯白底把阴影压到最轻：分层主要靠 hairline，阴影只在 hover 抬升时给一点 */
-  --mag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --mag-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.05),
-    0 10px 24px rgba(0, 0, 0, 0.06);
-  --mag-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.06),
-    0 20px 48px rgba(0, 0, 0, 0.09);
+  --mag-shadow-sm: none;
+  --mag-shadow-md: none;
+  --mag-shadow-lg: none;
 
-  /* ---- 首页波纹网格（CursorWave 从这里读色，自动适配主题） ----------- */
   --mag-wave-ink: 29, 29, 31;
   --mag-wave-accent: 0, 113, 227;
 
-  /* ---- 动效 ---------------------------------------------------------- */
-  /* 苹果惯用的缓出曲线：起步快、收尾慢。全站 hover / 揭示共用这一套，
-     时长与位移都从这里取，保证手感统一、丝滑。 */
-  --mag-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --mag-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --mag-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-  --mag-duration: 0.72s;
-  --mag-duration-fast: 0.32s;
-  --mag-reveal-shift: 14px;
-  --mag-reveal-blur: 6px;
+  --mag-duration: 0.55s;
+  --mag-duration-fast: 0.22s;
+  --mag-reveal-shift: 8px;
+  --mag-reveal-blur: 0px;
   --mag-stagger: 55ms;
 }
 
 .dark {
+  --mag-on-accent: #0f0f10;
   --mag-surface: #161617;
   --mag-surface-solid: #1c1c1e;
   --mag-surface-raised: #1f1f21;
@@ -144,12 +114,9 @@
 
   --mag-note-back: #2b2b2f;
 
-  /* 暗色下阴影改为轻微的纯黑环境影，仍然保持克制 */
-  --mag-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --mag-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4),
-    0 12px 28px rgba(0, 0, 0, 0.35);
-  --mag-shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.45),
-    0 24px 56px rgba(0, 0, 0, 0.4);
+  --mag-shadow-sm: none;
+  --mag-shadow-md: none;
+  --mag-shadow-lg: none;
 
   --mag-wave-ink: 245, 245, 247;
   --mag-wave-accent: 41, 151, 255;

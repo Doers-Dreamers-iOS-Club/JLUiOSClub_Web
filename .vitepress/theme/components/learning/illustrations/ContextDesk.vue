@@ -3,11 +3,11 @@ import { computed, ref } from 'vue'
 import LabFrame from './LabFrame.vue'
 
 const cards = [
-  { id: 'path', title: '文件路径', mark: '01 / FIND', text: 'index.html', note: '知道去哪里找，还不知道里面写了什么。', icon: 'M5 10V5h10l4 4h16v23H5Z' },
-  { id: 'code', title: '当前代码', mark: '02 / READ', text: 'const speed = 180\nfunction restart() { start(speed) }', note: '看见当前实现，才能判断应该改哪里。', icon: 'M15 10 5 20l10 10m10-20 10 10-10 10m-3-24-5 28' },
-  { id: 'old', title: '旧对话', mark: '03 / HISTORY', text: '上一轮：先做固定速度的基础版。', note: '帮助理解来由，但旧决定可能已被新需求替代。', icon: 'M5 6h30v22H17L8 35v-7H5Z M11 13h18m-18 7h12' },
-  { id: 'rule', title: '本轮要求', mark: '04 / NOW', text: '轻松 / 标准；默认轻松；开始前选择；重新开始沿用所选档位。', note: '把本次交付的边界说清楚。', icon: 'M10 4h20v32H10Z M15 13l3 3 7-7m-10 15h10m-10 6h10' },
-  { id: 'error', title: '报错证据', mark: '05 / CHECK', text: '复现：选标准 → 开始 → 重新开始\n结果：又变回轻松速度。', note: '复现步骤和实际结果，让问题可以被验证。', icon: 'M20 4 38 35H2Z M20 14v10m0 5v1' },
+  { id: 'path', title: '文件路径', mark: '01', text: 'index.html', note: '知道去哪里找，还不知道里面写了什么。', icon: 'M5 10V5h10l4 4h16v23H5Z' },
+  { id: 'code', title: '当前代码', mark: '02', text: 'const speed = 180\nfunction restart() { start(speed) }', note: '看见当前实现，才能判断应该改哪里。', icon: 'M15 10 5 20l10 10m10-20 10 10-10 10m-3-24-5 28' },
+  { id: 'old', title: '旧对话', mark: '03', text: '上一轮：先做固定速度的基础版。', note: '帮助理解来由，但旧决定可能已被新需求替代。', icon: 'M5 6h30v22H17L8 35v-7H5Z M11 13h18m-18 7h12' },
+  { id: 'rule', title: '本轮要求', mark: '04', text: '轻松 / 标准；默认轻松；开始前选择；重新开始沿用所选档位。', note: '把本次交付的边界说清楚。', icon: 'M10 4h20v32H10Z M15 13l3 3 7-7m-10 15h10m-10 6h10' },
+  { id: 'error', title: '报错证据', mark: '05', text: '复现：选标准 → 开始 → 重新开始\n结果：又变回轻松速度。', note: '复现步骤和实际结果，让问题可以被验证。', icon: 'M20 4 38 35H2Z M20 14v10m0 5v1' },
 ]
 const chosen = ref(['path'])
 const preset = ref(0)
@@ -88,17 +88,17 @@ async function copyTask() {
 <style scoped>
 .desk-shelf { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; margin:1rem 0 1.4rem; }
 .lesson-lab .desk-card { display:flex; flex-direction:column; gap:.7rem; min-width:0; text-align:left; padding:1rem; border-radius:var(--mag-radius-sm); }
-.card-top { display:flex; align-items:center; gap:.55rem; color:var(--mag-text-secondary); font: .62rem/1.5 var(--mag-font-mono); }
+.card-top { display:flex; align-items:center; gap:.55rem; color:var(--mag-text-secondary); font: 13px/1.5 var(--mag-font-display); }
 .card-top svg { width:30px; flex:none; }
-.card-text { white-space:pre-wrap; overflow-wrap:anywhere; color:var(--mag-text-secondary); font:.75rem/1.8 var(--mag-font-mono); }
-.card-action { margin-top:auto; font-size:.7rem; color:var(--mag-accent); }
+.card-text { white-space:pre-wrap; overflow-wrap:anywhere; color:var(--mag-text-secondary); font:14px/1.8 var(--mag-font-display); }
+.card-action { margin-top:auto; font-size:14px; color:var(--mag-accent); }
 .desk-tray { border:var(--mag-rule-strong); border-top:3px solid var(--mag-accent-border); border-radius:var(--mag-radius-md); padding:1rem; }
 .desk-tray.drop-ready { border-color:var(--mag-accent); background:var(--mag-accent-soft); }
 .tray-label { display:flex; align-items:center; gap:.75rem; }
 .tray-label svg { width:64px; flex:none; }
 .tray-notes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem; margin-top:.7rem; }
-.tray-notes b { font-size:.8rem; }.tray-notes p { font-size:.75rem; line-height:1.8; color:var(--mag-text-secondary); margin:.3rem 0 0; }
-.task-slip { margin-top:1rem; }.task-slip p { font-size:.82rem; line-height:1.9; }
+.tray-notes b { font-size:14px; }.tray-notes p { font-size:14px; line-height:1.8; color:var(--mag-text-secondary); margin:.3rem 0 0; }
+.task-slip { margin-top:1rem; }.task-slip p { font-size:14px; line-height:1.9; }
 .task-slip textarea { width:100%; min-height:140px; margin-top:.7rem; color:var(--mag-text); background:var(--mag-surface); border:var(--mag-rule-strong); padding:.7rem; font:inherit; }
 .task-slip textarea:focus-visible { outline:2px solid var(--mag-accent); outline-offset:3px; }
 @media(max-width:760px) { .desk-shelf { grid-template-columns:repeat(2,minmax(0,1fr)); } }

@@ -6,7 +6,7 @@ description: JLU iOS Club 历次活动与讲义的完整记录。
 <MagHero
   eyebrow="Archive"
   title="社团活动"
-  subtitle="从入门讲座到实战工作坊，这里是社团历次活动的完整记录。点击任意封面进入当期讲义。"
+  subtitle="从入门讲座到实战工作坊，这里是社团历次活动的完整记录。选择一篇记录，继续阅读。"
 />
 
 <MagNote title="想从一个小作品开始？" type="tip">

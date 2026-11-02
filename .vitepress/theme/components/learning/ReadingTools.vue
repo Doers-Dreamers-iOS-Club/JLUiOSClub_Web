@@ -32,12 +32,12 @@ function toggle() {
   </div>
 </template>
 <style scoped>
-.reading-tools { margin: 1.25rem 0 2rem; padding-bottom: 1rem; border-bottom: var(--mag-rule); color: var(--mag-text-secondary); font-size: .85rem; }
+.reading-tools { margin: 1.25rem 0 2rem; padding-bottom: 1rem; border-bottom: var(--mag-rule); color: var(--mag-text-secondary); font-size: 14px; }
 .reading-tools__meta, .reading-tools__actions { display: flex; flex-wrap: wrap; gap: .5rem 1.3rem; align-items: center; }
 .reading-tools__actions { margin-top: .6rem; }
 .reading-tools__actions a, button { display: inline-flex; align-items: center; min-height: 44px; }
 button { cursor: pointer; padding: .3rem .8rem; border: var(--mag-rule); border-radius: 8px; color: var(--mag-accent); }
 button[aria-pressed=true] { background: var(--mag-accent-soft); border-color: var(--mag-accent); }
 button:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 3px; }
-.reading-tools__status { margin: .2rem 0 0; font-size: .78rem; }
+.reading-tools__status { margin: .2rem 0 0; font-size: 14px; }
 </style>

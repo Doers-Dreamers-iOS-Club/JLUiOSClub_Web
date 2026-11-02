@@ -15,7 +15,7 @@ import { chapters, courseBase } from '../../../.vitepress/theme/components/learn
 
 <div class="course-masthead">
   <span>JLU iOS Club / 学习手记</span>
-  <span>BEGINNER'S FIELD GUIDE</span>
+  <span>AI 编程入门</span>
 </div>
 
 <MagHero eyebrow="AI 编程入门 · 面向 26 级新生" title="从想法到作品" subtitle="和 Agent 一起开始 AI 编程。">
@@ -34,7 +34,7 @@ import { chapters, courseBase } from '../../../.vitepress/theme/components/learn
 
 <div class="course-editorial">
 <div>
-<p class="course-kicker">写在开始之前 / A NOTE TO YOU</p>
+<p class="course-kicker">写在开始之前</p>
 
 ## 先做出来，再一点点变成你的作品。
 
@@ -83,7 +83,7 @@ import { chapters, courseBase } from '../../../.vitepress/theme/components/learn
 </div>
 
 <div class="course-download">
-<div><p class="course-kicker">带走这些，再开始动手 / TAKE IT WITH YOU</p><h2>你的第一份项目工具包。</h2><p>小游戏检查 Skill、Playwright MCP 配置、API 示例和项目记录模板，都放在这里。</p></div>
+<div><p class="course-kicker">配套材料</p><h2>你的第一份项目工具包。</h2><p>小游戏检查 Skill、Playwright MCP 配置、API 示例和项目记录模板，都放在这里。</p></div>
 <div class="course-actions"><MagButton href="/resources/ai-programming/materials/">查看配套材料</MagButton><a href="/ai-programming/ai-programming-handbook.zip" download>下载完整讲义包 ↓</a></div>
 </div>
 

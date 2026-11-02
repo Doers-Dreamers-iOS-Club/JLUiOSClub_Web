@@ -91,8 +91,8 @@ function onBackdropClick(e: MouseEvent) {
 }
 
 .mag-modal__dialog::backdrop {
-  background: rgba(20, 18, 15, 0.45);
-  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--mag-text) 40%, transparent);
+
 }
 
 .mag-modal__head {
@@ -108,7 +108,7 @@ function onBackdropClick(e: MouseEvent) {
   margin: 0;
   border: 0;
   padding: 0;
-  font-family: var(--mag-font-serif);
+  font-family: var(--mag-font-display);
   font-size: var(--mag-fs-h3);
   letter-spacing: var(--mag-tracking-serif);
 }

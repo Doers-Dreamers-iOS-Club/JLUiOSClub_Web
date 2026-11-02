@@ -39,13 +39,13 @@ watch(() => props.chapter, () => { selected.value = null })
 
 <style scoped>
 .recall-quiz { margin: var(--mag-space-xl) 0; padding: var(--mag-space-lg); border: var(--mag-rule); border-radius: var(--mag-radius-lg); background: var(--mag-surface); color: var(--mag-text); }
-.recall-quiz__eyebrow { margin-top: 0; color: var(--mag-text-secondary); font: var(--mag-fs-micro) var(--mag-font-mono); letter-spacing: .06em; }
+.recall-quiz__eyebrow { margin-top: 0; color: var(--mag-text-secondary); font: var(--mag-fs-micro) var(--mag-font-display); letter-spacing: .06em; }
 .recall-quiz__fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
-.recall-quiz__fieldset legend { font-weight: 600; padding: 0; }
+.recall-quiz__fieldset legend { font-weight: 500; padding: 0; }
 .recall-quiz__choices { display: grid; gap: var(--mag-space-xs); margin-top: var(--mag-space-md); }
 .recall-quiz button { min-height: 44px; padding: 12px; border: var(--mag-rule-strong); border-radius: var(--mag-radius-sm); background: var(--mag-surface); color: var(--mag-text); font: inherit; cursor: pointer; }
 .recall-quiz__choices button { display: flex; gap: var(--mag-space-sm); align-items: baseline; text-align: left; font-size: var(--mag-fs-small); line-height: 1.7; }
-.recall-quiz__choices button span { font-family: var(--mag-font-mono); }
+.recall-quiz__choices button span { font-family: var(--mag-font-display); }
 .recall-quiz button:hover:not(:disabled) { border-color: var(--mag-accent); }
 .recall-quiz button:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 3px; }
 .recall-quiz__choices button:disabled { cursor: default; }

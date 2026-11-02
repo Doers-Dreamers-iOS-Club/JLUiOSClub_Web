@@ -36,5 +36,5 @@ const observation = computed(() => state.value === 'paused' ? `暂停在第 ${po
   </div>
 </template>
 <style scoped>
-.anatomy-layers > div + div { border-top: var(--mag-rule); margin-top: .7rem; padding-top: .7rem; }.anatomy-layers p { margin: .3rem 0; font-size: .9rem; }.anatomy-layers small { color: var(--lab-muted); font-size: .72rem; }.anatomy-pulses { display: flex; gap: 5px; margin: .65rem 0; }.anatomy-pulses span { width: 14px; height: 18px; background: var(--mag-hairline); border-radius: 3px; }.anatomy-pulses .active { background: var(--lab-blue); }.anatomy-state { color: var(--lab-blue); }
+.anatomy-layers > div + div { border-top: var(--mag-rule); margin-top: .7rem; padding-top: .7rem; }.anatomy-layers p { margin: .3rem 0; font-size: 14px; }.anatomy-layers small { color: var(--lab-muted); font-size: 14px; }.anatomy-pulses { display: flex; gap: 5px; margin: .65rem 0; }.anatomy-pulses span { width: 14px; height: 18px; background: var(--mag-hairline); border-radius: 3px; }.anatomy-pulses .active { background: var(--lab-blue); }.anatomy-state { color: var(--lab-blue); }
 </style>

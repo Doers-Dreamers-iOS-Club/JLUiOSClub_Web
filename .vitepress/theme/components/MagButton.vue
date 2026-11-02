@@ -50,13 +50,13 @@ withDefaults(
 }
 
 .mag-btn:hover {
-  transform: translateY(-2px);
+  border-color: var(--mag-hairline-strong);
 }
 
 .mag-btn--primary {
   border: 1px solid var(--mag-accent);
   background: var(--mag-accent);
-  color: #fff;
+  color: var(--mag-on-accent);
 }
 
 .mag-btn--primary:hover {

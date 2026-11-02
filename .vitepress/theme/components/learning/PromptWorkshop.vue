@@ -31,7 +31,7 @@ async function copy() {
 
 <template>
   <section class="prompt-workshop mag-no-reveal" aria-label="六轮提示词工作坊">
-    <div class="prompt-workshop__heading"><strong>把“加个速度”拆成六轮对话</strong><span>PROMPT WORKSHOP</span></div>
+    <div class="prompt-workshop__heading"><strong>把“加个速度”拆成六轮对话</strong></div>
     <p class="prompt-workshop__intro">点击轮次查看示例。把项目文件名和实际观察补进去，再交给 AI。</p>
     <div class="prompt-workshop__rounds" role="group" aria-label="选择对话轮次">
       <button v-for="(item, index) in rounds" :key="item.title" type="button" :aria-pressed="selected === index" @click="select(index)"><span>{{ String(index + 1).padStart(2, '0') }}</span>{{ item.title }}</button>
@@ -49,17 +49,17 @@ async function copy() {
 <style scoped>
 .prompt-workshop { margin: var(--mag-space-xl) 0; padding: var(--mag-space-lg); background: var(--mag-surface); color: var(--mag-text); border: var(--mag-rule); border-radius: var(--mag-radius-lg); }
 .prompt-workshop__heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--mag-space-xs); }
-.prompt-workshop__heading span { font: var(--mag-fs-micro) var(--mag-font-mono); color: var(--mag-text-secondary); }
+.prompt-workshop__heading span { font: var(--mag-fs-micro) var(--mag-font-display); color: var(--mag-text-secondary); }
 .prompt-workshop__intro, .prompt-workshop__explanation, .prompt-workshop__status { color: var(--mag-text-secondary); font-size: var(--mag-fs-small); }
 .prompt-workshop__rounds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--mag-space-xs); margin: var(--mag-space-lg) 0; }
 .prompt-workshop button { min-height: 44px; padding: 10px 12px; border: var(--mag-rule-strong); border-radius: var(--mag-radius-sm); background: var(--mag-surface); color: var(--mag-text); font: inherit; cursor: pointer; }
 .prompt-workshop__rounds button { font-size: var(--mag-fs-small); }
-.prompt-workshop__rounds span { display: block; font: var(--mag-fs-micro) var(--mag-font-mono); color: var(--mag-text-secondary); }
+.prompt-workshop__rounds span { display: block; font: var(--mag-fs-micro) var(--mag-font-display); color: var(--mag-text-secondary); }
 .prompt-workshop button[aria-pressed="true"] { border-color: var(--mag-accent); color: var(--mag-accent); background: var(--mag-accent-soft); }
 .prompt-workshop button:hover { border-color: var(--mag-accent); }
 .prompt-workshop button:focus-visible, .prompt-workshop__prompt:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 3px; }
 .prompt-workshop button:disabled { opacity: .55; cursor: default; }
-.prompt-workshop__label { font: var(--mag-fs-small) var(--mag-font-mono); }
+.prompt-workshop__label { font: var(--mag-fs-small) var(--mag-font-display); }
 .prompt-workshop .prompt-workshop__prompt { margin: var(--mag-space-sm) 0; padding: var(--mag-space-md); color: var(--mag-text); background: var(--mag-surface-sunken); border-left: 3px solid var(--mag-accent); border-radius: 0 var(--mag-radius-sm) var(--mag-radius-sm) 0; line-height: 1.8; user-select: text; overflow-wrap: anywhere; }
 .prompt-workshop__status { min-height: 1.7em; margin-bottom: 0; }
 @media (max-width: 480px) { .prompt-workshop { padding: var(--mag-space-md); } .prompt-workshop__rounds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

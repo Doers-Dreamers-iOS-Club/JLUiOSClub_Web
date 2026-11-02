@@ -43,7 +43,7 @@ defineProps<{
   background: var(--mag-accent-soft);
   color: var(--mag-accent);
   font-size: var(--mag-fs-micro);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: var(--mag-tracking-caps);
 }
 
@@ -53,7 +53,7 @@ defineProps<{
   padding: 0;
   color: var(--mag-text);
   font-size: var(--mag-fs-h4);
-  font-weight: 650;
+  font-weight: 500;
   letter-spacing: var(--mag-tracking-title);
 }
 
