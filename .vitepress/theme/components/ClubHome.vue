@@ -22,7 +22,7 @@ const paths = [
       </section>
       <section id="start" class="club-page club-section" data-club-page tabindex="-1" aria-labelledby="club-title">
         <div class="club-page__inner">
-          <div class="club-art" aria-hidden="true"><img src="/home-art/learning-photo.png" alt="" width="1672" height="941" decoding="async" /></div>
+          <div class="club-art" aria-hidden="true"><img src="/home-art/learning-poster.png" alt="" width="1672" height="941" decoding="async" /></div>
           <div class="club-section__content" data-page-content>
             <header class="club-section__head"><h1 id="club-title" tabindex="-1">从这里开始</h1><a href="/resources/">全部资源 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <div class="club-paths">
@@ -35,7 +35,7 @@ const paths = [
       </section>
       <section id="activities" class="club-page club-section" data-club-page tabindex="-1" aria-labelledby="activity-title">
         <div class="club-page__inner">
-          <div class="club-art" aria-hidden="true"><img src="/home-art/activities-photo.png" alt="" width="1672" height="941" loading="lazy" decoding="async" /></div>
+          <div class="club-art" aria-hidden="true"><img src="/home-art/activities-poster.png" alt="" width="1672" height="941" loading="lazy" decoding="async" /></div>
           <div class="club-section__content" data-page-content>
             <header class="club-section__head"><h2 id="activity-title" tabindex="-1">最近在做什么</h2><a href="/activities/">全部活动 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <MagArchive source="activities" :limit="3" :show-view-toggle="false" />
@@ -44,7 +44,7 @@ const paths = [
       </section>
       <section id="community" class="club-page club-section club-community" data-club-page tabindex="-1" aria-labelledby="community-title">
         <div class="club-page__inner">
-          <div class="club-art" aria-hidden="true"><img src="/home-art/community-photo.png" alt="" width="1672" height="941" loading="lazy" decoding="async" /></div>
+          <div class="club-art" aria-hidden="true"><img src="/home-art/community-poster.png" alt="" width="1672" height="941" loading="lazy" decoding="async" /></div>
           <div class="club-section__content" data-page-content>
             <h2 id="community-title" tabindex="-1">好奇心，<br />是共同的起点。</h2>
             <div class="club-actions"><a class="club-button" href="/join-us/">加入我们 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" href="/about-us/">了解社团 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
@@ -84,8 +84,9 @@ const paths = [
 .club-section :deep(.mag-archive__date) { grid-column: 1; }
 .club-section :deep(.mag-archive__row-main) { grid-column: 1; }
 .club-section :deep(.mag-archive__arrow) { grid-column: 2; grid-row: 2; }
-.club-art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.club-art { position: absolute; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; background: var(--vp-c-bg); }
 .club-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+:global(.dark .club-art img) { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; }
 .club-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--vp-c-bg) 0%, var(--vp-c-bg) 22%, color-mix(in srgb, var(--vp-c-bg) 96%, transparent) 36%, color-mix(in srgb, var(--vp-c-bg) 65%, transparent) 49%, color-mix(in srgb, var(--vp-c-bg) 12%, transparent) 69%, transparent 85%); }
 .club-community h2 { margin: 0; font-size: 22px; font-weight: 500; line-height: 1.65; letter-spacing: -.02em; }
 .club-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
