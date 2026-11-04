@@ -22,7 +22,24 @@ try {
   await page.waitForSelector('[data-cover-entrance="playing"]')
   assert.equal(await page.$$eval('.journal-glyph', e => e.length), 12)
   assert(await page.$$eval('.journal-glyph', e => e.some(n => getComputedStyle(n).transform !== 'none')))
+  await page.waitForFunction(() => {
+    const liquid = document.querySelector('.journal-liquid-window')
+    const style = getComputedStyle(liquid)
+    const y = new DOMMatrix(style.transform).m42
+    return style.clipPath.includes('course-world-liquid-clip') && y > 0 && y < liquid.clientHeight * .3
+  })
+  const liquidY = () => page.$eval('.journal-liquid-window', e => new DOMMatrix(getComputedStyle(e).transform).m42)
+  const before = await liquidY(); await wait(150)
+  assert(await liquidY() < before, 'Liquid level must rise')
+  assert(await page.$$eval('.journal-word--world .journal-glyph', glyphs => glyphs.every(glyph => {
+    const fill = glyph.querySelector('.journal-glyph-fill').getBoundingClientRect()
+    const outline = glyph.querySelector('.journal-glyph-outline').getBoundingClientRect()
+    return Math.abs(fill.x - outline.x) < 1 && Math.abs(fill.y - outline.y) < 1
+  })), 'Moving liquid masks must not move the text inside the outline')
   await page.waitForFunction(() => !document.querySelector('.course-journal').dataset.coverEntrance)
+  assert(await page.$$eval('.journal-liquid-window, .journal-glyph-fill, .journal-glyph-outline', nodes =>
+    nodes.every(n => !n.style.transform && !n.style.clipPath && !n.style.willChange && !n.style.opacity)))
+  console.log('PASS liquid rises around stationary text and removes all temporary masks/layers on completion')
   assert.equal(await page.$eval('.journal-cover', e => e.getBoundingClientRect().bottom), 1000)
   assert.equal(await page.evaluate(() => document.documentElement.scrollHeight), 1000)
   assert.equal(await page.$eval('.journal-body', e => e.inert), true)

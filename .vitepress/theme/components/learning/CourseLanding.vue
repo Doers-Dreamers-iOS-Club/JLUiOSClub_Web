@@ -41,7 +41,8 @@ const related = [
           </div>
         </div>
         <div class="journal-cover__type" aria-hidden="true">
-          <div class="journal-cover__english"><span class="journal-word journal-word--hello"><span v-for="(letter, index) in 'Hello,'" :key="index" class="journal-glyph">{{ letter }}</span></span><span class="journal-word journal-word--world"><span v-for="(letter, index) in 'world.'" :key="index" class="journal-glyph"><span class="journal-glyph-outline">{{ letter }}</span><span class="journal-glyph-fill">{{ letter }}</span></span></span></div>
+          <svg class="journal-liquid-defs" aria-hidden="true" width="0" height="0"><defs><clipPath id="course-world-liquid-clip" clipPathUnits="objectBoundingBox"><path d="M0 .04 C.083 0 .167 0 .25 .04 S.417 .08 .5 .04 S.667 0 .75 .04 S.917 .08 1 .04 V1 H0Z" /></clipPath></defs></svg>
+          <div class="journal-cover__english"><span class="journal-word journal-word--hello"><span v-for="(letter, index) in 'Hello,'" :key="index" class="journal-glyph">{{ letter }}</span></span><span class="journal-word journal-word--world"><span v-for="(letter, index) in 'world.'" :key="index" class="journal-glyph"><span class="journal-glyph-outline">{{ letter }}</span><span class="journal-glyph-size">{{ letter }}</span><span class="journal-liquid-window"><span class="journal-glyph-fill">{{ letter }}</span></span></span></span></div>
           <span class="journal-cover__asterisk">✳</span>
         </div>
       </div>
@@ -140,7 +141,10 @@ const related = [
 .journal-word { overflow: clip; padding: .12em .08em .2em; margin: -.12em -.08em -.2em; perspective: 800px; }
 .journal-glyph { position: relative; display: inline-block; transform-origin: 50% 100%; }
 .journal-glyph-outline { position: absolute; inset: 0; color: transparent; -webkit-text-stroke: .65px var(--mag-accent); opacity: 0; }
-.journal-glyph-fill { display: block; }
+.journal-liquid-defs { position: absolute; pointer-events: none; }
+.journal-glyph-size { display: block; visibility: hidden; }
+.journal-liquid-window { position: absolute; left: -100%; top: 0; width: 300%; height: 200%; pointer-events: none; }
+.journal-glyph-fill { position: absolute; left: 33.333333%; top: 0; width: 33.333333%; height: 50%; display: block; }
 .journal-cover__english > span:last-child { color: var(--mag-accent); }
 .journal-cover__asterisk { align-self: end; color: var(--mag-accent); font-size: 42px; line-height: 1; font-weight: 300; }
 .journal-section { margin-top: 72px; }

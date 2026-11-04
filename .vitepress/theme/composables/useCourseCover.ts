@@ -1,5 +1,6 @@
 import { onBeforeUnmount, onMounted, type Ref } from 'vue'
 import { gsap } from 'gsap'
+import { addCourseLiquidFill } from './courseLiquidFill'
 
 /** Two real page states: a cover, then an article whose native scroll starts at zero. */
 export function useCourseCover(root: Ref<HTMLElement | null>) {
@@ -60,18 +61,11 @@ export function useCourseCover(root: Ref<HTMLElement | null>) {
         .fromTo(cover.querySelectorAll('.journal-word--world .journal-glyph'),
           { yPercent: 105, rotation: 1.5, opacity: 0, willChange: 'transform,opacity' },
           { yPercent: 0, rotation: 0, opacity: 1, duration: 1.05, stagger: .045, clearProps: 'transform,opacity,willChange' }, .22)
-        // Rasterize each text layer once; crossfade instead of repainting large
-        // glyph strokes and fill colors on every animation frame.
-        .fromTo(cover.querySelectorAll('.journal-glyph-outline'),
-          { opacity: 1, willChange: 'opacity' },
-          { opacity: 0, duration: 1.4, stagger: .045, ease: 'sine.inOut', clearProps: 'opacity,willChange' }, .6)
-        .fromTo(cover.querySelectorAll('.journal-glyph-fill'),
-          { opacity: 0, willChange: 'opacity' },
-          { opacity: 1, duration: 1.5, stagger: .045, ease: 'sine.inOut', clearProps: 'opacity,willChange' }, .6)
         .fromTo(cover.querySelectorAll('.journal-start, .journal-cover__links, .journal-cover__next'),
           { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: .65, stagger: .08, clearProps: 'transform,opacity' }, .4)
         .fromTo(cover.querySelector('.journal-cover__asterisk'),
           { rotation: -110, scale: .5, opacity: 0 }, { rotation: 0, scale: 1, opacity: 1, duration: 1.05, clearProps: 'transform,opacity' }, .32)
+      addCourseLiquidFill(entrance, cover)
     }
     const updateState = () => {
       if (enabled) journal.dataset.coursePage = page ? 'content' : 'cover'
