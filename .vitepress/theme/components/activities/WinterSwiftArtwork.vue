@@ -11,9 +11,8 @@ const guesses = [[1, 0, 3, 2], [0, 1, 3, 2], [0, 1, 2, 3]]
   <figure ref="figure" class="swift-artwork">
     <svg viewBox="0 0 1000 500" fill="none" role="img" aria-labelledby="swift-art-title swift-art-desc">
       <title id="swift-art-title">从 SwiftUI 界面到 CodeBreaker</title>
-      <desc id="swift-art-desc">中央的 CodeBreaker 游戏逐行填入彩色棋子，反馈钉从部分匹配变成全部匹配。背后的界面草图和右侧的状态模型通过蓝色曲线连接到游戏。</desc>
+      <desc id="swift-art-desc">中央的 CodeBreaker 游戏逐行填入彩色棋子，反馈钉从部分匹配变成全部匹配。背后的界面草图和右侧的状态模型展示游戏的组成。</desc>
       <ellipse cx="526" cy="456" rx="232" ry="14" class="swift-shadow" />
-      <circle cx="529" cy="252" r="203" class="swift-orbit" />
       <g class="swift-side" transform="rotate(-5 292 247)">
         <g data-art-reveal>
           <rect x="115" y="113" width="345" height="258" rx="10" class="swift-paper" />
@@ -27,7 +26,7 @@ const guesses = [[1, 0, 3, 2], [0, 1, 3, 2], [0, 1, 2, 3]]
           <text x="144" y="345" class="swift-serif">A view, composed.</text>
         </g>
       </g>
-      <path data-art-draw d="M250 399C297 443 360 436 405 406M682 134C717 134 730 164 730 192M767 357C764 395 695 426 646 409" class="swift-connection" />
+      <path data-art-draw d="M250 399C297 443 360 436 405 406M767 357C764 395 695 426 646 409" class="swift-connection" />
       <g data-art-reveal>
         <rect x="414" y="25" width="226" height="422" rx="33" class="swift-phone-shadow" />
         <rect x="407" y="19" width="226" height="422" rx="33" class="swift-phone" />
@@ -49,7 +48,6 @@ const guesses = [[1, 0, 3, 2], [0, 1, 3, 2], [0, 1, 2, 3]]
         <g data-art-reveal>
           <text x="711" y="83" class="swift-serif">State</text>
           <g v-for="(color, i) in colors" :key="color" data-art-pop><circle :cx="712 + (i % 2) * 44" :cy="113 + Math.floor(i / 2) * 44" r="14" :fill="color" /></g>
-          <path d="M687 99V171M780 99V171" class="swift-rule" />
         </g>
         <g transform="rotate(7 771 278)"><g data-art-reveal>
           <rect x="690" y="218" width="170" height="113" rx="8" class="swift-paper" />
@@ -81,7 +79,6 @@ svg { display: block; width: 100%; height: auto; }
 .swift-muted { fill: var(--mag-text-tertiary); }
 .swift-blue { fill: var(--mag-accent); }
 .swift-shadow { fill: var(--mag-text); opacity: .025; }
-.swift-orbit { stroke: var(--mag-accent); stroke-opacity: .09; }
 .swift-small { font: 11px var(--mag-font-display); letter-spacing: .8px; fill: var(--mag-text-secondary); }
 .swift-tiny { font: 9px var(--mag-font-display); letter-spacing: 1.2px; fill: var(--mag-text-tertiary); }
 .swift-serif { font: 25px var(--overview-serif); fill: var(--mag-accent); }

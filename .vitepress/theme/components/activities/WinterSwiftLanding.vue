@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ActivityOverview from './ActivityOverview.vue'
 import WinterSwiftArtwork from './WinterSwiftArtwork.vue'
+import WinterSwiftCover from './WinterSwiftCover.vue'
 import WinterResourceArt from './WinterResourceArt.vue'
 const base = '/activities/260209-winter-swift/'
 const lessons = [
@@ -15,7 +16,8 @@ const resources = [
 </script>
 
 <template>
-  <ActivityOverview :title="['冬季', 'Swift。']" :english="['Code.', 'Create.']" label="WINTER / 2026" contents-label="培训目录" :primary="{ title: '开始第一讲', href: base + 'first/' }" :secondary="{ title: '全部活动', href: '/activities/' }">
+  <ActivityOverview :title="['冬季', 'Swift。']" label="WINTER / 2026" contents-label="培训目录" :primary="{ title: '开始第一讲', href: base + 'first/' }" :secondary="{ title: '全部活动', href: '/activities/' }">
+    <template #cover><WinterSwiftCover /></template>
     <template #artwork><WinterSwiftArtwork /></template>
     <section class="overview-section" aria-labelledby="winter-contents">
       <div class="journal-section__head"><h2 id="winter-contents">培训目录</h2><span class="overview-index-label" aria-hidden="true">Learn by making</span></div>
