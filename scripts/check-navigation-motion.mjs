@@ -36,7 +36,7 @@ try {
   assert(await page.$eval(menu, e => e.contains(document.activeElement)), 'ArrowDown focuses first menu link')
   await page.keyboard.press('Escape'); await wait(500)
   assert(await page.$eval(button, e => document.activeElement === e && e.getAttribute('aria-expanded') === 'false'))
-  console.log('PASS dropdown elastic open, interruption, pointer gap, keyboard and Escape')
+  console.log('PASS dropdown gentle open, interruption, pointer gap, keyboard and Escape')
 
   await page.mouse.move(700, 180)
   await page.hover('.club-path'); await wait(900)

@@ -25,7 +25,7 @@ function close(restore = false) {
   const items = resultList.value?.querySelectorAll('.gooey-result')
   if (items?.length && !reduced()) {
     moving.value = true
-    resultMotion = gsap.to(items, { y: (i: number) => -(i + 1) * 62, scale: .3, opacity: 0, duration: .3, stagger: { each: .025, from: 'end' }, ease: 'power2.in', onComplete: () => { moving.value = false } })
+    resultMotion = gsap.to(items, { y: (i: number) => -(i + 1) * 62, scale: .8, opacity: 0, duration: .3, stagger: { each: .025, from: 'end' }, ease: 'power2.in', onComplete: () => { moving.value = false } })
   }
   if (reduced()) timeline?.progress(0).pause(); else timeline?.timeScale(1.7).reverse()
   if (restore) trigger.value?.focus()
@@ -44,8 +44,8 @@ async function search() {
     resultMotion?.kill()
     const items = resultList.value?.querySelectorAll('.gooey-result')
     if (items?.length && !reduced()) { moving.value = true; resultMotion = gsap.fromTo(items,
-      { y: (i: number) => -(i + 1) * 62, scale: .3, opacity: 0 },
-      { y: 0, scale: 1, opacity: 1, duration: .75, ease: 'back.out(1.45)', stagger: .12, clearProps: 'transform,opacity', onComplete: () => { moving.value = false } }) }
+      { y: (i: number) => -(i + 1) * 62, scale: .8, opacity: 0 },
+      { y: 0, scale: 1, opacity: 1, duration: .48, ease: 'power3.out', stagger: .06, clearProps: 'transform,opacity', onComplete: () => { moving.value = false } }) }
   } catch {
     if (version === request) { failed.value = true; hits.value = []; loading.value = false }
   }
@@ -92,8 +92,8 @@ onMounted(() => {
   preference = matchMedia('(prefers-reduced-motion: reduce)'); preference.addEventListener('change', mediaChange)
   window.addEventListener('keydown', shortcut); document.addEventListener('pointerdown', outside)
   timeline = gsap.timeline({ paused: true })
-    .fromTo(blob.value!, { scaleX: .55 }, { scaleX: 1, duration: .75, ease: 'back.out(1.15)', easeReverse: 'power3.out' }, 0)
-    .fromTo(orb.value!, { x: -72, scale: .8, autoAlpha: 0 }, { x: 0, scale: 1, autoAlpha: 1, duration: .85, ease: 'back.out(1.15)', easeReverse: 'power3.out' }, .1)
+    .fromTo(blob.value!, { scaleX: .55 }, { scaleX: 1, duration: .5, ease: 'power3.out', easeReverse: 'power3.out' }, 0)
+    .fromTo(orb.value!, { x: -72, scale: .8, autoAlpha: 0 }, { x: 0, scale: 1, autoAlpha: 1, duration: .55, ease: 'power3.out', easeReverse: 'power3.out' }, .1)
     .fromTo(field.value!, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: .25, easeReverse: true }, .12)
   ready.value = true
 })
@@ -124,17 +124,18 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.gooey-search { --goo-fill: var(--mag-text); --goo-ink: var(--vp-c-bg); position: relative; display: flex; align-items: center; flex-grow: 1; padding-left: 32px; height: 64px; }
+.gooey-search { --goo-fill: #f0f0f2; --goo-hover: #e5e5e8; --goo-ink: var(--mag-text); position: relative; display: flex; align-items: center; flex-grow: 1; padding-left: 32px; height: 64px; }
+.dark .gooey-search { --goo-fill: #29292c; --goo-hover: #353539; }
 .gooey-filter { position: absolute; pointer-events: none; }
-.gooey-trigger { display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 15px; border-radius: 24px; background: var(--goo-fill); color: var(--goo-ink); font-size: 13px; transition: opacity .15s .45s, transform .3s; }
-.gooey-trigger:hover { transform: scale(1.04); }
+.gooey-trigger { display: flex; align-items: center; gap: 9px; height: 38px; padding: 0 15px; border-radius: 24px; background: var(--goo-fill); color: var(--goo-ink); font-size: 13px; transition: opacity .15s .3s, background-color .2s; }
+.gooey-trigger:hover { background: var(--goo-hover); }
 .gooey-trigger > i { font-size: 17px; }
 .gooey-trigger kbd { margin-left: 14px; font-family: inherit; font-size: 10px; opacity: .65; }
-.gooey-trigger:focus-visible, .gooey-field:focus-within { outline: 2px solid var(--mag-accent); outline-offset: 4px; }
+.gooey-trigger:focus-visible, .gooey-field:focus-within { outline: 1px solid var(--mag-accent); outline-offset: 3px; }
 .is-open .gooey-trigger { opacity: 0; pointer-events: none; transition-delay: 0s; }
 .gooey-panel { position: absolute; z-index: 60; top: 13px; left: 32px; width: 274px; visibility: hidden; pointer-events: none; filter: url(#club-search-goo); }
 .is-open .gooey-panel { visibility: visible; pointer-events: auto; }
-.gooey-search:not(.is-open) .gooey-panel { transition: visibility 0s .6s; }
+.gooey-search:not(.is-open) .gooey-panel { transition: visibility 0s .4s; }
 .gooey-shapes { position: absolute; inset: 0 0 auto; height: 38px; pointer-events: none; }
 .gooey-blob { width: 224px; height: 38px; border-radius: 24px; transform-origin: left center; background: var(--goo-fill); }
 .gooey-orb { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--goo-fill); color: var(--goo-ink); }
@@ -153,7 +154,7 @@ onBeforeUnmount(() => {
 .gooey-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 16px; border-radius: 24px; background: var(--goo-fill); color: var(--goo-ink); transform-origin: top center; white-space: normal; }
 .gooey-result__label { display: grid; min-width: 0; font-size: 13px; line-height: 1.4; }
 .gooey-result small { opacity: .65; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 3px; }
-.gooey-result:hover, .gooey-result[aria-selected="true"], .gooey-result:focus-visible { background: var(--mag-accent); color: var(--mag-on-accent); }
+.gooey-result:hover, .gooey-result[aria-selected="true"], .gooey-result:focus-visible { background: var(--goo-hover); color: var(--mag-accent); }
 .gooey-result:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 2px; }
 .gooey-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @keyframes gooey-spin { to { transform: rotate(360deg); } }

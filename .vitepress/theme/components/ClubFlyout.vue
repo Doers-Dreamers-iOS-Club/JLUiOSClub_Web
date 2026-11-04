@@ -19,7 +19,7 @@ function setOpen(value: boolean) {
   if (preference?.matches) motion.progress(value ? 1 : 0).pause()
   else if (value) motion.timeScale(1).play()
   else {
-    motion.timeScale(2.5).reverse()
+    motion.timeScale(1.4).reverse()
     if (motion.progress() === 0) gsap.set(menu.value!, { autoAlpha: 0 })
   }
 }
@@ -53,11 +53,11 @@ onMounted(() => {
   preference = matchMedia('(prefers-reduced-motion: reduce)')
   preference.addEventListener('change', applyPreference)
   document.addEventListener('pointerdown', outside)
-  gsap.set(menu.value!, { autoAlpha: 0, yPercent: -30, scale: .7 })
+  gsap.set(menu.value!, { autoAlpha: 0, yPercent: -5, scale: .97 })
   motion = gsap.timeline({ paused: true, onReverseComplete: () => { if (!opened.value) gsap.set(menu.value!, { autoAlpha: 0 }) } })
-    .to(arrow.value!, { rotation: 180, duration: .9, ease: 'elastic.out(1.2, 0.3)', easeReverse: 'power2.inOut' }, 0)
-    .to(menu.value!, { autoAlpha: 1, yPercent: 0, scale: 1, duration: 1, ease: 'elastic.out(1.2, 0.3)', easeReverse: 'power3.out' }, 0)
-    .from(links(), { opacity: 0, x: -20, duration: .5, ease: 'back.out(3)', easeReverse: 'power2.out', stagger: .07 }, .1)
+    .to(arrow.value!, { rotation: 180, duration: .3, ease: 'power2.inOut', easeReverse: 'power2.inOut' }, 0)
+    .to(menu.value!, { autoAlpha: 1, yPercent: 0, scale: 1, duration: .32, ease: 'power3.out', easeReverse: 'power3.out' }, 0)
+    .from(links(), { opacity: 0, x: -6, duration: .24, ease: 'power2.out', easeReverse: 'power2.out', stagger: .04 }, .04)
   ready.value = true
   if (opened.value) setOpen(true)
 })
