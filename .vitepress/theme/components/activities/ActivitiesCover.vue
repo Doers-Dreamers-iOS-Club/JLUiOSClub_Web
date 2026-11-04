@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PaperPlane from './PaperPlane.vue'
 const orbit = { x: 239, y: 216, radius: 68 }
 const nodes = [-150, -30, 90].map((degrees, index) => ({
   x: orbit.x + orbit.radius * Math.cos(degrees * Math.PI / 180),
@@ -30,14 +31,7 @@ const nodes = [-150, -30, 90].map((degrees, index) => ({
       </g>
       <path d="M317 48V116L329 107L341 116V48" class="cover-blue" />
     </g></g>
-    <g data-cover-piece>
-      <path d="M391 138L394 158L402 143Z" class="cover-plane-keel" />
-      <path d="M370 126L447 102L416 174L402 143Z" class="cover-plane-paper" />
-      <path d="M370 126L447 102L402 143Z" class="cover-plane-upper" />
-      <path d="M402 143L447 102L416 174Z" class="cover-plane-lower" />
-      <path d="M370 126L447 102L416 174L402 143ZM402 143L447 102" class="cover-fold" />
-      <path d="M382 126L432 111" class="cover-plane-detail" />
-    </g>
+    <g data-cover-piece><g transform="translate(370 102)"><PaperPlane /></g></g>
   </svg>
 </template>
 
@@ -54,10 +48,4 @@ const nodes = [-150, -30, 90].map((degrees, index) => ({
 .cover-focus { stroke: var(--mag-accent); stroke-opacity: .7; stroke-width: 1.4; stroke-linecap: square; stroke-linejoin: round; }
 .cover-ticks { stroke: var(--mag-accent); stroke-opacity: .4; stroke-width: .8; }
 .cover-caption { font: 7px var(--mag-font-display); letter-spacing: 1.1px; fill: var(--mag-text-tertiary); }
-.cover-plane-paper { fill: var(--vp-c-bg); }
-.cover-plane-upper { fill: var(--mag-accent); fill-opacity: .06; }
-.cover-plane-lower { fill: var(--mag-accent); fill-opacity: .18; }
-.cover-plane-keel { fill: var(--mag-accent); fill-opacity: .32; stroke: var(--mag-accent); stroke-width: .8; }
-.cover-plane-detail { stroke: var(--mag-accent); stroke-opacity: .4; stroke-width: .65; stroke-linecap: round; }
-.cover-fold { stroke: var(--mag-accent); stroke-width: 1.3; stroke-linejoin: round; }
 </style>

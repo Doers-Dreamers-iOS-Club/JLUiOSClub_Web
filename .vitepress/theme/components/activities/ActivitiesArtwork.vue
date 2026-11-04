@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import PaperPlane from './PaperPlane.vue'
 import { useOverviewArtworkMotion } from './overviewMotion'
 const figure = ref<HTMLElement | null>(null)
 useOverviewArtworkMotion(figure)
@@ -58,8 +59,7 @@ useOverviewArtworkMotion(figure)
         </g>
       </g>
       <g data-art-reveal class="art-peripheral">
-        <path d="M802 82L869 131L847 137L828 157Z" class="art-blue-soft" />
-        <path data-art-draw d="M802 82L847 137L828 157M847 137L845 155L834 149" class="art-blue-line" />
+        <g transform="translate(800 82)"><PaperPlane /></g>
         <path d="M182 310L218 271L225 278L189 317L178 322Z" class="art-blue" /><path d="M178 322L182 310L189 317Z" class="art-ink" />
       </g>
       <g data-art-finish><path d="M784 184V204M774 194H794M205 52V64M199 58H211" class="art-blue-line" /><circle cx="735" cy="399" r="4" class="art-blue" /></g>
