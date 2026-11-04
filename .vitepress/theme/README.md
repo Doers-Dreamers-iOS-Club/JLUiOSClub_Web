@@ -191,3 +191,11 @@ tags: [Swift, 工作坊]
 所有场景都是教学模拟，不发送模型请求、连接真实 MCP 服务或操作仓库。旧 SnakeLab / FlowExplorer 文件保留作参考，已不在章节或全局组件注册中使用。验证入口：`node scripts/check-ai-course.mjs <本地预览地址>`。
 
 `DemoGame` 提供新分镜中的蛇与砖块运动。上述五幅情境动画另用 `node scripts/check-contextual-demos.mjs` 验证文件读取、提交历史保留、跨游戏复用、工具操作前后状态与响应顺序。截图保存在 `output/design-contextual-demos-2026-11-02`。
+
+### 首页 slogan intro
+
+首页客户端挂载时以 `I dwell in Possibility` 开场，重复文字按字母上下错位展开，四个词在约 2.4 秒内移入原有三行排版。`Possibility` 的实心填充交叉淡化为 Canvas 字形蒙版内的 ASCII 字符，再逐渐退为描边；Swift 标志在末段渐入，完整时间轴约 3.7 秒。`useHomeIntro.ts` 管理临时图层和清理，`introAscii.ts` 根据实际 DOM 字形位置生成字符纹理。
+
+ASCII WebGL 与叙事组件改为异步加载，首个客户端绘制后才请求，避免其初始化抢占文字开场；这不代表全部页面资源的下载量减少。SSR 保持可读终态，禁用 JavaScript 时仍保留诗句和静态字符画。非开场 hash、减少动态效果直接跳过；Escape、窗口尺寸变化、hash 导航及卸载会清理时间轴。字体等待上限 650ms，总兜底 6.5 秒，intro 不依赖 WebGL 成功。播放期间暂停首页翻页与 Swift 交互。
+
+验证：生产构建后执行 `node scripts/check-home-intro.mjs http://localhost:4174`，覆盖桌面/手机/深色、填充纹理、最终清理、跳过路径和无 JavaScript；截图写入 `/private/tmp/club-intro-qa`。原 `check-fullpage.mjs` 等待 intro 结束后再验证翻页。

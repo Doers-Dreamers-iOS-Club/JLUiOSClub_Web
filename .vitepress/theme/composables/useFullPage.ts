@@ -2,7 +2,7 @@ import { nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { gsap } from 'gsap'
 import { homeTransitionDuration, isMythTransition } from './homeMotion'
 
-export function useFullPage(root: Ref<HTMLElement | null>) {
+export function useFullPage(root: Ref<HTMLElement | null>, intro?: Ref<boolean>) {
   const active = ref(0)
   const enabled = ref(false)
   const busy = ref(false)
@@ -62,7 +62,7 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
       context.settle()
       const go = (requested: number, focus = false, instant = false) => {
         const next = Math.max(minimum(), Math.min(pages.length - 1, requested))
-        if (busy.value && !instant) return
+        if ((busy.value || intro?.value) && !instant) return
         if (next === active.value) { window.scrollTo({ top: 0, behavior: 'instant' }); return }
         context.settle()
         const previous = active.value
@@ -194,13 +194,13 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
       }
       const hashChange = () => { const index = fromHash(); if (index >= 0) changePage(index, true, true) }
       const motionChange = () => { if (motion.matches) context.settle() }
-      const ascii = host.querySelector('.mag-ascii-hero')
       const checkAscii = () => {
+        const ascii = host.querySelector('.mag-ascii-hero')
         asciiAvailable.value = !ascii?.classList.contains('is-failed')
         if (!asciiAvailable.value && active.value === 0) changePage(1, false, true)
       }
       const asciiObserver = new MutationObserver(checkAscii)
-      if (ascii) asciiObserver.observe(ascii, { attributes: true, attributeFilter: ['class'] })
+      asciiObserver.observe(host, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] })
       checkAscii()
       host.addEventListener('wheel', wheel, { passive: false })
       host.addEventListener('touchstart', touchStart, { passive: true })

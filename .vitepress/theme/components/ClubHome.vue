@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import AsciiNarrative from './AsciiNarrative.vue'
+import { defineAsyncComponent, onMounted, onBeforeUnmount, ref } from 'vue'
+import { useHomeIntro } from '../composables/useHomeIntro'
+const AsciiNarrative = defineAsyncComponent(() => import('./AsciiNarrative.vue'))
 import AsciiPoster from './AsciiPoster.vue'
 import { data as activities } from '../../data/activities.data.mts'
-import AsciiHero from './AsciiHero.vue'
+const AsciiHero = defineAsyncComponent(() => import('./AsciiHero.vue'))
 import { useFullPage } from '../composables/useFullPage'
 const root = ref<HTMLElement | null>(null)
-const { active, enabled, busy, asciiAvailable, navigate } = useFullPage(root)
+const { playing } = useHomeIntro(root)
+const { active, enabled, busy, asciiAvailable, navigate } = useFullPage(root, playing)
+const loadAscii = ref(false)
+let paintFrame = 0
+onMounted(() => { paintFrame = requestAnimationFrame(() => { paintFrame = requestAnimationFrame(() => { loadAscii.value = true }) }) })
+onBeforeUnmount(() => cancelAnimationFrame(paintFrame))
 const pages = ['开场', '学习', '活动', '加入']
 const opening = ref<InstanceType<typeof AsciiHero> | null>(null)
 const asciiReady = ref(false)
@@ -23,11 +29,11 @@ const paths = [
 </script>
 
 <template>
-  <div ref="root" class="club-home" :class="{ 'is-paged': enabled, 'is-changing': busy, 'has-ascii-canvas': asciiReady && enabled, 'is-ascii-transition': coveringOpening }">
+  <div ref="root" class="club-home" :class="{ 'is-intro': playing, 'is-paged': enabled, 'is-changing': busy, 'has-ascii-canvas': asciiReady && enabled, 'is-ascii-transition': coveringOpening }">
     <div class="club-pages">
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
-          <AsciiHero ref="opening" :active="!enabled || active === 0" />
+          <AsciiHero v-if="loadAscii" ref="opening" :active="!playing && (!enabled || active === 0)" />
           <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell"><span>dwell</span> <span>in</span></span> <span class="club-opening__possibility">Possibilit<span class="club-opening__final-y">y</span></span></p>
         </div>
       </section>
@@ -70,11 +76,11 @@ const paths = [
         </div>
       </section>
     </div>
-    <AsciiNarrative :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
+    <AsciiNarrative v-if="loadAscii && !playing" :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
     <nav v-if="enabled" class="club-pager" aria-label="首页栏目">
-      <button type="button" aria-label="上一屏" :disabled="busy || active <= (asciiAvailable ? 0 : 1)" @click="navigate(active - 1)"><i class="ti ti-chevron-up" aria-hidden="true" /></button>
-      <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__label" aria-hidden="true">{{ page }}</span><span class="club-pager__mark" aria-hidden="true" /></button>
-      <button type="button" aria-label="下一屏" :disabled="busy || active === pages.length - 1" @click="navigate(active + 1)"><i class="ti ti-chevron-down" aria-hidden="true" /></button>
+      <button type="button" aria-label="上一屏" :disabled="playing || busy || active <= (asciiAvailable ? 0 : 1)" @click="navigate(active - 1)"><i class="ti ti-chevron-up" aria-hidden="true" /></button>
+      <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="playing || busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__label" aria-hidden="true">{{ page }}</span><span class="club-pager__mark" aria-hidden="true" /></button>
+      <button type="button" aria-label="下一屏" :disabled="playing || busy || active === pages.length - 1" @click="navigate(active + 1)"><i class="ti ti-chevron-down" aria-hidden="true" /></button>
     </nav>
     <span class="club-sr-only" aria-live="polite">{{ enabled ? pages[active] : '' }}</span>
   </div>
@@ -276,4 +282,15 @@ const paths = [
 }
 @media print { .has-ascii-canvas :deep(.ascii-poster) { visibility: visible; } }
 @media(max-height:559px) { .club-learning :deep(.ascii-slot) { height: min(32vw,350px); } }
+</style>
+
+<style>
+.club-intro { position: fixed; inset: 0; z-index: 25; overflow: hidden; pointer-events: none; color: var(--mag-text); font-family: 'Club Instrument Serif', serif; font-weight: 400; }
+.club-intro__source { position: absolute; top: 48%; left: 50%; transform: translate(-50%,-50%); display: flex; gap: .22em; line-height: 1; white-space: nowrap; letter-spacing: -.025em; }
+.club-intro__echo { display: block; }
+.club-intro__echo > span { display: inline-block; }
+.club-home.is-intro { --intro-hero-opacity: 0; }
+.is-intro .club-opening__poem { visibility: hidden; }
+.is-intro .mag-ascii-hero { opacity: var(--intro-hero-opacity); pointer-events: none; }
+.is-intro .club-pager { opacity: var(--intro-hero-opacity); pointer-events: none; }
 </style>

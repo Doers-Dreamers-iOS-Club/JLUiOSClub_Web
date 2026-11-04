@@ -31,6 +31,7 @@ try {
   await page.setViewport({ width: 1440, height: 900 })
   await page.goto(base + '/', { waitUntil: 'networkidle0' })
   await page.waitForSelector('.mag-ascii-hero__canvas:not(.is-hidden)')
+  await page.waitForFunction(() => !document.querySelector('.club-home')?.classList.contains('is-intro'))
   await assertPanel('开场')
   await page.mouse.move(700, 400)
   for (let i = 0; i < 10; i++) { await page.mouse.wheel({ deltaY: 120 }); await wait(50) }
