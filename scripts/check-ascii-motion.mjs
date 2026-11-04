@@ -12,12 +12,12 @@ const state=()=>page.$eval('.ascii-narrative',e=>({...e.dataset}))
 const pixels=()=>page.$eval('.ascii-narrative',e=>e.toDataURL())
 const at=age=>page.waitForFunction(age=>Number(document.querySelector('.ascii-narrative').dataset.sceneTime)>=age,{timeout:15000},age)
 async function select(name){await page.click(`.club-pager [aria-label="${name}"]`);await page.waitForFunction(()=>!document.querySelector('.club-home').classList.contains('is-changing')&&document.querySelector('.ascii-narrative').dataset.morphing==='false')}
-async function story(label,kind){
+async function story(label,kind,suffix=''){
  await page.click(`.club-pager [aria-label="${label}"]`)
  await page.waitForFunction(kind=>{const d=document.querySelector('.ascii-narrative').dataset;return d.morphing==='true'&&d.transition===kind&&Number(d.progress)>.18},{timeout:10000},kind)
- await page.screenshot({path:`${out}/${kind}-${label}-early.png`})
+ await page.screenshot({path:`${out}/${kind}-${label}${suffix}-early.png`})
  await page.waitForFunction(()=>Number(document.querySelector('.ascii-narrative').dataset.progress)>.58)
- await page.screenshot({path:`${out}/${kind}-${label}-late.png`})
+ await page.screenshot({path:`${out}/${kind}-${label}${suffix}-late.png`})
  await page.waitForFunction(()=>!document.querySelector('.club-home').classList.contains('is-changing')&&document.querySelector('.ascii-narrative').dataset.morphing==='false')
 }
 async function interact(label){
@@ -65,7 +65,7 @@ try{
  const hidden=(await state()).sceneTime;await wait(450);assert.equal((await state()).sceneTime,hidden)
  await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'))})
  console.log('PASS stationary full-bleed hands, ongoing flow, pause/resume and background suspension')
- await story('活动','touch-to-fire');await at(.2)
+ await story('活动','hands-sand');await at(.2)
  const fire=await pixels();await wait(800);assert.notEqual(await pixels(),fire,'Flame should keep burning')
  assert.equal((await state()).motion,'burning')
  const area=await shape(),recordLeft=await page.$eval('.club-making__records',e=>e.getBoundingClientRect().left)
@@ -79,8 +79,8 @@ try{
  await page.screenshot({path:out+'/argo-sailing.png'})
  await interact('argo')
  await story('活动','fire-to-sail')
- await story('学习','touch-to-fire')
- console.log('PASS fingertip-to-fire and fire-to-sail transitions in both directions, burning, billowing, text clearance and scanning')
+ await story('学习','hands-sand')
+ console.log('PASS hands-sand and fire-to-sail transitions in both directions, burning, billowing, text clearance and scanning')
  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}])
  for(const label of ['学习','活动','加入']){await select(label);const before=await pixels();await wait(150);assert.equal(await pixels(),before);assert.equal(await page.$('.club-ascii-playback'),null)}
  for(const [width,height] of [[320,568],[390,844]]){
@@ -92,6 +92,8 @@ try{
   await page.screenshot({path:`${out}/hands-${width}-dark.png`})
  }
  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'no-preference'}])
+ await story('活动','hands-sand','-390')
+ await story('学习','hands-sand','-390')
  for(const [label,name] of [['活动','prometheus'],['加入','argo']]){
   await select(label);await at(.4)
   const before=await pixels();await wait(600);assert.notEqual(await pixels(),before,'Myth motion should also run on mobile')

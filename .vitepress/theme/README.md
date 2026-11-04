@@ -204,6 +204,12 @@ tags: [Swift, 工作坊]
 
 交接检查：`node scripts/check-intro-handoff.mjs http://localhost:4174` 验证桌面和手机上，最后字符仍在飞行时 WebGL 已运动，交接前后运动相位连续，叙事组件提前就绪；报告本机交接附近的帧间隔。
 
+### 双手与盗火之间的流沙过渡
+
+`ascii/sand-transition.ts` 只负责第二、三屏之间的 ASCII 转场。双手离开时，带有细微轮廓起伏的侵蚀边界从右向左推进；尚未经过边界的字符保持原位和透明度，经过的字符缩成细砂，沿下坠的 Bézier 曲线组成下方持火炬的手和火炬。指尖之间的火花仍沿原路径生长成上方火焰，火焰不参与流沙映射。反向播放同一组路径，双手从左向右逐步堆积成形。流沙使用稳定的涟漪和短尾迹，避免逐帧随机抖动；轨迹在切换时一次生成，流沙字符总数最多为双手与持炬部分较大点数的两倍，另加原有火焰字符。
+
+沿用现有转场时长、暂停与减少动态效果处理。首屏 intro、静态场景运动、盗火与阿戈尔号之间的转场及作品标签保持原样。验证：`node scripts/check-sand-transition.mjs` 检查端点、侵蚀方向、反向成形和字符数量；`node scripts/check-ascii-motion.mjs http://localhost:4174` 检查实际浏览器中的双向转场及原有交互。前者可选传入旧版 `myth-motion.ts` 路径，逐帧比较保留的指尖生火路径、火焰与船转场。
+
 ### ASCII 作品标签
 
 第二至四屏的 `AsciiPoster.vue` 使用 figure/figcaption 组织图像与作品标签。原文分别为 `Fiat lux`（拉丁文）、`πῦρ ἐγώ σφιν ὤπασα.`、`Ἀργὼ πᾶσι μέλουσα`（古希腊语）。出处为《创世记》1:3、[《被缚的普罗米修斯》252行](https://www.greek-language.gr/digitalResources/ancient_greek/library/browse.html?page=7&text_id=132)、[《奥德赛》12.70](https://atlas.perseus.tufts.edu/nodes/urn%3Acts%3AgreekLit%3Atlg0012.tlg002.perseus-grc2%3A12.70/)。来源说明只提供给辅助技术，视觉上仅展示原文。

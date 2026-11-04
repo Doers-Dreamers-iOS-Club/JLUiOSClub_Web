@@ -1,3 +1,5 @@
+import { sandField } from './sand-transition'
+
 export type Glyph = {
   x: number; y: number; char: string; size: number; alpha: number
   u?: number; v?: number; part?: number
@@ -28,34 +30,31 @@ export function mythTransition(previous: number, next: number, from: Glyph[], to
   if (!flames.length) return null
   const fire = center(flames)
   let sample: (t: number) => Glyph[]
-  const kind = low === 1 ? 'touch-to-fire' : 'fire-to-sail'
+  const kind = low === 1 ? 'hands-sand' : 'fire-to-sail'
 
   if (low === 1) {
+    const sand = sandField(source, destination.filter(p => p.part !== 1), width, reverse)
+    if (!sand) return null
     const leftHand = source.filter(p => p.x < width / 2)
     const rightHand = source.filter(p => p.x >= width / 2)
     const left = leftHand.reduce((a, p) => p.x > a.x ? p : a, leftHand[0] || source[0])
     const right = rightHand.reduce((a, p) => p.x < a.x ? p : a, rightHand[0] || source[source.length - 1])
     const spark = { x: (left.x + right.x) / 2, y: (left.y + right.y) / 2 }
+    // Keep the original destination indices: spark seeds and timing stay unchanged.
     const routes = destination.map((p, i) => {
       const n = random(i)
       return { p, n, seed: i % 20 === 0, start: { x: spark.x + (n - .5) * 9, y: spark.y + (random(i + 9) - .5) * 7 },
         control: { x: mix(spark.x, fire.x, .55) + (n - .5) * 45, y: Math.max(12, Math.min(spark.y, fire.y) - 65 - n * 32) } }
-    })
+    }).filter(({ p }) => p.part === 1)
     sample = t => {
       if (t <= 0) return source
       if (t >= 1) return destination
-      const old = source.map(p => ({ ...p, alpha: p.alpha * (1 - smooth((t - .12) / .38)) }))
       const arriving = routes.map(({ p, n, seed, start, control }) => {
-        if (p.part === 1) {
-          const progress = smooth((t - .04 - n * .15) / .64)
-          const visibility = seed ? smooth((t - .02 - n * .1) / .08) : smooth((t - .28 - n * .18) / .16)
-          return travel(start, p, control, progress, p.alpha * visibility * (.35 + .65 * progress))
-        }
-        // The supporting arm resolves after the first fire has gathered.
-        const progress = smooth((t - .36 - (1 - (p.v ?? .5)) * .12) / .48)
-        return { ...p, y: p.y + (1 - progress) * 14, alpha: p.alpha * progress }
+        const progress = smooth((t - .04 - n * .15) / .64)
+        const visibility = seed ? smooth((t - .02 - n * .1) / .08) : smooth((t - .28 - n * .18) / .16)
+        return travel(start, p, control, progress, p.alpha * visibility * (.35 + .65 * progress))
       })
-      return [...old, ...arriving]
+      return [...sand(t), ...arriving]
     }
   } else {
     const sails = destination.filter(p => p.part === 1)
