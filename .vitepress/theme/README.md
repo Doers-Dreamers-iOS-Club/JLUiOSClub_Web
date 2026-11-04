@@ -194,10 +194,12 @@ tags: [Swift, 工作坊]
 
 ### 首页 slogan intro
 
-首页 HTML 自带轻量 CSS 翻字开场，不依赖 Vue、GSAP 或 WebGL 下载完成。`.vitepress/homeBoot.ts` 提供首帧 slogan、交错翻字和重复文字呼吸效果；挂载后接入 `useHomeIntro.ts` 的重复排版横移、交错拆字与三行收束。字体单独预加载；Mermaid 改为异步注册并移除首页的额外 modulepreload，课程和 Mag 组件按需加载，关闭导航链接预取。Swift WebGL 在挂载 750ms 后请求，后续叙事组件在 intro 结束后加载。保留 SSR 的诗句和静态字符画。
+首页 HTML 自带轻量 CSS 翻字开场，不依赖 Vue、GSAP 或 WebGL 下载完成。`.vitepress/homeBoot.ts` 提供首帧 slogan、交错翻字和重复文字呼吸效果；挂载后接入 `useHomeIntro.ts` 的重复排版横移、交错拆字与三行收束。字体单独预加载；Mermaid 改为异步注册并移除首页的额外 modulepreload，课程和 Mag 组件按需加载，关闭导航链接预取。Swift WebGL 在挂载 750ms 后请求，后续叙事组件在挂载 1400ms 后准备，避开 logo 交接时初始化。保留 SSR 的诗句和静态字符画。
 
-`Possibility` 的实心墨水沿水平边界从上到下退去，像水位下降；边界上方显露 ASCII，下方仍是实心。填充与纹理裁剪边界共用 50px 外扩范围，保留字母升降部。水位经过每一行时，该行字符立即显露并脱离，退墨与飞行共用同一时钟；不会等待整行转换完成。字符沿三次 Bézier 弧线汇聚到 `AsciiHero.snapshot()` 的真实字符坐标。`introAscii.ts` 生成纹理及源字符点；`introFlight.ts` 在一个 Canvas 中插值位置、字符大小与透明度，结束时交接给冻结在同一姿态的 WebGL，再恢复交互。字符按水平邻域匹配目标，出生时间由水位缓动反算；飞行时长略有差异，五次缓动让起终点速度、加速度归零，字符内容也交叉淡化。标准时间轴约 6.1 秒。
+`Possibility` 的实心墨水沿水平边界从上到下退去，像水位下降；边界上方显露 ASCII，下方仍是实心。填充与纹理裁剪边界共用 50px 外扩范围，保留字母升降部。水位经过每一行时，该行字符立即显露并脱离，退墨与飞行共用同一时钟；不会等待整行转换完成。字符沿三次 Bézier 弧线汇聚到 `AsciiHero.snapshot()` 的真实字符坐标。`introAscii.ts` 生成纹理及源字符点；`introFlight.ts` 在一个 Canvas 中插值位置、字符大小与透明度，最后一批字符接近目标时就与运动中的 WebGL 交叉交接，再恢复交互。字符按水平邻域匹配目标，出生时间由水位缓动反算；飞行时长略有差异，五次缓动让起终点速度、加速度归零，字符内容也交叉淡化。结束时间按实际最长行程计算，不保留固定静止尾段。最后 550ms 已启动 WebGL 运动，运动增益柔和升起，intro 卸载前后沿用同一个运动时钟。叙事组件首次布局不再读取 GPU 字符快照。
 
 非开场 hash、减少动态效果跳过；Escape、窗口尺寸变化、hash 导航及卸载会清理。HTML cover 兜底 6.5 秒，字体等待上限 650ms，logo 目标等待上限 1.2 秒，整体兜底 9.5 秒。慢速或失败的 WebGL 不会永久阻塞主页。播放时锁定首页翻页及 Swift 交互。
 
 验证：生产构建后执行 `node scripts/check-home-intro.mjs http://localhost:4174`、`node scripts/check-home-loading.mjs http://localhost:4174` 和 `node scripts/check-fullpage.mjs http://localhost:4174`。覆盖字形转粒子、桌面/手机/深色、跳过路径、无 JS、阻断全部外部 JS 时的 HTML 开场、按需 Mermaid 渲染及首页资源量。截图写入 `/private/tmp/club-intro-qa`，资源清单写入 `/private/tmp/club-load-after.json`。
+
+交接检查：`node scripts/check-intro-handoff.mjs http://localhost:4174` 验证桌面和手机上，最后字符仍在飞行时 WebGL 已运动，交接前后运动相位连续，叙事组件提前就绪；报告本机交接附近的帧间隔。

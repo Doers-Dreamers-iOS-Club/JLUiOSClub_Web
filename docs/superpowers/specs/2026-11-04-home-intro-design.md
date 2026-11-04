@@ -11,3 +11,7 @@ The user requested a true character transfer into the logo and faster initial re
 ## Continuous emission refinement
 
 The user clarified that characters must fly while the ink drains, not afterward. Use one elapsed-time clock for the waterline and particles. Invert the waterline easing to release each source row as it is exposed. Match horizontal neighbourhoods, use cubic paths with zero endpoint velocity/acceleration, vary travel duration slightly, and crossfade glyph identities instead of switching them abruptly. Acquire the logo snapshot before the conversion starts, with the existing bounded wait. Validate that particles are moving while solid ink remains, and that arrivals overlap ongoing flights.
+
+## Moving handoff refinement
+
+The user reported a pause between assembly and idle logo motion. End the transfer at the measured final arrival instead of the conservative fixed duration. Overlap the last 550ms with live WebGL motion and preserve that animation clock across intro teardown. Ramp motion gain on reveal to avoid a velocity jump. Prepare AsciiNarrative during the earlier typography phase, and avoid synchronous GPU snapshot reads on initial unchanged-page layout. Check concurrent particle/WebGL motion and continuous phase on desktop/mobile.

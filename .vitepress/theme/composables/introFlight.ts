@@ -46,6 +46,8 @@ export function introFlight(layer: HTMLElement, sources: IntroGlyph[], targets: 
       c2: { x: target.x + (source.x - target.x) * .12, y: target.y + lift * .55 }
     }
   })
+  const duration = Math.max(...particles.map(p => p.release + p.duration))
+  canvas.dataset.duration = duration.toFixed(3)
   function paint(seconds: number) {
     ctx.clearRect(0, 0, innerWidth, innerHeight)
     let moving = 0, settled = 0, visible = 0, lastSize = -1
@@ -74,7 +76,7 @@ export function introFlight(layer: HTMLElement, sources: IntroGlyph[], targets: 
       if (t === 1) settled++
     }
     ctx.globalAlpha = 1
-    Object.assign(canvas.dataset, { progress: (seconds / INK_TRANSFER_SECONDS).toFixed(3), water: inkLevel(seconds).toFixed(3), moving: String(moving), settled: String(settled), visible: String(visible) })
+    Object.assign(canvas.dataset, { progress: (seconds / duration).toFixed(3), water: inkLevel(seconds).toFixed(3), moving: String(moving), settled: String(settled), visible: String(visible) })
   }
-  return { canvas, paint }
+  return { canvas, paint, duration }
 }

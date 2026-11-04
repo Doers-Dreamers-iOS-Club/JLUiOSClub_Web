@@ -14,7 +14,7 @@ import { Color, LinearSRGBColorSpace } from 'three'
 import { loadGlyphAtlas } from '../ascii/glyph-atlas'
 import { AsciiLogoRenderer } from '../ascii/renderer'
 
-const props = withDefaults(defineProps<{ active?: boolean }>(), { active: true })
+const props = withDefaults(defineProps<{ active?: boolean; introReveal?: boolean }>(), { active: true, introReveal: false })
 
 /** Frame-rate independent exponential lerp. */
 const damp = (current: number, target: number, tau: number, dt: number) =>
@@ -94,6 +94,7 @@ onMounted(async () => {
   let raf = 0
   let last = 0
   let elapsed = Math.PI
+  let motionGain = 1
   let visible = false
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
   let reduced = prefersReducedMotion()
@@ -171,7 +172,9 @@ onMounted(async () => {
 
     // Capped so a backgrounded tab does not jump the float forward on return.
     const step = Math.min(48, dt)
-    if (!reduced) elapsed += (step / 1000) * CONFIG.floatSpeed
+    motionGain = damp(motionGain, 1, 120, step)
+    if (!reduced) elapsed += (step / 1000) * CONFIG.floatSpeed * motionGain
+    canvas!.dataset.motionTime = elapsed.toFixed(4)
 
     azimuth = damp(azimuth, aimAzimuth, CONFIG.orbitTau, step)
     elevation = damp(elevation, aimElevation, CONFIG.orbitTau, step)
@@ -233,7 +236,11 @@ onMounted(async () => {
     draw()
   }
 
-  const stopActiveWatch = watch(() => props.active, () => { applyMotion(); if (props.active) draw() })
+  const stopActiveWatch = watch(() => [props.active, props.introReveal], ([active, revealing], [, wasRevealing]) => {
+    if (revealing && !wasRevealing) motionGain = 0
+    applyMotion()
+    if (active) draw()
+  })
 
   dispose = () => {
     stopActiveWatch()

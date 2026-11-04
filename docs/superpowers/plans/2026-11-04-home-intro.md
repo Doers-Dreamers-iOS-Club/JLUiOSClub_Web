@@ -30,3 +30,11 @@ Validation completed: production build, intro browser checks, and existing full-
 - [x] Match horizontal neighbourhoods and use cubic paths with quintic timing, slightly varied flight duration, font-size caching, and crossfaded glyph identities.
 - [x] Production build and desktop/mobile/dark intro checks passed, including simultaneous ink/flight and overlapping arrivals.
 - [x] Existing full-page regression suite passed before the local commit.
+
+## Follow-up: continuous logo handoff
+
+- [x] Remove the conservative fixed transfer tail; schedule completion from the actual last particle arrival.
+- [x] Overlap the last 550ms with live WebGL, ramp motion gain, and preserve the existing RAF/phase across intro teardown.
+- [x] Prepare the narrative canvas at 1400ms and skip redundant initial GPU readbacks for unchanged pages.
+- [x] Intro and full-page regression checks passed; desktop/mobile handoff showed roughly 30 moving overlap frames and a local 17ms maximum frame gap near teardown.
+- [x] Rebuilt the completion guard; desktop/mobile continuity and artificially delayed WebGL checks passed before the local commit.

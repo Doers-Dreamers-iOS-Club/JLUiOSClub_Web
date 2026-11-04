@@ -5,6 +5,7 @@ import { introFlight, inkLevel, INK_TRANSFER_SECONDS } from './introFlight'
 
 export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => IntroSnapshot | null) {
   const playing = ref(false)
+  const revealing = ref(false)
   let dispose = () => {}
   onBeforeUnmount(() => dispose())
   onMounted(async () => {
@@ -19,6 +20,7 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
     let timeline: gsap.core.Timeline | undefined
     let fontTimer = 0
     let targetTimer = 0
+    let transferScheduled = false
     playing.value = true
     host.classList.add('is-intro')
     const finish = () => {
@@ -32,6 +34,7 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
       host.classList.remove('is-intro')
       host.style.removeProperty('--intro-hero-opacity')
       playing.value = false
+      revealing.value = false
       window.removeEventListener('resize', finish)
       window.removeEventListener('hashchange', finish)
       window.removeEventListener('keydown', key)
@@ -108,7 +111,7 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
       })
       gsap.set(clones.map(item => item.clone), { opacity: 0 })
       clones.forEach(({ clone, box, scale, source }) => gsap.set(clone, { x: source.left - box.left, y: source.top - box.top + (source.height - box.height * scale) / 2, scale }))
-      timeline = gsap.timeline({ defaults: { ease: 'expo.inOut' }, onComplete: finish })
+      timeline = gsap.timeline({ defaults: { ease: 'expo.inOut' }, onComplete: () => { if (transferScheduled) finish() } })
       timeline.from(source.querySelectorAll('.club-intro__letter'), { yPercent: i => i % 2 ? 115 : -115, rotationX: i => i % 2 ? -80 : 80, opacity: 0, stagger: .018, duration: .7 }, 0)
       echoes.forEach((echo, index) => {
         timeline!.to(echo, { opacity: index % 2 ? .23 : .12, duration: .4 }, .15 + index * .06)
@@ -151,6 +154,24 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
             targetTimer = window.setTimeout(attempt, 60)
             return
           }
+          // End on the actual last arrival, rather than a conservative fixed tail.
+          transferScheduled = true
+          const duration = flight?.duration ?? INK_TRANSFER_SECONDS
+          const overlap = .55
+          const handoffAt = releaseAt + Math.max(0, duration - overlap)
+          timeline!.to(travel, {
+            seconds: duration, duration, ease: 'none',
+            onUpdate: () => {
+              water.progress = inkLevel(travel.seconds)
+              drain()
+              flight?.paint(travel.seconds)
+            }
+          }, releaseAt)
+          timeline!.call(() => { revealing.value = true }, [], handoffAt)
+          if (texture) timeline!.to(texture, { opacity: 0, duration: overlap }, handoffAt)
+          timeline!.to(host, { '--intro-hero-opacity': 1, duration: overlap, ease: 'sine.inOut' }, handoffAt)
+          const blend = { opacity: 1 }
+          timeline!.to(blend, { opacity: 0, duration: overlap, ease: 'sine.inOut', onUpdate: () => { if (flight) flight.canvas.style.opacity = String(blend.opacity) } }, handoffAt)
           // Slow/failed WebGL never traps the visitor in a loading cover.
           timeline!.play()
         }
@@ -158,23 +179,11 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
       }
       // Acquire the destination BEFORE draining. Once started, ink and flight share one clock.
       const releaseAt = 2.65
-      const landAt = releaseAt + INK_TRANSFER_SECONDS
       timeline.call(prepareFlight, [], releaseAt)
-      timeline.to(travel, {
-        seconds: INK_TRANSFER_SECONDS, duration: INK_TRANSFER_SECONDS, ease: 'none',
-        onUpdate: () => {
-          water.progress = inkLevel(travel.seconds)
-          drain()
-          flight?.paint(travel.seconds)
-        }
-      }, releaseAt)
-      if (texture) timeline.to(texture, { opacity: 0, duration: .3 }, landAt)
-      timeline.to(host, { '--intro-hero-opacity': 1, duration: .3, ease: 'sine.inOut' }, landAt)
-      timeline.to({}, { duration: .3, onUpdate() { if (flight) flight.canvas.style.opacity = String(1 - this.progress()) } }, landAt)
     } catch (error) {
       console.warn('Home intro skipped:', error)
       finish()
     }
   })
-  return { playing }
+  return { playing, revealing }
 }

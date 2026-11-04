@@ -10,12 +10,17 @@ import { useFullPage } from '../composables/useFullPage'
 const root = ref<HTMLElement | null>(null)
 const opening = ref<{ snapshot: () => IntroSnapshot | null } | null>(null)
 const captureOpening = () => opening.value?.snapshot() ?? null
-const { playing } = useHomeIntro(root, captureOpening)
+const { playing, revealing } = useHomeIntro(root, captureOpening)
 const { active, enabled, busy, asciiAvailable, navigate } = useFullPage(root, playing)
 const loadAscii = ref(false)
+const loadNarrative = ref(false)
 let loadTimer = 0
-onMounted(() => { loadTimer = window.setTimeout(() => { loadAscii.value = true }, playing.value ? 750 : 0) })
-onBeforeUnmount(() => clearTimeout(loadTimer))
+let narrativeTimer = 0
+onMounted(() => {
+  loadTimer = window.setTimeout(() => { loadAscii.value = true }, playing.value ? 750 : 0)
+  narrativeTimer = window.setTimeout(() => { loadNarrative.value = true }, playing.value ? 1400 : 0)
+})
+onBeforeUnmount(() => { clearTimeout(loadTimer); clearTimeout(narrativeTimer) })
 const pages = ['开场', '学习', '活动', '加入']
 const asciiReady = ref(false)
 const coveringOpening = ref(false)
@@ -34,7 +39,7 @@ const paths = [
     <div class="club-pages">
       <section id="index" class="club-page club-opening" data-club-page tabindex="-1" aria-label="ASCII 开场">
         <div class="club-page__inner">
-          <AsciiHero v-if="loadAscii" ref="opening" :active="!playing && (!enabled || active === 0)" />
+          <AsciiHero v-if="loadAscii" ref="opening" :active="(!playing || revealing) && (!enabled || active === 0)" :intro-reveal="revealing" />
           <p class="club-opening__poem" lang="en"><span class="club-opening__i">I</span> <span class="club-opening__dwell"><span>dwell</span> <span>in</span></span> <span class="club-opening__possibility">Possibilit<span class="club-opening__final-y">y</span></span></p>
         </div>
       </section>
@@ -77,7 +82,7 @@ const paths = [
         </div>
       </section>
     </div>
-    <AsciiNarrative v-if="loadAscii && !playing" :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
+    <AsciiNarrative v-if="loadAscii && loadNarrative" :page="active" :paged="enabled" :opening="captureOpening" @ready="asciiReady = $event" @covering="coveringOpening = $event" />
     <nav v-if="enabled" class="club-pager" aria-label="首页栏目">
       <button type="button" aria-label="上一屏" :disabled="playing || busy || active <= (asciiAvailable ? 0 : 1)" @click="navigate(active - 1)"><i class="ti ti-chevron-up" aria-hidden="true" /></button>
       <button v-for="(page, index) in pages" :key="page" type="button" :aria-label="page" :aria-current="active === index ? 'step' : undefined" :disabled="playing || busy || (index === 0 && !asciiAvailable)" @click="navigate(index)"><span class="club-pager__label" aria-hidden="true">{{ page }}</span><span class="club-pager__mark" aria-hidden="true" /></button>

@@ -180,6 +180,8 @@ async function change(){
  if(!props.paged){tween?.kill();morphing=false;points=[];base=[];measure();paint();emit('ready',false);emit('covering',false);lastPage=props.page;return}
  measure();emit('ready',true)
  const previous=lastPage;lastPage=props.page
+ // Initial/static layout needs no synchronous GPU readback of the opening.
+ if(previous===props.page){settle(age===0);return}
  const from=previous===0&&!points.length?target(0):points.map(p=>({...p}))
  const raw=target(props.page)
  const to=scenePose(props.page,raw,0,reduced.value||paused.value)
