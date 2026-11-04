@@ -7,7 +7,7 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
 </script>
 <template>
   <figure ref="artwork" class="course-art mag-no-reveal" :class="{ 'course-art--compact': compact }" aria-label="从想法到贪吃蛇：画出草稿，与代码协作，做成游戏">
-    <div class="art-stage">
+    <div class="art-stage" data-motion-state="waiting">
       <svg viewBox="0 0 340 320" role="img" aria-label="想法：纸上的贪吃蛇草图">
         <ellipse cx="160" cy="276" rx="109" ry="12" class="art-shadow" />
         <g transform="rotate(-7 170 158)">
@@ -34,7 +34,7 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
       <span class="art-stage__label"><i>01</i> 想法</span>
     </div>
     <svg class="art-connector" viewBox="0 0 80 80" aria-hidden="true"><path d="M4 51C29 51 35 27 70 27m-8-7 8 7-8 7" /></svg>
-    <div class="art-stage">
+    <div class="art-stage" data-motion-state="waiting">
       <svg viewBox="0 0 340 320" role="img" aria-label="代码：把草图写成可以运行的程序">
         <ellipse cx="170" cy="276" rx="117" ry="12" class="art-shadow" />
         <rect x="48" y="42" width="247" height="224" rx="8" class="art-paper art-edge" />
@@ -52,7 +52,7 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
       <span class="art-stage__label"><i>02</i> 代码</span>
     </div>
     <svg class="art-connector" viewBox="0 0 80 80" aria-hidden="true"><path d="M4 27C29 27 35 51 70 51m-8-7 8 7-8 7" /></svg>
-    <div class="art-stage">
+    <div class="art-stage" data-motion-state="waiting">
       <svg viewBox="0 0 340 320" role="img" aria-label="作品：完成的蓝色贪吃蛇游戏">
         <ellipse cx="173" cy="276" rx="124" ry="12" class="art-shadow" />
         <g transform="rotate(3 170 158)">

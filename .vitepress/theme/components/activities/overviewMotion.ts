@@ -28,15 +28,18 @@ export function useOverviewArtworkMotion(root: Ref<HTMLElement | null>) {
   onBeforeUnmount(() => media?.revert())
   onMounted(() => {
     const figure = root.value
-    if (!figure || !('IntersectionObserver' in window)) return
+    if (!figure) return
+    // SSR supplies the CSS starting pose; unsupported/reduced motion stays static.
+    delete figure.dataset.artState
+    if (!('IntersectionObserver' in window)) return
     const journal = figure.closest<HTMLElement>('.activity-journal')
     media = gsap.matchMedia()
     media.add('(prefers-reduced-motion: no-preference)', context => {
       let visible = false
       figure.dataset.artState = 'waiting'
       let timeline: gsap.core.Timeline | undefined
-      // A paused fromTo still measures and writes its starting values. Build it
-      // only when the illustration is visible, inside the GSAP cleanup context.
+      // CSS holds the starting pose through hydration and the cover transition.
+      // Prepare on an explicit cover turn, or when native scrolling reveals it.
       context.add('prepare', () => {
         const paths = Array.from(figure.querySelectorAll<SVGPathElement>('[data-art-draw]'))
         const lengths = paths.map(path => path.getTotalLength())
@@ -58,14 +61,17 @@ export function useOverviewArtworkMotion(root: Ref<HTMLElement | null>) {
           if (timeline!.progress() < 1) timeline!.play()
         } else timeline?.pause()
       }
+      const prepareCover = () => { if (!timeline) context.prepare() }
       const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync() }, { threshold: .2 })
       observer.observe(figure)
       const state = new MutationObserver(sync)
       if (journal) state.observe(journal, { attributes: true, attributeFilter: ['data-course-page', 'data-cover-transition'] })
+      journal?.addEventListener('course-cover-prepare', prepareCover)
       journal?.addEventListener('course-cover-settled', sync)
       document.addEventListener('visibilitychange', sync)
       return () => {
         observer.disconnect(); state.disconnect()
+        journal?.removeEventListener('course-cover-prepare', prepareCover)
         journal?.removeEventListener('course-cover-settled', sync)
         document.removeEventListener('visibilitychange', sync)
         delete figure.dataset.artState

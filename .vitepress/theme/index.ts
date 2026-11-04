@@ -9,6 +9,7 @@ import './style.css'
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/motion.css'
+import './styles/artwork-motion.css'
 import './styles/learning.css'
 
 import { initReveal, teardownReveal } from './composables/useReveal'

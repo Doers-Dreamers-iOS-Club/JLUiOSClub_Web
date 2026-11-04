@@ -128,6 +128,9 @@ export function useCourseCover(root: Ref<HTMLElement | null>, options: {
       gsap.set(panels[previous], { autoAlpha: 1, zIndex: 1 })
       gsap.set(panels[next], { autoAlpha: 1, xPercent: direction * 100, zIndex: 2 })
       gsap.set(inners[next], { xPercent: direction * -100 })
+      // Prepare the incoming illustration while the cover still hides it. The
+      // paused SVG timelines must not be constructed on the first settled frame.
+      if (next) journal.dispatchEvent(new Event('course-cover-prepare'))
       timeline = gsap.timeline({ defaults: { duration: innerWidth <= 640 ? .62 : .85, ease: 'power2.inOut' }, onComplete: finish })
       timeline.to(panels[previous], { xPercent: direction * -100 }, 0)
         .to(inners[previous], { xPercent: direction * 100 }, 0)

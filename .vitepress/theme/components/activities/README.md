@@ -8,6 +8,8 @@ Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`pr
 
 每页独立设计 SVG 构图，不固定为三段式。使用 `useOverviewArtworkMotion` 管理可见性、封页状态和减少动态效果。`data-art-reveal` 用于插图主体入场，`data-art-draw` 用于短路径描画，`data-art-pop` 用于小部件落位，`data-art-row` 用于序列变化，`data-art-finish` 用于完成反馈。静态 SVG 必须已经是完整画面，动画只做增强。
 
+插图的 SSR 根节点设置 `data-art-state="waiting"`，与 `styles/artwork-motion.css` 中的动画起点样式配合，避免翻页或直接打开内容锚点时先闪出完成态。CSS 起点必须与时间线的 `from` 值同步；用户翻页时，通过 `course-cover-prepare` 在过渡开始前准备首屏插图，过渡结束后才播放，屏外插图仍延迟初始化。滚动动画只初始化视口下方的内容，不能把已经显示的目录移回动画起点。禁用 JavaScript、减少动态效果和打印时显示完整静态插图。修改后运行 `node scripts/check-artwork-first-frame.mjs` 和 `node scripts/check-content-settle.mjs` 检查首帧、锚点直达及翻页后的位置稳定性。
+
 `overview.css` 的所有版式规则限于 `.activity-journal` / `.activity-overview`。目录沿用 `.journal-chapter` 和 `.journal-section__head` 接入滚动阻尼；交互沿用课程封页状态机，但锚点为 `#activity-content` / `#activity-cover`。底部 SVG 不获得滚动锁，也不等待动画结束再切页。
 
 检查：`npm run build` 后重启 `npm run preview -- --port 4174 --host 0.0.0.0`，执行 `node scripts/check-activity-overviews.mjs --all`。修改共用切页逻辑时另跑 `node scripts/check-course-cover.mjs`。

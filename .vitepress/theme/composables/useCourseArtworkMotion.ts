@@ -7,11 +7,14 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
   onBeforeUnmount(() => media?.revert())
   onMounted(() => {
     const figure = root.value
-    if (!figure || !('IntersectionObserver' in window)) return
+    if (!figure) return
+    const stages = Array.from(figure.querySelectorAll<HTMLElement>('.art-stage'))
+    // Release the SSR starting pose if this visit cannot run an animation.
+    stages.forEach(stage => { delete stage.dataset.motionState })
+    if (!('IntersectionObserver' in window)) return
     media = gsap.matchMedia()
     media.add({ reduce: '(prefers-reduced-motion: reduce)', desktop: '(min-width: 641px)', mobile: '(max-width: 640px)' }, context => {
       if (context.conditions?.reduce) return
-      const stages = Array.from(figure.querySelectorAll<HTMLElement>('.art-stage'))
       const connectors = Array.from(figure.querySelectorAll<SVGPathElement>('.art-connector path'))
       const visible = new Set<Element>()
       const timelines = new Map<Element, gsap.core.Timeline>()
@@ -24,6 +27,10 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
       }
       stages.forEach(stage => { stage.dataset.motionState = 'waiting' })
       context.add('prepare', (stage: HTMLElement) => {
+        // Release CSS within this synchronous setup so GSAP saves the actual
+        // resting transforms for revert(), rather than the temporary start pose.
+        // Restore waiting before the browser can paint or the delayed tween runs.
+        stage.dataset.motionState = 'preparing'
         const index = stages.indexOf(stage)
         const paths = Array.from(stage.querySelectorAll<SVGPathElement>('.art-sketch, .art-snake, .art-snake-shadow'))
         if (connectors[index]) paths.push(connectors[index])
@@ -56,6 +63,7 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
           }, .8)
         }
         if (connectors[index]) draw(timeline, [connectors[index]], lengths, 1.2, .55)
+        stage.dataset.motionState = 'waiting'
       })
       const sync = (stage: HTMLElement) => {
         if (visible.has(stage) && canPlay()) {
@@ -73,13 +81,25 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
       }, { threshold: .28 })
       stages.forEach(stage => observer.observe(stage))
       const onVisibility = () => stages.forEach(sync)
+      const prepareCover = () => {
+        // The panel's counter-transforms keep these bounds in their final
+        // viewport positions. Prepare only the incoming screen's stages; later
+        // mobile stages remain lazy and all timelines stay paused until settled.
+        const incoming = stages.filter(stage => {
+          const bounds = stage.getBoundingClientRect()
+          return bounds.top < innerHeight && bounds.bottom > 0
+        })
+        incoming.forEach(stage => { if (!timelines.has(stage)) context.prepare(stage) })
+      }
       document.addEventListener('visibilitychange', onVisibility)
+      journal?.addEventListener('course-cover-prepare', prepareCover)
       journal?.addEventListener('course-cover-settled', onVisibility)
       const pageObserver = new MutationObserver(onVisibility)
       if (journal) pageObserver.observe(journal, { attributes: true, attributeFilter: ['data-course-page', 'data-cover-transition'] })
       return () => {
         observer.disconnect()
         pageObserver.disconnect()
+        journal?.removeEventListener('course-cover-prepare', prepareCover)
         journal?.removeEventListener('course-cover-settled', onVisibility)
         document.removeEventListener('visibilitychange', onVisibility)
         stages.forEach(stage => { delete stage.dataset.motionState })

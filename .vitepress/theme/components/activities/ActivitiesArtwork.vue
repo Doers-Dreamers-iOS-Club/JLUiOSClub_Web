@@ -7,7 +7,7 @@ useOverviewArtworkMotion(figure)
 </script>
 
 <template>
-  <figure ref="figure" class="activities-artwork">
+  <figure ref="figure" class="activities-artwork" data-art-state="waiting">
     <svg viewBox="0 0 1000 460" fill="none" role="img" aria-labelledby="activities-art-title activities-art-desc">
       <title id="activities-art-title">社团的活动编辑台</title>
       <desc id="activities-art-desc">一本展开的活动手册，左页是相聚分享，右页是代码与作品，周围散落着设备体验、活动日期和灵感便笺。</desc>

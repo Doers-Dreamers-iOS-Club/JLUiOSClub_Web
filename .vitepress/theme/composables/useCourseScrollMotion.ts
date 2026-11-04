@@ -44,7 +44,11 @@ export function useCourseScrollMotion(root: Ref<HTMLElement | null>) {
           return
         }
         ScrollTrigger.enable()
+        // The async plugin may arrive after this content has already been seen.
+        // Only prepare elements below the viewport; never move visible text back
+        // to a from-pose. Read all bounds before any tween invalidates layout.
         const targets = Array.from(journal.querySelectorAll<HTMLElement>('.journal-section__head, .journal-chapter, .journal-feature, .journal-desk > *, .journal-related > a'))
+          .filter(target => target.getBoundingClientRect().top >= innerHeight)
         const motions = targets.map(target => gsap.fromTo(target, {
           y: context.conditions?.desktop ? 26 : 16, opacity: .45
         }, {

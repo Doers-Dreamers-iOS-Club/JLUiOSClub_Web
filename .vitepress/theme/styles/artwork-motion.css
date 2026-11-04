@@ -1,0 +1,28 @@
+/* The server-rendered waiting pose must match the timelines' from-values.
+   It is visible before hydration, during a cover turn, and before an offscreen
+   mobile stage starts. GSAP writes its initial values before onStart releases
+   these rules. No scripting, reduced motion and print retain complete artwork. */
+@media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .activity-journal [data-art-state="waiting"] :is([data-art-reveal], [data-art-draw], [data-art-pop], [data-art-row], [data-art-finish]) {
+    opacity: 0;
+  }
+
+  .course-art .art-stage[data-motion-state="waiting"] > svg {
+    opacity: .65;
+    transform: translateY(12px);
+  }
+  .course-art .art-stage[data-motion-state="waiting"] .art-pen-motion {
+    transform: translate(10px, -12px);
+  }
+  .course-art .art-stage[data-motion-state="waiting"] .art-code text {
+    opacity: .1;
+    transform: translateX(-4px);
+  }
+  .course-art .art-stage[data-motion-state="waiting"] .art-caret {
+    opacity: .2;
+  }
+  .course-art .art-stage[data-motion-state="waiting"] :is(.art-sketch, .art-grid, .art-snake, .art-snake-shadow, .art-snake-eye, .art-apple, .art-cursor),
+  .course-art .art-stage[data-motion-state="waiting"] + .art-connector path {
+    opacity: 0;
+  }
+}

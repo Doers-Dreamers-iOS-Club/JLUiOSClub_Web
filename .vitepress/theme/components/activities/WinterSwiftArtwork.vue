@@ -8,7 +8,7 @@ const guesses = [[1, 0, 3, 2], [0, 1, 3, 2], [0, 1, 2, 3]]
 </script>
 
 <template>
-  <figure ref="figure" class="swift-artwork">
+  <figure ref="figure" class="swift-artwork" data-art-state="waiting">
     <svg viewBox="0 0 1000 500" fill="none" role="img" aria-labelledby="swift-art-title swift-art-desc">
       <title id="swift-art-title">从 SwiftUI 界面到 CodeBreaker</title>
       <desc id="swift-art-desc">中央的 CodeBreaker 游戏逐行填入彩色棋子，反馈钉从部分匹配变成全部匹配。背后的界面草图和右侧的状态模型展示游戏的组成。</desc>
