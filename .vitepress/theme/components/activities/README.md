@@ -11,3 +11,5 @@ Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`pr
 `overview.css` 的所有版式规则限于 `.activity-journal` / `.activity-overview`。目录沿用 `.journal-chapter` 和 `.journal-section__head` 接入滚动阻尼；交互沿用课程封页状态机，但锚点为 `#activity-content` / `#activity-cover`。底部 SVG 不获得滚动锁，也不等待动画结束再切页。
 
 检查：`npm run build` 后重启 `npm run preview -- --port 4174 --host 0.0.0.0`，执行 `node scripts/check-activity-overviews.mjs --all`。修改共用切页逻辑时另跑 `node scripts/check-course-cover.mjs`。
+
+SVG 修改完成后必须先渲染实际页面截图，逐张查看浅色、深色与手机端的主体轮廓、线条交叉、文字遮挡和裁切；修正视觉问题后再 commit，不能只凭源码或构建通过判定完成。
