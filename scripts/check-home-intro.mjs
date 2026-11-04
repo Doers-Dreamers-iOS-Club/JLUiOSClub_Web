@@ -18,9 +18,23 @@ try {
     await page.waitForSelector('.club-intro')
     await wait(300)
     await page.screenshot({ path: `${out}/${name}-slogan.png` })
-    await wait(2050)
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('.club-intro canvas')
+      const fill = canvas && [...canvas.parentElement.children].find(child => child.tagName === 'SPAN' && child.style.clipPath)
+      const top = fill && parseFloat(getComputedStyle(fill).clipPath.slice(6))
+      return top > 0 && top < 160
+    })
     assert(await page.$('.club-intro canvas'), 'ASCII fill texture exists during transition')
+    const fillClip = await page.$eval('.club-intro canvas', el => {
+      const fill = [...el.parentElement.children].find(child => child.tagName === 'SPAN' && child.style.clipPath)
+      return fill ? getComputedStyle(fill).clipPath : ''
+    })
+    assert(/^inset\([\d.\-]+px -50px/.test(fillClip), `Ink must recede vertically, preserving horizontal bounds: ${fillClip}`)
     await page.screenshot({ path: `${out}/${name}-fill.png` })
+    await page.waitForFunction(() => Number(document.querySelector('.club-intro__flight')?.dataset.progress) > .25)
+    const flight = await page.$eval('.club-intro__flight', el => ({ ...el.dataset }))
+    assert(Number(flight.sourcePoints) > 20 && Number(flight.targetPoints) > 100)
+    await page.screenshot({ path: `${out}/${name}-flight.png` })
     await done()
     await page.waitForSelector('.mag-ascii-hero__canvas:not(.is-hidden)')
     await page.screenshot({ path: `${out}/${name}-final.png` })

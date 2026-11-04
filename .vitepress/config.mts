@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { homeBoot } from './homeBoot'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import implicitFigures from 'markdown-it-implicit-figures'
 import { UserConfig } from 'vitepress/dist/node'
@@ -11,7 +12,20 @@ const wechatIcon = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-
 // https://vitepress.dev/reference/site-config
 const viteConfig: UserConfig = {
   srcDir: 'docs',
-  srcExclude: ['**/_content/**', 'public/ai-programming/**'],
+  // Visible navigation should not speculatively download every linked page during intro.
+  router: { prefetchLinks: false },
+  transformHtml(html, _id, context) {
+    if (context.pageData.relativePath !== 'index.md') return html
+    // VitePress also preloads the app's dynamic Mermaid registration; exclude it
+    // from the homepage HTML so the async boundary actually saves network work.
+    return html.replace(/<link\b[^>]*rel="modulepreload"[^>]*href="[^"]*\/Mermaid\.[^"]*"[^>]*>/g, '')
+      .replace('<body>', '<body>' + homeBoot)
+  },
+  transformHead({ pageData }) {
+    return pageData.relativePath === 'index.md'
+      ? [['link', { rel: 'preload', href: '/fonts/instrument-serif/instrument-serif-latin.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }]] : []
+  },
+  srcExclude: ['**/_content/**', 'public/ai-programming/**', 'superpowers/**'],
   lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "吉林大学Doers&Dreamers iOS CLub社团官方网站",
@@ -96,5 +110,19 @@ const viteConfig: UserConfig = {
   }
 }
 
-export default withMermaid(defineConfig(viteConfig))
+const config = withMermaid(defineConfig(viteConfig))
+// The upstream plugin registers Mermaid with an eager import in VitePress's app.
+// Keep its renderer/configuration, but instantiate it only on pages with diagrams.
+config.vite!.plugins!.push({
+  name: 'club-lazy-mermaid',
+  enforce: 'post',
+  transform(code, id) {
+    if (!id.includes('vitepress/dist/client/app/index.js')) return
+    return code.replace(
+      "import Mermaid from 'vitepress-plugin-mermaid/Mermaid.vue';",
+      "import { defineAsyncComponent as lazyMermaid } from 'vue'; const Mermaid = lazyMermaid(() => import('vitepress-plugin-mermaid/Mermaid.vue'));"
+    )
+  }
+})
+export default config
 

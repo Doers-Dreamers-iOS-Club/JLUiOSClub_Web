@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onBeforeUnmount, ref } from 'vue'
+import type { IntroSnapshot } from '../composables/introAscii'
 import { useHomeIntro } from '../composables/useHomeIntro'
 const AsciiNarrative = defineAsyncComponent(() => import('./AsciiNarrative.vue'))
 import AsciiPoster from './AsciiPoster.vue'
@@ -7,17 +8,17 @@ import { data as activities } from '../../data/activities.data.mts'
 const AsciiHero = defineAsyncComponent(() => import('./AsciiHero.vue'))
 import { useFullPage } from '../composables/useFullPage'
 const root = ref<HTMLElement | null>(null)
-const { playing } = useHomeIntro(root)
+const opening = ref<{ snapshot: () => IntroSnapshot | null } | null>(null)
+const captureOpening = () => opening.value?.snapshot() ?? null
+const { playing } = useHomeIntro(root, captureOpening)
 const { active, enabled, busy, asciiAvailable, navigate } = useFullPage(root, playing)
 const loadAscii = ref(false)
-let paintFrame = 0
-onMounted(() => { paintFrame = requestAnimationFrame(() => { paintFrame = requestAnimationFrame(() => { loadAscii.value = true }) }) })
-onBeforeUnmount(() => cancelAnimationFrame(paintFrame))
+let loadTimer = 0
+onMounted(() => { loadTimer = window.setTimeout(() => { loadAscii.value = true }, playing.value ? 750 : 0) })
+onBeforeUnmount(() => clearTimeout(loadTimer))
 const pages = ['开场', '学习', '活动', '加入']
-const opening = ref<InstanceType<typeof AsciiHero> | null>(null)
 const asciiReady = ref(false)
 const coveringOpening = ref(false)
-const captureOpening = () => opening.value?.snapshot() ?? null
 const latest = activities.slice(0,3)
 const dateParts = (date: string) => ({ year: date.slice(0,4), day: date.slice(5) })
 const paths = [
@@ -287,6 +288,7 @@ const paths = [
 <style>
 .club-intro { position: fixed; inset: 0; z-index: 25; overflow: hidden; pointer-events: none; color: var(--mag-text); font-family: 'Club Instrument Serif', serif; font-weight: 400; }
 .club-intro__source { position: absolute; top: 48%; left: 50%; transform: translate(-50%,-50%); display: flex; gap: .22em; line-height: 1; white-space: nowrap; letter-spacing: -.025em; }
+.club-intro__letter { display: inline-block; transform-origin: 50% 50%; }
 .club-intro__echo { display: block; }
 .club-intro__echo > span { display: inline-block; }
 .club-home.is-intro { --intro-hero-opacity: 0; }

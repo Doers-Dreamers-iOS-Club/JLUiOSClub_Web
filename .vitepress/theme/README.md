@@ -194,8 +194,10 @@ tags: [Swift, 工作坊]
 
 ### 首页 slogan intro
 
-首页客户端挂载时以 `I dwell in Possibility` 开场，重复文字按字母上下错位展开，四个词在约 2.4 秒内移入原有三行排版。`Possibility` 的实心填充交叉淡化为 Canvas 字形蒙版内的 ASCII 字符，再逐渐退为描边；Swift 标志在末段渐入，完整时间轴约 3.7 秒。`useHomeIntro.ts` 管理临时图层和清理，`introAscii.ts` 根据实际 DOM 字形位置生成字符纹理。
+首页 HTML 自带轻量 CSS 翻字开场，不依赖 Vue、GSAP 或 WebGL 下载完成。`.vitepress/homeBoot.ts` 提供首帧 slogan、交错翻字和重复文字呼吸效果；挂载后接入 `useHomeIntro.ts` 的重复排版横移、交错拆字与三行收束。字体单独预加载；Mermaid 改为异步注册并移除首页的额外 modulepreload，课程和 Mag 组件按需加载，关闭导航链接预取。Swift WebGL 在挂载 750ms 后请求，后续叙事组件在 intro 结束后加载。保留 SSR 的诗句和静态字符画。
 
-ASCII WebGL 与叙事组件改为异步加载，首个客户端绘制后才请求，避免其初始化抢占文字开场；这不代表全部页面资源的下载量减少。SSR 保持可读终态，禁用 JavaScript 时仍保留诗句和静态字符画。非开场 hash、减少动态效果直接跳过；Escape、窗口尺寸变化、hash 导航及卸载会清理时间轴。字体等待上限 650ms，总兜底 6.5 秒，intro 不依赖 WebGL 成功。播放期间暂停首页翻页与 Swift 交互。
+`Possibility` 的实心墨水沿水平边界从上到下退去，像水位下降；边界上方显露 ASCII，下方仍是实心。填充与纹理裁剪边界共用 50px 外扩范围，保留字母升降部。字符随后从上到下脱离字形，沿弧线汇聚到 `AsciiHero.snapshot()` 的真实字符坐标。`introAscii.ts` 生成纹理及源字符点；`introFlight.ts` 在一个 Canvas 中插值位置、字符大小与透明度，结束时交接给冻结在同一姿态的 WebGL，再恢复交互。标准时间轴约 5.25 秒。
 
-验证：生产构建后执行 `node scripts/check-home-intro.mjs http://localhost:4174`，覆盖桌面/手机/深色、填充纹理、最终清理、跳过路径和无 JavaScript；截图写入 `/private/tmp/club-intro-qa`。原 `check-fullpage.mjs` 等待 intro 结束后再验证翻页。
+非开场 hash、减少动态效果跳过；Escape、窗口尺寸变化、hash 导航及卸载会清理。HTML cover 兜底 6.5 秒，字体等待上限 650ms，logo 目标等待上限 1.2 秒，整体兜底 9.5 秒。慢速或失败的 WebGL 不会永久阻塞主页。播放时锁定首页翻页及 Swift 交互。
+
+验证：生产构建后执行 `node scripts/check-home-intro.mjs http://localhost:4174`、`node scripts/check-home-loading.mjs http://localhost:4174` 和 `node scripts/check-fullpage.mjs http://localhost:4174`。覆盖字形转粒子、桌面/手机/深色、跳过路径、无 JS、阻断全部外部 JS 时的 HTML 开场、按需 Mermaid 渲染及首页资源量。截图写入 `/private/tmp/club-intro-qa`，资源清单写入 `/private/tmp/club-load-after.json`。

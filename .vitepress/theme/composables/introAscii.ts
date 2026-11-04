@@ -1,4 +1,6 @@
-/** Static, bounded ASCII texture clipped to the actual measured letter shapes. */
+export type IntroGlyph = { x: number; y: number; char: string; size: number; alpha: number }
+export type IntroSnapshot = { points: IntroGlyph[]; width: number; height: number }
+/** The texture and particle sources share exactly the same glyph grid. */
 export function introAscii(word: HTMLElement) {
   const box = word.getBoundingClientRect()
   const padding = 50
@@ -34,15 +36,21 @@ export function introAscii(word: HTMLElement) {
   }
   ctx.fillStyle = getComputedStyle(word).color
   ctx.font = '9px monospace'
-  const chars = ' .:+*01<>/{}'
+  const chars = '.:+*01<>/{}'
+  const points: IntroGlyph[] = []
+  const pixels = ink.getImageData(0, 0, mask.width, mask.height).data
   for (let y = 0; y < height; y += 10) {
     for (let x = 0; x < width; x += 6) {
-      ctx.fillText(chars[(x * 7 + y * 13 + Math.floor(x / 6) * Math.floor(y / 10)) % chars.length], x, y)
+      const char = chars[(x * 7 + y * 13 + Math.floor(x / 6) * Math.floor(y / 10)) % chars.length]
+      ctx.fillText(char, x, y)
+      const cx = Math.min(mask.width - 1, (x + 3) * 2)
+      const cy = Math.max(0, Math.min(mask.height - 1, (y - 3) * 2))
+      if (pixels[(cy * mask.width + cx) * 4 + 3] > 80) points.push({ x: box.left + x + 3 - padding, y: box.top + y - 3 - padding, char, size: 9, alpha: 1 })
     }
   }
   ctx.globalCompositeOperation = 'destination-in'
   ctx.drawImage(mask, 0, 0, width, height)
   Object.assign(canvas.style, { position: 'absolute', left: `${-padding}px`, top: `${-padding}px`, width: `${width}px`, height: `${height}px`, opacity: '0', pointerEvents: 'none' })
   canvas.setAttribute('aria-hidden', 'true')
-  return canvas
+  return { canvas, points }
 }

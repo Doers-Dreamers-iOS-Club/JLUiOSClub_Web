@@ -1,5 +1,5 @@
 // https://vitepress.dev/guide/custom-theme
-import { onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { defineAsyncComponent, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vitepress'
 import type { Theme } from 'vitepress'
 import mediumZoom from 'medium-zoom'
@@ -15,31 +15,31 @@ import { initReveal, teardownReveal } from './composables/useReveal'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
 import ClubHome from './components/ClubHome.vue'
 
-import MagHero from './components/MagHero.vue'
-import MagSection from './components/MagSection.vue'
-import MagGrid from './components/MagGrid.vue'
-import MagCard from './components/MagCard.vue'
-import MagStep from './components/MagStep.vue'
-import MagNote from './components/MagNote.vue'
-import MagFigure from './components/MagFigure.vue'
-import MagTimeline from './components/MagTimeline.vue'
-import MagTimelineItem from './components/MagTimelineItem.vue'
-import MagBadge from './components/MagBadge.vue'
-import MagArchive from './components/MagArchive.vue'
-import MagButton from './components/MagButton.vue'
-import MagCarousel from './components/MagCarousel.vue'
-import MagModal from './components/MagModal.vue'
+const MagHero = defineAsyncComponent(() => import('./components/MagHero.vue'))
+const MagSection = defineAsyncComponent(() => import('./components/MagSection.vue'))
+const MagGrid = defineAsyncComponent(() => import('./components/MagGrid.vue'))
+const MagCard = defineAsyncComponent(() => import('./components/MagCard.vue'))
+const MagStep = defineAsyncComponent(() => import('./components/MagStep.vue'))
+const MagNote = defineAsyncComponent(() => import('./components/MagNote.vue'))
+const MagFigure = defineAsyncComponent(() => import('./components/MagFigure.vue'))
+const MagTimeline = defineAsyncComponent(() => import('./components/MagTimeline.vue'))
+const MagTimelineItem = defineAsyncComponent(() => import('./components/MagTimelineItem.vue'))
+const MagBadge = defineAsyncComponent(() => import('./components/MagBadge.vue'))
+const MagArchive = defineAsyncComponent(() => import('./components/MagArchive.vue'))
+const MagButton = defineAsyncComponent(() => import('./components/MagButton.vue'))
+const MagCarousel = defineAsyncComponent(() => import('./components/MagCarousel.vue'))
+const MagModal = defineAsyncComponent(() => import('./components/MagModal.vue'))
 
 /**
  * 全局注册 —— markdown 里可直接使用，无需 import。
  * 这是"新增一个界面"成本最低的关键：写 frontmatter + 拼组件，不碰 CSS。
  */
-import CourseArtwork from './components/learning/CourseArtwork.vue'
-import ReadingTools from './components/learning/ReadingTools.vue'
-import CourseProgress from './components/learning/CourseProgress.vue'
-import LearningIllustration from './components/learning/LearningIllustration.vue'
-import PromptWorkshop from './components/learning/PromptWorkshop.vue'
-import RecallQuiz from './components/learning/RecallQuiz.vue'
+const CourseArtwork = defineAsyncComponent(() => import('./components/learning/CourseArtwork.vue'))
+const ReadingTools = defineAsyncComponent(() => import('./components/learning/ReadingTools.vue'))
+const CourseProgress = defineAsyncComponent(() => import('./components/learning/CourseProgress.vue'))
+const LearningIllustration = defineAsyncComponent(() => import('./components/learning/LearningIllustration.vue'))
+const PromptWorkshop = defineAsyncComponent(() => import('./components/learning/PromptWorkshop.vue'))
+const RecallQuiz = defineAsyncComponent(() => import('./components/learning/RecallQuiz.vue'))
 
 const components = {
   ClubHome,
