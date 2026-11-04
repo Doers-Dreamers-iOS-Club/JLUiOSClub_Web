@@ -30,10 +30,10 @@ const related = [
   <div ref="journal" class="course-journal">
     <header class="journal-cover">
       <div class="journal-cover__inner">
-      <div class="journal-masthead"><span>JLU iOS CLUB</span><span>AI 编程入门</span></div>
+      <div class="journal-masthead"><span class="journal-masthead__rule" aria-hidden="true"></span><span>JLU iOS CLUB</span><span>AI 编程入门</span></div>
       <div class="journal-cover__spread">
         <div class="journal-cover__story">
-          <h1 tabindex="-1"><span>从想法</span><span>到作品<span class="journal-period">。</span></span></h1>
+          <h1 tabindex="-1"><span class="journal-title-line journal-title-line--idea"><span><span class="journal-title-prefix">从</span><span class="journal-title-keyword journal-title-keyword--idea">想法</span></span></span><span class="journal-title-line journal-title-line--work"><span><span class="journal-title-prefix">到</span><span class="journal-title-keyword journal-title-keyword--work">作品<span class="journal-period">。</span></span></span></span></h1>
           <a class="journal-start" :href="courseBase + 'chapters/01'">开始第一章 <span aria-hidden="true">↗</span></a>
           <div class="journal-cover__links">
             <a :href="courseBase + 'reference/tools'">工具准备 <span aria-hidden="true">↗</span></a>
@@ -41,7 +41,7 @@ const related = [
           </div>
         </div>
         <div class="journal-cover__type" aria-hidden="true">
-          <div class="journal-cover__english"><span>Hello,</span><span>world.</span></div>
+          <div class="journal-cover__english"><span class="journal-word journal-word--hello"><span v-for="(letter, index) in 'Hello,'" :key="index" class="journal-glyph">{{ letter }}</span></span><span class="journal-word journal-word--world"><span v-for="(letter, index) in 'world.'" :key="index" class="journal-glyph"><span class="journal-glyph-outline">{{ letter }}</span><span class="journal-glyph-fill">{{ letter }}</span></span></span></div>
           <span class="journal-cover__asterisk">✳</span>
         </div>
       </div>
@@ -101,6 +101,10 @@ const related = [
 @font-face { font-family: 'Club Instrument Serif'; src: url('/fonts/instrument-serif/instrument-serif-latin.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
 .course-journal { --journal-serif: 'Club Instrument Serif', Georgia, serif; position: relative; overflow: clip; }
 .journal-cover, .journal-body { position: relative; overflow: clip; background: var(--vp-c-bg); }
+.course-journal[data-course-page="cover"] > .journal-body,
+.course-journal[data-course-page="content"] > .journal-cover { position: absolute; inset: 0 0 auto; visibility: hidden; pointer-events: none; }
+.course-journal[data-cover-transition] > .journal-cover,
+.course-journal[data-cover-transition] > .journal-body { pointer-events: none; }
 .journal-cover__inner { display: flex; flex-direction: column; min-height: calc(100svh - var(--vp-nav-height, 64px)); padding-top: 24px; }
 .journal-body:focus { outline: none; }
 .journal-body__inner { padding-top: 24px; }
@@ -110,14 +114,22 @@ const related = [
 .course-journal :is(h1,h2,h3,p) { margin: 0; padding: 0; border: 0; }
 .course-journal a { color: inherit; text-decoration: none; }
 .course-journal a:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: 5px; }
-.journal-masthead { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--mag-text); padding: 16px 0; font-size: 12px; line-height: 1.6; letter-spacing: .04em; }
+.journal-masthead { position: relative; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-size: 12px; line-height: 1.6; letter-spacing: .04em; }
+.journal-masthead__rule { position: absolute; inset: 0 0 auto; height: 1px; background: var(--mag-text); transform-origin: left; }
 .journal-cover__spread { flex: 1; align-content: center; display: grid; grid-template-columns: 1.15fr 1fr; gap: 6%; padding: 48px 0 52px; }
 .journal-cover__story { display: flex; flex-direction: column; justify-content: center; }
-.course-journal h1 { font-size: clamp(52px, 5.3vw, 76px); font-weight: 400; line-height: 1.2; letter-spacing: -.06em; margin-bottom: 26px; }
+.course-journal h1 { font-size: clamp(64px, 7vw, 96px); font-weight: 400; line-height: 1.2; letter-spacing: -.06em; margin-bottom: 30px; }
 .journal-cover h1 > span { display: block; }
+.journal-title-line { overflow: clip; padding: .05em .12em; margin: -.05em -.12em; }
+.journal-title-line > span { display: flex; align-items: center; gap: .12em; transform-origin: left bottom; }
+.journal-title-line--work { margin-left: .3em; }
+.journal-title-prefix { flex: none; color: var(--mag-text-secondary); font-family: var(--mag-font-display); font-size: .25em; font-weight: 400; letter-spacing: 0; }
+.journal-title-keyword--idea { font-family: var(--mag-font-serif); font-weight: 400; letter-spacing: -.08em; }
+.journal-title-keyword--work { color: var(--mag-accent); font-weight: 500; letter-spacing: -.07em; }
+.journal-title-keyword .journal-period { font-size: .55em; }
 .journal-period { color: var(--mag-accent); }
-.course-journal .journal-start { display: flex; align-items: center; justify-content: space-between; width: 230px; padding: 14px 0; border-bottom: 1px solid var(--mag-accent); color: var(--mag-accent); font-size: 16px; }
-.journal-start > span { font-size: 24px; transition: transform .25s ease; }
+.course-journal .journal-start { display: flex; align-items: center; justify-content: space-between; width: min(300px, 100%); min-height: 68px; padding: 18px 0; border-bottom: 1px solid var(--mag-accent); color: var(--mag-accent); font-size: 20px; font-weight: 500; }
+.journal-start > span { font-size: 30px; transition: transform .25s ease; }
 .journal-start:hover > span { transform: translate(3px,-3px); }
 .journal-cover__links { display: flex; gap: 28px; margin-top: 13px; font-size: 12px; color: var(--mag-text-secondary); }
 .journal-cover__links a { display: inline-flex; gap: 16px; align-items: center; min-height: 36px; }
@@ -125,6 +137,10 @@ const related = [
 .journal-cover__type { display: flex; flex-direction: column; justify-content: center; border-left: var(--mag-rule); padding-left: 12%; }
 .journal-cover__english { font-family: var(--journal-serif); font-size: clamp(100px, 12.5vw, 180px); font-weight: 400; letter-spacing: -.04em; line-height: .82; padding: 12px 0 26px; }
 .journal-cover__english > span { display: block; }
+.journal-word { overflow: clip; padding: .12em .08em .2em; margin: -.12em -.08em -.2em; perspective: 800px; }
+.journal-glyph { position: relative; display: inline-block; transform-origin: 50% 100%; }
+.journal-glyph-outline { position: absolute; inset: 0; color: transparent; -webkit-text-stroke: .65px var(--mag-accent); opacity: 0; }
+.journal-glyph-fill { display: block; }
 .journal-cover__english > span:last-child { color: var(--mag-accent); }
 .journal-cover__asterisk { align-self: end; color: var(--mag-accent); font-size: 42px; line-height: 1; font-weight: 300; }
 .journal-section { margin-top: 72px; }
@@ -172,7 +188,8 @@ const related = [
   .journal-cover__next { margin-bottom: 12px; }
   .journal-masthead { font-size: 11px; }
   .journal-cover__spread { grid-template-columns: 1fr; padding: 30px 0 20px; gap: 36px; }
-  .course-journal h1 { font-size: clamp(52px, 11vw, 70px); margin-bottom: 21px; }
+  .course-journal h1 { font-size: clamp(60px, 16vw, 80px); margin-bottom: 21px; }
+  .course-journal .journal-start { width: min(250px, 100%); min-height: 62px; font-size: 18px; padding: 15px 0; }
   .journal-cover__type { border-left: 0; border-top: var(--mag-rule); padding: 22px 0 0; }
   .journal-cover__english { display: flex; flex-wrap: wrap; column-gap: .16em; font-size: clamp(66px, 16vw, 100px); padding: 5px 0 20px; }
   .journal-cover__asterisk { font-size: 26px; }
@@ -194,9 +211,16 @@ const related = [
   .journal-related :deep(.course-spot) { max-height: 145px; }
   .journal-colophon { margin-top: 48px; }
 }
+@media (min-width: 641px) and (max-height: 760px) {
+  .journal-cover__spread { padding: 20px 0 24px; }
+  .course-journal h1 { font-size: clamp(44px, 8vh, 60px); }
+  .journal-cover__english { font-size: clamp(96px, 18vh, 140px); padding: 8px 0 20px; }
+  .journal-cover__asterisk { font-size: 30px; }
+}
 @media (max-width: 640px) and (min-height: 560px) and (max-height: 740px) {
   .journal-cover__spread { gap: 20px; padding: 20px 0 12px; }
   .course-journal h1 { font-size: 44px; margin-bottom: 12px; }
+  .course-journal .journal-start { min-height: 54px; padding: 11px 0; }
   .journal-cover__english { font-size: 64px; padding-bottom: 10px; }
   .journal-cover__type { padding-top: 16px; }
   .journal-cover__asterisk { font-size: 22px; }

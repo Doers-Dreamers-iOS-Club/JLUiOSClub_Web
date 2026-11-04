@@ -15,6 +15,8 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
       const connectors = Array.from(figure.querySelectorAll<SVGPathElement>('.art-connector path'))
       const visible = new Set<Element>()
       const timelines = new Map<Element, gsap.core.Timeline>()
+      const journal = figure.closest<HTMLElement>('.course-journal')
+      const canPlay = () => !document.hidden && journal?.dataset.coursePage !== 'cover' && !journal?.dataset.coverTransition
       function draw(timeline: gsap.core.Timeline, paths: SVGPathElement[], at: number, duration: number) {
         const lengths = paths.map(path => path.getTotalLength())
         paths.forEach((path, i) => timeline.fromTo(path, {
@@ -57,18 +59,23 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
           const timeline = timelines.get(entry.target)!
           if (entry.isIntersecting) {
             visible.add(entry.target)
-            if (!document.hidden && timeline.progress() < 1) timeline.play()
+            if (canPlay() && timeline.progress() < 1) timeline.play()
           } else { visible.delete(entry.target); timeline.pause() }
         })
       }, { threshold: .28 })
       stages.forEach(stage => observer.observe(stage))
       const onVisibility = () => timelines.forEach((timeline, stage) => {
-        if (document.hidden) timeline.pause()
+        if (!canPlay()) timeline.pause()
         else if (visible.has(stage) && timeline.progress() < 1) timeline.play()
       })
       document.addEventListener('visibilitychange', onVisibility)
+      journal?.addEventListener('course-cover-settled', onVisibility)
+      const pageObserver = new MutationObserver(onVisibility)
+      if (journal) pageObserver.observe(journal, { attributes: true, attributeFilter: ['data-course-page', 'data-cover-transition'] })
       return () => {
         observer.disconnect()
+        pageObserver.disconnect()
+        journal?.removeEventListener('course-cover-settled', onVisibility)
         document.removeEventListener('visibilitychange', onVisibility)
         stages.forEach(stage => { delete stage.dataset.motionState })
       }

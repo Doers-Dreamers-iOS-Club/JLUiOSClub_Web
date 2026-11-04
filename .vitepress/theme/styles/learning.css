@@ -1,5 +1,9 @@
 /* The learning series inherits the site's typography and tokens. */
 .ai-course-home .VPDoc { padding-top: 0 !important; }
+.ai-course-home:has(.course-journal[data-course-page="cover"]) .VPDoc { padding-bottom: 0 !important; }
+.ai-course-home:has(.course-journal[data-course-page="cover"]) .VPDoc .content { padding-bottom: 0 !important; }
+.ai-course-home:has(.course-journal[data-course-page="cover"]) .VPDocFooter,
+body:has(.course-journal[data-course-page="cover"]) .VPFooter { display: none; }
 .ai-course-home .VPDoc:not(.has-sidebar) .container { max-width: 1120px; }
 .ai-course-home .VPDoc:not(.has-sidebar) .content { max-width: 100%; }
 .ai-course-home .VPDoc .content-container { max-width: 100%; }

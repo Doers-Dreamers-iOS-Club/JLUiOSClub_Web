@@ -27,6 +27,8 @@ try {
   await page.setViewport({ width: 1440, height: 600 })
   await page.goto(base + path, { waitUntil: 'networkidle0' })
   assert.equal(await state(0), 'waiting')
+  await page.click('.journal-cover__next')
+  await page.waitForFunction(() => document.querySelector('.course-journal').dataset.coursePage === 'content' && !document.querySelector('.course-journal').dataset.coverTransition)
   await show('.course-art'); await playing(0)
   await (await page.$('.course-art')).screenshot({ path: output + '/drawing.png' })
   await Promise.all([complete(0), complete(1), complete(2)])
