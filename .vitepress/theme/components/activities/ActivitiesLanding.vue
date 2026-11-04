@@ -27,8 +27,8 @@ const earlier = ['解锁 iPad 生产力', '2023 冬季 WWDC · Swift 特训营',
       </section>
     </section>
     <section class="overview-section" aria-labelledby="activities-earlier">
-      <div class="journal-section__head"><h2 id="activities-earlier">更早的相聚</h2><span class="overview-index-label">2023 &amp; before</span></div>
-      <div class="overview-legacy"><span v-for="title in earlier" :key="title">{{ title }}</span></div>
+      <div class="journal-section__head"><h2 id="activities-earlier">更早的相聚</h2><span id="activities-earlier-status" class="overview-status">暂无记录页</span></div>
+      <div class="overview-legacy" aria-describedby="activities-earlier-status"><span v-for="title in earlier" :key="title">{{ title }}</span></div>
     </section>
     <section class="overview-section" aria-label="AI 编程入门">
       <a class="overview-feature journal-feature" href="/resources/ai-programming/">

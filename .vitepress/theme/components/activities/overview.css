@@ -40,6 +40,7 @@
 .activity-journal .journal-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--mag-text); margin-bottom: 26px; }
 .activity-journal h2 { font-size: 28px; line-height: 1.4; font-weight: 400; letter-spacing: -.035em; }
 .activity-journal .overview-index-label { color: var(--mag-text-tertiary); font-family: var(--overview-serif); font-size: 22px; }
+.activity-journal .overview-status { color: var(--mag-text-secondary); font-size: 12px; white-space: nowrap; }
 .activity-journal .overview-year { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 30px; margin-top: 30px; }
 .activity-journal .overview-year > h3 { font-family: var(--overview-serif); font-size: 60px; line-height: 1; font-weight: 400; color: var(--mag-accent); padding-top: 18px; }
 .activity-journal .overview-list { border-bottom: var(--mag-rule); }
