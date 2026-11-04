@@ -14,7 +14,7 @@ import './styles/learning.css'
 import { initReveal, teardownReveal } from './composables/useReveal'
 import { useRouteMotion } from './composables/useRouteMotion'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
-import ClubHome from './components/ClubHome.vue'
+const ClubHome = defineAsyncComponent(() => import('./components/ClubHome.vue'))
 
 const MagHero = defineAsyncComponent(() => import('./components/MagHero.vue'))
 const MagSection = defineAsyncComponent(() => import('./components/MagSection.vue'))

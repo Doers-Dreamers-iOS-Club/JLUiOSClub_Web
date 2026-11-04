@@ -17,15 +17,18 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
       const timelines = new Map<Element, gsap.core.Timeline>()
       const journal = figure.closest<HTMLElement>('.course-journal')
       const canPlay = () => !document.hidden && journal?.dataset.coursePage !== 'cover' && !journal?.dataset.coverTransition
-      function draw(timeline: gsap.core.Timeline, paths: SVGPathElement[], at: number, duration: number) {
-        const lengths = paths.map(path => path.getTotalLength())
-        paths.forEach((path, i) => timeline.fromTo(path, {
-          strokeDasharray: `${lengths[i]} ${lengths[i]}`, strokeDashoffset: lengths[i]
+      function draw(timeline: gsap.core.Timeline, paths: SVGPathElement[], lengths: Map<SVGPathElement, number>, at: number, duration: number) {
+        paths.forEach(path => timeline.fromTo(path, {
+          strokeDasharray: `${lengths.get(path)} ${lengths.get(path)}`, strokeDashoffset: lengths.get(path)
         }, { strokeDashoffset: 0, duration, ease: 'power2.inOut' }, at))
       }
-      stages.forEach((stage, index) => {
+      stages.forEach(stage => { stage.dataset.motionState = 'waiting' })
+      context.add('prepare', (stage: HTMLElement) => {
+        const index = stages.indexOf(stage)
+        const paths = Array.from(stage.querySelectorAll<SVGPathElement>('.art-sketch, .art-snake, .art-snake-shadow'))
+        if (connectors[index]) paths.push(connectors[index])
+        const lengths = new Map(paths.map(path => [path, path.getTotalLength()]))
         const select = gsap.utils.selector(stage)
-        stage.dataset.motionState = 'waiting'
         const timeline = gsap.timeline({
           paused: true, delay: context.conditions?.desktop ? index * .48 : 0,
           defaults: { ease: 'power2.out' },
@@ -35,7 +38,7 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
         timelines.set(stage, timeline)
         timeline.fromTo(select('svg'), { y: 12, opacity: .65 }, { y: 0, opacity: 1, duration: .8 }, 0)
         if (index === 0) {
-          draw(timeline, Array.from(stage.querySelectorAll<SVGPathElement>('.art-sketch')), .12, 1.2)
+          draw(timeline, Array.from(stage.querySelectorAll<SVGPathElement>('.art-sketch')), lengths, .12, 1.2)
           timeline.fromTo(select('.art-pen-motion'), { x: 10, y: -12 }, { x: 0, y: 0, duration: 1.4, ease: 'sine.inOut' }, 0)
         } else if (index === 1) {
           timeline.fromTo(select('.art-code text'), { opacity: .1, x: -4 }, { opacity: 1, x: 0, duration: .32, stagger: .16 }, .12)
@@ -46,28 +49,30 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
             .set(select('.art-caret'), { opacity: 1 }, 1.4)
         } else {
           timeline.fromTo(select('.art-grid'), { opacity: 0 }, { opacity: .12, duration: .6, stagger: .025 }, 0)
-          draw(timeline, Array.from(stage.querySelectorAll<SVGPathElement>('.art-snake, .art-snake-shadow')), .2, 1.4)
+          draw(timeline, Array.from(stage.querySelectorAll<SVGPathElement>('.art-snake, .art-snake-shadow')), lengths, .2, 1.4)
           timeline.fromTo(select('.art-snake-eye'), { opacity: 0 }, { opacity: 1, duration: .16 }, 1.45)
           timeline.fromTo(select('.art-apple'), { scale: .65, opacity: 0, transformOrigin: '50% 50%' }, {
             scale: 1, opacity: 1, duration: .5, clearProps: 'transform,transformOrigin,opacity'
           }, .8)
         }
-        if (connectors[index]) draw(timeline, [connectors[index]], 1.2, .55)
+        if (connectors[index]) draw(timeline, [connectors[index]], lengths, 1.2, .55)
       })
+      const sync = (stage: HTMLElement) => {
+        if (visible.has(stage) && canPlay()) {
+          if (!timelines.has(stage)) context.prepare(stage)
+          const timeline = timelines.get(stage)!
+          if (timeline.progress() < 1) timeline.play()
+        } else timelines.get(stage)?.pause()
+      }
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          const timeline = timelines.get(entry.target)!
-          if (entry.isIntersecting) {
-            visible.add(entry.target)
-            if (canPlay() && timeline.progress() < 1) timeline.play()
-          } else { visible.delete(entry.target); timeline.pause() }
+          if (entry.isIntersecting) visible.add(entry.target)
+          else visible.delete(entry.target)
+          sync(entry.target as HTMLElement)
         })
       }, { threshold: .28 })
       stages.forEach(stage => observer.observe(stage))
-      const onVisibility = () => timelines.forEach((timeline, stage) => {
-        if (!canPlay()) timeline.pause()
-        else if (visible.has(stage) && timeline.progress() < 1) timeline.play()
-      })
+      const onVisibility = () => stages.forEach(sync)
       document.addEventListener('visibilitychange', onVisibility)
       journal?.addEventListener('course-cover-settled', onVisibility)
       const pageObserver = new MutationObserver(onVisibility)

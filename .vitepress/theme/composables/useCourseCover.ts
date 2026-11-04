@@ -135,7 +135,7 @@ export function useCourseCover(root: Ref<HTMLElement | null>, options: {
         .to(inners[next], { xPercent: 0 }, 0)
     }
     const wheel = (event: WheelEvent) => {
-      if (!enabled || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || blocked(event.target) || nestedScroll(event.target, event.deltaY)) return
+      if (!enabled || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return
       const now = performance.now()
       const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1)
       const direction = Math.sign(delta)
@@ -143,12 +143,15 @@ export function useCourseCover(root: Ref<HTMLElement | null>, options: {
       if (now - lastWheel > 160 || direction !== lockedDirection) lockedDirection = 0
       if (now - lastWheel > 450 || Math.sign(wheelTotal) !== direction) wheelTotal = 0
       lastWheel = now
+      // Native article scrolling needs no ancestor computed-style/layout reads.
+      // Inspect nested scrollers only when this gesture could turn the cover.
+      if (!busy && page === 1 && direction > 0) { lockedDirection = 0; wheelTotal = 0; return }
+      if (!busy && page === 1 && scrollY > 1) { wheelTotal = 0; return }
+      if (blocked(event.target) || nestedScroll(event.target, event.deltaY)) return
       if (busy) { event.preventDefault(); return }
       // Once the article is shown, continued downward input is ordinary scroll,
       // even during the same gesture. The SVG never owns or blocks navigation.
-      if (page === 1 && direction > 0) { lockedDirection = 0; wheelTotal = 0; return }
       if (lockedDirection === direction) { event.preventDefault(); return }
-      if (page === 1 && scrollY > 1) { wheelTotal = 0; return }
       if (page === 0 && direction < 0 || page === 1 && direction > 0) return
       event.preventDefault()
       if (document.documentElement.dataset.routeTransition) return
@@ -160,10 +163,10 @@ export function useCourseCover(root: Ref<HTMLElement | null>, options: {
     const scroll = () => {
       const current = Math.max(0, scrollY), previous = previousScroll
       previousScroll = current
-      if (!enabled || !armed || busy || blocked(document.activeElement)) return
+      if (!enabled || !armed || busy) return
       // The article really starts at scrollY=0. No predicted offsets, time window,
       // pointer-position dependency, or chance of switching before the top.
-      if (page === 1 && previous > 1 && current <= 1) {
+      if (page === 1 && previous > 1 && current <= 1 && !blocked(document.activeElement)) {
         lockedDirection = -1
         go(0)
       }
@@ -181,6 +184,7 @@ export function useCourseCover(root: Ref<HTMLElement | null>, options: {
     }
     const move = (event: TouchEvent) => {
       if (!enabled || !touch || event.touches.length !== 1) return
+      if (!busy && !touch.used && page === 1 && scrollY > 1) return
       const dx = touch.x - event.touches[0].clientX, dy = touch.y - event.touches[0].clientY
       if (Math.abs(dx) > Math.abs(dy) || nestedScroll(event.target, dy)) return
       if (busy || touch.used) { event.preventDefault(); return }

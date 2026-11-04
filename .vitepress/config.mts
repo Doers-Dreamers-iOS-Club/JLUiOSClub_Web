@@ -16,11 +16,13 @@ const viteConfig: UserConfig = {
   // Visible navigation should not speculatively download every linked page during intro.
   router: { prefetchLinks: false },
   transformHtml(html, _id, context) {
-    if (context.pageData.relativePath !== 'index.md') return html
-    // VitePress also preloads the app's dynamic Mermaid registration; exclude it
-    // from the homepage HTML so the async boundary actually saves network work.
-    return html.replace(/<link\b[^>]*rel="modulepreload"[^>]*href="[^"]*\/Mermaid\.[^"]*"[^>]*>/g, '')
-      .replace('<body>', '<body>' + homeBoot)
+    // VitePress follows the app's dynamic registrations when emitting preloads.
+    // Let Mermaid load when a diagram mounts, on every route, not just home.
+    html = html.replace(/<link\b[^>]*rel="modulepreload"[^>]*href="[^"]*\/Mermaid\.[^"]*"[^>]*>/g, '')
+    if (context.pageData.relativePath !== 'index.md') {
+      return html.replace(/<link\b[^>]*rel="modulepreload"[^>]*href="[^"]*\/ClubHome\.[^"]*"[^>]*>/g, '')
+    }
+    return html.replace('<body>', '<body>' + homeBoot)
   },
   transformHead({ pageData }) {
     return pageData.relativePath === 'index.md'
