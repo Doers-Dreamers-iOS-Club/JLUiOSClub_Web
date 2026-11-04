@@ -4,9 +4,19 @@ import { gsap } from 'gsap'
 export function animateOverviewEntrance(timeline: gsap.core.Timeline, cover: HTMLElement) {
   timeline.fromTo(cover.querySelector('.overview-rule'), { scaleX: 0 }, { scaleX: 1, duration: 1, ease: 'power2.inOut', clearProps: 'transform' }, 0)
     .fromTo(cover.querySelectorAll('.overview-title-line > span'), { yPercent: 110, rotation: 3, opacity: .2 }, { yPercent: 0, rotation: 0, opacity: 1, duration: 1, stagger: .13, clearProps: 'transform,opacity' }, .08)
-    .fromTo(cover.querySelectorAll('.overview-letter'), { yPercent: 110, rotation: 4, opacity: 0 }, { yPercent: 0, rotation: 0, opacity: 1, duration: 1.1, stagger: .045, clearProps: 'transform,opacity' }, .16)
     .fromTo(cover.querySelectorAll('.overview-start,.overview-secondary,.overview-next'), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: .65, stagger: .08, clearProps: 'transform,opacity' }, .4)
-    .fromTo(cover.querySelector('.overview-mark'), { rotation: -100, scale: .6, opacity: 0 }, { rotation: 0, scale: 1, opacity: 1, duration: 1.2, clearProps: 'transform,opacity' }, .35)
+  const letters = cover.querySelectorAll('.overview-letter')
+  if (letters.length) timeline.fromTo(letters, { yPercent: 110, rotation: 4, opacity: 0 }, { yPercent: 0, rotation: 0, opacity: 1, duration: 1.1, stagger: .045, clearProps: 'transform,opacity' }, .16)
+  const mark = cover.querySelector('.overview-mark')
+  if (mark) timeline.fromTo(mark, { rotation: -100, scale: .6, opacity: 0 }, { rotation: 0, scale: 1, opacity: 1, duration: 1.2, clearProps: 'transform,opacity' }, .35)
+  const pieces = cover.querySelectorAll('[data-cover-piece]')
+  if (pieces.length) timeline.fromTo(pieces, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, stagger: .12, clearProps: 'transform,opacity' }, .18)
+  const pegs = cover.querySelectorAll('[data-cover-peg]')
+  if (pegs.length) timeline.fromTo(pegs, { y: -24, scale: .7, opacity: 0, transformOrigin: '50% 50%' }, { y: 0, scale: 1, opacity: 1, duration: .85, stagger: .09, clearProps: 'transform,opacity,transformOrigin' }, .6)
+  cover.querySelectorAll<SVGPathElement>('[data-cover-line]').forEach((path, i) => {
+    const length = path.getTotalLength()
+    timeline.fromTo(path, { strokeDasharray: `${length} ${length}`, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1.25, ease: 'sine.inOut', clearProps: 'strokeDasharray,strokeDashoffset' }, .35 + i * .12)
+  })
 }
 
 /** Each illustration owns its composition; data attributes only share playback rules. */

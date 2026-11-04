@@ -4,7 +4,7 @@
 
 Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`prev: false`、`next: false`、`pageClass: activity-overview`，导入该页的 Landing 组件。
 
-`ActivityOverview` 接收两行中文 `title`、两行英文 `english`、刊头 `label`、主入口 `primary`、可选次入口 `secondary` 和目录标签 `contentsLabel`。`artwork` 插槽放该页专属 SVG，默认插槽放目录及资源。先封页，再 SVG 概览，再实际目录。
+`ActivityOverview` 接收两行中文 `title`、刊头 `label`、主入口 `primary`、可选次入口 `secondary` 和目录标签 `contentsLabel`。`cover` 插槽放该页独立设计的封面 SVG（可用 `data-cover-piece`、`data-cover-peg`、`data-cover-line` 接入入场动画）；未提供插槽时可选用 `english` 两行英文作为后备。`artwork` 插槽放该页专属 SVG，默认插槽放目录及资源。先封页，再 SVG 概览，再实际目录。
 
 每页独立设计 SVG 构图，不固定为三段式。使用 `useOverviewArtworkMotion` 管理可见性、封页状态和减少动态效果。`data-art-reveal` 用于插图主体入场，`data-art-draw` 用于短路径描画，`data-art-pop` 用于小部件落位，`data-art-row` 用于序列变化，`data-art-finish` 用于完成反馈。静态 SVG 必须已经是完整画面，动画只做增强。
 

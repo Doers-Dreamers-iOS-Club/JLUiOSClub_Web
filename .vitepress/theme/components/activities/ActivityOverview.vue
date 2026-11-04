@@ -6,7 +6,7 @@ import { animateOverviewEntrance } from './overviewMotion'
 
 withDefaults(defineProps<{
   title: [string, string]
-  english: [string, string]
+  english?: [string, string]
   label: string
   primary: { title: string; href: string }
   secondary?: { title: string; href: string }
@@ -28,9 +28,11 @@ useCourseScrollMotion(journal)
             <a class="overview-start" :href="primary.href">{{ primary.title }}<span aria-hidden="true">↗</span></a>
             <a v-if="secondary" class="overview-secondary" :href="secondary.href">{{ secondary.title }}<span aria-hidden="true">↗</span></a>
           </div>
-          <div class="overview-type" aria-hidden="true">
+          <div class="overview-type" :class="{ 'overview-type--art': $slots.cover }" aria-hidden="true">
+            <slot name="cover">
             <div class="overview-english"><span v-for="word in english" :key="word" class="overview-word"><span v-for="(letter, i) in word" :key="i" class="overview-letter">{{ letter }}</span></span></div>
             <svg class="overview-mark" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="1" /><path d="M32 1V63M1 32H63M10 10L54 54M54 10L10 54" stroke="currentColor" stroke-width="1.5" /></svg>
+            </slot>
           </div>
         </div>
         <a class="journal-cover__next overview-next" href="#activity-content" :aria-label="'浏览' + contentsLabel"><span>{{ contentsLabel }}</span><span aria-hidden="true">↓</span></a>

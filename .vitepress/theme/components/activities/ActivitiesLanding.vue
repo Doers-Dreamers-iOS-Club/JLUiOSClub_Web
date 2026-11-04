@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { data as activities } from '../../../data/activities.data.mts'
 import ActivityOverview from './ActivityOverview.vue'
 import ActivitiesArtwork from './ActivitiesArtwork.vue'
+import ActivitiesCover from './ActivitiesCover.vue'
 const groups = computed(() => {
   const years = [...new Set(activities.map(entry => entry.year))]
   return years.map(year => ({ year, entries: activities.filter(entry => entry.year === year) }))
@@ -12,7 +13,8 @@ const earlier = ['解锁 iPad 生产力', '2023 冬季 WWDC · Swift 特训营',
 </script>
 
 <template>
-  <ActivityOverview :title="['社团', '活动。']" :english="['Meet.', 'Make.']" label="ACTIVITIES" :primary="{ title: '最近一期活动', href: latest?.url || '#activity-content' }" :secondary="{ title: 'AI 编程入门', href: '/resources/ai-programming/' }">
+  <ActivityOverview :title="['社团', '活动。']" label="ACTIVITIES" :primary="{ title: '最近一期活动', href: latest?.url || '#activity-content' }" :secondary="{ title: 'AI 编程入门', href: '/resources/ai-programming/' }">
+    <template #cover><ActivitiesCover /></template>
     <template #artwork><ActivitiesArtwork /></template>
     <section class="overview-section" aria-labelledby="activities-contents">
       <div class="journal-section__head"><h2 id="activities-contents">活动目录</h2><span class="overview-index-label" aria-hidden="true">The archive</span></div>

@@ -19,6 +19,7 @@ useOverviewArtworkMotion(figure)
         <path d="M500 100V376M253 355L245 363M745 355L752 363" class="art-rule" />
         <text x="280" y="134" class="art-small">JLU iOS CLUB</text><text x="707" y="134" class="art-small">01</text>
         <path d="M280 148H464M536 148H718" class="art-rule" />
+        <g transform="translate(0 -18)">
         <g data-art-reveal>
           <rect x="292" y="177" width="156" height="88" rx="4" class="art-board" />
           <path d="M370 266V286M346 287H394" class="art-rule" />
@@ -38,6 +39,7 @@ useOverviewArtworkMotion(figure)
         </g>
         <path data-art-draw d="M541 312H661M541 324H626" class="art-writing" />
         <text x="540" y="350" class="art-serif">Made together.</text>
+        </g>
       </g>
       <g class="art-peripheral" transform="translate(82 87) rotate(-10 65 72)">
         <g data-art-reveal>
