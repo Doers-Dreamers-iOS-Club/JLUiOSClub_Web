@@ -13,7 +13,7 @@ export function animateOverviewEntrance(timeline: gsap.core.Timeline, cover: HTM
   if (pieces.length) timeline.fromTo(pieces, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, stagger: .12, clearProps: 'transform,opacity' }, .18)
   const pegs = cover.querySelectorAll('[data-cover-peg]')
   if (pegs.length) timeline.fromTo(pegs, { y: -24, scale: .7, opacity: 0, transformOrigin: '50% 50%' }, { y: 0, scale: 1, opacity: 1, duration: .85, stagger: .09, clearProps: 'transform,opacity,transformOrigin' }, .6)
-  cover.querySelectorAll<SVGPathElement>('[data-cover-line]').forEach((path, i) => {
+  cover.querySelectorAll<SVGGeometryElement>('[data-cover-line]').forEach((path, i) => {
     const length = path.getTotalLength()
     timeline.fromTo(path, { strokeDasharray: `${length} ${length}`, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1.25, ease: 'sine.inOut', clearProps: 'strokeDasharray,strokeDashoffset' }, .35 + i * .12)
   })
