@@ -19,8 +19,11 @@ export function initReveal(): void {
     const targets = Array.from(root.querySelectorAll<HTMLElement>('[data-mag-reveal], [data-mag-stagger] > *'))
       .filter(el => !el.closest('.mag-hero, .learning-illustration, .club-home'))
     const timeline = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity,visibility' } })
-    if (lines.length) timeline.from(lines, { yPercent: 105, duration: .75, stagger: .09 }, 0)
-    if (intro.length) timeline.from(intro, { autoAlpha: 0, y: 8, duration: .55, stagger: .08 }, .1)
+    // A route entrance already moves this content as a whole; don't stack a
+    // second title movement on top. Initial visits retain their original reveal.
+    const routeEntrance = !!document.documentElement.dataset.routeTransition
+    if (lines.length && !routeEntrance) timeline.from(lines, { yPercent: 105, duration: .75, stagger: .09 }, 0)
+    if (intro.length && !routeEntrance) timeline.from(intro, { autoAlpha: 0, y: 8, duration: .55, stagger: .08 }, .1)
     let observer: IntersectionObserver | undefined
     const pending = new Set<HTMLElement>()
     if ('IntersectionObserver' in window) {

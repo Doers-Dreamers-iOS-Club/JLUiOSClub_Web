@@ -10,7 +10,7 @@ const errors = []
 page.on('pageerror', error => errors.push(error.message))
 page.on('response', response => { if (response.url().startsWith(base) && response.status() >= 400) errors.push(response.url()) })
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
-const settled = () => page.waitForFunction(() => !document.querySelector('.club-home')?.classList.contains('is-changing'))
+const settled = () => page.waitForFunction(() => document.querySelector('.club-home') && !document.querySelector('.club-home').classList.contains('is-changing') && !document.documentElement.dataset.routeTransition)
 const current = () => page.$eval('.club-pager [aria-current]', e => e.getAttribute('aria-label'))
 async function select(label) { await page.click(`.club-pager [aria-label="${label}"]`); await settled(); await wait(100) }
 async function assertPanel(label) {

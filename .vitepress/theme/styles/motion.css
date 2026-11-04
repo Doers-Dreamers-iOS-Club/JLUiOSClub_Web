@@ -1,3 +1,6 @@
+.club-route-progress { position: fixed; z-index: 100; top: calc(var(--vp-nav-height, 64px) - 1px); left: 0; width: 100%; height: 1px; pointer-events: none; background: var(--mag-accent); opacity: 0; transform: scaleX(0); transform-origin: left center; }
+@media (prefers-reduced-motion: reduce), print { .club-route-progress { display: none; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }

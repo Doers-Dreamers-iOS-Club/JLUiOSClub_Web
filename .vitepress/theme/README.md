@@ -172,6 +172,10 @@ tags: [Swift, 工作坊]
 
 ## 导航、文字悬停和搜索动效
 
+`useRouteMotion.ts` 为站内跨页跳转提供统一衔接：正文先用 180ms 上移 10px、淡至 28%，目标页面按 VitePress 原有路径规则同时预加载；路由准备好后再切换 DOM，并用 480ms 从下方 18px 显现。导航栏保持原位，下沿以细蓝线反馈加载。慢加载时保留旧页面，5 秒兜底恢复可见性；连续跳转只由最新请求完成动效。浏览器前进后退同样支持，页内锚点跳过。减少动态效果、切换到后台和卸载均清理状态，且不会取消已经请求的导航。
+
+首页返回采用纯透明度过渡，正在播放 intro 时直接交还给 intro，避免干扰 ASCII 坐标测量。跨页进入期间 `useReveal.ts` 跳过重复的标题入场，仍保留初次访问和屏幕下方内容的原有显现。验证：`node scripts/check-route-motion.mjs http://localhost:4174`，截图位于 `/private/tmp/club-route-qa`，涵盖预加载、慢请求、可见退场/入场、历史、连续点击、锚点、减少动态效果和 404 恢复。
+
 配置通过 Vite alias 替换默认主题的 `VPFlyout.vue` 与 `VPNavBarSearch.vue`，不修改依赖包。`ClubFlyout.vue` 沿用 VitePress 的菜单内容，参考 [GSAP easeReverse UI interactions](https://demos.gsap.com/demo/easereverse-ui-interactions/)：面板从 0.97 倍缩放和向上 5% 的位置柔和展开，箭头平滑转动，选项以 6px 的小位移错峰滑入；不使用弹性过冲，反向使用独立缓动与 1.4 倍速度，允许中途反转。支持 hover、点击、键盘方向键、Escape、焦点移出及外部点击关闭，无 JS 时保留 CSS hover/focus 展开。
 
 `RollText.vue` 用于主页资源、活动与加入入口，参考 [Menu Nav GSAP](https://codepen.io/moussamamadou/pen/zxYONpz?anon=true&view=pen) 的文字部分。字符上移一行，蓝色 text-shadow 接替原文字，每字间隔 20ms；相邻资源入口交替使用左右起始顺序。沿用现有字体和布局，不添加图片；屏幕阅读器仅读取一次完整标题。字符动画与原翻页容器分开，避免争用 transform。

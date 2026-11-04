@@ -1,0 +1,91 @@
+import assert from 'node:assert/strict'
+import fs from 'node:fs/promises'
+import puppeteer from 'puppeteer-core'
+const base = process.argv[2] || 'http://localhost:4174'
+const out = '/private/tmp/club-route-qa'
+await fs.mkdir(out, { recursive: true })
+const browser = await puppeteer.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader'] })
+const page = await browser.newPage()
+const errors = [], requests = [], releaseDestination = []
+page.on('pageerror', e => errors.push(e.message))
+const wait = ms => new Promise(r => setTimeout(r, ms))
+const idle = () => page.waitForFunction(() => !document.documentElement.dataset.routeTransition)
+const state = () => page.evaluate(() => ({ phase: document.documentElement.dataset.routeTransition, path: location.pathname, opacity: getComputedStyle(document.querySelector('.VPContent')).opacity, transform: getComputedStyle(document.querySelector('.VPContent')).transform, home: !!document.querySelector('.club-home') }))
+const routeClick = href => page.$eval(`a[href="${href}"]`, e => e.click())
+try {
+  await page.setViewport({ width: 1440, height: 900 })
+  await page.setRequestInterception(true)
+  page.on('request', request => {
+    if (/resources_index\.md\.[\w-]+\.js/.test(request.url())) {
+      requests.push(request.url()); releaseDestination.push(() => request.continue().catch(() => {}))
+    } else request.continue().catch(() => {})
+  })
+  await page.goto(base + '/#start', { waitUntil: 'networkidle0' })
+  await page.waitForSelector('.ascii-narrative')
+  await page.waitForFunction(() => Number(document.querySelector('.ascii-narrative').dataset.sceneTime) > 1)
+  assert.equal((await state()).phase, undefined, 'Initial visit must not gain an extra route entrance')
+  const nav = await page.$eval('.VPNav', e => ({ top: e.getBoundingClientRect().top, height: e.getBoundingClientRect().height }))
+  await page.click('#start .club-section__head a')
+  await page.waitForFunction(() => ['leaving', 'loading'].includes(document.documentElement.dataset.routeTransition))
+  await page.waitForFunction(() => document.documentElement.dataset.routeTransition === 'loading')
+  const slow = await state()
+  assert.equal(slow.phase, 'loading'); assert(slow.home); assert(Number(slow.opacity) >= .25, 'Slow destination retains the previous page')
+  assert(requests.length, 'Destination starts loading during the outgoing animation')
+  await page.screenshot({ path: out + '/leaving-during-load.png' })
+  assert.deepEqual(await page.$eval('.VPNav', e => ({ top: e.getBoundingClientRect().top, height: e.getBoundingClientRect().height })), nav)
+  releaseDestination.splice(0).forEach(release => release())
+  await page.waitForFunction(() => document.documentElement.dataset.routeTransition === 'entering')
+  assert.equal((await state()).path, '/resources/')
+  await page.screenshot({ path: out + '/new-page-entering.png' })
+  await idle()
+  assert(await page.$eval('.VPContent', e => !e.style.transform && !e.style.opacity && !e.style.willChange && !e.hasAttribute('aria-busy')))
+  await page.screenshot({ path: out + '/resources-settled.png' })
+  console.log('PASS concurrent preload, readable slow exit, visible entrance, fixed header and complete cleanup')
+
+  await page.goBack(); await page.waitForSelector('.club-home'); await idle()
+  assert.equal(await page.$eval('.club-pager [aria-current]', e => e.getAttribute('aria-label')), '学习')
+  await page.goForward(); await page.waitForFunction(() => location.pathname === '/resources/' && !document.querySelector('.club-home')); await idle()
+  await routeClick('/news/'); await wait(30); await routeClick('/about-us/')
+  await page.waitForFunction(() => location.pathname === '/about-us/' && !document.documentElement.dataset.routeTransition)
+  assert.equal(await page.$eval('.VPContent', e => getComputedStyle(e).opacity), '1')
+  console.log('PASS back/forward restoration and latest destination after rapid navigation')
+
+  // Same-page anchors must retain the router's native scroll behavior.
+  const anchor = await page.$eval('a.header-anchor', e => e.getAttribute('href'))
+  await page.$eval('a.header-anchor', e => e.click())
+  await wait(80)
+  assert.equal((await state()).phase, undefined)
+  assert.equal(decodeURIComponent(await page.evaluate(() => location.hash)), decodeURIComponent(anchor))
+  console.log('PASS same-page anchors bypass page animation')
+
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
+  await routeClick('/resources/')
+  await page.waitForFunction(() => location.pathname === '/resources/' && document.querySelector('.VPContent h1')?.textContent.includes('资源'))
+  assert.equal((await state()).phase, undefined)
+  assert.equal(await page.$eval('.VPContent', e => getComputedStyle(e).opacity), '1')
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }])
+  await routeClick('/news/')
+  await page.waitForFunction(() => document.documentElement.dataset.routeTransition === 'leaving')
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
+  await page.waitForFunction(() => location.pathname === '/news/' && document.querySelector('.VPContent h1')?.textContent.includes('新闻'))
+  await idle()
+  assert.equal(await page.$eval('.VPContent', e => getComputedStyle(e).opacity), '1', 'Preference changes cannot cancel navigation or strand content')
+  console.log('PASS reduced motion and preference changes during navigation')
+
+  await page.setViewport({ width: 390, height: 844 })
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }])
+  await page.evaluate(() => document.documentElement.classList.add('dark'))
+  await routeClick('/about-us/')
+  await page.waitForFunction(() => location.pathname === '/about-us/' && !document.documentElement.dataset.routeTransition)
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+  await page.screenshot({ path: out + '/mobile-dark-settled.png' })
+  await page.evaluate(() => { const a = document.createElement('a'); a.href = '/route-motion-missing-page/'; document.body.append(a); a.click(); a.remove() })
+  await page.waitForFunction(() => !!document.querySelector('.NotFound'))
+  await idle()
+  assert.equal(await page.$eval('.VPContent', e => getComputedStyle(e).opacity), '1')
+  assert.equal(await page.$('.club-route-progress[style*="opacity: 1"]'), null)
+  assert.deepEqual(errors, [])
+  console.log('PASS mobile dark layout, 404 recovery and no runtime errors')
+} catch (error) {
+  console.error(await state()); await page.screenshot({ path: out + '/failure.png' }); throw error
+} finally { await browser.close() }

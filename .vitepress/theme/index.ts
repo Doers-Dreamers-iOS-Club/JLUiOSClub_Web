@@ -12,6 +12,7 @@ import './styles/motion.css'
 import './styles/learning.css'
 
 import { initReveal, teardownReveal } from './composables/useReveal'
+import { useRouteMotion } from './composables/useRouteMotion'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
 import ClubHome from './components/ClubHome.vue'
 
@@ -74,6 +75,7 @@ export default {
   },
   setup() {
     const route = useRoute()
+    useRouteMotion()
 
     let zoom: ReturnType<typeof mediumZoom> | undefined
     const initZoom = () => {
