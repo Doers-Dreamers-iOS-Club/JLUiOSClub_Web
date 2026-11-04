@@ -30,11 +30,19 @@ try {
       return fill ? getComputedStyle(fill).clipPath : ''
     })
     assert(/^inset\([\d.\-]+px -50px/.test(fillClip), `Ink must recede vertically, preserving horizontal bounds: ${fillClip}`)
+    await page.waitForFunction(() => {
+      const state = document.querySelector('.club-intro__flight')?.dataset
+      return state && Number(state.water) < .85 && Number(state.moving) > 20
+    })
     await page.screenshot({ path: `${out}/${name}-fill.png` })
     await page.waitForFunction(() => Number(document.querySelector('.club-intro__flight')?.dataset.progress) > .25)
     const flight = await page.$eval('.club-intro__flight', el => ({ ...el.dataset }))
     assert(Number(flight.sourcePoints) > 20 && Number(flight.targetPoints) > 100)
     await page.screenshot({ path: `${out}/${name}-flight.png` })
+    await page.waitForFunction(() => {
+      const state = document.querySelector('.club-intro__flight')?.dataset
+      return state && Number(state.settled) > 0 && Number(state.moving) > 0
+    })
     await done()
     await page.waitForSelector('.mag-ascii-hero__canvas:not(.is-hidden)')
     await page.screenshot({ path: `${out}/${name}-final.png` })

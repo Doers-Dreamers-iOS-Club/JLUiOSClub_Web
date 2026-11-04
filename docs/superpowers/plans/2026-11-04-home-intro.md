@@ -22,3 +22,11 @@ Validation completed: production build, intro browser checks, and existing full-
 - [x] Replace horizontal conversion with one shared descending ink level driving solid-fill and ASCII masks, including ascender/descender padding.
 - [x] Validate loading without external scripts and on-demand Mermaid rendering. Local decoded JavaScript bytes dropped from 4,180,378 to 942,358; homepage resource entries dropped from 48 to 13. These are local resource measurements, not a claimed production latency improvement.
 - [x] Final waterline/flight, full-page, and course interaction browser regressions passed. Inspected the descending ink boundary and character flight on desktop/mobile/dark screenshots.
+
+## Follow-up: continuous release and softer assembly
+
+- [x] Use one elapsed-time clock for descending ink and glyph travel; derive per-row birth times from the inverse of the ink easing.
+- [x] Acquire the target before draining, retain bounded fallback, and emit each row while lower ink remains solid.
+- [x] Match horizontal neighbourhoods and use cubic paths with quintic timing, slightly varied flight duration, font-size caching, and crossfaded glyph identities.
+- [x] Production build and desktop/mobile/dark intro checks passed, including simultaneous ink/flight and overlapping arrivals.
+- [x] Existing full-page regression suite passed before the local commit.

@@ -7,3 +7,7 @@ Use a scoped GSAP timeline with measured destination geometry. Keep SSR content 
 ## Follow-up refinement
 
 The user requested a true character transfer into the logo and faster initial rendering. Ship a CSS-only HTML cover, defer WebGL by 750ms, lazy-load Mermaid and non-home components, and remove unnecessary homepage diagram preloads. Extend the typography choreography with alternating flip letters and horizontal repeated rows. The latest direction explicitly replaces left-to-right conversion with a descending horizontal ink level: top becomes ASCII first, bottom retains solid fill, and particles leave top-to-bottom before assembling at the real logo snapshot. No fixed simulated loading percentage. Preserve interruption and accessibility behavior.
+
+## Continuous emission refinement
+
+The user clarified that characters must fly while the ink drains, not afterward. Use one elapsed-time clock for the waterline and particles. Invert the waterline easing to release each source row as it is exposed. Match horizontal neighbourhoods, use cubic paths with zero endpoint velocity/acceleration, vary travel duration slightly, and crossfade glyph identities instead of switching them abruptly. Acquire the logo snapshot before the conversion starts, with the existing bounded wait. Validate that particles are moving while solid ink remains, and that arrivals overlap ongoing flights.

@@ -1,7 +1,7 @@
 import { onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { gsap } from 'gsap'
 import { introAscii, type IntroSnapshot } from './introAscii'
-import { introFlight } from './introFlight'
+import { introFlight, inkLevel, INK_TRANSFER_SECONDS } from './introFlight'
 
 export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => IntroSnapshot | null) {
   const playing = ref(false)
@@ -129,9 +129,8 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
       }
       if (texture) texture.style.opacity = '1'
       drain()
-      timeline.to(water, { progress: 1, duration: .8, ease: 'sine.inOut', onUpdate: drain }, 2.45)
       let flight: ReturnType<typeof introFlight> = null
-      const travel = { progress: 0 }
+      const travel = { seconds: 0 }
       const prepareFlight = () => {
         if (!alive) return
         timeline!.pause()
@@ -145,7 +144,7 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
             const rect = hero.getBoundingClientRect()
             const points = shot.points.map(p => ({ ...p, x: rect.left + p.x / shot.width * rect.width, y: rect.top + p.y / shot.height * rect.height, size: p.size * rect.width / shot.width }))
             const style = getComputedStyle(hero)
-            flight = introFlight(layer!, ascii.points, points, style.color, style.fontFamily)
+            flight = introFlight(layer!, ascii.points, points, style.color, style.fontFamily, clones[3].box.top - 50, clones[3].box.height + 100)
             flight?.paint(0)
             if (texture && flight) texture.style.opacity = '0'
           } else if (performance.now() < deadline && !hero?.classList.contains('is-failed')) {
@@ -157,11 +156,21 @@ export function useHomeIntro(root: Ref<HTMLElement | null>, snapshot: () => Intr
         }
         attempt()
       }
-      timeline.call(prepareFlight, [], 3.3)
-      timeline.to(travel, { progress: 1, duration: 1.65, ease: 'none', onUpdate: () => flight?.paint(travel.progress) }, 3.3)
-      if (texture) timeline.to(texture, { opacity: 0, duration: .3 }, 4.95)
-      timeline.to(host, { '--intro-hero-opacity': 1, duration: .3, ease: 'sine.inOut' }, 4.95)
-      timeline.to({}, { duration: .3, onUpdate() { if (flight) flight.canvas.style.opacity = String(1 - this.progress()) } }, 4.95)
+      // Acquire the destination BEFORE draining. Once started, ink and flight share one clock.
+      const releaseAt = 2.65
+      const landAt = releaseAt + INK_TRANSFER_SECONDS
+      timeline.call(prepareFlight, [], releaseAt)
+      timeline.to(travel, {
+        seconds: INK_TRANSFER_SECONDS, duration: INK_TRANSFER_SECONDS, ease: 'none',
+        onUpdate: () => {
+          water.progress = inkLevel(travel.seconds)
+          drain()
+          flight?.paint(travel.seconds)
+        }
+      }, releaseAt)
+      if (texture) timeline.to(texture, { opacity: 0, duration: .3 }, landAt)
+      timeline.to(host, { '--intro-hero-opacity': 1, duration: .3, ease: 'sine.inOut' }, landAt)
+      timeline.to({}, { duration: .3, onUpdate() { if (flight) flight.canvas.style.opacity = String(1 - this.progress()) } }, landAt)
     } catch (error) {
       console.warn('Home intro skipped:', error)
       finish()
