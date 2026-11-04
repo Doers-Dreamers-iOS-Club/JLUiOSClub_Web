@@ -107,6 +107,7 @@ onBeforeUnmount(() => {
   <div ref="root" class="VPNavBarSearch gooey-search" :class="{ 'is-open': opened }" :data-ready="ready" @focusout="blur" @keydown.esc.stop.prevent="close(true)">
     <svg class="gooey-filter" aria-hidden="true" width="0" height="0"><defs><filter id="club-search-goo" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" /><feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -15" result="goo" /><feComposite in="SourceGraphic" in2="goo" operator="atop" /></filter></defs></svg>
     <button ref="trigger" class="gooey-trigger" aria-label="搜索本站" :aria-expanded="opened" aria-controls="club-search-panel" @click="open"><i class="ti ti-search" aria-hidden="true" /><span>搜索</span><kbd>⌘ K</kbd></button>
+    <div class="gooey-backdrop" aria-hidden="true" @pointerdown.prevent="close(true)" />
     <div id="club-search-panel" class="gooey-panel" :inert="!opened" :aria-hidden="!opened">
       <div class="gooey-shapes" aria-hidden="true"><div ref="blob" class="gooey-blob" /><div ref="orb" class="gooey-orb"><i :class="loading ? 'ti ti-loader-2' : 'ti ti-search'" /></div></div>
       <div ref="field" class="gooey-field">
@@ -133,6 +134,10 @@ onBeforeUnmount(() => {
 .gooey-trigger kbd { margin-left: 14px; font-family: inherit; font-size: 10px; opacity: .65; }
 .gooey-trigger:focus-visible, .gooey-field:focus-within { outline: 1px solid var(--mag-accent); outline-offset: 3px; }
 .is-open .gooey-trigger { opacity: 0; pointer-events: none; transition-delay: 0s; }
+/* Keep the backdrop outside the goo filter so only the page behind it blurs. */
+.gooey-backdrop { position: fixed; z-index: 59; inset: var(--vp-nav-height, 64px) 0 0; background: rgb(245 245 247 / 42%); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s ease, visibility 0s .4s; }
+.dark .gooey-backdrop { background: rgb(20 20 22 / 42%); }
+.is-open .gooey-backdrop { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
 .gooey-panel { position: absolute; z-index: 60; top: 13px; left: 32px; width: 274px; visibility: hidden; pointer-events: none; filter: url(#club-search-goo); }
 .is-open .gooey-panel { visibility: visible; pointer-events: auto; }
 .gooey-search:not(.is-open) .gooey-panel { transition: visibility 0s .4s; }
@@ -165,6 +170,6 @@ onBeforeUnmount(() => {
   .gooey-trigger span, .gooey-trigger kbd { display: none; }
   .gooey-panel { position: fixed; left: auto; right: 16px; top: 72px; width: min(274px, calc(100vw - 32px)); }
 }
-@media (prefers-reduced-motion: reduce) { .gooey-trigger { transition: none; } .gooey-orb .ti-loader-2 { animation: none; } .gooey-panel { filter: none; } .gooey-search:not(.is-open) .gooey-panel { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .gooey-trigger, .gooey-backdrop { transition: none; } .gooey-orb .ti-loader-2 { animation: none; } .gooey-panel { filter: none; } .gooey-search:not(.is-open) .gooey-panel { transition: none; } }
 @supports (-webkit-touch-callout: none) { .gooey-panel { filter: none; } }
 </style>
