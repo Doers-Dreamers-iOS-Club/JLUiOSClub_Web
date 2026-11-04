@@ -203,3 +203,11 @@ tags: [Swift, 工作坊]
 验证：生产构建后执行 `node scripts/check-home-intro.mjs http://localhost:4174`、`node scripts/check-home-loading.mjs http://localhost:4174` 和 `node scripts/check-fullpage.mjs http://localhost:4174`。覆盖字形转粒子、桌面/手机/深色、跳过路径、无 JS、阻断全部外部 JS 时的 HTML 开场、按需 Mermaid 渲染及首页资源量。截图写入 `/private/tmp/club-intro-qa`，资源清单写入 `/private/tmp/club-load-after.json`。
 
 交接检查：`node scripts/check-intro-handoff.mjs http://localhost:4174` 验证桌面和手机上，最后字符仍在飞行时 WebGL 已运动，交接前后运动相位连续，叙事组件提前就绪；报告本机交接附近的帧间隔。
+
+### ASCII 作品标签
+
+第二至四屏的 `AsciiPoster.vue` 使用 figure/figcaption 组织图像与作品标签。原文分别为 `Fiat lux`（拉丁文）、`πῦρ ἐγώ σφιν ὤπασα.`、`Ἀργὼ πᾶσι μέλουσα`（古希腊语）。出处为《创世记》1:3、[《被缚的普罗米修斯》252行](https://www.greek-language.gr/digitalResources/ancient_greek/library/browse.html?page=7&text_id=132)、[《奥德赛》12.70](https://atlas.perseus.tufts.edu/nodes/urn%3Acts%3AgreekLit%3Atlg0012.tlg002.perseus-grc2%3A12.70/)。来源说明只提供给辅助技术，视觉上仅展示原文。
+
+标签采用 EB Garamond 400 正体，桌面 16px、手机 15px，24px 行高，沿用主题次级文字色。本地 Latin/Greek/Greek Extended 字体约 41KB，含 OFL 许可，首次悬停或聚焦才启用字体，避免增加 intro 的字体请求。标签始终预留位置，鼠标停留 120ms 后轻微上移淡入；键盘聚焦也能显示。触屏轻点显示 3.5 秒，不拦截翻页手势，离开该页清除触屏状态。翻页期间隐藏标签，减少动态效果时立即切换。
+
+验证：`node scripts/check-ascii-captions.mjs http://localhost:4174` 检查默认隐藏、hover/focus/touch、按需字体、原文、320/390px、深色模式、几何稳定和减少动态效果；截图写入 `/private/tmp/club-caption-qa`。
