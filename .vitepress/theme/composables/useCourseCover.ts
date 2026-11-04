@@ -3,7 +3,13 @@ import { gsap } from 'gsap'
 import { addCourseLiquidFill } from './courseLiquidFill'
 
 /** Two real page states: a cover, then an article whose native scroll starts at zero. */
-export function useCourseCover(root: Ref<HTMLElement | null>) {
+export function useCourseCover(root: Ref<HTMLElement | null>, options: {
+  contentId?: string
+  coverId?: string
+  animateEntrance?: (timeline: gsap.core.Timeline, cover: HTMLElement) => void
+} = {}) {
+  const contentId = options.contentId || 'course-content'
+  const coverHash = '#' + (options.coverId || 'course-cover')
   let dispose = () => {}
   onBeforeUnmount(() => dispose())
   onMounted(() => {
@@ -15,14 +21,22 @@ export function useCourseCover(root: Ref<HTMLElement | null>) {
     const inners = panels.map(panel => panel.firstElementChild as HTMLElement)
     const reduced = matchMedia('(prefers-reduced-motion: reduce)')
     let timeline: gsap.core.Timeline | undefined, entrance: gsap.core.Timeline | undefined
-    let page = location.hash && location.hash !== '#course-cover' ? 1 : 0
+    let page = location.hash && location.hash !== coverHash ? 1 : 0
     let enabled = false, busy = false, focusAfter = false
     let previousScroll = scrollY, lastWheel = 0, wheelTotal = 0, lockedDirection = 0
     let refreshFrame = 0, armFrame = 0, armed = false
-    const arm = () => {
+    const arm = (alignContent = false) => {
       armed = false; cancelAnimationFrame(armFrame)
       armFrame = requestAnimationFrame(() => {
-        armFrame = requestAnimationFrame(() => { previousScroll = scrollY; armed = true })
+        armFrame = requestAnimationFrame(() => {
+          // A native hash jump may have measured the SSR body below the cover.
+          // Cancel that old smooth-scroll destination once the two panels settle;
+          // keep explicit history scroll positions and deeper section anchors.
+          if (alignContent && enabled && page === 1 && location.hash === '#' + contentId && !history.state?.scrollPosition) {
+            window.scrollTo({ top: 0, behavior: 'instant' })
+          }
+          previousScroll = scrollY; armed = true
+        })
       })
     }
     let touch: { x: number; y: number; used: boolean } | undefined
@@ -51,6 +65,7 @@ export function useCourseCover(root: Ref<HTMLElement | null>) {
       if (reduced.matches || document.hidden) return
       journal.dataset.coverEntrance = 'playing'
       entrance = gsap.timeline({ delay, defaults: { ease: 'power3.out' }, onComplete: () => { delete journal.dataset.coverEntrance } })
+      if (options.animateEntrance) { options.animateEntrance(entrance, cover); return }
       entrance.fromTo(cover.querySelector('.journal-masthead__rule'),
         { scaleX: 0, willChange: 'transform' }, { scaleX: 1, duration: 1, ease: 'power2.inOut', clearProps: 'transform,willChange' }, 0)
         .fromTo(cover.querySelectorAll('.journal-title-line > span'),
@@ -79,7 +94,7 @@ export function useCourseCover(root: Ref<HTMLElement | null>) {
     }
     const rememberPage = () => {
       const url = new URL(location.href)
-      url.hash = page ? 'course-content' : ''
+      url.hash = page ? contentId : ''
       history.replaceState(history.state, '', url)
     }
     const finish = () => {
@@ -192,14 +207,14 @@ export function useCourseCover(root: Ref<HTMLElement | null>) {
       refresh()
     }
     const hash = () => {
-      arm()
-      const next = location.hash && location.hash !== '#course-cover' ? 1 : 0
+      arm(true)
+      const next = location.hash && location.hash !== coverHash ? 1 : 0
       if (enabled && next !== page) go(next, false, false)
     }
     const preference = () => { if (busy) finish(); entrance?.revert(); delete journal.dataset.coverEntrance }
     const visibility = () => { if (document.hidden) { if (busy) finish(); entrance?.progress(1) } }
     enabled = fits(); updateState()
-    arm()
+    arm(true)
     // Listen on the viewport so a trackpad over the page margins behaves identically.
     window.addEventListener('wheel', wheel, { passive: false })
     window.addEventListener('touchstart', start, { passive: true })
