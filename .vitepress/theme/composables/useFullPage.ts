@@ -1,5 +1,6 @@
 import { nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { gsap } from 'gsap'
+import { homeTransitionDuration, isMythTransition } from './homeMotion'
 
 export function useFullPage(root: Ref<HTMLElement | null>) {
   const active = ref(0)
@@ -41,6 +42,7 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
       const contents = pages.flatMap(page => Array.from(page.querySelectorAll<HTMLElement>('[data-page-content]')))
       const images = pages.flatMap(page => Array.from(page.querySelectorAll<HTMLElement>('.club-art img')))
       const poemLines = Array.from(host.querySelectorAll<HTMLElement>('.club-opening__poem > span'))
+      const copyGroups = pages.map(page => Array.from(page.querySelectorAll<HTMLElement>('[data-page-copy]')))
       const minimum = () => asciiAvailable.value ? 0 : 1
       const updateHash = () => history.replaceState(history.state, '', `#${ids[active.value]}`)
       const settle = () => {
@@ -53,6 +55,7 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
         gsap.set(inners, { clearProps: 'transform,willChange' })
         gsap.set([...contents, ...images], { clearProps: 'transform,opacity,visibility' })
         gsap.set(poemLines, { clearProps: 'transform,opacity,visibility,willChange' })
+        gsap.set(copyGroups.flat(), { clearProps: 'transform,opacity,visibility,willChange' })
         busy.value = false
       }
       context.add('settle', settle)
@@ -81,16 +84,32 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
         }
         if (instant || motion.matches) { finish(); return }
         busy.value = true
-        const duration = window.innerWidth <= 700 ? .6 : .9
+        const compact = window.innerWidth <= 700
+        const duration = compact ? .6 : .85
+        const completeAt = homeTransitionDuration(compact, previous, next)
+        const narrative = isMythTransition(previous, next)
+        const outgoing = copyGroups[previous], incoming = copyGroups[next]
         gsap.set([oldPage, newPage, inners[previous], inners[next]], { willChange: 'transform' })
+        gsap.set([...outgoing, ...incoming], { willChange: 'transform,opacity' })
         gsap.set(oldPage, { zIndex: 1 })
         gsap.set(newPage, { autoAlpha: 1, xPercent: direction * 100, zIndex: 2 })
         gsap.set(inners[next], { xPercent: direction * -100 })
-        timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut' }, onComplete: finish })
-        timeline.to(oldPage, { xPercent: direction * -100 }, 0)
-          .to(inners[previous], { xPercent: direction * 100 }, 0)
-          .to(newPage, { xPercent: 0 }, 0)
-          .to(inners[next], { xPercent: 0 }, 0)
+        timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut' } })
+        timeline.addLabel('exit', 0).addLabel('wipe', .12).addLabel('enter', narrative ? (compact ? .8 : 1) : (compact ? .3 : .42))
+        timeline.to(oldPage, { xPercent: direction * -100 }, 'wipe')
+          .to(inners[previous], { xPercent: direction * 100 }, 'wipe')
+          .to(newPage, { xPercent: 0 }, 'wipe')
+          .to(inners[next], { xPercent: 0 }, 'wipe')
+        if (outgoing.length) timeline.to(outgoing, {
+          y: -direction * (compact ? 10 : 16), x: -direction * 6, autoAlpha: 0,
+          duration: .26, stagger: { amount: .1, from: direction > 0 ? 'start' : 'end' }, ease: 'power2.in'
+        }, 'exit')
+        if (incoming.length) timeline.fromTo(incoming,
+          { y: direction * (compact ? 20 : 30), x: direction * 8, autoAlpha: 0 },
+          { y: 0, x: 0, autoAlpha: 1, duration: compact ? .52 : .65,
+            stagger: { amount: compact ? .2 : .28, from: direction > 0 ? 'start' : 'end' }, ease: 'power3.out' },
+          'enter'
+        )
         if (previous === 0 || next === 0) gsap.set(poemLines, { willChange: 'transform,opacity' })
         if (previous === 0) timeline.to(poemLines, {
           yPercent: -18, x: -24, autoAlpha: 0, duration: duration * .48,
@@ -101,10 +120,9 @@ export function useFullPage(root: Ref<HTMLElement | null>) {
           { yPercent: 0, x: 0, autoAlpha: 1, duration: duration * .62, stagger: duration * .08, ease: 'power3.out' },
           duration * .2
         )
-        const content = newPage.querySelector<HTMLElement>('[data-page-content]')
         const image = newPage.querySelector<HTMLElement>('.club-art img')
-        if (content) timeline.fromTo(content, { y: direction * 18, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: 'power3.out' }, duration * .55)
         if (image) timeline.fromTo(image, { scale: 1.025 }, { scale: 1, duration: duration + .15, ease: 'power2.out' }, 0)
+        timeline.call(finish, [], completeAt)
       }
       context.add('go', go)
       changePage = (index, focus = false, instant = false) => context.go(index, focus, instant)

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import hands from '../ascii/creation/hands.json'
-import making from '../ascii/creation/making.json'
-import growing from '../ascii/creation/growing.json'
+import prometheus from '../ascii/creation/prometheus.json'
+import argo from '../ascii/creation/argo.json'
 import handsMobile from '../ascii/creation/hands-mobile.json'
-import makingMobile from '../ascii/creation/making-mobile.json'
-import growingMobile from '../ascii/creation/growing-mobile.json'
+import prometheusMobile from '../ascii/creation/prometheus-mobile.json'
+import argoMobile from '../ascii/creation/argo-mobile.json'
 const props = defineProps<{ scene: 1 | 2 | 3 }>()
-const posters = [hands,making,growing]
-const mobilePosters = [handsMobile,makingMobile,growingMobile]
+const posters = [hands,prometheus,argo]
+const mobilePosters = [handsMobile,prometheusMobile,argoMobile]
 </script>
 <template>
   <div class="ascii-slot" :data-ascii-slot="scene" aria-hidden="true">
@@ -19,6 +19,5 @@ const mobilePosters = [handsMobile,makingMobile,growingMobile]
 .ascii-poster { display: block; width: 100%; height: 100%; }
 .ascii-poster text { fill: currentColor; font: 400 12px var(--mag-font-mono); white-space: pre; }
 .ascii-poster--mobile { display: none; }
-[data-ascii-slot="2"] .ascii-poster { transform: perspective(900px) rotateY(-7deg) rotateZ(-6deg) scale(.94); }
 @media(max-width:700px) { .ascii-poster--desktop { display: none; }.ascii-poster--mobile { display: block; } }
 </style>

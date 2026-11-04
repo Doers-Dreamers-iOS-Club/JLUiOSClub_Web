@@ -6,3 +6,17 @@ making.svg and growing.svg are project-native vector drawings for character samp
 
 Rebuild matrices: node scripts/build-ascii-creation.mjs
 Output: .vitepress/theme/ascii/creation/{hands,making,growing}.json
+
+Myth narrative update, 2026-11-04
+
+prometheus-source.png and argo-source.png were generated with the built-in image_gen tool. The site renders their sampled ASCII matrices. The fingertip/fire/sail transition is an original visual connection between independent myths.
+
+Successful Prometheus prompt:
+Square monochrome Renaissance copperplate engraving on pure white. Isolated anatomically elegant male forearm from lower left, sculptural hand gripping an ancient wooden torch raised diagonally toward upper right. A clearly defined tall flame above the torch in the upper third. Entire hand and flame visible. No body or face. Strong readable silhouette, medium-gray directional hatching, white highlights, restrained detail suitable for conversion to ASCII. Generous white margins. No words, border, paper texture, background scene or color.
+
+Successful Argo prompt:
+Square monochrome Renaissance copperplate engraving on pure white. An ancient Greek longship, the Argo, isolated in exact side profile facing right. One tall mast, one large square sail gently billowing, elegant raised bow and curled stern, six spaced diagonal oars, long slender wooden hull. Two sparse broken water lines beneath the ship. Whole ship visible with generous white margins. Medium-gray hatching, clear silhouette, pale sail with dark curved folds, suitable for conversion to ASCII. No people, words, shields, border, paper texture, sky, land or color.
+
+Current matrices: {hands,prometheus,argo}{,-mobile}.json.
+Rebuild: node scripts/build-ascii-creation.mjs
+The sampler assigns semantic regions for flame, sail, rigid structure and water. The previous making.svg / growing.svg sources are retained as historical artwork.

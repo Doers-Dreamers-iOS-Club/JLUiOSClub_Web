@@ -34,10 +34,10 @@ const paths = [
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
-            <header class="club-section__head"><h1 id="club-title" tabindex="-1">从这里开始</h1><a href="/resources/">全部资源 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
+            <header class="club-section__head"><h1 id="club-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>从这里开始</span></span></h1><a href="/resources/" data-page-copy>全部资源 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <AsciiPoster :scene="1" />
             <div class="club-paths">
-              <a v-for="(path,index) in paths" :key="path.href" :href="path.href" class="club-path">
+              <a v-for="(path,index) in paths" :key="path.href" :href="path.href" class="club-path" data-page-copy>
                 <span class="club-path__number">0{{ index+1 }}</span><h3>{{ path.title }}</h3><i class="ti ti-arrow-up-right club-path__arrow" aria-hidden="true" />
               </a>
             </div>
@@ -47,14 +47,14 @@ const paths = [
       <section id="activities" class="club-page club-section club-activities" data-club-page tabindex="-1" aria-labelledby="activity-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
-            <header class="club-section__head"><h2 id="activity-title" tabindex="-1">最近在做什么</h2><a href="/activities/">全部活动 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
+            <header class="club-section__head"><h2 id="activity-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>最近在做什么</span></span></h2><a href="/activities/" data-page-copy>全部活动 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <div class="club-making"><AsciiPoster :scene="2" /><div class="club-making__records">
             <a v-if="latest[0]" :href="latest[0].url" class="club-latest">
-              <time class="club-latest__date" :datetime="latest[0].date.replaceAll('.', '-')"><span>{{ dateParts(latest[0].date).year }}</span><span>{{ dateParts(latest[0].date).day }}</span></time>
-              <div class="club-latest__title"><span class="club-latest__label"><span />最近一次</span><h3>{{ latest[0].title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></div>
+              <time class="club-latest__date" :datetime="latest[0].date.replaceAll('.', '-')"><span data-page-copy>{{ dateParts(latest[0].date).year }}</span><span data-page-copy>{{ dateParts(latest[0].date).day }}</span></time>
+              <div class="club-latest__title"><span class="club-latest__label" data-page-copy><span />最近一次</span><h3 data-page-copy>{{ latest[0].title }}</h3><i data-page-copy class="ti ti-arrow-up-right" aria-hidden="true" /></div>
             </a>
             <div class="club-activity-history">
-              <a v-for="entry in latest.slice(1)" :key="entry.url" :href="entry.url" class="club-activity-row"><time :datetime="entry.date.replaceAll('.', '-')">{{ entry.date }}</time><h3>{{ entry.title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></a>
+              <a v-for="entry in latest.slice(1)" :key="entry.url" :href="entry.url" class="club-activity-row" data-page-copy><time :datetime="entry.date.replaceAll('.', '-')">{{ entry.date }}</time><h3>{{ entry.title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></a>
             </div>
             </div></div>
           </div>
@@ -64,8 +64,8 @@ const paths = [
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
             <AsciiPoster :scene="3" />
-            <h2 id="community-title" tabindex="-1">好奇心，<br />是共同的起点。</h2>
-            <div class="club-actions"><a class="club-button" href="/join-us/">加入我们 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" href="/about-us/">了解社团 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
+            <h2 id="community-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>好奇心，</span></span><span class="club-copy-mask"><span data-page-copy>是共同的起点。</span></span></h2>
+            <div class="club-actions"><a class="club-button" data-page-copy href="/join-us/">加入我们 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" data-page-copy href="/about-us/">了解社团 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
           </div>
         </div>
       </section>
@@ -114,6 +114,9 @@ const paths = [
   .club-opening__poem { --poem-title-size: min(24vw,39svh); }
 }
 .club-section__content { position: relative; width: min(1120px, 82vw); margin-inline: auto; padding: 48px 0 64px; }
+.club-copy-mask { display: block; overflow: hidden; padding-block: .08em; margin-block: -.08em; }
+.club-copy-mask > span { display: block; }
+.is-changing [data-page-copy] { transition: none !important; }
 .club-section__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
 .club-section__head :is(h1,h2) { margin: 0; font-size: 22px; font-weight: 500; line-height: 1.5; letter-spacing: -.015em; }
 .club-section__head > a, .club-about { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--mag-text-secondary); }
@@ -240,7 +243,7 @@ const paths = [
 .club-learning .club-section__content { overflow: visible; }
 .club-learning :deep(.ascii-slot) { width: 100vw; height: min(440px,32vw,calc(100svh - 400px)); margin: 12px 0 44px calc(50% - 50vw); }
 .club-making { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
-.club-making :deep(.ascii-slot) { height: 390px; }
+.club-making :deep(.ascii-slot) { height: 440px; }
 .club-making__records { min-width: 0; }
 .club-latest { grid-template-columns: 1fr; gap: 24px; padding: 16px 0 28px; }
 .club-latest__date > span:last-child { font-size: 64px; }
@@ -249,7 +252,7 @@ const paths = [
 .club-activity-row { grid-template-columns: 1fr 20px; gap: 8px 16px; padding: 18px 0; }
 .club-activity-row time { grid-column: 1/-1; }
 .club-activity-row h3 { font-size: 14px; }
-.club-community :deep(.ascii-slot) { height: 290px; max-width: 400px; margin: 0 auto 24px; }
+.club-community :deep(.ascii-slot) { height: 350px; max-width: 510px; margin: 0 auto 24px; }
 .has-ascii-canvas :deep(.ascii-poster) { visibility: hidden; }
 .is-ascii-transition :deep(.mag-ascii-hero__canvas) { visibility: hidden; transition: none; }
 @media(max-width:960px) and (min-width:701px) { .club-learning :deep(.ascii-slot) { margin-left: -48px; } }
@@ -264,7 +267,7 @@ const paths = [
  .club-latest h3 { font-size: 16px; }
  .club-latest__title { grid-template-columns: 1fr; gap: 8px; }
  .club-latest__title > i { display: none; }
- .club-community :deep(.ascii-slot) { height: 230px; }
+ .club-community :deep(.ascii-slot) { height: clamp(210px,34svh,280px); }
 }
 @media(max-height:740px) and (min-width:701px) {
  .club-learning :deep(.ascii-slot) { height: min(230px,calc(100svh - 330px)); margin-bottom: 28px; }

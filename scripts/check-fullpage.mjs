@@ -23,6 +23,9 @@ async function assertPanel(label) {
   assert.equal(result.hidden, 0)
   assert.equal(result.overflow, false)
   assert(!result.transform)
+  assert(await page.$$eval('[data-club-page]:not([inert]) [data-page-copy]', els => els.every(e =>
+    getComputedStyle(e).visibility === 'visible' && Number(getComputedStyle(e).opacity) === 1 && !e.style.transform && !e.style.willChange
+  )), 'Text must settle visibly without leftover transforms or promoted layers')
 }
 try {
   await page.setViewport({ width: 1440, height: 900 })
@@ -35,6 +38,10 @@ try {
   await wait(250)
   await page.mouse.wheel({ deltaY: 200 }); await wait(350)
   assert(await page.$eval('.club-home', e => e.classList.contains('is-changing')))
+  assert(await page.$$eval('#start [data-page-copy]', els => els.every(e => Number(getComputedStyle(e).opacity) < .1)), 'Outgoing copy should fade before the next page enters')
+  await wait(800)
+  const copyOpacity = await page.$$eval('#activities [data-page-copy]', els => els.map(e => Number(getComputedStyle(e).opacity)))
+  assert(Math.max(...copyOpacity) - Math.min(...copyOpacity) > .15, 'Incoming text should reveal in staggered groups')
   await page.screenshot({ path: out + '/transition.png' })
   await settled(); await assertPanel('活动')
   await page.evaluate(() => document.activeElement?.blur())
@@ -57,9 +64,9 @@ try {
   await page.waitForFunction(()=>document.querySelector('.ascii-narrative').dataset.morphing==='false')
   assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),2000)
   await select('活动');await wait(1600)
-  assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),688)
+  assert(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)>500&&e.dataset.motion==='burning'))
   await select('加入');await wait(1600)
-  assert.equal(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)),1080)
+  assert(await page.$eval('.ascii-narrative',e=>Number(e.dataset.points)>500&&e.dataset.motion==='sailing'))
   await page.mouse.move(700,400);await wait(250);await page.mouse.wheel({deltaY:300});await wait(300)
   assert(await page.evaluate(()=>scrollY>0),'Footer must remain reachable')
   await select('学习')
