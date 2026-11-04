@@ -4,6 +4,7 @@ import type { IntroSnapshot } from '../composables/introAscii'
 import { useHomeIntro } from '../composables/useHomeIntro'
 const AsciiNarrative = defineAsyncComponent(() => import('./AsciiNarrative.vue'))
 import AsciiPoster from './AsciiPoster.vue'
+import RollText from './RollText.vue'
 import { data as activities } from '../../data/activities.data.mts'
 const AsciiHero = defineAsyncComponent(() => import('./AsciiHero.vue'))
 import { useFullPage } from '../composables/useFullPage'
@@ -46,11 +47,11 @@ const paths = [
       <section id="start" class="club-page club-section club-learning" data-club-page tabindex="-1" aria-labelledby="club-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
-            <header class="club-section__head"><h1 id="club-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>从这里开始</span></span></h1><a href="/resources/" data-page-copy>全部资源 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
+            <header class="club-section__head"><h1 id="club-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>从这里开始</span></span></h1><a href="/resources/" data-page-copy><RollText text="全部资源" /> <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <AsciiPoster :scene="1" :active="!enabled || active === 1" />
             <div class="club-paths">
               <a v-for="(path,index) in paths" :key="path.href" :href="path.href" class="club-path" data-page-copy>
-                <span class="club-path__number">0{{ index+1 }}</span><h3>{{ path.title }}</h3><i class="ti ti-arrow-up-right club-path__arrow" aria-hidden="true" />
+                <span class="club-path__number">0{{ index+1 }}</span><h3><RollText :text="path.title" :reverse="index % 2 === 1" /></h3><i class="ti ti-arrow-up-right club-path__arrow" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -59,14 +60,14 @@ const paths = [
       <section id="activities" class="club-page club-section club-activities" data-club-page tabindex="-1" aria-labelledby="activity-title">
         <div class="club-page__inner">
           <div class="club-section__content" data-page-content>
-            <header class="club-section__head"><h2 id="activity-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>最近在做什么</span></span></h2><a href="/activities/" data-page-copy>全部活动 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
+            <header class="club-section__head"><h2 id="activity-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>最近在做什么</span></span></h2><a href="/activities/" data-page-copy><RollText text="全部活动" /> <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></header>
             <div class="club-making"><AsciiPoster :scene="2" :active="!enabled || active === 2" /><div class="club-making__records">
             <a v-if="latest[0]" :href="latest[0].url" class="club-latest">
               <time class="club-latest__date" :datetime="latest[0].date.replaceAll('.', '-')"><span data-page-copy>{{ dateParts(latest[0].date).year }}</span><span data-page-copy>{{ dateParts(latest[0].date).day }}</span></time>
-              <div class="club-latest__title"><span class="club-latest__label" data-page-copy><span />最近一次</span><h3 data-page-copy>{{ latest[0].title }}</h3><i data-page-copy class="ti ti-arrow-up-right" aria-hidden="true" /></div>
+              <div class="club-latest__title"><span class="club-latest__label" data-page-copy><span />最近一次</span><h3 data-page-copy><RollText :text="latest[0].title" /></h3><i data-page-copy class="ti ti-arrow-up-right" aria-hidden="true" /></div>
             </a>
             <div class="club-activity-history">
-              <a v-for="entry in latest.slice(1)" :key="entry.url" :href="entry.url" class="club-activity-row" data-page-copy><time :datetime="entry.date.replaceAll('.', '-')">{{ entry.date }}</time><h3>{{ entry.title }}</h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></a>
+              <a v-for="entry in latest.slice(1)" :key="entry.url" :href="entry.url" class="club-activity-row" data-page-copy><time :datetime="entry.date.replaceAll('.', '-')">{{ entry.date }}</time><h3><RollText :text="entry.title" reverse /></h3><i class="ti ti-arrow-up-right" aria-hidden="true" /></a>
             </div>
             </div></div>
           </div>
@@ -77,7 +78,7 @@ const paths = [
           <div class="club-section__content" data-page-content>
             <AsciiPoster :scene="3" :active="!enabled || active === 3" />
             <h2 id="community-title" tabindex="-1"><span class="club-copy-mask"><span data-page-copy>好奇心，</span></span><span class="club-copy-mask"><span data-page-copy>是共同的起点。</span></span></h2>
-            <div class="club-actions"><a class="club-button" data-page-copy href="/join-us/">加入我们 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" data-page-copy href="/about-us/">了解社团 <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
+            <div class="club-actions"><a class="club-button" data-page-copy href="/join-us/"><RollText text="加入我们" /> <i class="ti ti-arrow-up-right" aria-hidden="true" /></a><a class="club-about" data-page-copy href="/about-us/"><RollText text="了解社团" reverse /> <i class="ti ti-arrow-up-right" aria-hidden="true" /></a></div>
           </div>
         </div>
       </section>

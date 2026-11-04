@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath } from 'node:url'
 import { homeBoot } from './homeBoot'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import implicitFigures from 'markdown-it-implicit-figures'
@@ -104,6 +105,12 @@ const viteConfig: UserConfig = {
     }
   },
   vite: {
+    resolve: {
+      alias: [
+        { find: /^\.\/VPFlyout\.vue$/, replacement: fileURLToPath(new URL('./theme/components/ClubFlyout.vue', import.meta.url)) },
+        { find: /^\.\/VPNavBarSearch\.vue$/, replacement: fileURLToPath(new URL('./theme/components/GooeySearch.vue', import.meta.url)) }
+      ]
+    },
     build: {
       chunkSizeWarningLimit: 1600
     }
