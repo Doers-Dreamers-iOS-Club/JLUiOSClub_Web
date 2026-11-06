@@ -4,7 +4,7 @@ description: "探索AI辅助开发，用Qoder与AI一起编写代码，体验未
 icon: "💻"
 tags: [AI, 开发工具, 工作坊]
 date: "2025-10-18"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

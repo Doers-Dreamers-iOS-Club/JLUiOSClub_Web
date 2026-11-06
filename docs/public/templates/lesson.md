@@ -2,7 +2,7 @@
 title: SwiftUI 第一课，让界面回应操作
 description: 认识状态与界面的关系，完成一个按钮计数器。
 date: "2026-11-06"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

@@ -28,7 +28,7 @@
 
 活动、新闻、竞赛均从对应 `*/index.md` 的 frontmatter 构建索引。title 必填，date 使用带引号的 ISO 日期或月份；活动可以从 YYMMDD 目录推断日期。没有日期的记录归入“未归档”。数据只输出页面消费的字段；扩展字段需同时说明消费者。
 
-`.data.mts` 是 VitePress 数据入口；浏览器只收到序列化结果。`shared.ts` 是可独立测试的纯函数，`groupByYear` 保留输入顺序，单次遍历完成分组。新增活动无需登记索引；活动详情使用 `MagArticle` 与文内目录，其他栏目的侧栏仍在 `sidebar.ts` 维护。课程章节目录、侧栏与进度上限统一来自 `data/course.ts`，存储操作独立在 `composables/readingState.ts`。
+`.data.mts` 是 VitePress 数据入口；浏览器只收到序列化结果。`shared.ts` 是可独立测试的纯函数，`groupByYear` 保留输入顺序，单次遍历完成分组。新增活动无需登记索引；活动详情使用 `MagArticle`、杂志侧栏与文内目录；所有栏目的侧栏条目统一在 `sidebar.ts` 维护。课程章节目录、侧栏与进度上限统一来自 `data/course.ts`，存储操作独立在 `composables/readingState.ts`。
 
 ## 通用组件
 

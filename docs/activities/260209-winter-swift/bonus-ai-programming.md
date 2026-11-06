@@ -2,7 +2,7 @@
 title: "现代 AI 编程全景"
 description: "课程外补充讲义：LLM、Tool Calling、RAG、Agent、Skills、MCP 与 iOS 落地路径。"
 date: "2026-02-22"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

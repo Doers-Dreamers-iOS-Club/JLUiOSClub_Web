@@ -2,7 +2,7 @@
 title: "Swift 进阶，让游戏运转起来"
 description: "第二讲讲义：MVVM、Struct/Class、Enum/Optional、Closure、状态管理与匹配算法。"
 date: "2026-02-16"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

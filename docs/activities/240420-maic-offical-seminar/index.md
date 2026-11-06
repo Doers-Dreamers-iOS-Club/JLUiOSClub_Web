@@ -4,7 +4,7 @@ description: 移动应用赛官方宣讲会
 icon: "🏆"
 tags: [MAIC, 官方宣讲]
 date: "2024-04-20"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

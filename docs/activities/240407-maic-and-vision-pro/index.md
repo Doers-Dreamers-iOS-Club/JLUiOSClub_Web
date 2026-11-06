@@ -4,7 +4,7 @@ icon: "🍎"
 tags: [MAIC, Vision Pro]
 description: "MAIC 宣讲会暨 Vision Pro 体验会活动记录。"
 date: "2024-04-07"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

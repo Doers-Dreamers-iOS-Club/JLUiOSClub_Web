@@ -2,7 +2,7 @@
 title: 以热爱为起点，让创意成为现实
 description: 从 iOS Club 到大学生创新应用工坊，一次关于 AI、创意与成长的相聚，也是一段新旅程的开始。
 date: "2026-10-11"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

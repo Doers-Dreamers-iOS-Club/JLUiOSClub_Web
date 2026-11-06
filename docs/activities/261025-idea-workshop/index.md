@@ -2,7 +2,7 @@
 title: 你的想法，值得被认真听
 description: 一颗星星代表一个 Idea。让分散的灵感相遇，让一次交流成为项目的起点——大学生创新应用工坊第二次活动回顾。
 date: "2026-10-25"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

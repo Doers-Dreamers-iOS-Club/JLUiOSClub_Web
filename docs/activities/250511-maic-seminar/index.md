@@ -4,7 +4,7 @@ description: 移动应用赛宣讲会
 icon: "🏆"
 tags: [MAIC, 宣讲会]
 date: "2025-05-11"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

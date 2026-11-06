@@ -4,7 +4,7 @@ description: AI Agent揭秘&低代码实践
 icon: "🧠"
 tags: [AI, 工作坊]
 date: "2025-05-18"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

@@ -4,7 +4,7 @@ description: "手把手搭建 Coze 智能体,让 AI 自动整理通知并写入�
 icon: "🤖"
 tags: [AI, Agent, 工作坊]
 date: "2025-11-02"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

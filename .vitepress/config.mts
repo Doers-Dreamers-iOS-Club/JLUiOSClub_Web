@@ -112,6 +112,7 @@ const viteConfig: UserConfig = {
     plugins: [contentIcons(fileURLToPath(new URL('../', import.meta.url)))],
     resolve: {
       alias: [
+        { find: /^\.\/VPSidebarGroup\.vue$/, replacement: fileURLToPath(new URL('./theme/components/ClubSidebarGroup.vue', import.meta.url)) },
         { find: /^\.\/VPFlyout\.vue$/, replacement: fileURLToPath(new URL('./theme/components/ClubFlyout.vue', import.meta.url)) },
         { find: /^\.\/VPNavBarSearch\.vue$/, replacement: fileURLToPath(new URL('./theme/components/GooeySearch.vue', import.meta.url)) }
       ]

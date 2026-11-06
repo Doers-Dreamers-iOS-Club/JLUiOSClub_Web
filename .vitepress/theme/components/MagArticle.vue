@@ -116,9 +116,10 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 .mag-article__body :deep(.dual-qr img) { max-width: 100%; }
 .mag-article__body :deep(a), .mag-article__body :deep(:not(pre) > code) { overflow-wrap: anywhere; }
 
-@media (max-width: 959px) {
+@media (max-width: 1279px) {
   .mag-article__opening { grid-template-columns: minmax(0, 1fr) 85px; gap: 24px; }
   .mag-article__number { font-size: 84px; }
+  .mag-article h1 { font-size: clamp(34px, 4.6vw, 52px); }
   .mag-article__body { padding-inline: 32px; }
   .mag-article--numbered .mag-article__body :deep(h2)::before { position: static; display: block; margin-bottom: 6px; font-size: 20px; }
   .mag-article__body :deep(blockquote) { margin-inline: -24px; padding-inline: 24px; }

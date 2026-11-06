@@ -6,7 +6,7 @@ description: "参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift
 icon: "📚"
 tags: [Swift, 打卡挑战]
 date: "2024-07-15"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

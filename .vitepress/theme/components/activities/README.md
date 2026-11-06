@@ -1,6 +1,6 @@
 # 活动总览页
 
-活动索引和某一期活动的导航入口都属于总览页，使用 `ActivityOverview.vue`，不要套内容页侧栏或卡片墙。活动详情、介绍、讲义与回顾正文统一使用 `MagArticle` 和 `pageClass: mag-article-page`，隐藏文档侧栏，以连续文章组织内容。具体创作规范见 `docs/activities/AGENTS.md` 和网页维护指南，长讲义使用文内可点击目录。
+活动索引和某一期活动的导航入口都属于总览页，使用 `ActivityOverview.vue`，不要套内容页侧栏或卡片墙。活动详情、介绍、讲义与回顾正文统一使用 `MagArticle` 和 `pageClass: mag-article-page`，启用杂志目录侧栏，以连续文章组织内容。具体创作规范见 `docs/activities/AGENTS.md` 和网页维护指南，长讲义使用文内可点击目录。
 
 Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`prev: false`、`next: false`、`pageClass: activity-overview`，导入该页的 Landing 组件。
 
@@ -15,3 +15,5 @@ Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`pr
 检查：`npm run build` 后重启 `npm run preview -- --port 4174 --host 0.0.0.0`，执行 `node scripts/check-activity-overviews.mjs --all`。修改共用切页逻辑时另跑 `node scripts/check-course-cover.mjs`。
 
 SVG 修改完成后必须先渲染实际页面截图，逐张查看浅色、深色与手机端的主体轮廓、线条交叉、文字遮挡和裁切；修正视觉问题后再 commit，不能只凭源码或构建通过判定完成。
+
+`MagazineSidebar.vue` 将 `sidebar.ts` 的分组呈现为杂志目次，复用主页 `RollText`。`ClubSidebarGroup.vue` 仅在活动文章中替换目录内容，VitePress 继续负责抽屉与键盘操作，其他栏目保留默认侧栏。

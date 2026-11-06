@@ -2,7 +2,7 @@
 title: "SwiftUI 入门，搭建游戏界面"
 description: "第一讲讲义：SwiftUI 结构、布局、修饰符、ForEach 与 enum 状态建模。"
 date: "2026-02-09"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

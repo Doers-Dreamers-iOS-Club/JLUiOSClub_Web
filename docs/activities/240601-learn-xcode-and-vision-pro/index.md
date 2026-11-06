@@ -4,7 +4,7 @@ icon: "🥽"
 tags: [Vision Pro, Xcode]
 description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
 date: "2024-06-01"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

@@ -2,7 +2,7 @@
 title: 以赛促学，智创未来
 description: 第十一届华为 ICT 大赛走进吉林大学。从赛道介绍到参赛经验，在一场校园路演中看见技术走向实践的路径。
 date: "2026-10-16"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false

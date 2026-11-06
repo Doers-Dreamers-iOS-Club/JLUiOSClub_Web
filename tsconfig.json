@@ -20,6 +20,9 @@
     ],
     "allowImportingTsExtensions": true,
     "paths": {
+      "vitepress/dist/client/theme-default/components/VPSidebarGroup.vue": [
+        "./.vitepress/types/vitepress-sidebar-group.d.ts"
+      ],
       "vitepress/dist/client/theme-default/components/VPMenu.vue": [
         "./.vitepress/types/vitepress-menu.d.ts"
       ]

@@ -4,7 +4,7 @@ icon: "🎉"
 tags: [纳新]
 description: "2024 百团大战纳新：果粉们看过来，JLU iOS Club 等你加入。"
 date: "2024-04-14"
-sidebar: false
+sidebar: true
 aside: false
 outline: false
 prev: false
