@@ -1,9 +1,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
   title?: string
-  subtitle?: string
-  eyebrow?: string
-  issue?: string | number
   date?: string
   entrance?: boolean
 }>(), { entrance: true })

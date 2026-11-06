@@ -7,12 +7,12 @@ tags: [MAIC, 官方宣讲]
 <MagHero title="移动应用创新赛——官方宣讲会来啦！" />
 
 <MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2024年<strong>04月20日</strong></MagCard>
-  <MagCard icon="🕜" title="时间">下午 13:30-15:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B108 会议室</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">上海交通大学-董占勋<br />MAIC 组委会秘书-曹颖萍</MagCard>
-  <MagCard icon="✋" title="参与报名"><a href="https://www.wjx.cn/vm/tUo0G8e.aspx">报名链接</a></MagCard>
-  <MagCard icon="❗️" title="报名截止时间">4月19日 17:00，请同学们抓紧报名</MagCard>
+  <MagCard title="日期">2024年<strong>04月20日</strong></MagCard>
+  <MagCard title="时间">下午 13:30-15:00</MagCard>
+  <MagCard title="地点">南区计算机楼 B108 会议室</MagCard>
+  <MagCard title="主讲人">上海交通大学-董占勋<br />MAIC 组委会秘书-曹颖萍</MagCard>
+  <MagCard title="参与报名"><a href="https://www.wjx.cn/vm/tUo0G8e.aspx">报名链接</a></MagCard>
+  <MagCard title="报名截止时间">4月19日 17:00，请同学们抓紧报名</MagCard>
 </MagGrid>
 
 ## 活动概述

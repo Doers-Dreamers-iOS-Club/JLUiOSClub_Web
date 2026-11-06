@@ -1,12 +1,12 @@
 ---
 title: Swift 学生挑战赛
 description: Apple 面向全球学生的年度挑战赛，以 Swift Playgrounds 作品参赛。
-date: 2024.02
+date: "2024.02"
 icon: "🍎"
 tags: [竞赛, Swift]
 ---
 
-<MagHero eyebrow="Swift Student Challenge" title="WWDC-Swift学生挑战赛" />
+<MagHero title="WWDC-Swift学生挑战赛" />
 
 ![WWDC24](Swift.webp)
 

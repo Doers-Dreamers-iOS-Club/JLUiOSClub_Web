@@ -15,7 +15,7 @@ tags: [AI, 开发工具, 工作坊]
 
 
 
-<MagHero title="🚀 Vibe Coding" subtitle="AI时代的开发新方式 - 让AI成为你的编程伙伴" />
+<MagHero title="🚀 Vibe Coding" />
 
 <MagGrid :cols="4">
   <MagCard>
@@ -986,6 +986,6 @@ AI确实能够：
 
 ---
 
-<MagHero title="🎉 期待你的作品！" subtitle="用AI赋能你的创意，让想法变为现实">
+<MagHero title="🎉 期待你的作品！">
   <p style="margin-top: 1rem; font-size: 1rem;">有任何问题？欢迎在活动群或社团群内讨论～</p>
 </MagHero>

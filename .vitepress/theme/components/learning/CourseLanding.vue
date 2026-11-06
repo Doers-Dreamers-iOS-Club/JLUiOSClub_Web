@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import { useCourseScrollMotion } from '../../composables/useCourseScrollMotion'
 import { useCourseCover } from '../../composables/useCourseCover'
+import { animateCourseEntrance } from '../../composables/courseEntrance'
 const journal = ref<HTMLElement | null>(null)
 useCourseScrollMotion(journal)
-useCourseCover(journal)
-import { chapters, courseBase } from './course'
+useCourseCover(journal, { animateEntrance: animateCourseEntrance })
+import { chapters, courseBase } from '../../../data/course'
 import CourseArtwork from './CourseArtwork.vue'
 import CourseSpot from './CourseSpot.vue'
 
@@ -56,7 +57,7 @@ const related = [
 
     <section class="journal-section" aria-labelledby="course-contents-title">
       <div class="journal-section__head"><h2 id="course-contents-title">课程目录</h2><a class="journal-text-link" :href="courseBase + 'read-all'">连续阅读 <span aria-hidden="true">↗</span></a></div>
-      <nav class="journal-chapters" aria-label="六章课程目录">
+      <nav class="journal-chapters" aria-label="主线课程目录">
         <a v-for="chapter in chapters" :key="chapter.id" :href="courseBase + 'chapters/' + chapter.id" class="journal-chapter">
           <span class="journal-chapter__number" aria-hidden="true">{{ chapter.id }}</span><h3>{{ chapter.title }}</h3><span class="journal-arrow" aria-hidden="true">↗</span>
         </a>

@@ -15,7 +15,7 @@ tags: [AI, Agent, 工作坊]
 
 
 
-<MagHero title="🤖 日常记录小能手工作坊" subtitle="从零到一搭建你的第一个 AI 智能助手，让 AI 自动帮你整理通知、记录待办！" />
+<MagHero title="🤖 日常记录小能手工作坊" />
 
 <MagGrid :cols="4">
   <MagCard>

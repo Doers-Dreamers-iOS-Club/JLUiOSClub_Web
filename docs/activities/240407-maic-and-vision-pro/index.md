@@ -5,15 +5,15 @@ icon: "🍎"
 tags: [MAIC, Vision Pro]
 description: "MAIC 宣讲会暨 Vision Pro 体验会活动记录。"
 ---
-<MagHero title="移动应用创新赛宣讲会暨 Vision Pro 体验会" eyebrow="ARCHIVED" />
+<MagHero title="移动应用创新赛宣讲会暨 Vision Pro 体验会" />
 
 <MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2024年04月<strong>06日-07日</strong></MagCard>
-  <MagCard icon="🕑" title="6日场 时间">14:00-17:00</MagCard>
-  <MagCard icon="🕕" title="7日场 时间">18:00-21:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B110苹果机房</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">相开原 张天翼 陈悦华</MagCard>
-  <MagCard icon="✋" title="报名方式">请阅读本篇活动说明，申请表在页面底部</MagCard>
+  <MagCard title="日期">2024年04月<strong>06日-07日</strong></MagCard>
+  <MagCard title="6日场 时间">14:00-17:00</MagCard>
+  <MagCard title="7日场 时间">18:00-21:00</MagCard>
+  <MagCard title="地点">南区计算机楼 B110苹果机房</MagCard>
+  <MagCard title="主讲人">相开原 张天翼 陈悦华</MagCard>
+  <MagCard title="报名方式">请阅读本篇活动说明，申请表在页面底部</MagCard>
 </MagGrid>
 
 :::danger 注意

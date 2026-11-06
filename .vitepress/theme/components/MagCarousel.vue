@@ -7,7 +7,8 @@
  * 注意：medium-zoom 的选择器不含本组件内的图（.mag-carousel img 被排除），
  * 轮播图不需要点击放大。
  */
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
+import { usePlaybackVisibility } from '../composables/usePlaybackVisibility'
 
 const props = withDefaults(
   defineProps<{
@@ -17,17 +18,19 @@ const props = withDefaults(
   { autoplay: 0 }
 )
 
-const track = ref<HTMLElement>()
+const track = ref<HTMLElement | null>(null)
 const current = ref(0)
 const count = ref(0)
 
-let timer: ReturnType<typeof setInterval> | null = null
+const hovered = ref(false)
+const focused = ref(false)
+const { available, reduced } = usePlaybackVisibility(track, .3)
 
 function scrollTo(i: number) {
   const el = track.value
   if (!el || !count.value) return
   const index = ((i % count.value) + count.value) % count.value
-  el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
+  el.scrollTo({ left: index * el.clientWidth, behavior: reduced.value ? 'instant' : 'smooth' })
   current.value = index
 }
 
@@ -37,44 +40,25 @@ function onScroll() {
   current.value = Math.round(el.scrollLeft / el.clientWidth)
 }
 
-function stopAutoplay() {
-  if (timer) {
-    clearInterval(timer)
-    timer = null
-  }
+function onFocusOut(event: FocusEvent) {
+  focused.value = (event.currentTarget as HTMLElement).contains(event.relatedTarget as Node | null)
 }
 
-function startAutoplay() {
-  if (!props.autoplay || timer) return
-  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
-  timer = setInterval(() => scrollTo(current.value + 1), props.autoplay)
-}
-
-let io: IntersectionObserver | null = null
-
-onMounted(() => {
-  const el = track.value
-  if (!el) return
-  count.value = el.children.length
-  // 离屏时暂停自动播放，回来再继续
-  io = new IntersectionObserver(
-    (entries) => (entries[0].isIntersecting ? startAutoplay() : stopAutoplay()),
-    { threshold: 0.3 }
-  )
-  io.observe(el)
-})
-
-onUnmounted(() => {
-  stopAutoplay()
-  io?.disconnect()
+onMounted(() => { count.value = track.value!.children.length })
+watchEffect(onCleanup => {
+  if (!available.value || hovered.value || focused.value || !props.autoplay || count.value < 2) return
+  const timer = setInterval(() => scrollTo(current.value + 1), props.autoplay)
+  onCleanup(() => clearInterval(timer))
 })
 </script>
 
 <template>
   <div
     class="mag-carousel mag-no-reveal"
-    @mouseenter="stopAutoplay"
-    @mouseleave="startAutoplay"
+    @mouseenter="hovered = true"
+    @mouseleave="hovered = false"
+    @focusin="focused = true"
+    @focusout="onFocusOut"
   >
     <div ref="track" class="mag-carousel__track" @scroll.passive="onScroll">
       <slot />

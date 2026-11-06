@@ -64,6 +64,9 @@ try {
   assert.equal((await state()).phase, undefined)
   assert.equal(await page.$eval('.VPContent', e => getComputedStyle(e).opacity), '1')
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }])
+  // Media-query change listeners run during rendering; settle that change before
+  // starting the navigation whose in-flight preference change this checks.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
   await routeClick('/news/')
   await page.waitForFunction(() => document.documentElement.dataset.routeTransition === 'leaving')
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])

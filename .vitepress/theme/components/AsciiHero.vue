@@ -311,7 +311,7 @@ onMounted(async () => {
   themeObserver = new MutationObserver(applyTheme)
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 
-  function onContextLost(event: Event) {
+  const onContextLost = (event: Event) => {
     event.preventDefault()
     stop()
     canvas.classList.add('is-hidden')

@@ -2,7 +2,7 @@
 title: 转正答题
 ---
 
-<MagHero eyebrow="Membership" title="参与答题 成为正式社员" />
+<MagHero title="参与答题 成为正式社员" />
 
 点击下方按钮，开始答题吧~
 

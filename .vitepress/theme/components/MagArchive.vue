@@ -3,24 +3,19 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { data as activities } from '../../data/activities.data.mts'
 import { data as news } from '../../data/news.data.mts'
 import { data as competitions } from '../../data/competitions.data.mts'
-import type { RecordEntry } from '../../data/shared'
+import { groupByYear, type RecordEntry } from '../../data/shared'
 const props = withDefaults(defineProps<{
   source?: 'activities' | 'news' | 'competitions'
   limit?: number
-  highlightLatest?: boolean
   view?: 'timeline' | 'grid'
   showViewToggle?: boolean
-}>(), { source: 'activities', highlightLatest: true, view: 'timeline', showViewToggle: true })
+}>(), { source: 'activities', view: 'timeline', showViewToggle: true })
 const sources = { activities, news, competitions }
 const all = computed<RecordEntry[]>(() => sources[props.source])
 const entries = computed(() => props.limit ? all.value.slice(0, props.limit) : all.value)
 const currentView = ref(props.view)
 const toggle = computed(() => props.showViewToggle && !props.limit)
-const groups = computed(() => {
-  const map = new Map<number, RecordEntry[]>()
-  for (const entry of entries.value) map.set(entry.year, [...(map.get(entry.year) || []), entry])
-  return [...map].map(([year, items]) => ({ year, items }))
-})
+const groups = computed(() => groupByYear(entries.value))
 onMounted(() => {
   if (!toggle.value) return
   try {
@@ -50,9 +45,9 @@ watch(currentView, view => {
     </div>
     <div v-else-if="currentView === 'timeline'" class="mag-archive__timeline">
       <section v-for="group in groups" :key="group.year" class="mag-archive__year">
-        <h2>{{ group.year > 0 ? group.year : '未归档' }}<span>{{ group.items.length }} 篇</span></h2>
+        <h2>{{ group.year > 0 ? group.year : '未归档' }}<span>{{ group.entries.length }} 篇</span></h2>
         <div class="mag-archive__entries" data-mag-stagger>
-          <a v-for="entry in group.items" :key="entry.url" class="mag-archive__row" :href="entry.url">
+          <a v-for="entry in group.entries" :key="entry.url" class="mag-archive__row" :href="entry.url">
             <time class="mag-archive__date">{{ entry.date }}</time>
             <div class="mag-archive__row-main"><h3>{{ entry.title }}</h3></div>
             <i class="ti ti-arrow-up-right mag-archive__arrow" aria-hidden="true" />

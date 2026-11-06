@@ -6,7 +6,7 @@ outline: [2, 3]
 ---
 
 
-<MagHero title="第二讲 · Swift 进阶与 CodeBreaker 实战" subtitle="本讲从语言进阶概念出发，串到真实项目代码：MVVM、类型系统、闭包、状态更新与匹配算法。" />
+<MagHero title="第二讲 · Swift 进阶与 CodeBreaker 实战" />
 
 <MagGrid :cols="4">
   <MagCard>
@@ -259,7 +259,7 @@ func match(against otherCode: Code) -> [Match] {
   </ul>
 </MagNote>
 
-<MagHero title="第二讲核心收获" subtitle="你需要形成“结构化开发”的习惯：先定职责，再写状态，再落算法，最后打磨交互与视觉。这样项目才会越做越稳。" />
+<MagHero title="第二讲核心收获" />
 
 <script setup>
 import { useData } from 'vitepress'

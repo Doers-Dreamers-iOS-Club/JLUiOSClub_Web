@@ -16,7 +16,7 @@ page.on('console', message => {
 })
 page.on('response', response => { if (response.url().startsWith(base) && response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`) })
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-async function go(route) { await page.goto(base + route, { waitUntil: 'networkidle0' }); await delay(850) }
+async function go(route) { await page.goto(base + route, { waitUntil: 'networkidle0' }); await delay(850); await page.waitForFunction(() => !document.querySelector('.club-home.is-intro')); }
 async function scrollPage() {
   if (await page.$('.club-pager')) {
     for (const label of ['学习', '活动', '加入']) {
@@ -24,6 +24,10 @@ async function scrollPage() {
       await page.waitForFunction(() => !document.querySelector('.club-home').classList.contains('is-changing'))
     }
     return
+  }
+  if (await page.$('[data-course-page="cover"]')) {
+    await page.click('.journal-cover__next')
+    await page.waitForFunction(() => !document.querySelector('[data-cover-transition]'))
   }
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += innerHeight * .75) {
@@ -35,7 +39,7 @@ async function scrollPage() {
 async function check(label) {
   const result = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth > innerWidth + 1,
-    tiny: [...document.querySelectorAll('.VPContent *')].filter(e => e.getClientRects().length && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 11).map(e => e.className),
+    tiny: [...document.querySelectorAll('.VPContent *')].filter(e => e instanceof HTMLElement && !e.closest('[inert],[aria-hidden="true"]') && e.getClientRects().length && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 11).map(e => e.className),
     hidden: [...document.querySelectorAll('[data-mag-enter],[data-mag-reveal],[data-mag-stagger] > *')].filter(e => !e.closest('[inert]') && (getComputedStyle(e).visibility === 'hidden' || Number(getComputedStyle(e).opacity) < .99)).length
   }))
   assert(!result.overflow, label + ': horizontal overflow')
@@ -51,7 +55,7 @@ try {
     await page.screenshot({ path: path.join(out, name + '-desktop.png'), fullPage: ['home','course'].includes(name) })
     console.log('PASS desktop '+name)
   }
-  await go('/activities/')
+  await go('/news/')
   await page.click('.mag-archive__toggle button:nth-child(2)')
   await page.waitForSelector('.mag-archive__grid')
   await page.screenshot({path:path.join(out,'archive-grid.png')})
@@ -70,7 +74,7 @@ try {
   await page.click('.club-pager [aria-label="学习"]')
   await page.waitForFunction(() => !document.querySelector('.club-home').classList.contains('is-changing'))
   await page.click('.club-path')
-  await page.waitForSelector('.ai-course-home')
+  await page.waitForSelector('.course-journal')
   assert.equal(await page.$('.mag-note--tearing'), null, 'Old tearing transition still runs')
   await page.goBack({waitUntil:'networkidle0'}); await delay(900)
   await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}])

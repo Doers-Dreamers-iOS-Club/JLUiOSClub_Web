@@ -6,7 +6,7 @@ outline: [2, 3]
 ---
 
 
-<MagHero title="SwiftUI 入门讲义 · CodeBreaker UI 从 0 到 1" subtitle="这份讲义对应本次冬季 SwiftUI 课程，重点建立「结构化思维 + 可扩展实现」：先搭框架，再写细节。" />
+<MagHero title="SwiftUI 入门讲义 · CodeBreaker UI 从 0 到 1" />
 
 <MagGrid :cols="4">
   <MagCard>
@@ -258,7 +258,7 @@ enum Match {
   </ul>
 </MagNote>
 
-<MagHero title="这节课真正要带走的能力" subtitle="把界面拆成可复用小组件，用数据驱动状态，再用稳定 id 和清晰枚举保证可扩展。学会这套方法，后续任何 SwiftUI 页面都能独立搭起来。" />
+<MagHero title="这节课真正要带走的能力" />
 
 <script setup>
 import { useData } from 'vitepress'

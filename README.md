@@ -25,22 +25,17 @@
 
 ### 1) 安装依赖
 
-推荐使用 pnpm：
+使用仓库中的 npm 锁文件安装：
 
 ```bash
-pnpm install
+npm ci
 ```
 
-如你使用 npm：
-
-```bash
-npm install
-```
 
 ### 2) 本地开发
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 启动后默认由 VitePress 提供本地站点（配置里使用 `--host 0.0.0.0`）。
@@ -48,8 +43,8 @@ pnpm dev
 ### 3) 构建与预览
 
 ```bash
-pnpm build
-pnpm preview
+npm run build
+npm run preview
 ```
 
 ## 目录结构（核心）
@@ -62,7 +57,7 @@ pnpm preview
 │  └─ theme/
 │     ├─ index.ts             # 主题增强（图片缩放等）
 │     ├─ style.css
-│     └─ custom.css
+│     └─ styles/
 ├─ docs/
 │  ├─ index.md                # 首页
 │  ├─ about-us/               # 关于我们
@@ -104,7 +99,7 @@ pnpm preview
 ## 编写约定（建议）
 
 - 页面建议使用 Frontmatter 标注：`title`、`description`、`date`；
-- 复杂讲义页面可使用 `<style scoped>` + 语义化区块；
+- 复杂讲义优先组合现成排版组件，参见 [内容写作指南](docs/guide/components.md)；
 - 需要交互时可在 Markdown 使用 `<script setup>` + Vue 组件；
 - 图示类内容优先 `mermaid`，截图类内容统一放专题子目录；
 - 链接尽量使用站内绝对路径（如 `/activities/xxx/`），保证部署一致性。
@@ -121,14 +116,14 @@ pnpm preview
 
 当前站点可直接使用 VitePress 静态产物部署到任意静态托管平台（如 Cloudflare Pages）。
 
-- 构建命令：`pnpm build`
+- 构建命令：`npm run build`
 - 输出目录：VitePress 默认输出目录（`.vitepress/dist`）
 
 ## 维护建议
 
 - 定期清理无效资源（如 macOS 产生的 `._*` 文件、`.DS_Store`）；
 - 新增活动时同步更新首页推荐入口与活动聚合页；
-- 大型讲义建议统一 UI 模板（banner/info-card/step-container），保持站内体验一致。
+- 活动和讲义可复制 `docs/public/templates/` 中的 Markdown 模板。
 
 ## License
 
@@ -150,3 +145,15 @@ pnpm preview
 ### 章节可操作图解
 
 八种图解与两段短分镜嵌入原正文，分别演示规则、上下文、暂停、重复计时器、版本、Skill、MCP 和 API。通过 `LearningIllustration` 按需加载，共用 `illustrations/useLabPlayback.ts` 控制生命周期；首页采用简洁的学习入口与活动列表。所有网络/版本操作均为模拟。验证脚本覆盖状态变化、故障/修复、拖拽替代、320 px 布局、暗色、减少动态效果、阅读进度与下载内容。
+
+## 内容组件与维护检查
+
+[组件写作指南](docs/guide/components.md) 提供可运行的网格、卡片、提示、步骤、配图、折叠、弹窗与轮播示例。所有 `Mag*` 组件无需 import。组件接口与模块职责见 [.vitepress/theme/README.md](.vitepress/theme/README.md)。
+
+```bash
+npm test
+npm run typecheck
+npm run build
+```
+
+浏览器检查：先 `npm run preview -- --port 4173`，再运行 `npm run check:components -- http://localhost:4173` 和 `npm run check:playback -- http://localhost:4173`。生产依赖以 `package-lock.json` 为准；Node 版本见 `.node-version`。

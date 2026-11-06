@@ -13,7 +13,7 @@ outline: [2, 3]
 
 
 
-<MagHero title="主线之外 · 现代 AI 编程全景" subtitle="这份讲义是主线之外的补充版本，目标不是“再背几个名词”，而是建立一张能直接指导你做项目的 AI 编程路线图。">
+<MagHero title="主线之外 · 现代 AI 编程全景">
   <div class="mag-badge-row">
     <MagBadge>LLM</MagBadge>
     <MagBadge>Tool Calling</MagBadge>
@@ -384,4 +384,4 @@ my-skill/
   </ul>
 </MagNote>
 
-<MagHero title="这份补充讲座真正要你带走的能力" subtitle="你不是“接受 AI 输出的人”，而是“定义目标、设计约束、评估结果、沉淀流程的人”。当你做到这一点，AI 才会成为稳定的工程增幅器。" />
+<MagHero title="这份补充讲座真正要你带走的能力" />

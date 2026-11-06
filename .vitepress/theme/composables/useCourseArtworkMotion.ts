@@ -1,5 +1,6 @@
 import { onBeforeUnmount, onMounted, type Ref } from 'vue'
 import { gsap } from 'gsap'
+import { observeArtworkPlayback } from './observeArtworkPlayback'
 
 /** Short, once-per-visit illustrations. Each mobile panel starts in its own viewport. */
 export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
@@ -16,10 +17,8 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
     media.add({ reduce: '(prefers-reduced-motion: reduce)', desktop: '(min-width: 641px)', mobile: '(max-width: 640px)' }, context => {
       if (context.conditions?.reduce) return
       const connectors = Array.from(figure.querySelectorAll<SVGPathElement>('.art-connector path'))
-      const visible = new Set<Element>()
       const timelines = new Map<Element, gsap.core.Timeline>()
       const journal = figure.closest<HTMLElement>('.course-journal')
-      const canPlay = () => !document.hidden && journal?.dataset.coursePage !== 'cover' && !journal?.dataset.coverTransition
       function draw(timeline: gsap.core.Timeline, paths: SVGPathElement[], lengths: Map<SVGPathElement, number>, at: number, duration: number) {
         paths.forEach(path => timeline.fromTo(path, {
           strokeDasharray: `${lengths.get(path)} ${lengths.get(path)}`, strokeDashoffset: lengths.get(path)
@@ -65,43 +64,19 @@ export function useCourseArtworkMotion(root: Ref<HTMLElement | null>) {
         if (connectors[index]) draw(timeline, [connectors[index]], lengths, 1.2, .55)
         stage.dataset.motionState = 'waiting'
       })
-      const sync = (stage: HTMLElement) => {
-        if (visible.has(stage) && canPlay()) {
-          if (!timelines.has(stage)) context.prepare(stage)
-          const timeline = timelines.get(stage)!
-          if (timeline.progress() < 1) timeline.play()
-        } else timelines.get(stage)?.pause()
-      }
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) visible.add(entry.target)
-          else visible.delete(entry.target)
-          sync(entry.target as HTMLElement)
-        })
-      }, { threshold: .28 })
-      stages.forEach(stage => observer.observe(stage))
-      const onVisibility = () => stages.forEach(sync)
-      const prepareCover = () => {
-        // The panel's counter-transforms keep these bounds in their final
-        // viewport positions. Prepare only the incoming screen's stages; later
-        // mobile stages remain lazy and all timelines stay paused until settled.
-        const incoming = stages.filter(stage => {
-          const bounds = stage.getBoundingClientRect()
-          return bounds.top < innerHeight && bounds.bottom > 0
-        })
-        incoming.forEach(stage => { if (!timelines.has(stage)) context.prepare(stage) })
-      }
-      document.addEventListener('visibilitychange', onVisibility)
-      journal?.addEventListener('course-cover-prepare', prepareCover)
-      journal?.addEventListener('course-cover-settled', onVisibility)
-      const pageObserver = new MutationObserver(onVisibility)
-      if (journal) pageObserver.observe(journal, { attributes: true, attributeFilter: ['data-course-page', 'data-cover-transition'] })
+      const prepare = (stage: HTMLElement) => { if (!timelines.has(stage)) context.prepare(stage) }
+      const stopPlayback = observeArtworkPlayback({
+        targets: stages, journal, threshold: .28, prepare,
+        sync: (stage, playing) => {
+          if (playing) {
+            prepare(stage)
+            const timeline = timelines.get(stage)!
+            if (timeline.progress() < 1) timeline.play()
+          } else timelines.get(stage)?.pause()
+        }
+      })
       return () => {
-        observer.disconnect()
-        pageObserver.disconnect()
-        journal?.removeEventListener('course-cover-prepare', prepareCover)
-        journal?.removeEventListener('course-cover-settled', onVisibility)
-        document.removeEventListener('visibilitychange', onVisibility)
+        stopPlayback()
         stages.forEach(stage => { delete stage.dataset.motionState })
       }
     }, figure)

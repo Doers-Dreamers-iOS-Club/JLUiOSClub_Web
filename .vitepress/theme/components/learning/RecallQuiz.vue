@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { ChapterId } from '../../../data/course'
 import { computed, nextTick, ref, watch } from 'vue'
 
-type Chapter = '01' | '02' | '03' | '04' | '05' | '06' | 'api-setup'
+type Chapter = ChapterId | 'api-setup'
 const props = withDefaults(defineProps<{ chapter?: Chapter }>(), { chapter: '01' })
 const questions: Record<Chapter, { question: string; choices: string[]; answer: number; explanation: string }> = {
   '01': { question: 'AI 说“已经完成”，接下来应该做什么？', choices: ['直接认为需求已经实现', '查看改动并按需求验证结果', '让 AI 再说一次完成'], answer: 1, explanation: 'AI 的回答是工作说明。你还需要阅读实际改动、运行项目并检查预期行为，才能确认交付。' },
@@ -12,7 +13,7 @@ const questions: Record<Chapter, { question: string; choices: string[]; answer: 
   '06': { question: '通过 MCP 让 Agent 操作浏览器，哪条链路更准确？', choices: ['Agent 选择工具，宿主客户端连接服务端，工具执行并返回结果', 'MCP 自己决定需求并替用户完成所有验证', '只要连接成功，就证明网页行为正确'], answer: 0, explanation: 'MCP 规范客户端与服务端通信，浏览器工具执行实际操作。Agent 还要检查返回的页面状态与操作结果，确认它们符合用户要求。' },
   'api-setup': { question: '客户端配置已经填完，怎样确认 API 确实连通？', choices: ['看到保存成功就结束', '核对服务商、Base URL、Key、模型的对应关系，再发一条实际请求', '公开 API Key，让其他人替你测试'], answer: 1, explanation: '配置保存成功不等于请求成功。服务地址、密钥和模型必须匹配服务商支持的用法，再通过实际响应确认连通；不要公开密钥。' },
 }
-const quiz = computed(() => questions[props.chapter] ?? questions['01'])
+const quiz = computed(() => questions[props.chapter])
 const selected = ref<number | null>(null)
 const choices = ref<HTMLButtonElement[]>([])
 const correct = computed(() => selected.value === quiz.value.answer)

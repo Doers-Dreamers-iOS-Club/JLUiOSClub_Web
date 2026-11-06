@@ -10,14 +10,14 @@
 
 ## Tasks
 
-- [ ] Data: add `.vitepress/data/createRecordLoader.ts` and a pure linear `groupByYear` function; use them from the three loaders and both archive consumers. Normalize competition frontmatter to quoted dates. Test sorting, grouping, URL date inference and invalid date reporting with `node --test`.
-- [ ] Course: separate chapter catalog from persistence, derive totals and membership from the catalog, remove unused minutes props and stale fallbacks. Keep reading storage key and existing progress semantics.
-- [ ] Theme: move registration to `components/register.ts`, isolate image/reveal refresh as a composable, make illustration registry module-scoped. Remove the five audited unused modules and unused dependencies.
-- [ ] Motion: extract course entrance strategy from `useCourseCover`; share artwork observer lifecycle; implement a visibility/reduced-motion composable for carousel and lab playback. Add browser regression for timers and preserve existing artwork tests.
-- [ ] Icons: add a small build-time CSS transform in `.vitepress/plugins/` that discovers `ti-*` literals from theme and Markdown sources, retains base/font-face rules and filters unused icon selectors. Verify all source classes resolve and measure production CSS.
-- [ ] Authoring: clean stale props at definitions and Markdown call sites. Add an explicit card body option for linked cards, native details wrapper, component guide and downloadable/copyable page templates; update README and theme reference.
-- [ ] Validation: add strict TypeScript checking for changed typed modules and Vue components, reuse existing browser scripts, update obsolete design assertions to current routes, run build and relevant regression suites. Record outputs and compare baseline resource bytes.
-- [ ] Review and commit: inspect diff for needless guards/abstractions, review spec compliance then code quality, commit as Hean-Yi. Keep work on the feature branch without merging or deploying.
+- [x] Data: add `.vitepress/data/createRecordLoader.ts` and a pure linear `groupByYear` function; use them from the three loaders and both archive consumers. Normalize competition frontmatter to quoted dates. Test sorting, grouping, URL date inference and invalid date reporting with `node --test`.
+- [x] Course: separate chapter catalog from persistence, derive totals and membership from the catalog, remove unused minutes props and stale fallbacks. Keep reading storage key and existing progress semantics.
+- [x] Theme: move registration to `components/register.ts`, isolate image/reveal refresh as a composable, make illustration registry module-scoped. Remove the five audited unused modules and unused dependencies.
+- [x] Motion: extract course entrance strategy from `useCourseCover`; share artwork observer lifecycle; implement a visibility/reduced-motion composable for carousel and lab playback. Add browser regression for timers and preserve existing artwork tests.
+- [x] Icons: add a small build-time CSS transform in `.vitepress/plugins/` that discovers `ti-*` literals from theme and Markdown sources, retains base/font-face rules and filters unused icon selectors. Verify all source classes resolve and measure production CSS.
+- [x] Authoring: clean stale props at definitions and Markdown call sites. Add an explicit card body option for linked cards, native details wrapper, component guide and downloadable/copyable page templates; update README and theme reference.
+- [x] Validation: add strict TypeScript checking for changed typed modules and Vue components, reuse existing browser scripts, update obsolete design assertions to current routes, run build and relevant regression suites. Record outputs and compare baseline resource bytes.
+- [x] Review and commit: inspect diff for needless guards/abstractions, review spec compliance then code quality, commit as Hean-Yi. Keep work on the feature branch without merging or deploying.
 
 ## Verification commands
 

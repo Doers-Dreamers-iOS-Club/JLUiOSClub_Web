@@ -7,11 +7,11 @@ tags: [MAIC, 宣讲会]
 <MagHero title="移动应用创新赛——宣讲会来啦！" />
 
 <MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2025年<strong>05月11日</strong></MagCard>
-  <MagCard icon="🕜" title="时间">晚 19:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B110</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">吉林大学MAIC的指导教师谷方明</MagCard>
-  <MagCard icon="✋" title="竞赛官网"><a href="https://www.appcontext.net">竞赛官网</a></MagCard>
+  <MagCard title="日期">2025年<strong>05月11日</strong></MagCard>
+  <MagCard title="时间">晚 19:00</MagCard>
+  <MagCard title="地点">南区计算机楼 B110</MagCard>
+  <MagCard title="主讲人">吉林大学MAIC的指导教师谷方明</MagCard>
+  <MagCard title="竞赛官网"><a href="https://www.appcontext.net">竞赛官网</a></MagCard>
 </MagGrid>
 
 ## 活动亮点

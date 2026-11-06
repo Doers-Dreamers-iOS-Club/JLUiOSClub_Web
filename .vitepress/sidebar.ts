@@ -1,18 +1,12 @@
-import { DefaultTheme } from "vitepress";
+import { chapters } from './data/course'
+import type { DefaultTheme } from "vitepress";
 
 const sidebar: DefaultTheme.Sidebar = {
   '/resources/ai-programming/': {
     base: '/resources/ai-programming/',
     items: [
       { text: '从想法到作品', link: '' },
-      { text: '六章主线', items: [
-        { text: '01 · 先让想法动起来', link: 'chapters/01' },
-        { text: '02 · 让 Agent 沿着想法做', link: 'chapters/02' },
-        { text: '03 · 为了改好它而学习', link: 'chapters/03' },
-        { text: '04 · 排错、恢复与继续', link: 'chapters/04' },
-        { text: '05 · 把方法变成 Skill', link: 'chapters/05' },
-        { text: '06 · 用 MCP 操作作品', link: 'chapters/06' },
-      ] },
+      { text: '主线课程', items: chapters.map(({ id, title }) => ({ text: `${id} · ${title}`, link: `chapters/${id}` })) },
       { text: '补充学习', items: [
         { text: '在 DSH 中接入模型', link: 'chapters/api-setup' },
         { text: '选读 · Python 调用 API', link: 'reference/python-api' },

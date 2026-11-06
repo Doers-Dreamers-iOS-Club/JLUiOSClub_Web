@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { courseBase, readState, saveState } from './course'
-const props = defineProps<{ chapter: string; minutes: number }>()
+import { chapterIds, courseBase } from '../../../data/course'
+import { readState, saveState } from '../../composables/readingState'
+const props = defineProps<{ chapter: string }>()
 const complete = ref(false)
 const message = ref('')
-const main = computed(() => /^0[1-6]$/.test(props.chapter))
+const main = computed(() => chapterIds.includes(props.chapter))
 onMounted(() => {
   if (!main.value) return
   const state = readState()

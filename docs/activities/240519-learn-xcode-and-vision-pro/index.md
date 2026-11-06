@@ -4,7 +4,7 @@ icon: "🥽"
 tags: [Vision Pro, Xcode]
 description: "深入了解 Vision Pro 与 Xcode 开发的第一场活动。"
 ---
-<MagHero title="《深入了解 Vision Pro》系列活动" eyebrow="第一期" subtitle="🚀 深入探索Apple Vision Pro，掌握Xcode编程，一起开启visionOS应用之旅！🚀" />
+<MagHero title="《深入了解 Vision Pro》系列活动" />
 
 亲爱的同学们，
 

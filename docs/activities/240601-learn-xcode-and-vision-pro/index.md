@@ -4,7 +4,7 @@ icon: "🥽"
 tags: [Vision Pro, Xcode]
 description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
 ---
-<MagHero title="《深入了解 Vision Pro》系列活动" eyebrow="第二期" subtitle="🚀 Xcode实操大挑战：用Xcode编写宇宙星系模拟的visionOS 应用！🚀" />
+<MagHero title="《深入了解 Vision Pro》系列活动" />
 
 亲爱的同学们，
 

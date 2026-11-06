@@ -5,7 +5,7 @@ icon: "📚"
 tags: [Swift, 打卡挑战]
 ---
 
-<MagHero eyebrow="Summer Challenge" title="Learn Swift! 暑期学习打卡挑战" />
+<MagHero title="Learn Swift! 暑期学习打卡挑战" />
 
 来参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift吧！
 

@@ -5,7 +5,7 @@ outline: [2, 3]
 pageClass: ai-course-article
 ---
 
-<MagHero eyebrow="从想法到作品 / TOOLKIT" title="动手时，把它们放在身边。" subtitle="先查看用途和内容，再把需要的文件带回自己的项目。" />
+<MagHero title="动手时，把它们放在身边。" />
 
 <div class="course-actions">
 <a class="course-file-button" href="/ai-programming/ai-programming-handbook.zip" download>下载完整讲义包 ↓</a>

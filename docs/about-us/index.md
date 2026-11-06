@@ -1,4 +1,4 @@
-<MagHero eyebrow="About" title="关于我们" subtitle="吉林大学 Doers &amp; Dreamers iOS Club —— 一群热爱 Apple 生态的创造者。" />
+<MagHero title="关于我们" />
 
 ![](/logo-hero.png)
 
@@ -27,7 +27,7 @@
 ## 指导老师
 
 <MagGrid :cols="1">
-  <MagCard icon="👨‍🏫" title="谷方明 —— 技术顾问">
+  <MagCard title="谷方明 —— 技术顾问">
     <ul>
       <li>计算机科学与技术学院教师</li>
       <li>为社团、竞赛提供技术指导</li>
