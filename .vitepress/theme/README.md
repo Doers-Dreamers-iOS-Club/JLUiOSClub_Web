@@ -86,4 +86,6 @@ node scripts/check-route-motion.mjs http://localhost:4173
 
 复杂动效另有 `check-course-motion`、`check-fullpage`、`check-ai-course` 等浏览器检查。使用系统 Chrome。类型检查保持 strict；`vendor.d.ts` 只声明上游未提供类型的少量接口，私有 VPMenu 通过 `types/vitepress-menu.d.ts` 声明组件边界，不把依赖内部源码纳入本项目检查。
 
-设计背景与本次审查见 [重构设计](../../docs/superpowers/specs/2026-11-06-maintainability-design.md)。旧设计记录保留在 superpowers 目录和 Git 历史中。
+开发约定与检查流程见 [开发与维护](../../docs/about-us/maintenance/development.md)。
+
+本地设计记录 `docs/superpowers/` 与根目录 `.gitignore` 不纳入版本管理。维护者在本地 `.gitignore` 中加入 `/docs/superpowers/` 和 `/.gitignore`；这些忽略规则不随仓库分发。
