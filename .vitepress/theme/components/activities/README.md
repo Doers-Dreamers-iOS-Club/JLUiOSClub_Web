@@ -17,3 +17,5 @@ Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`pr
 SVG 修改完成后必须先渲染实际页面截图，逐张查看浅色、深色与手机端的主体轮廓、线条交叉、文字遮挡和裁切；修正视觉问题后再 commit，不能只凭源码或构建通过判定完成。
 
 `MagazineSidebar.vue` 将 `sidebar.ts` 的分组呈现为杂志目次，复用主页 `RollText`。`ClubSidebarGroup.vue` 仅在活动文章中替换目录内容，VitePress 继续负责抽屉与键盘操作，其他栏目保留默认侧栏。
+
+目录只保留「目次」、简短链接和条目编号，最新活动固定展示前三篇，其余移入往期活动。`ClubLayout.vue` 管理桌面侧栏收起状态，切换文章时保持；移动端仍使用默认抽屉。
