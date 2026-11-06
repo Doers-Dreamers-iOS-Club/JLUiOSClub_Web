@@ -87,7 +87,7 @@ npm run preview
 
 1. 新建专题目录与页面（如 `index.md`、`first.md`、`second.md`）；
 2. 图片放入专题下 `imgs/` 或 `shots/`，避免跨目录引用；
-3. 在 `/.vitepress/sidebar.ts` 增加专题侧栏分组；
+3. 活动详情沿用 `MagArticle` 杂志版式，长讲义提供文内目录；专题总览负责讲义间的导航；
 4. 活动索引会自动收录 `docs/activities/*/index.md`；按需更新首页推荐入口。
 
 ### C. Winter Swift 专题当前组织
@@ -124,7 +124,7 @@ npm run preview
 ## 维护建议
 
 - 定期清理无效资源（如 macOS 产生的 `._*` 文件、`.DS_Store`）；
-- 新增活动会自动进入活动索引；同步检查侧栏并按需更新首页推荐入口；
+- 新增活动会自动进入活动索引；同步检查文内目录与继续阅读链接，并按需更新首页推荐入口；
 - 活动和讲义可复制 `docs/public/templates/` 中的 Markdown 模板。
 
 ## License

@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   title: string
   description: string
   date: string
   issue: string
   category: string
+  kind?: string
+  author?: string
+  dateLabel?: string
+  numbered?: boolean
   next?: { title: string; href: string }
-}>()
+}>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true })
 const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('\n'))
 </script>
 
 <template>
-  <article class="mag-article">
+  <article class="mag-article" :class="{ 'mag-article--numbered': numbered }">
     <header class="mag-article__header">
       <div class="mag-article__masthead">
         <a href="/activities/#activity-content">社团活动 · 现场手记</a>
@@ -31,15 +35,15 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
         </div>
       </div>
       <div class="mag-article__byline">
-        <span>大学生创新应用工坊</span>
-        <time :datetime="date">{{ date.replaceAll('-', '.') }}</time>
-        <span>活动回顾</span>
+        <span>{{ author }}</span>
+        <time :datetime="date" :aria-label="`${dateLabel} ${date}`"><span v-if="dateLabel !== '活动日期'">{{ dateLabel }} · </span>{{ date.replaceAll('-', '.') }}</time>
+        <span>{{ kind }}</span>
       </div>
     </header>
     <div class="mag-article__body"><slot /></div>
     <footer class="mag-article__footer">
       <span class="mag-article__endmark" aria-hidden="true">■</span>
-      <p>大学生创新应用工坊 <span lang="en">/ FIELD NOTES {{ issue }}</span></p>
+      <p>{{ author }} <span lang="en">/ FIELD NOTES {{ issue }}</span></p>
       <nav aria-label="文章导航">
         <a href="/activities/#activity-content">返回活动目录 <span aria-hidden="true">↗</span></a>
         <a v-if="next" :href="next.href"><span class="mag-article__next-label">继续阅读</span>{{ next.title }} <span aria-hidden="true">→</span></a>
@@ -69,7 +73,7 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 .mag-article__body :deep(p) { margin: 20px 0; }
 .mag-article__body :deep(> p:first-child) { font-family: var(--mag-font-serif); font-size: 20px; line-height: 1.95; }
 .mag-article__body :deep(h2) { position: relative; margin: 56px 0 24px; padding: 0; border: 0; font-family: var(--mag-font-serif); font-size: 26px; font-weight: 600; line-height: 1.6; text-wrap: pretty; }
-.mag-article__body :deep(h2)::before { counter-increment: article-section; content: counter(article-section, decimal-leading-zero); position: absolute; left: -58px; top: 5px; color: var(--mag-accent); font: italic 24px/1.6 var(--mag-font-serif); }
+.mag-article--numbered .mag-article__body :deep(h2)::before { counter-increment: article-section; content: counter(article-section, decimal-leading-zero); position: absolute; left: -58px; top: 5px; color: var(--mag-accent); font: italic 24px/1.6 var(--mag-font-serif); }
 .mag-article__body :deep(h3) { margin: 32px 0 12px; font-size: 18px; font-weight: 600; }
 .mag-article__body :deep(strong) { font-weight: 600; }
 .mag-article__body :deep(blockquote) { margin: 40px -64px; padding: 24px 40px; border-inline: 0; border-block: var(--mag-rule); text-align: center; }
@@ -85,11 +89,38 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 .mag-article__footer nav a:hover { color: var(--mag-accent); }
 .mag-article__next-label { display: block; color: var(--mag-text-secondary); font-size: 11px; }
 .mag-article__footer nav a:last-child { text-align: right; }
+
+.mag-article__body :deep(.article-facts) { margin: 32px 0; padding: 20px 0; border-block: var(--mag-rule); color: var(--mag-text-secondary); }
+.mag-article__body :deep(.article-facts p) { margin: 8px 0; font-size: 14px; line-height: 1.9; }
+.mag-article__body :deep(.article-contents) { margin: 32px 0; padding: 20px 0; border-block: var(--mag-rule); }
+.mag-article__body :deep(.article-contents summary) { cursor: pointer; font-size: 14px; font-weight: 500; }
+.mag-article__body :deep(.article-contents ol) { padding-left: 24px; margin-bottom: 0; }
+.mag-article__body :deep(.article-contents li) { font-size: 14px; line-height: 1.8; }
+.mag-article__body :deep(.article-contents a) { color: var(--mag-text-secondary); text-decoration: none; }
+.mag-article__body :deep(.article-contents a:hover) { color: var(--mag-accent); }
+.mag-article__body :deep(figure) { margin: 32px 0; }
+.mag-article__body :deep(figure img) { display: block; margin-inline: auto; width: auto; max-width: 100%; height: auto; max-height: 38rem; border: 0; border-radius: 2px; }
+.mag-article__body :deep(figcaption) { margin: 12px 0 0; color: var(--mag-text-secondary); font-size: 12px; line-height: 1.7; text-align: left; }
+.mag-article__body :deep(.mag-grid--media) { margin: 32px 0; }
+.mag-article__body :deep(.mag-grid--media figure) { margin: 0; }
+.mag-article__body :deep(.mag-grid--media img) { width: 100%; height: auto; max-height: none; }
+.mag-article__body :deep(.mag-note), .mag-article__body :deep(.custom-block) { margin: 28px 0; padding: 8px 0 8px 20px; border: 0; border-left: 2px solid var(--mag-hairline-strong); border-radius: 0; background: transparent; }
+.mag-article__body :deep(.mag-note p), .mag-article__body :deep(.custom-block p), .mag-article__body :deep(.mag-note li), .mag-article__body :deep(.custom-block li) { font-size: 15px; }
+.mag-article__body :deep(.mag-note h3) { font-family: var(--mag-font-display); font-size: 17px; }
+.mag-article__body :deep(.mag-note__title), .mag-article__body :deep(.custom-block-title) { margin-top: 0; font-weight: 600; }
+.mag-article__body :deep(div[class*='language-']) { margin: 24px 0; max-width: 100%; border-radius: 2px; }
+.mag-article__body :deep(table) { display: block; max-width: 100%; overflow-x: auto; font-size: 14px; }
+.mag-article__body :deep(iframe), .mag-article__body :deep(video) { max-width: 100%; }
+.mag-article__body :deep(.mermaid) { max-width: 100%; overflow-x: auto; }
+.mag-article__body :deep(.dual-qr) { flex-wrap: wrap; }
+.mag-article__body :deep(.dual-qr img) { max-width: 100%; }
+.mag-article__body :deep(a), .mag-article__body :deep(:not(pre) > code) { overflow-wrap: anywhere; }
+
 @media (max-width: 959px) {
   .mag-article__opening { grid-template-columns: minmax(0, 1fr) 85px; gap: 24px; }
   .mag-article__number { font-size: 84px; }
   .mag-article__body { padding-inline: 32px; }
-  .mag-article__body :deep(h2)::before { position: static; display: block; margin-bottom: 6px; font-size: 20px; }
+  .mag-article--numbered .mag-article__body :deep(h2)::before { position: static; display: block; margin-bottom: 6px; font-size: 20px; }
   .mag-article__body :deep(blockquote) { margin-inline: -24px; padding-inline: 24px; }
 }
 @media (max-width: 600px) {

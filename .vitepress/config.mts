@@ -29,7 +29,7 @@ const viteConfig: UserConfig = {
     return pageData.relativePath === 'index.md'
       ? [['link', { rel: 'preload', href: '/fonts/instrument-serif/instrument-serif-latin.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }]] : []
   },
-  srcExclude: ['**/_content/**', 'public/**', 'superpowers/**'],
+  srcExclude: ['**/AGENTS.md', '**/_content/**', 'public/**', 'superpowers/**'],
   lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "吉林大学Doers&Dreamers iOS CLub社团官方网站",

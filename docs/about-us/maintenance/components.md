@@ -32,7 +32,7 @@ date: "2026-11-06"
 
 ## 杂志文章
 
-活动回顾可以使用 `MagArticle`，实际效果见 [秋季纳新宣讲](/activities/261011-autumn-welcome/)、[华为 ICT 路演](/activities/261016-huawei-ict/) 和 [Find 主题交流](/activities/261025-idea-workshop/)。它提供刊头、导语、日期、编号章节、摘句和文末导航，正文仍然使用普通 Markdown。
+活动详情、介绍、回顾与讲义统一使用 `MagArticle`。实际效果见 [秋季纳新宣讲](/activities/261011-autumn-welcome/)、[华为 ICT 路演](/activities/261016-huawei-ict/) 和 [Find 主题交流](/activities/261025-idea-workshop/)。它提供刊头、导语、日期、编号章节、摘句和文末导航，正文仍然使用普通 Markdown。
 
 ```md
 ---
@@ -62,7 +62,11 @@ pageClass: mag-article-page
 </MagArticle>
 ```
 
-`title`、`description`、`date`、`issue`、`category` 为必填参数，日期使用 ISO 字符串。`next` 可选，格式为 `{ title: '下一篇标题', href: '/activities/下一篇目录/' }`。组件已经输出一级标题，正文从二级标题开始。`pageClass` 应用于独立文章页；它只调整这一类页面的阅读宽度与页脚，不影响其他页面。长文以段落推进，少量摘句即可形成阅读节奏。
+`title`、`description`、`date`、`issue`、`category` 为必填参数，日期使用 ISO 字符串。`kind` 默认“活动回顾”，可设为“活动介绍”或“活动讲义”；`author` 设置署名。仅知道记录日期时使用 `date-label="记录日期"`。已有手动章节编号时使用 `:numbered="false"`。`next` 可选，格式为 `{ title: '下一篇标题', href: '/activities/下一篇目录/' }`。组件已经输出一级标题，正文从二级标题开始。`pageClass` 应用于独立文章页；它只调整这一类页面的阅读宽度与页脚，不影响其他页面。长文以段落推进，少量摘句即可形成阅读节奏。
+
+活动详情采用统一的单栏文章结构，事实资料使用段落或 `<div class="article-facts">`，不再把全文拆成卡片和步骤框。较长讲义可以参考 [SwiftUI 第一讲](/activities/260209-winter-swift/first) 的原生折叠目录；更换标题时使用 `{#原锚点}` 保留旧链接。照片与截图提供原始尺寸，首图提前加载、后续图片由浏览器在接近视口时加载。活动总目录和专题总览继续使用现有封面导航。
+
+仓库内的创作约定位于 `docs/activities/AGENTS.md`；活动页与讲义下载模板也已采用此版式。
 
 ## 网格与卡片
 

@@ -1,6 +1,6 @@
 # 活动总览页
 
-活动索引和某一期活动的导航入口都属于总览页，使用 `ActivityOverview.vue`，不要套内容页侧栏或卡片墙。讲义、回顾正文等内容页保留原侧栏。
+活动索引和某一期活动的导航入口都属于总览页，使用 `ActivityOverview.vue`，不要套内容页侧栏或卡片墙。活动详情、介绍、讲义与回顾正文统一使用 `MagArticle` 和 `pageClass: mag-article-page`，隐藏文档侧栏，以连续文章组织内容。具体创作规范见 `docs/activities/AGENTS.md` 和网页维护指南，长讲义使用文内可点击目录。
 
 Markdown 入口设置 `sidebar: false`、`aside: false`、`outline: false`、`prev: false`、`next: false`、`pageClass: activity-overview`，导入该页的 Landing 组件。
 

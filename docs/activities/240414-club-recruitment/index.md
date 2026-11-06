@@ -1,10 +1,26 @@
 ---
-title: 2024 百团纳新
+title: "2024 百团纳新"
 icon: "🎉"
 tags: [纳新]
 description: "2024 百团大战纳新：果粉们看过来，JLU iOS Club 等你加入。"
+date: "2024-04-14"
+sidebar: false
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
-<MagHero title="😲 果粉们看过来！JLU iOS Club 纳新啦！" />
+
+<script setup>
+import dualQRCode from '/components/dualQRCode.vue';
+</script>
+
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="02" category="社团纳新 · 2024" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: 'MAIC 官方宣讲会', href: '/activities/240420-maic-offical-seminar/' }">
+
+2024 年百团纳新，JLU iOS Club 在田径场 B13 摊位与同学们相遇。认识社团、交流兴趣，也从一次小小的问答开始，了解开发与设计的更多可能。
 
 > 笔落于此 或许有些言不达意 
 > 
@@ -18,7 +34,9 @@ description: "2024 百团大战纳新：果粉们看过来，JLU iOS Club 等你
 
 ## 关于我们
 
-![社团活动实景](..%2F..%2Fabout-us%2Fclass1.jpeg)
+<MagFigure caption="社团活动实景">
+<img src="../../about-us/class1.jpeg" alt="社团活动实景" width="1024" height="768" loading="eager" decoding="async" />
+</MagFigure>
 
 吉林大学 Doers & Dreamers iOS Club，简称 JLU iOS Club，是一个由 Apple 公司资助和指导，于2017年成立的计科学院直属社团。成员涵盖计算机学院、软件学院、艺术学院、文学院等，**只要有爱，我们都欢迎！**
 
@@ -45,7 +63,9 @@ JLU iOS Club 原则上设有社长兼负责人 1 名，副社长 2~3 名，并�
 
 ## 来找我们玩！
 
-![2023 百团纳新时的我们](playground.jpg)
+<MagFigure caption="2023 百团纳新时的我们">
+<img src="./playground.jpg" alt="2023 百团纳新时的我们" width="3024" height="4032" loading="lazy" decoding="async" />
+</MagFigure>
 
 4月14日，早上八点半到下午四点半，来田径场**B13**摊位找到 **吉林大学 Doers&Dreamers iOS Club 社团**，我们期待与您相见！
 
@@ -62,7 +82,9 @@ JLU iOS Club 原则上设有社长兼负责人 1 名，副社长 2~3 名，并�
 _（不过私以为我们的周边奖品储备已经相当饱和了🤔）_
 :::
 
-![我们在 B13 摊位（点击图片可放大）](place.jpg)
+<MagFigure caption="我们在 B13 摊位（点击图片可放大）">
+<img src="./place.jpg" alt="我们在 B13 摊位（点击图片可放大）" width="2352" height="2486" loading="lazy" decoding="async" />
+</MagFigure>
 
 ## 关注我们
 
@@ -72,6 +94,4 @@ _（不过私以为我们的周边奖品储备已经相当饱和了🤔）_
 > 
 > **JLU iOS Club** 与您不见不散！
 
-<script setup>
-import dualQRCode from '/components/dualQRCode.vue';
-</script>
+</MagArticle>

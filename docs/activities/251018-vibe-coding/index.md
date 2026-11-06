@@ -1,11 +1,37 @@
 ---
-title: "Vibe Coding - AI时代的开发新方式"
+title: "Vibe Coding，与 AI 一起开发"
 description: "探索AI辅助开发，用Qoder与AI一起编写代码，体验未来的编程方式！"
-date: 2025.10.18
-outline: [2, 3]
 icon: "💻"
 tags: [AI, 开发工具, 工作坊]
+date: "2025-10-18"
+sidebar: false
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
+
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="03" category="开发实战 · 2025" kind="活动讲义" author="JLU iOS Club" date-label="记录日期" :next="{ title: '零代码 AI Agent，日常记录小能手', href: '/activities/251102-AI-Agent/' }">
+
+这份讲义保留了 2025 年 10 月 18 日工作坊的实战路线。从认识 Xcode 开始，使用 Qoder 辅助开发，再完成调试、网页部署与 API 接入。
+
+<details class="article-contents">
+<summary>阅读目录 · 9 节</summary>
+<ol>
+<li><a href="#活动概述">活动概述</a></li>
+<li><a href="#part-1-认识xcode">Part 1: 认识Xcode</a></li>
+<li><a href="#part-2-ai辅助开发实战">Part 2: AI辅助开发实战</a></li>
+<li><a href="#part-3-调试与完善">Part 3: 调试与完善</a></li>
+<li><a href="#part-4-静态网页开发与部署">Part 4: 静态网页开发与部署</a></li>
+<li><a href="#part-5-api使用指南">Part 5: API使用指南</a></li>
+<li><a href="#总结与思考">总结与思考</a></li>
+<li><a href="#相关资源">相关资源</a></li>
+<li><a href="#期待你的作品">期待你的作品！</a></li>
+</ol>
+</details>
 
 <MagNote type="tip" title="继续学习 · 新的入门讲义">
 
@@ -13,34 +39,19 @@ tags: [AI, 开发工具, 工作坊]
 
 </MagNote>
 
+<div class="article-facts">
 
+**活动日期。** 2025年10月18日
 
-<MagHero title="🚀 Vibe Coding" />
+**活动地点。** 南区计算机楼 B110苹果机房
 
-<MagGrid :cols="4">
-  <MagCard>
-    <span class="mag-icon">🗓️</span>
-    <h3>活动日期</h3>
-    <p>2025年10月18日</p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">📍</span>
-    <h3>活动地点</h3>
-    <p>南区计算机楼 B110苹果机房</p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">👨‍💻</span>
-    <h3>主要内容</h3>
-    <p>AI辅助开发实战</p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">🎯</span>
-    <h3>适合人群</h3>
-    <p>所有对编程感兴趣的同学</p>
-  </MagCard>
-</MagGrid>
+**主要内容。** AI辅助开发实战
 
-## 活动概述 <Badge type="tip" text="NEW" />
+**适合人群。** 所有对编程感兴趣的同学
+
+</div>
+
+## 活动概述 {#活动概述}
 
 欢迎来到 **Vibe Coding** 工作坊！在这个AI时代，编程的方式正在发生革命性的变化。本次活动将带你探索如何使用**Qoder**等AI辅助开发工具，让AI成为你的编程伙伴，大幅提升开发效率。
 
@@ -55,46 +66,40 @@ tags: [AI, 开发工具, 工作坊]
 - ✅ API的使用与集成
 :::
 
----
-
-<MagSection title="🎯 Part 1: 认识Xcode" />
+## Part 1: 认识Xcode
 
 Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具。虽然我们主要使用Qoder进行开发，但了解Xcode的项目结构对于理解iOS开发至关重要。
 
 ### 创建你的第一个Xcode项目
 
-<MagStep n="1" title="打开Xcode并创建新项目">
-</MagStep>
+#### 1. 打开Xcode并创建新项目
 
 <MagFigure>
-  <img src="./shots/1.png" alt="Xcode启动界面" />
+<img src="./shots/1.png" alt="Xcode启动界面" width="1472" height="906" loading="eager" decoding="async" />
 </MagFigure>
 
 打开Xcode后，你会看到一个简洁的欢迎界面。点击 **Create New Project** 开始创建你的第一个iOS项目。
 
-<MagStep n="2" title="选择项目模板">
-</MagStep>
+#### 2. 选择项目模板
 
 <MagFigure>
-  <img src="./shots/2.png" alt="选择App模板" />
+<img src="./shots/2.png" alt="选择App模板" width="1520" height="1090" loading="lazy" decoding="async" />
 </MagFigure>
 
 选择默认的 **App** 模板，这是最基础的iOS应用模板。
 
-<MagStep n="3" title="配置项目信息">
-</MagStep>
+#### 3. 配置项目信息
 
 <MagFigure>
-  <img src="./shots/3.png" alt="输入项目名称" />
+<img src="./shots/3.png" alt="输入项目名称" width="1516" height="1082" loading="lazy" decoding="async" />
 </MagFigure>
 
 输入你的项目名称，这里演示使用 `test` 作为项目名。建议使用有意义的英文名称。
 
-<MagStep n="4" title="选择保存位置">
-</MagStep>
+#### 4. 选择保存位置
 
 <MagFigure>
-  <img src="./shots/4.png" alt="选择保存位置" />
+<img src="./shots/4.png" alt="选择保存位置" width="1610" height="902" loading="lazy" decoding="async" />
 </MagFigure>
 
 选择一个合适的文件夹保存项目，也可以点击左下角的 **New Folder** 创建新文件夹。
@@ -102,22 +107,22 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 ### 理解Xcode项目结构
 
 <MagFigure>
-  <img src="./shots/5.png" alt="Xcode项目界面" />
+<img src="./shots/5.png" alt="Xcode项目界面" width="2784" height="1792" loading="lazy" decoding="async" />
 </MagFigure>
 
 创建完成后，你会看到Xcode的主界面，包含了许多文件和配置选项。现阶段我们不需要深入了解每个文件的作用，重点是理解项目的整体结构。
 
 <MagNote>
-  <h3>🔍 重要发现：xcodeproj文件</h3>
-  
+<h3>重要发现：xcodeproj文件</h3>
+
 <MagFigure>
-  <img src="./shots/6.png" alt="Finder中的项目文件" />
+<img src="./shots/6.png" alt="Finder中的项目文件" width="1828" height="858" loading="lazy" decoding="async" />
 </MagFigure>
 
 在Finder中打开项目文件夹，你会发现一个 `.xcodeproj` 文件。这个文件是什么呢？
 
 <MagFigure>
-  <img src="./shots/8.png" alt="项目文件夹内容" />
+<img src="./shots/8.png" alt="项目文件夹内容" width="1822" height="860" loading="lazy" decoding="async" />
 </MagFigure>
 
 **xcodeproj文件是Xcode项目的大脑**，它定义了：
@@ -134,21 +139,19 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 如果找不到保存的项目位置，按下 **Command + 空格** 打开聚焦搜索，直接搜索项目文件夹名即可！
 
 <MagFigure>
-  <img src="./shots/7.png" alt="使用聚焦搜索" />
+<img src="./shots/7.png" alt="使用聚焦搜索" width="2426" height="1732" loading="lazy" decoding="async" />
 </MagFigure>
 :::
 
----
-
-<MagSection title="🤖 Part 2: AI辅助开发实战" />
+## Part 2: AI辅助开发实战
 
 ### 构思你的项目
 
 在开始动手之前，我们需要明确想要创建什么。但作为初学者，我们可能不清楚需要哪些技术栈、开发流程是怎样的。这时候，**AI就是你最好的老师**！
 
 <MagNote type="tip">
-  <h3>📝 编写高效的Prompt模板</h3>
-  
+<h3>编写高效的Prompt模板</h3>
+
 一个好的Prompt应该包含以下要素：
 
 ```text
@@ -189,29 +192,26 @@ Xcode是苹果官方的集成开发环境（IDE），是iOS开发的核心工具
 
 ### 使用Qoder开始开发
 
-<MagStep n="1" title="打开Qoder并创建项目">
-</MagStep>
+#### 1. 打开Qoder并创建项目
 
 <MagFigure>
-  <img src="./shots/10.png" alt="Qoder启动界面" />
+<img src="./shots/10.png" alt="Qoder启动界面" width="2384" height="1594" loading="lazy" decoding="async" />
 </MagFigure>
 
 打开Qoder，选择 **打开项目**，选择一个文件夹作为项目存储位置（建议使用英文命名）。
 
-<MagStep n="2" title="信任作者">
-</MagStep>
+#### 2. 信任作者
 
 <MagFigure>
-  <img src="./shots/11.png" alt="信任此作者" />
+<img src="./shots/11.png" alt="信任此作者" width="2378" height="1584" loading="lazy" decoding="async" />
 </MagFigure>
 
 首次打开时，选择 **信任此作者** 以启用完整功能。
 
-<MagStep n="3" title="了解Qoder工作区">
-</MagStep>
+#### 3. 了解Qoder工作区
 
 <MagFigure>
-  <img src="./shots/12.png" alt="Qoder工作区" />
+<img src="./shots/12.png" alt="Qoder工作区" width="2378" height="1592" loading="lazy" decoding="async" />
 </MagFigure>
 
 Qoder的界面分为三个主要区域：
@@ -223,14 +223,13 @@ Qoder的界面分为三个主要区域：
 厌倦了每次都要手动点击确认？
 
 <MagFigure>
-  <img src="./shots/13.png" alt="Qoder设置" />
+<img src="./shots/13.png" alt="Qoder设置" width="360" height="514" loading="lazy" decoding="async" />
 </MagFigure>
 
 点击右上角用户头像 → **Qoder设置** → **智能会话** → 将终端和Web工具改为 **自动执行**，让AI帮你自动处理！
 :::
 
-<MagStep n="4" title="输入Prompt开始创建">
-</MagStep>
+#### 4. 输入Prompt开始创建
 
 将你精心准备的Prompt粘贴到对话框中，按Enter发送。接下来，就是见证奇迹的时刻——AI会为你自动生成完整的项目代码！
 
@@ -295,9 +294,7 @@ Qoder的界面分为三个主要区域：
 请在实现前先生成一个简短的开发说明（≤ 200 字），说明核心实现思路（例如：方块表示、旋转规则、碰撞检测、渲染更新节奏），接着开始生成代码文件。谢谢。
 ```
 
----
-
-<MagSection title="🔧 Part 3: 调试与完善" />
+## Part 3: 调试与完善
 
 AI虽然强大，但生成的代码可能存在一些问题。这时候就需要我们进行调试和优化。
 
@@ -316,25 +313,23 @@ AI会自动进行编译并修复可能出现的错误。
 有些视觉效果和交互细节，我们可以在Xcode中进行精细调整。
 
 <MagFigure>
-  <img src="./shots/14.png" alt="发现问题" />
+<img src="./shots/14.png" alt="发现问题" width="870" height="1878" loading="lazy" decoding="async" />
 </MagFigure>
 
 比如发现了一些UI布局问题：文字位置偏移、大小不合适、颜色不喜欢等。
 
-<MagStep n="1" title="定位问题代码">
-</MagStep>
+#### 1. 定位问题代码
 
 <MagFigure>
-  <img src="./shots/15.png" alt="查找ContentView" />
+<img src="./shots/15.png" alt="查找ContentView" width="2256" height="1754" loading="lazy" decoding="async" />
 </MagFigure>
 
 打开主文件，找到 `ContentView()`，右键选择 **Jump to Definition** 跳转到定义位置。
 
-<MagStep n="2" title="使用实时预览">
-</MagStep>
+#### 2. 使用实时预览
 
 <MagFigure>
-  <img src="./shots/17.png" alt="Xcode界面布局" />
+<img src="./shots/17.png" alt="Xcode界面布局" width="2794" height="1784" loading="lazy" decoding="async" />
 </MagFigure>
 
 Xcode的界面分为四个区域：
@@ -344,13 +339,12 @@ Xcode的界面分为四个区域：
 - **右侧右**：属性面板
 
 <MagFigure>
-  <img src="./shots/18.png" alt="实时预览" />
+<img src="./shots/18.png" alt="实时预览" width="912" height="1356" loading="lazy" decoding="async" />
 </MagFigure>
 
 点击重试按钮启动实时预览，可以实时看到UI效果。
 
-<MagStep n="3" title="使用选择工具定位组件">
-</MagStep>
+#### 3. 使用选择工具定位组件
 
 左下角有三个工具按钮：
 1. **交互模式**：直接与UI交互
@@ -360,17 +354,17 @@ Xcode的界面分为四个区域：
 使用选择模式点击有问题的UI元素，代码编辑器会自动高亮对应代码。
 
 <MagFigure>
-  <img src="./shots/23.png" alt="调整属性" />
+<img src="./shots/23.png" alt="调整属性" width="520" height="896" loading="lazy" decoding="async" />
 </MagFigure>
 
 在右侧属性面板中可以直接调整大小、颜色、字体等属性，代码会自动更新！
 
 <MagNote>
-  <h3>🎨 Xcode界面微调教程</h3>
+<h3>Xcode界面微调教程</h3>
 
 以下是完整的SwiftUI界面调整方法和示例，让你轻松掌握Xcode的界面微调技巧。
 
-#### 🟢 1. 控件的基本组成：View + 修饰符
+#### 1. 控件的基本组成：View + 修饰符 {#🟢-1-控件的基本组成-view-修饰符}
 
 SwiftUI 里的界面控件都以 `View` 为单位，例如：
 
@@ -388,9 +382,7 @@ Text("分数")
     .foregroundColor(.white)                  // 字体颜色
 ```
 
----
-
-#### 🔠 2. 修改字体大小与粗细
+#### 2. 修改字体大小与粗细 {#🔠-2-修改字体大小与粗细}
 
 Xcode 中修改字体有三种常见方法：
 
@@ -407,9 +399,7 @@ Text("分数")
     .font(.system(size: 14, weight: .medium))
 ```
 
----
-
-#### 🎨 3. 设置文字或图形颜色
+#### 3. 设置文字或图形颜色 {#🎨-3-设置文字或图形颜色}
 
 使用 `.foregroundColor()` 或 `.fill()`：
 
@@ -427,9 +417,7 @@ Rectangle()
 Color.blue.opacity(0.5)
 ```
 
----
-
-#### 🟧 4. 设置背景色和圆角
+#### 4. 设置背景色和圆角 {#🟧-4-设置背景色和圆角}
 
 任何 View 都可以加背景：
 
@@ -448,9 +436,7 @@ RoundedRectangle(cornerRadius: 10)
     .fill(Color.black.opacity(0.6))
 ```
 
----
-
-#### 📏 5. 设置控件的大小与位置
+#### 5. 设置控件的大小与位置 {#📏-5-设置控件的大小与位置}
 
 ##### （1）固定尺寸：
 
@@ -491,9 +477,7 @@ GeometryReader { geometry in
 这代表每个俄罗斯方块小格子的位置是通过计算出来的。
 :::
 
----
-
-#### 💠 6. 布局容器：VStack / HStack / ZStack
+#### 6. 布局容器：VStack / HStack / ZStack {#💠-6-布局容器-vstack-hstack-zstack}
 
 SwiftUI 通过"堆叠"控件来决定排版：
 
@@ -515,9 +499,7 @@ ZStack {
 
 这表示有一个黑色背景，然后在上面放了两行文字。
 
----
-
-#### 📱 7. 在 Xcode 预览中实时调整
+#### 7. 在 Xcode 预览中实时调整 {#📱-7-在-xcode-预览中实时调整}
 
 在 Xcode 右上角点击 **Canvas（画布）**，你会看到代码右侧出现"实时预览"。任何修改（字体、颜色、位置）都会立即更新。
 
@@ -531,9 +513,7 @@ ZStack {
 
 如果你想改颜色或字体，只需要改代码，右边的预览马上变化。
 
----
-
-#### 🧭 8. 常用控件与修饰符速查表
+#### 8. 常用控件与修饰符速查表 {#🧭-8-常用控件与修饰符速查表}
 
 | 功能 | 修饰符 | 示例 |
 |------|--------|------|
@@ -550,62 +530,58 @@ ZStack {
 
 </MagNote>
 
----
-
-<MagSection title="🌐 Part 4: 静态网页开发与部署" />
+## Part 4: 静态网页开发与部署
 
 除了iOS开发，我们还可以创建静态网页项目。这对于不熟悉Mac或想要快速搭建个人主页的同学特别友好！
 
-<MagGrid :cols="2">
-  <MagCard>
-    <h3>💼 项目一：个人主页</h3>
-    <p>创建一个炫酷的个人主页，展示你的作品集、技能和联系方式。</p>
-    <p><strong>技术栈：</strong>HTML + CSS + JavaScript</p>
-    <p><strong>部署平台：</strong>GitHub Pages（免费！）</p>
-  </MagCard>
-  
-  <MagCard>
-    <h3>🎯 项目二：AI Quiz</h3>
-    <p>基于AI的智能问答系统，可以上传PDF/PPT自动生成测验题目。</p>
-    <p><strong>技术栈：</strong>Next.js + TypeScript + AI API</p>
-    <p><strong>特色：</strong>集成智谱AI API</p>
-  </MagCard>
-</MagGrid>
+<div class="article-facts">
+
+**项目一：个人主页。**
+
+<p>创建一个炫酷的个人主页，展示你的作品集、技能和联系方式。</p>
+<p><strong>技术栈：</strong>HTML + CSS + JavaScript</p>
+<p><strong>部署平台：</strong>GitHub Pages（免费！）</p>
+
+**项目二：AI Quiz。**
+
+<p>基于AI的智能问答系统，可以上传PDF/PPT自动生成测验题目。</p>
+<p><strong>技术栈：</strong>Next.js + TypeScript + AI API</p>
+<p><strong>特色：</strong>集成智谱AI API</p>
+
+</div>
 
 ### 使用GitHub Pages部署网站
 
-<MagStep n="1" title="创建GitHub仓库">
-</MagStep>
+#### 1. 创建GitHub仓库
 
 <MagFigure>
-  <img src="./shots/24.png" alt="GitHub新建仓库" />
+<img src="./shots/24.png" alt="GitHub新建仓库" width="2620" height="1264" loading="lazy" decoding="async" />
 </MagFigure>
 
 登录GitHub，点击 **new** 创建新仓库。
 
 <MagFigure>
-  <img src="./shots/25.png" alt="配置仓库" />
+<img src="./shots/25.png" alt="配置仓库" width="2134" height="1552" loading="lazy" decoding="async" />
 </MagFigure>
 
 输入仓库名称，点击 **Create repository** 创建。
 
-<MagStep n="2" title="上传项目文件">
-</MagStep>
+#### 2. 上传项目文件
 
 <MagFigure>
-  <img src="./shots/26.png" alt="上传文件选项" />
+<img src="./shots/26.png" alt="上传文件选项" width="2554" height="1508" loading="lazy" decoding="async" />
 </MagFigure>
 
 点击 **uploading an existing file** 上传现有文件。
 
 <MagFigure>
-  <img src="./shots/29.png" alt="拖拽上传" />
+<img src="./shots/29.png" alt="拖拽上传" width="2488" height="1270" loading="lazy" decoding="async" />
 </MagFigure>
 
 将项目文件拖入上传区域。**重要：确保包含 `index.html` 文件！**
 
 <MagFigure>
-  <img src="./shots/30.png" alt="上传示例" />
+<img src="./shots/30.png" alt="上传示例" width="1810" height="810" loading="lazy" decoding="async" />
 </MagFigure>
 
 :::warning ⚠️ 必须包含的文件
@@ -614,75 +590,68 @@ ZStack {
 - 其他CSS、JS、图片等资源文件
 :::
 
-<MagStep n="3" title="配置GitHub Pages">
-</MagStep>
+#### 3. 配置GitHub Pages
 
 <MagFigure>
-  <img src="./shots/32.png" alt="进入Settings" />
+<img src="./shots/32.png" alt="进入Settings" width="2568" height="1704" loading="lazy" decoding="async" />
 </MagFigure>
 
 上传完成后，点击 **Settings** 进入设置页面。
 
 <MagFigure>
-  <img src="./shots/33.png" alt="配置Pages" />
+<img src="./shots/33.png" alt="配置Pages" width="2598" height="1730" loading="lazy" decoding="async" />
 </MagFigure>
 
 在左侧菜单找到 **Pages**，选择 **GitHub Actions** 作为部署方式。
 
 <MagFigure>
-  <img src="./shots/34.png" alt="选择Static HTML" />
+<img src="./shots/34.png" alt="选择Static HTML" width="2612" height="1548" loading="lazy" decoding="async" />
 </MagFigure>
 
 选择 **Static HTML** 模板，点击 **Configure**。
 
 <MagFigure>
-  <img src="./shots/35.png" alt="提交配置" />
+<img src="./shots/35.png" alt="提交配置" width="2612" height="1744" loading="lazy" decoding="async" />
 </MagFigure>
 
 直接点击 **Commit changes** 保存配置。
 
-<MagStep n="4" title="访问你的网站">
-</MagStep>
+#### 4. 访问你的网站
 
 <MagFigure>
-  <img src="./shots/37.png" alt="网站已部署" />
+<img src="./shots/37.png" alt="网站已部署" width="2510" height="1578" loading="lazy" decoding="async" />
 </MagFigure>
 
 等待几分钟后，你的网站就部署成功了！点击 **Visit site** 访问，分享给朋友吧！🎉
 
----
-
-<MagSection title="🔑 Part 5: API使用指南" />
+## Part 5: API使用指南
 
 对于AI Quiz等需要调用AI服务的项目，我们需要获取API密钥。这里以智谱AI为例。
 
 ### 获取智谱AI API密钥
 
-<MagStep n="1" title="注册并登录">
-</MagStep>
+#### 1. 注册并登录
 
 访问 [智谱AI开放平台](https://open.bigmodel.cn)，注册并登录账号。
 
 <MagFigure>
-  <img src="./shots/38.png" alt="进入API Key页面" />
+<img src="./shots/38.png" alt="进入API Key页面" width="446" height="686" loading="lazy" decoding="async" />
 </MagFigure>
 
 鼠标移动到右上角头像，选择 **API Key**。
 
-<MagStep n="2" title="创建API Key">
-</MagStep>
+#### 2. 创建API Key
 
 <MagFigure>
-  <img src="./shots/39.png" alt="API Key管理" />
+<img src="./shots/39.png" alt="API Key管理" width="2582" height="898" loading="lazy" decoding="async" />
 </MagFigure>
 
 点击 **添加新的API Key**，给密钥取个名字，然后复制生成的API Key。
 
-<MagStep n="3" title="查看API文档">
-</MagStep>
+#### 3. 查看API文档
 
 <MagFigure>
-  <img src="./shots/39.png" alt="API文档" />
+<img src="./shots/39.png" alt="API文档" width="2582" height="898" loading="lazy" decoding="async" />
 </MagFigure>
 
 在主页的 **开发者** 部分可以找到详细的API调用文档。
@@ -694,7 +663,7 @@ ZStack {
 3. AI会自动生成完整的API调用代码
 
 <MagFigure>
-  <img src="./shots/40.png" alt="告诉AI使用API" />
+<img src="./shots/40.png" alt="告诉AI使用API" width="2626" height="1660" loading="lazy" decoding="async" />
 </MagFigure>
 :::
 
@@ -864,7 +833,7 @@ npm run dev
 ```
 
 <MagNote>
-  <h3>📦 安装Node.js (macOS)</h3>
+<h3>安装Node.js (macOS)</h3>
 
 如果你的电脑还没有安装Node.js，可以使用以下命令安装：
 
@@ -888,7 +857,7 @@ npm -v
 </MagNote>
 
 <MagNote>
-  <h3>📦 安装Node.js (Windows)</h3>
+<h3>安装Node.js (Windows)</h3>
 
 Windows用户推荐直接下载安装包：
 
@@ -903,13 +872,11 @@ npm -v
 ```
 </MagNote>
 
----
-
-<MagSection title="🎓 总结与思考" />
+## 总结与思考
 
 <MagNote type="tip">
-  <h3>🤔 AI能否完全替代程序员？</h3>
-  
+<h3>AI能否完全替代程序员？</h3>
+
 通过这次活动，你可能会产生一个疑问：既然AI这么强大，我们还需要学习编程吗？
 
 **答案是：AI是工具，不是替代品。**
@@ -934,7 +901,7 @@ AI确实能够：
 </MagNote>
 
 <MagNote>
-  <h3>🚀 下一步学习建议</h3>
+<h3>下一步学习建议</h3>
 
 **如果你对iOS开发感兴趣：**
 - 学习Swift语言基础
@@ -957,35 +924,22 @@ AI确实能够：
 记住：**AI是放大器，它会放大你的能力。** 你懂得越多，AI能帮你实现的就越多！
 </MagNote>
 
----
+## 相关资源
 
-<MagSection title="📚 相关资源" />
+<div class="article-facts">
 
-<MagGrid :cols="4">
-  <MagCard>
-    <span class="mag-icon">📖</span>
-    <h3>学习资源</h3>
-    <p><a href="/resources/">查看完整学习资源库</a></p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">🏆</span>
-    <h3>竞赛信息</h3>
-    <p><a href="/competitions/">了解MAIC等竞赛</a></p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">👥</span>
-    <h3>加入我们</h3>
-    <p><a href="/join-us/">成为iOS Club成员</a></p>
-  </MagCard>
-  <MagCard>
-    <span class="mag-icon">💬</span>
-    <h3>问题求助</h3>
-    <p><a href="/questions/">访问问答社区</a></p>
-  </MagCard>
-</MagGrid>
+**学习资源。** <a href="/resources/">查看完整学习资源库</a>
 
----
+**竞赛信息。** <a href="/competitions/">了解MAIC等竞赛</a>
 
-<MagHero title="🎉 期待你的作品！">
-  <p style="margin-top: 1rem; font-size: 1rem;">有任何问题？欢迎在活动群或社团群内讨论～</p>
-</MagHero>
+**加入我们。** <a href="/join-us/">成为iOS Club成员</a>
+
+**问题求助。** <a href="/questions/">访问问答社区</a>
+
+</div>
+
+## 期待你的作品！
+
+<p style="margin-top: 1rem; font-size: 1rem;">有任何问题？欢迎在活动群或社团群内讨论～</p>
+
+</MagArticle>

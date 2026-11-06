@@ -68,7 +68,7 @@ node scripts/check-maintenance.mjs http://localhost:4173
 1. 从 [活动页模板](/templates/activity.md){download="activity.md"} 或 [讲义模板](/templates/lesson.md){download="lesson.md"} 开始。在 `docs/activities/YYMMDD-slug/index.md` 创建活动入口，将讲义与图片放入同一专题。
 2. 填写 frontmatter 的 `title`、`description` 与 `date`。日期使用带引号的 `"YYYY-MM-DD"`；只知道月份时使用 `"YYYY-MM"`。活动可以省略日期，由 `YYMMDD-` 目录名推断；无日期记录归入“未归档”。
 3. 使用 [现有组件](/about-us/maintenance/components) 排版。`docs/public/` 中的资源使用 `/` 开头的路径；专题内图片使用相对路径，并为图片填写有意义的替代文字。
-4. 在 `.vitepress/sidebar.ts` 添加侧栏入口。活动、新闻与竞赛的 `*/index.md` 会自动进入各自索引，无需手动登记；首页推荐与顶部导航仅在确有入口需求时更新。
+4. 活动详情统一使用 `MagArticle`，检查文内目录与继续阅读链接；专题总览负责讲义导航。活动、新闻与竞赛的 `*/index.md` 会自动进入各自索引，无需手动登记；其他栏目需要侧栏时在 `.vitepress/sidebar.ts` 配置。首页推荐与顶部导航仅在确有入口需求时更新。
 5. 本地预览并执行前述检查，确认专题入口、讲义之间的链接及下载文件都可访问。
 
 ## 扩展组件与动画
