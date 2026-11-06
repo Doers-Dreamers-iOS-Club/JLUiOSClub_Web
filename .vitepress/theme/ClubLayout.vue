@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
 .article-sidebar-toggle { display: none; }
 @media (min-width: 960px) {
   .Layout.mag-article-page { --article-sidebar-edge: calc(max(0px, (100vw - var(--vp-layout-max-width)) / 2) + var(--vp-sidebar-width)); --article-sidebar-ease: cubic-bezier(.22, 1, .36, 1); }
-  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 8px); width: 44px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
+  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 32px); width: 32px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
   .article-sidebar-toggle svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--article-sidebar-ease); }
   .article-sidebar-toggle:hover svg { transform: translateX(-2px); }
   .article-sidebar-toggle:hover { color: var(--mag-accent); }
@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
   .Layout.mag-article-page .VPSidebar { transition: transform .46s var(--article-sidebar-ease), opacity .3s, visibility 0s; }
   .Layout.article-sidebar-collapsed .VPSidebar { transform: translateX(-100%); opacity: 0; visibility: hidden; pointer-events: none; transition: transform .46s var(--article-sidebar-ease), opacity .3s, visibility 0s .46s; }
   .article-sidebar-collapsed .VPContent.has-sidebar { padding-inline: 0; }
-  .article-sidebar-collapsed .article-sidebar-toggle { transform: translateX(calc(8px - var(--article-sidebar-edge))); }
+  .article-sidebar-collapsed .article-sidebar-toggle { transform: translateX(calc(32px - var(--article-sidebar-edge))); }
   .article-sidebar-toggle[aria-expanded='false'] svg { transform: rotate(180deg); }
   .article-sidebar-toggle[aria-expanded='false']:hover svg { transform: translateX(2px) rotate(180deg); }
 }
