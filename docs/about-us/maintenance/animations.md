@@ -60,6 +60,11 @@ import AnimationGallery from '@theme/components/maintenance/AnimationGallery.vue
 查看内容组件的交互示例和使用方法。
 
   </MagCard>
+  <MagCard title="杂志目录收展" href="/activities/261025-idea-workshop/">
+
+点击侧栏外沿的箭头，查看侧栏滑动、条目依次入场和正文位置衔接。活动文章模板自动启用，保留主页同款文字 hover；减少动态效果时直接切换。
+
+  </MagCard>
 </MagGrid>
 
 顶栏菜单与搜索框、站内页面切换都由主题统一提供，内容作者不需要在 Markdown 中重复添加。

@@ -73,11 +73,16 @@ try {
   assert.equal(await page.$$eval('.contents-section:first-of-type .contents-entry', links => links.length), 3, 'Only three latest activities')
   const articleWidth = await page.$eval('.mag-article', el => el.getBoundingClientRect().width)
   await page.click('.article-sidebar-toggle')
-  assert.equal(await page.$eval('.VPSidebar', el => getComputedStyle(el).display), 'none', 'Collapse hides sidebar and its focus targets')
+  assert.equal(await page.$eval('.VPSidebar', el => el.inert), true, 'Closing sidebar removes focus targets immediately')
+  assert.equal(await page.$eval('.article-sidebar-toggle', el => el.textContent.trim()), '>')
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.VPSidebar')).visibility === 'hidden')
   assert.equal(await page.$eval('.VPContent', el => getComputedStyle(el).paddingLeft), '0px', 'Collapsed article uses available width')
   assert(await page.$eval('.mag-article', (el, width) => el.getBoundingClientRect().width >= width, articleWidth))
   await page.keyboard.press('Enter')
   assert.equal(await page.$eval('.article-sidebar-toggle', el => el.getAttribute('aria-expanded')), 'true', 'Keyboard can reopen contents')
+  assert.equal(await page.$eval('.VPSidebar', el => el.inert), false)
+  assert.equal(await page.$eval('.contents-entry', el => getComputedStyle(el).animationName), 'contents-entry-in', 'Opening animates the entries')
+  await page.waitForFunction(() => document.querySelector('.VPSidebar').getBoundingClientRect().left >= 0)
   const link = '.contents-entry[href="/activities/261016-huawei-ict/"]'
   const track = link + ' .roll-track'
   const rolled = () => page.$eval(track, el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m42 < -10)
