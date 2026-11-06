@@ -57,6 +57,9 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '最新活动',
         items: [
+          { text: '你的想法，值得被认真听', link: '261025-idea-workshop/' },
+          { text: '以赛促学，智创未来 · 华为 ICT 路演', link: '261016-huawei-ict/' },
+          { text: '以热爱为起点 · 秋季纳新宣讲', link: '261011-autumn-welcome/' },
           { text: 'Winter SwiftUI 入门工作坊', link: '260209-winter-swift/' },
           { text: '日常记录小能手 - AI Agent实战', link: '251102-AI-Agent/' },
           { text: 'Vibe Coding - AI辅助开发工作坊', link: '251018-vibe-coding/' },

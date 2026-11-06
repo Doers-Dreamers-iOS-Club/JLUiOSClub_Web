@@ -3,6 +3,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ClubHome: typeof import('./theme/components/ClubHome.vue')['default']
+    MagArticle: typeof import('./theme/components/MagArticle.vue')['default']
     MagHero: typeof import('./theme/components/MagHero.vue')['default']
     MagSection: typeof import('./theme/components/MagSection.vue')['default']
     MagGrid: typeof import('./theme/components/MagGrid.vue')['default']

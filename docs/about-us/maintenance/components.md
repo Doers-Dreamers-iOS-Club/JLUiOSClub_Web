@@ -30,6 +30,40 @@ date: "2026-11-06"
 
 普通正文继续使用 `##`、`###`、列表、表格和代码块。`MagHero` 可用默认插槽放导语；没有 subtitle、eyebrow 或 issue 参数。
 
+## 杂志文章
+
+活动回顾可以使用 `MagArticle`，实际效果见 [秋季纳新宣讲](/activities/261011-autumn-welcome/)、[华为 ICT 路演](/activities/261016-huawei-ict/) 和 [Find 主题交流](/activities/261025-idea-workshop/)。它提供刊头、导语、日期、编号章节、摘句和文末导航，正文仍然使用普通 Markdown。
+
+```md
+---
+title: 一次从想法出发的相聚
+description: 用一两句话介绍这次活动的主题与看点。
+date: "2026-10-25"
+sidebar: false
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
+---
+
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="01" category="秋季活动 · 交流回顾">
+
+开篇用一段完整的叙述，把读者带进这次活动。
+
+## 从一个问题开始
+
+继续写正文。二级标题会自动编号，不需要在标题里重复写数字。
+
+> 从原文中选取一句值得停下来读的话。
+
+</MagArticle>
+```
+
+`title`、`description`、`date`、`issue`、`category` 为必填参数，日期使用 ISO 字符串。`next` 可选，格式为 `{ title: '下一篇标题', href: '/activities/下一篇目录/' }`。组件已经输出一级标题，正文从二级标题开始。`pageClass` 应用于独立文章页；它只调整这一类页面的阅读宽度与页脚，不影响其他页面。长文以段落推进，少量摘句即可形成阅读节奏。
+
 ## 网格与卡片
 
 <MagGrid :cols="2">

@@ -2,6 +2,7 @@ import { defineAsyncComponent, type App } from 'vue'
 
 export const contentComponents = {
   ClubHome: defineAsyncComponent(() => import('./ClubHome.vue')),
+  MagArticle: defineAsyncComponent(() => import('./MagArticle.vue')),
   MagHero: defineAsyncComponent(() => import('./MagHero.vue')),
   MagSection: defineAsyncComponent(() => import('./MagSection.vue')),
   MagGrid: defineAsyncComponent(() => import('./MagGrid.vue')),

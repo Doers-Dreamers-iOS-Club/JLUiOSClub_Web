@@ -34,6 +34,7 @@
 
 | 组件 | 有效接口 |
 | --- | --- |
+| MagArticle | title、description、date（ISO 字符串）、issue、category；next(title, href)；默认插槽为 Markdown 正文；独立页使用 pageClass: mag-article-page |
 | MagHero | title、date、entrance；title / default 插槽 |
 | MagSection | title、n |
 | MagGrid | cols、media；默认插槽 |
