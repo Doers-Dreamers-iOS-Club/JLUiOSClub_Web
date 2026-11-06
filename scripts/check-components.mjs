@@ -15,7 +15,7 @@ try {
     if (response.url().startsWith(base) && response.status() >= 400) errors.push(`${response.status()} ${response.url()}`)
   })
   await page.setViewport({ width: 1440, height: 1000 })
-  await page.goto(base + '/guide/components', { waitUntil: 'networkidle0' })
+  await page.goto(base + '/about-us/maintenance/components', { waitUntil: 'networkidle0' })
   assert.equal(await page.$eval('.mag-grid .mag-card[href] .mag-card__body', el => el.textContent.trim()), '查看讲义、工具与课程入口。')
   assert.equal(await page.$eval('.mag-note strong', el => el.textContent), '加粗')
   assert.equal(await page.$eval('.mag-figure img', image => image.complete && image.naturalWidth > 0), true)
@@ -61,7 +61,7 @@ try {
   await writeFile(`${out}/resources.json`, JSON.stringify({ cssBytes, resources }, null, 2))
 
   await page.setJavaScriptEnabled(false)
-  await page.goto(base + '/guide/components', { waitUntil: 'networkidle0' })
+  await page.goto(base + '/about-us/maintenance/components', { waitUntil: 'networkidle0' })
   await page.$eval('.mag-details summary', el => el.scrollIntoView({ block: 'center', behavior: 'instant' }))
   await page.click('.mag-details summary')
   assert(await page.$eval('.mag-details', el => el.open), 'Native details must work without JavaScript')

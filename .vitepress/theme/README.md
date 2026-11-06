@@ -1,6 +1,6 @@
 # 主题维护
 
-内容作者从 [组件写作指南](../../docs/guide/components.md) 开始。常用组件已全局注册，Markdown 不需要 import；活动页和讲义模板在 `docs/public/templates/`。
+统一入口是 [网页维护指南](../../docs/about-us/maintenance/index.md)。内容作者从 [内容写作与组件](../../docs/about-us/maintenance/components.md) 开始；动效示例见 [动画展示与复用](../../docs/about-us/maintenance/animations.md)，开发流程见 [开发与维护](../../docs/about-us/maintenance/development.md)。常用组件已全局注册，Markdown 不需要 import；活动页和讲义模板在 `docs/public/templates/`。
 
 ## 模块边界
 
@@ -49,7 +49,7 @@
 | MagCarousel | autoplay；直接放 img 的默认插槽 |
 | MagModal | title、width；trigger(open)、default(close)、footer(close) |
 
-新增通用组件在 `components/register.ts` 登记，在 `env.d.ts` 添加模板类型，并在组件指南补充实际渲染示例。业务专用组件在所属页面内导入。`LearningIllustration` 的场景注册在 `learning/illustrations/registry.ts`，多个实例共用异步组件定义。
+新增通用组件在 `components/register.ts` 登记，在 `.vitepress/env.d.ts` 添加模板类型，并在组件指南补充实际渲染示例。业务专用组件在所属页面内导入。`LearningIllustration` 的场景注册在 `learning/illustrations/registry.ts`，多个实例共用异步组件定义。
 
 旧版 MagHero 的 subtitle/eyebrow/issue、MagCard 的 icon/tag、MagArchive 的 highlightLatest 和 ReadingTools 的 minutes 已移除；它们在旧实现中不影响渲染。
 

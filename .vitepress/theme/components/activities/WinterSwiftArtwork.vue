@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useId } from 'vue'
 import { useOverviewArtworkMotion } from './overviewMotion'
+const id = useId()
 const figure = ref<HTMLElement | null>(null)
 useOverviewArtworkMotion(figure)
 const colors = ['var(--mag-accent)', '#d68b63', '#b9a5cc', '#8eaaa2']
@@ -9,9 +10,9 @@ const guesses = [[1, 0, 3, 2], [0, 1, 3, 2], [0, 1, 2, 3]]
 
 <template>
   <figure ref="figure" class="swift-artwork" data-art-state="waiting">
-    <svg viewBox="0 0 1000 500" fill="none" role="img" aria-labelledby="swift-art-title swift-art-desc">
-      <title id="swift-art-title">从 SwiftUI 界面到 CodeBreaker</title>
-      <desc id="swift-art-desc">中央的 CodeBreaker 游戏逐行填入彩色棋子，反馈钉从部分匹配变成全部匹配。背后的界面草图和右侧的状态模型展示游戏的组成。</desc>
+    <svg viewBox="0 0 1000 500" fill="none" role="img" :aria-labelledby="`${id}-title ${id}-desc`">
+      <title :id="`${id}-title`">从 SwiftUI 界面到 CodeBreaker</title>
+      <desc :id="`${id}-desc`">中央的 CodeBreaker 游戏逐行填入彩色棋子，反馈钉从部分匹配变成全部匹配。背后的界面草图和右侧的状态模型展示游戏的组成。</desc>
       <ellipse cx="526" cy="456" rx="232" ry="14" class="swift-shadow" />
       <g class="swift-side" transform="rotate(-5 292 247)">
         <g data-art-reveal>
@@ -81,7 +82,7 @@ svg { display: block; width: 100%; height: auto; }
 .swift-shadow { fill: var(--mag-text); opacity: .025; }
 .swift-small { font: 11px var(--mag-font-display); letter-spacing: .8px; fill: var(--mag-text-secondary); }
 .swift-tiny { font: 9px var(--mag-font-display); letter-spacing: 1.2px; fill: var(--mag-text-tertiary); }
-.swift-serif { font: 25px var(--overview-serif); fill: var(--mag-accent); }
+.swift-serif { font: 25px 'Club Instrument Serif', Georgia, serif; fill: var(--mag-accent); }
 .swift-app-title { font: 18px var(--mag-font-display); font-weight: 500; fill: var(--mag-text); }
 .swift-success { font: 12px var(--mag-font-display); fill: white; }
 .swift-home-indicator { stroke: var(--mag-text); stroke-width: 4; stroke-linecap: round; }

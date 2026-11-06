@@ -3,7 +3,7 @@
    mobile stage starts. GSAP writes its initial values before onStart releases
    these rules. No scripting, reduced motion and print retain complete artwork. */
 @media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  .activity-journal [data-art-state="waiting"] :is([data-art-reveal], [data-art-draw], [data-art-pop], [data-art-row], [data-art-finish]) {
+  [data-art-state="waiting"] :is([data-art-reveal], [data-art-draw], [data-art-pop], [data-art-row], [data-art-finish]) {
     opacity: 0;
   }
 

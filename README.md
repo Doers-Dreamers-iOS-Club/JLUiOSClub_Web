@@ -73,6 +73,8 @@ npm run preview
 
 ## 内容维护指南
 
+统一入口：[网页维护指南](docs/about-us/maintenance/index.md)（站内路径 `/about-us/maintenance/`），包含 [内容写作与组件](docs/about-us/maintenance/components.md)、[动画展示与复用](docs/about-us/maintenance/animations.md) 和 [开发与维护](docs/about-us/maintenance/development.md)。
+
 ### A. 新增普通内容页
 
 1. 在 `docs/` 对应栏目下创建 `index.md` 或新页面；
@@ -86,7 +88,7 @@ npm run preview
 1. 新建专题目录与页面（如 `index.md`、`first.md`、`second.md`）；
 2. 图片放入专题下 `imgs/` 或 `shots/`，避免跨目录引用；
 3. 在 `/.vitepress/sidebar.ts` 增加专题侧栏分组；
-4. 在 `docs/activities/index.md` 或首页入口增加跳转。
+4. 活动索引会自动收录 `docs/activities/*/index.md`；按需更新首页推荐入口。
 
 ### C. Winter Swift 专题当前组织
 
@@ -99,7 +101,7 @@ npm run preview
 ## 编写约定（建议）
 
 - 页面建议使用 Frontmatter 标注：`title`、`description`、`date`；
-- 复杂讲义优先组合现成排版组件，参见 [内容写作指南](docs/guide/components.md)；
+- 复杂讲义优先组合现成排版组件，参见 [内容写作指南](docs/about-us/maintenance/components.md)；
 - 需要交互时可在 Markdown 使用 `<script setup>` + Vue 组件；
 - 图示类内容优先 `mermaid`，截图类内容统一放专题子目录；
 - 链接尽量使用站内绝对路径（如 `/activities/xxx/`），保证部署一致性。
@@ -122,7 +124,7 @@ npm run preview
 ## 维护建议
 
 - 定期清理无效资源（如 macOS 产生的 `._*` 文件、`.DS_Store`）；
-- 新增活动时同步更新首页推荐入口与活动聚合页；
+- 新增活动会自动进入活动索引；同步检查侧栏并按需更新首页推荐入口；
 - 活动和讲义可复制 `docs/public/templates/` 中的 Markdown 模板。
 
 ## License
@@ -148,7 +150,7 @@ npm run preview
 
 ## 内容组件与维护检查
 
-[组件写作指南](docs/guide/components.md) 提供可运行的网格、卡片、提示、步骤、配图、折叠、弹窗与轮播示例。所有 `Mag*` 组件无需 import。组件接口与模块职责见 [.vitepress/theme/README.md](.vitepress/theme/README.md)。
+[组件写作指南](docs/about-us/maintenance/components.md) 提供可运行的网格、卡片、提示、步骤、配图、折叠、弹窗与轮播示例。所有 `Mag*` 组件无需 import。组件接口与模块职责见 [.vitepress/theme/README.md](.vitepress/theme/README.md)。
 
 ```bash
 npm test

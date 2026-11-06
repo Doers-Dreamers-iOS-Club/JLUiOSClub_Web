@@ -2,6 +2,17 @@ import { chapters } from './data/course'
 import type { DefaultTheme } from "vitepress";
 
 const sidebar: DefaultTheme.Sidebar = {
+  '/about-us/maintenance/': [
+    {
+      text: '网页维护指南',
+      items: [
+        { text: '维护指南总览', link: '/about-us/maintenance/' },
+        { text: '内容写作与组件', link: '/about-us/maintenance/components' },
+        { text: '动画展示与复用', link: '/about-us/maintenance/animations' },
+        { text: '开发与维护', link: '/about-us/maintenance/development' },
+      ]
+    }
+  ],
   '/resources/ai-programming/': {
     base: '/resources/ai-programming/',
     items: [

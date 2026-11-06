@@ -61,14 +61,14 @@ const viteConfig: UserConfig = {
         items: [
           { text: '竞赛指导', link: '/competitions/', activeMatch: '/competitions' },
           { text: '资源导航', link: '/resources/', activeMatch: '^/resources/$' },
-          { text: '内容写作指南', link: '/guide/components' },
           { text: 'AI 编程入门', link: '/resources/ai-programming/', activeMatch: '/resources/ai-programming/' }
         ]
       },
       {
         text: '关于我们',
         items: [
-          { text: '了解社团', link: '/about-us/', activeMatch: '/about-us' },
+          { text: '了解社团', link: '/about-us/', activeMatch: '^/about-us/$' },
+          { text: '网页维护指南', link: '/about-us/maintenance/', activeMatch: '^/about-us/maintenance/' },
           { text: '加入我们', link: '/join-us/', activeMatch: '/join-us' },
         ]
       }

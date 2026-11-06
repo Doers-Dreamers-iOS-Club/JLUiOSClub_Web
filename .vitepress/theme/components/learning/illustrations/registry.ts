@@ -1,16 +1,20 @@
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, type Component } from 'vue'
 
-const lessonStory = defineAsyncComponent(() => import('./LessonStory.vue'))
-export const illustrations = {
-  project: defineAsyncComponent(() => import('./ProjectPreview.vue')),
-  context: defineAsyncComponent(() => import('./ContextDesk.vue')),
-  pause: defineAsyncComponent(() => import('./PauseAnatomy.vue')),
-  timers: defineAsyncComponent(() => import('./TimerMicroscope.vue')),
-  versions: defineAsyncComponent(() => import('./VersionBook.vue')),
-  skill: defineAsyncComponent(() => import('./SkillRecipe.vue')),
-  mcp: defineAsyncComponent(() => import('./McpWorkbench.vue')),
-  api: defineAsyncComponent(() => import('./ApiEnvelope.vue')),
-  observe: lessonStory,
-  feedback: lessonStory,
+const loadLessonStory = () => import('./LessonStory.vue')
+export const illustrationLoaders = {
+  project: () => import('./ProjectPreview.vue'),
+  context: () => import('./ContextDesk.vue'),
+  pause: () => import('./PauseAnatomy.vue'),
+  timers: () => import('./TimerMicroscope.vue'),
+  versions: () => import('./VersionBook.vue'),
+  skill: () => import('./SkillRecipe.vue'),
+  mcp: () => import('./McpWorkbench.vue'),
+  api: () => import('./ApiEnvelope.vue'),
+  observe: loadLessonStory,
+  feedback: loadLessonStory,
 }
-export type Scene = keyof typeof illustrations
+export type Scene = keyof typeof illustrationLoaders
+export const illustrations = Object.fromEntries(
+  Object.entries(illustrationLoaders).map(([scene, load]) => [scene, defineAsyncComponent<Component>(load)])
+) as Record<Scene, Component>
+illustrations.feedback = illustrations.observe
