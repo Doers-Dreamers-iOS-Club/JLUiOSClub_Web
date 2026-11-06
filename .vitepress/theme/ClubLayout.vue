@@ -59,7 +59,9 @@ onBeforeUnmount(() => {
         aria-controls="VPSidebarNav"
         :aria-label="sidebarCollapsed ? '展开目录' : '收起目录'"
         @click="toggleSidebar"
-      ><span aria-hidden="true">{{ sidebarCollapsed ? '>' : '<' }}</span></button>
+      >
+        <svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="m13 4-6 6 6 6" /></svg>
+      </button>
     </template>
   </DefaultTheme.Layout>
 </template>
@@ -68,17 +70,18 @@ onBeforeUnmount(() => {
 .article-sidebar-toggle { display: none; }
 @media (min-width: 960px) {
   .Layout.mag-article-page { --article-sidebar-edge: calc(max(0px, (100vw - var(--vp-layout-max-width)) / 2) + var(--vp-sidebar-width)); --article-sidebar-ease: cubic-bezier(.22, 1, .36, 1); }
-  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 40px); left: calc(var(--article-sidebar-edge) - 32px); width: 32px; height: 44px; color: var(--mag-text-secondary); font: 30px/1 var(--mag-font-serif); transition: transform .46s var(--article-sidebar-ease), color .2s; }
-  .article-sidebar-toggle span { transition: transform .2s var(--article-sidebar-ease); }
-  .article-sidebar-toggle:hover span { transform: translateX(-3px); }
+  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 8px); width: 44px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
+  .article-sidebar-toggle svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--article-sidebar-ease); }
+  .article-sidebar-toggle:hover svg { transform: translateX(-2px); }
   .article-sidebar-toggle:hover { color: var(--mag-accent); }
-  .article-sidebar-toggle:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: -3px; }
+  .article-sidebar-toggle:focus-visible { outline: 2px solid var(--mag-accent); outline-offset: -5px; border-radius: 8px; }
   .Layout.mag-article-page .VPSidebar { transition: transform .46s var(--article-sidebar-ease), opacity .3s, visibility 0s; }
   .Layout.article-sidebar-collapsed .VPSidebar { transform: translateX(-100%); opacity: 0; visibility: hidden; pointer-events: none; transition: transform .46s var(--article-sidebar-ease), opacity .3s, visibility 0s .46s; }
   .article-sidebar-collapsed .VPContent.has-sidebar { padding-inline: 0; }
-  .article-sidebar-collapsed .article-sidebar-toggle { transform: translateX(calc(32px - var(--article-sidebar-edge))); }
-  .article-sidebar-collapsed .article-sidebar-toggle:hover span { transform: translateX(3px); }
+  .article-sidebar-collapsed .article-sidebar-toggle { transform: translateX(calc(8px - var(--article-sidebar-edge))); }
+  .article-sidebar-toggle[aria-expanded='false'] svg { transform: rotate(180deg); }
+  .article-sidebar-toggle[aria-expanded='false']:hover svg { transform: translateX(2px) rotate(180deg); }
 }
-@media (prefers-reduced-motion: reduce) { .Layout.mag-article-page .VPSidebar, .article-sidebar-toggle, .article-sidebar-toggle span { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .Layout.mag-article-page .VPSidebar, .article-sidebar-toggle, .article-sidebar-toggle svg { transition: none; } }
 @media print { .article-sidebar-toggle { display: none; } }
 </style>

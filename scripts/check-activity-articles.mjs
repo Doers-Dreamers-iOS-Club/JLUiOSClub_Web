@@ -74,7 +74,7 @@ try {
   const articleWidth = await page.$eval('.mag-article', el => el.getBoundingClientRect().width)
   await page.click('.article-sidebar-toggle')
   assert.equal(await page.$eval('.VPSidebar', el => el.inert), true, 'Closing sidebar removes focus targets immediately')
-  assert.equal(await page.$eval('.article-sidebar-toggle', el => el.textContent.trim()), '>')
+  assert.equal(await page.$eval('.article-sidebar-toggle', el => el.getAttribute('aria-label')), '展开目录')
   await page.waitForFunction(() => getComputedStyle(document.querySelector('.VPSidebar')).visibility === 'hidden')
   assert.equal(await page.$eval('.VPContent', el => getComputedStyle(el).paddingLeft), '0px', 'Collapsed article uses available width')
   assert(await page.$eval('.mag-article', (el, width) => el.getBoundingClientRect().width >= width, articleWidth))
