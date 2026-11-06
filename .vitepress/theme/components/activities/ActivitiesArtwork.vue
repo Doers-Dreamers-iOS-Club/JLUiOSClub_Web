@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useId } from 'vue'
 import PaperPlane from './PaperPlane.vue'
 import { useOverviewArtworkMotion } from './overviewMotion'
+const id = useId()
 const figure = ref<HTMLElement | null>(null)
 useOverviewArtworkMotion(figure)
 </script>
 
 <template>
   <figure ref="figure" class="activities-artwork" data-art-state="waiting">
-    <svg viewBox="0 0 1000 460" fill="none" role="img" aria-labelledby="activities-art-title activities-art-desc">
-      <title id="activities-art-title">社团的活动编辑台</title>
-      <desc id="activities-art-desc">一本展开的活动手册，左页是相聚分享，右页是代码与作品，周围散落着设备体验、活动日期和灵感便笺。</desc>
+    <svg viewBox="0 0 1000 460" fill="none" role="img" :aria-labelledby="`${id}-title ${id}-desc`">
+      <title :id="`${id}-title`">社团的活动编辑台</title>
+      <desc :id="`${id}-desc`">一本展开的活动手册，左页是相聚分享，右页是代码与作品，周围散落着设备体验、活动日期和灵感便笺。</desc>
       <ellipse cx="504" cy="387" rx="324" ry="18" class="art-shadow" />
       <circle cx="516" cy="222" r="184" class="art-orbit" />
       <path data-art-draw d="M132 282C136 391 276 421 391 392M700 72C816 45 926 139 881 235" class="art-trail" />
@@ -80,8 +81,8 @@ svg { display: block; width: 100%; height: auto; }
 .art-muted { fill: var(--mag-text-tertiary); }
 .art-ink { fill: var(--mag-text); }
 .art-small { font-family: var(--mag-font-display); font-size: 9px; letter-spacing: .7px; fill: var(--mag-text-secondary); }
-.art-serif { font-family: var(--overview-serif); font-size: 23px; fill: var(--mag-accent); }
-.art-date { font-family: var(--overview-serif); font-size: 64px; fill: var(--mag-accent); }
+.art-serif { font-family: 'Club Instrument Serif', Georgia, serif; font-size: 23px; fill: var(--mag-accent); }
+.art-date { font-family: 'Club Instrument Serif', Georgia, serif; font-size: 64px; fill: var(--mag-accent); }
 .art-writing { stroke: var(--mag-text-tertiary); stroke-width: 2; stroke-linecap: round; }
 .art-orbit { stroke: var(--mag-accent); stroke-opacity: .08; stroke-width: 1; }
 .art-trail { stroke: var(--mag-accent); stroke-opacity: .35; stroke-width: 1; }

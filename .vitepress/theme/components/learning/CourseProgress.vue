@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { chapters, courseBase, readState } from './course'
+import { chapters, courseBase } from '../../../data/course'
+import { readState } from '../../composables/readingState'
 defineProps<{ editorial?: boolean }>()
 const completed = ref<string[]>([])
 const last = ref('')
@@ -11,9 +12,9 @@ onUnmounted(() => { window.removeEventListener('storage', sync); window.removeEv
 </script>
 <template>
   <section class="course-progress mag-no-reveal" :class="{ 'course-progress--editorial': editorial }" aria-label="主线阅读进度">
-    <div class="course-progress__top"><span>你的阅读足迹</span><span>{{ completed.length }} / 6 章已读</span></div>
-    <div class="course-progress__track" role="progressbar" :aria-valuenow="completed.length" :aria-valuemin="0" :aria-valuemax="6" aria-label="已读章节"><span :style="{ width: `${completed.length / 6 * 100}%` }" /></div>
-    <a :href="courseBase + 'chapters/' + next.id">{{ completed.length === 6 ? '回顾第一章' : last ? '继续阅读' : '从第一章开始' }}：{{ next.title }} <span aria-hidden="true">→</span></a>
+    <div class="course-progress__top"><span>你的阅读足迹</span><span>{{ completed.length }} / {{ chapters.length }} 章已读</span></div>
+    <div class="course-progress__track" role="progressbar" :aria-valuenow="completed.length" :aria-valuemin="0" :aria-valuemax="chapters.length" aria-label="已读章节"><span :style="{ width: `${completed.length / chapters.length * 100}%` }" /></div>
+    <a :href="courseBase + 'chapters/' + next.id">{{ completed.length === chapters.length ? '回顾第一章' : last ? '继续阅读' : '从第一章开始' }}：{{ next.title }} <span aria-hidden="true">→</span></a>
   </section>
 </template>
 <style scoped>

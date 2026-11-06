@@ -1,14 +1,10 @@
-<MagHero eyebrow="Resources" title="资源导航" subtitle="从 AI 编程入门到 Swift / SwiftUI，找到适合你的学习起点。" />
+<MagHero title="资源导航" />
 
 <MagSection n="01" title="社团原创讲义" />
 
 <MagGrid :cols="2">
-<MagCard tag="新生入门 · 交互阅读" title="从想法到作品" href="/resources/ai-programming/">
-从一个贪吃蛇开始，沿六章主线学习与 Agent 协作、排错、Skill 和 MCP。配有动态图、小练习和资料下载。
-</MagCard>
-<MagCard tag="Swift / SwiftUI" title="Winter Swift 培训" href="/activities/260209-winter-swift/">
-用 CodeBreaker 项目学习 SwiftUI 基础与 Swift 进阶，配套课程视频与代码。
-</MagCard>
+<MagCard title="从想法到作品" href="/resources/ai-programming/"></MagCard>
+<MagCard title="Winter Swift 培训" href="/activities/260209-winter-swift/"></MagCard>
 </MagGrid>
 
 ![Let's Swift!](developers.jpeg)

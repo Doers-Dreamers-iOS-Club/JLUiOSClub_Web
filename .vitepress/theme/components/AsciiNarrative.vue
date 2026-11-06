@@ -16,8 +16,9 @@ const emit = defineEmits<{ ready: [boolean]; covering: [boolean] }>()
 const canvas = ref<HTMLCanvasElement | null>(null)
 const paused = ref(false)
 const reduced = ref(false)
-const scenes = [hands,prometheus,argo]
-const mobileScenes = [handsMobile,prometheusMobile,argoMobile]
+type SceneData = { cols: number; rows: number; lines: string[]; parts?: string[]; features?: typeof features }
+const scenes: SceneData[] = [hands,prometheus,argo]
+const mobileScenes: SceneData[] = [handsMobile,prometheusMobile,argoMobile]
 const clamp = (v: number) => Math.min(1,Math.max(0,v))
 let ctx: CanvasRenderingContext2D | null = null
 let host: HTMLElement | null = null
@@ -82,10 +83,10 @@ function target(page: number): Point[] {
  else x+=(slot.clientWidth-data.cols*cellX)/2
  y+=(slot.clientHeight-data.rows*cellY)/2
  box={x,y,width:data.cols*cellX,height:data.rows*cellY}
- if('features' in data)features=data.features
+ if(data.features)features=data.features
  const result:Point[]=[]
  data.lines.forEach((line,row)=>Array.from(line).forEach((char,col)=>{
-  if(char!==' ')result.push({x:x+(col+.5)*cellX,y:y+(row+.5)*cellY,char,size:Math.min(cellX/.6,cellY),alpha:1,u:(col+.5)/data.cols,v:(row+.5)/data.rows,part:'parts' in data?Number(data.parts[row][col]):0})
+  if(char!==' ')result.push({x:x+(col+.5)*cellX,y:y+(row+.5)*cellY,char,size:Math.min(cellX/.6,cellY),alpha:1,u:(col+.5)/data.cols,v:(row+.5)/data.rows,part:data.parts?Number(data.parts[row][col]):0})
  }))
  if(page===3){
   const cloth=result.filter(p=>p.part===1)

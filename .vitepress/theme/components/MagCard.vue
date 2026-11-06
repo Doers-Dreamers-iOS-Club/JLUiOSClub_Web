@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ icon?: string; title?: string; tag?: string; href?: string; compact?: boolean }>()
+defineProps<{ title?: string; href?: string; compact?: boolean }>()
 </script>
 
 <template>
@@ -8,7 +8,7 @@ defineProps<{ icon?: string; title?: string; tag?: string; href?: string; compac
     :rel="href?.startsWith('http') ? 'noreferrer' : undefined"
     class="mag-card" :class="{ 'mag-card--compact': compact, 'mag-card--link': href }">
     <div v-if="title || href" class="mag-card__heading"><h3 v-if="title" class="mag-card__title">{{ title }}</h3><i v-if="href" class="ti ti-arrow-up-right mag-card__arrow" aria-hidden="true" /></div>
-    <div v-if="!href || !title" class="mag-card__body"><slot /></div>
+    <div v-if="$slots.default" class="mag-card__body"><slot /></div>
   </component>
 </template>
 
@@ -21,6 +21,7 @@ defineProps<{ icon?: string; title?: string; tag?: string; href?: string; compac
 .mag-card__arrow { color: var(--mag-text-secondary); font-size: 18px; transition: transform .4s var(--mag-ease), color .2s; }
 .mag-card--link:hover .mag-card__arrow { transform: translate(2px, -2px); color: var(--mag-accent); }
 .mag-card__title, .mag-card__body :deep(h3), .mag-card__body :deep(h4) { margin: 0 0 .5rem; padding: 0; border: 0; color: var(--mag-text); font-size: 16px; font-weight: 500; line-height: 1.5; }
+.mag-card__heading + .mag-card__body { margin-top: .5rem; }
 .mag-card__body { color: var(--mag-text-secondary); font-size: 14px; line-height: 1.7; }
 .mag-card__body :deep(p) { margin: 0 0 .5rem; }
 .mag-card__body :deep(p:last-child) { margin-bottom: 0; }

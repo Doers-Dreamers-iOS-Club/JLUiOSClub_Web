@@ -38,11 +38,11 @@ try {
   console.log('PASS desktop sketch, code, play button and snake complete')
 
   await page.waitForSelector('.journal-chapter[style]')
-  await page.$eval('.journal-chapter', e => scrollTo({ top: scrollY + e.getBoundingClientRect().top - innerHeight * .67, behavior: 'instant' }))
+  await page.$eval('.journal-chapter[style]', e => scrollTo({ top: scrollY + e.getBoundingClientRect().top - innerHeight * .67, behavior: 'instant' }))
   await wait(30)
-  const first = await page.$eval('.journal-chapter', e => Number(getComputedStyle(e).opacity))
+  const first = await page.$eval('.journal-chapter[style]', e => Number(getComputedStyle(e).opacity))
   await wait(800)
-  const settled = await page.$eval('.journal-chapter', e => Number(getComputedStyle(e).opacity))
+  const settled = await page.$eval('.journal-chapter[style]', e => Number(getComputedStyle(e).opacity))
   assert(settled > first && settled > .99, `Damping should settle: ${first} -> ${settled}`)
   console.log('PASS native scrolling with damped content movement')
 

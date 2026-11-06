@@ -1,22 +1,42 @@
 ---
-title: MAIC 宣讲会
+title: "2025 MAIC 宣讲会"
 description: 移动应用赛宣讲会
 icon: "🏆"
 tags: [MAIC, 宣讲会]
+date: "2025-05-11"
+sidebar: true
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
-<MagHero title="移动应用创新赛——宣讲会来啦！" />
 
-<MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2025年<strong>05月11日</strong></MagCard>
-  <MagCard icon="🕜" title="时间">晚 19:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B110</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">吉林大学MAIC的指导教师谷方明</MagCard>
-  <MagCard icon="✋" title="竞赛官网"><a href="https://www.appcontext.net">竞赛官网</a></MagCard>
-</MagGrid>
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="01" category="竞赛交流 · 2025" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: 'AI 工作坊，从模型到应用', href: '/activities/250518-ai-workshop/' }">
+
+2025 年 5 月 11 日，JLU iOS Club 在前卫南区计算机楼 B110 开展移动应用创新赛宣讲。谷方明老师的指导与往届获奖同学的经验分享，为新的参赛者提供参考。
+
+<div class="article-facts">
+
+**日期。** 2025年<strong>05月11日</strong>
+
+**时间。** 晚 19:00
+
+**地点。** 南区计算机楼 B110
+
+**主讲人。** 吉林大学MAIC的指导教师谷方明
+
+**竞赛官网。** <a href="https://www.appcontext.net">竞赛官网</a>
+
+</div>
 
 ## 活动亮点
 
-![活动海报](1.png){style="width:auto; height:auto;"}
+<MagFigure caption="活动海报">
+<img src="./1.png" alt="活动海报" width="2368" height="1800" loading="eager" decoding="async" />
+</MagFigure>
 
 “移动应用创新赛”是 “中国高校计算机大赛” 所设立的四个竞赛模块之一，是由 Apple 与浙江大学联合举办、面向高校学员、供应链员工、K12 组别学生推出的基于 iOS/iPadOS 平台设计开发应用的竞赛。
 
@@ -38,6 +58,10 @@ tags: [MAIC, 宣讲会]
 🌈竞赛介绍
 移动应用创新赛，是2017年中国高校计算机大赛( China Collegiate Computing Contest)所设立的四个竞赛模块之一，本届大赛由浙江大学与苹果公司承办。
 
-## 🔥 加入2024-MAIC竞赛群
+## 加入2024-MAIC竞赛群 {#🔥-加入2024-maic竞赛群}
 
-![竞赛群二维码](2.jpg){style="width:auto; height:auto;"}
+<MagFigure caption="竞赛群二维码">
+<img src="./2.jpg" alt="竞赛群二维码" width="1156" height="2055" loading="lazy" decoding="async" />
+</MagFigure>
+
+</MagArticle>

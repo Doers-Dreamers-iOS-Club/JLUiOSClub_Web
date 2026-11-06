@@ -1,5 +1,6 @@
 import { onBeforeUnmount, onMounted, type Ref } from 'vue'
 import { gsap } from 'gsap'
+import { observeArtworkPlayback } from '../../composables/observeArtworkPlayback'
 
 export function animateOverviewEntrance(timeline: gsap.core.Timeline, cover: HTMLElement) {
   // Measure paths before any tween writes styles and invalidates SVG layout.
@@ -35,7 +36,6 @@ export function useOverviewArtworkMotion(root: Ref<HTMLElement | null>) {
     const journal = figure.closest<HTMLElement>('.activity-journal')
     media = gsap.matchMedia()
     media.add('(prefers-reduced-motion: no-preference)', context => {
-      let visible = false
       figure.dataset.artState = 'waiting'
       let timeline: gsap.core.Timeline | undefined
       // CSS holds the starting pose through hydration and the cover transition.
@@ -55,25 +55,18 @@ export function useOverviewArtworkMotion(root: Ref<HTMLElement | null>) {
         if (finish.length) motion.fromTo(finish, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .65 }, 2.15)
         timeline = motion
       })
-      const sync = () => {
-        if (visible && !document.hidden && journal?.dataset.coursePage !== 'cover' && !journal?.dataset.coverTransition) {
-          if (!timeline) context.prepare()
-          if (timeline!.progress() < 1) timeline!.play()
-        } else timeline?.pause()
-      }
-      const prepareCover = () => { if (!timeline) context.prepare() }
-      const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync() }, { threshold: .2 })
-      observer.observe(figure)
-      const state = new MutationObserver(sync)
-      if (journal) state.observe(journal, { attributes: true, attributeFilter: ['data-course-page', 'data-cover-transition'] })
-      journal?.addEventListener('course-cover-prepare', prepareCover)
-      journal?.addEventListener('course-cover-settled', sync)
-      document.addEventListener('visibilitychange', sync)
+      const prepare = () => { if (!timeline) context.prepare() }
+      const stopPlayback = observeArtworkPlayback({
+        targets: [figure], journal, threshold: .2, prepare,
+        sync: (_, playing) => {
+          if (playing) {
+            prepare()
+            if (timeline!.progress() < 1) timeline!.play()
+          } else timeline?.pause()
+        }
+      })
       return () => {
-        observer.disconnect(); state.disconnect()
-        journal?.removeEventListener('course-cover-prepare', prepareCover)
-        journal?.removeEventListener('course-cover-settled', sync)
-        document.removeEventListener('visibilitychange', sync)
+        stopPlayback()
         delete figure.dataset.artState
       }
     }, figure)

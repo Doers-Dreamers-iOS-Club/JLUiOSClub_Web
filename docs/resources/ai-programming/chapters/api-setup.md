@@ -11,7 +11,7 @@ next: {"text": "选读：用 Python 调用 API", "link": "/resources/ai-programm
 
 # 补充教程｜在 DSH 中接入模型，认识 API 配置
 
-<ReadingTools chapter="api-setup" :minutes="6" />
+<ReadingTools chapter="api-setup" />
 
 <MagNote title="读完这一章，你可以" type="tip">
 

@@ -3,17 +3,13 @@ title: 社团竞赛
 description: 社团重点参与的竞赛，以及我们能提供的支持。
 ---
 
-<MagHero eyebrow="Competitions" title="社团竞赛" subtitle="社团重点参与的竞赛，以及我们能提供的支持。" />
+<MagHero title="社团竞赛" />
 
 <MagSection n="01" title="核心竞赛" />
 
 <MagGrid :cols="2">
-  <MagCard icon="🍎" title="Swift 学生挑战赛" href="/competitions/swift/index">
-    Apple 面向全球学生举办的年度挑战赛，以 Swift Playgrounds 作品参赛。
-  </MagCard>
-  <MagCard icon="⭐️" title="移动应用创新赛" href="/competitions/maic/index">
-    中国高校计算机大赛四大模块之一，由 Apple 与浙江大学联合举办。
-  </MagCard>
+  <MagCard title="Swift 学生挑战赛" href="/competitions/swift/index"></MagCard>
+  <MagCard title="移动应用创新赛" href="/competitions/maic/index"></MagCard>
 </MagGrid>
 
 <MagSection n="02" title="相关支持" />

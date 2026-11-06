@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { groupByYear } from '../../../data/shared'
 import { data as activities } from '../../../data/activities.data.mts'
 import ActivityOverview from './ActivityOverview.vue'
 import ActivitiesArtwork from './ActivitiesArtwork.vue'
 import ActivitiesCover from './ActivitiesCover.vue'
-const groups = computed(() => {
-  const years = [...new Set(activities.map(entry => entry.year))]
-  return years.map(year => ({ year, entries: activities.filter(entry => entry.year === year) }))
-})
+const groups = groupByYear(activities)
 const latest = activities[0]
 const earlier = ['解锁 iPad 生产力', '2023 冬季 WWDC · Swift 特训营', '购买 Mac / iPad 迎接高校生活', 'macOS 初体验']
 </script>

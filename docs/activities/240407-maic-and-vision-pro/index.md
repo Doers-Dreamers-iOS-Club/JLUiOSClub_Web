@@ -1,20 +1,38 @@
 ---
-title: MAIC宣讲会暨Vision Pro体验会
-date: 2024.04.07
+title: "MAIC 宣讲与 Vision Pro 体验"
 icon: "🍎"
 tags: [MAIC, Vision Pro]
 description: "MAIC 宣讲会暨 Vision Pro 体验会活动记录。"
+date: "2024-04-07"
+sidebar: true
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
-<MagHero title="移动应用创新赛宣讲会暨 Vision Pro 体验会" eyebrow="ARCHIVED" />
 
-<MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2024年04月<strong>06日-07日</strong></MagCard>
-  <MagCard icon="🕑" title="6日场 时间">14:00-17:00</MagCard>
-  <MagCard icon="🕕" title="7日场 时间">18:00-21:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B110苹果机房</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">相开原 张天翼 陈悦华</MagCard>
-  <MagCard icon="✋" title="报名方式">请阅读本篇活动说明，申请表在页面底部</MagCard>
-</MagGrid>
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="01" category="竞赛与体验 · 2024" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: '2024 百团纳新', href: '/activities/240414-club-recruitment/' }">
+
+从一款 App 的想法出发，了解移动应用创新赛，再亲手体验空间计算。这里保留了 2024 年 MAIC 宣讲会暨 Vision Pro 体验会的活动说明与资料。
+
+<div class="article-facts">
+
+**日期。** 2024年04月<strong>06日-07日</strong>
+
+**6日场 时间。** 14:00-17:00
+
+**7日场 时间。** 18:00-21:00
+
+**地点。** 南区计算机楼 B110苹果机房
+
+**主讲人。** 相开原 张天翼 陈悦华
+
+**报名方式。** 请阅读本篇活动说明，申请表在页面底部
+
+</div>
 
 :::danger 注意
 我们在校园网之窗投放的活动推广中，活动日期填写有误，请以官网时间为准。给您造成困扰，敬请谅解！
@@ -36,7 +54,9 @@ JLU iOS Club核心社员们在试用了Vision Pro之后，对其震撼的画质�
 
 ## 什么是：移动应用创新赛（MAIC）
 
-![MAIC](..%2F..%2Fcompetitions%2Fmaic%2Fmaic.webp)
+<MagFigure caption="MAIC">
+<img src="../../competitions/maic/maic.webp" alt="MAIC" width="640" height="640" loading="eager" decoding="async" />
+</MagFigure>
 
 这是一场以 iOS/PadOS 系统设计开发移动应用程序的高端竞赛。学生组成一个两到三人的队伍，在创新创意赛道上提交自己的原创 App 原型，在决赛时最终实现并完善。参赛者可自由命题，鼓励参赛队伍使用Swift语言进行开发。无论你是代码高手还是才华横溢的设计师，甚至**零编程基础**，都可在这里一展身手。
 
@@ -46,8 +66,6 @@ JLU iOS Club核心社员们在试用了Vision Pro之后，对其震撼的画质�
 对于MAIC的初赛而言，只要求参赛者提交一个项目说明文档，也就是**一个PPT**，完全不要求提交任何代码，只要你的点子够好！
 
 进入复赛后，您可以再另外找1～2人组队，我们也可以在社团内为您招募擅长编程的同学一同参赛。
-
----
 
 对于**擅长编程**的同学，您也可以找到擅长设计/美工的同学组队。Apple的Swift语言与SwiftUI框架也十分简单易学，只需一日即可上手，数周即可熟练掌握！
 
@@ -60,11 +78,15 @@ JLU iOS Club核心社员们在试用了Vision Pro之后，对其震撼的画质�
 
 最重要的是，MAIC自2022年起，被列入**吉林大学B*类竞赛**，获奖同学享有**加分和推免**等政策！
 
-![MAIC与蓝桥杯等竞赛等均为吉林大学B类竞赛](maic-grade.png)
+<MagFigure caption="MAIC与蓝桥杯等竞赛等均为吉林大学B类竞赛">
+<img src="./maic-grade.png" alt="MAIC与蓝桥杯等竞赛等均为吉林大学B类竞赛" width="1680" height="958" loading="lazy" decoding="async" />
+</MagFigure>
 
 ## 如何获得 Vision Pro 体验资格
 
-![ Vision Pro](vp.jpg)
+<MagFigure caption=" Vision Pro">
+<img src="./vp.jpg" alt=" Vision Pro" width="7560" height="5670" loading="lazy" decoding="async" />
+</MagFigure>
 
 ### 途径一：在线上报名表中提交您的App想法
 
@@ -88,7 +110,9 @@ JLU iOS Club核心社员们在试用了Vision Pro之后，对其震撼的画质�
 
 ## 活动流程
 
-![计算机楼 B110 苹果机房](..%2F..%2Fabout-us%2Fclass1.jpeg)
+<MagFigure caption="计算机楼 B110 苹果机房">
+<img src="../../about-us/class1.jpeg" alt="计算机楼 B110 苹果机房" width="1024" height="768" loading="lazy" decoding="async" />
+</MagFigure>
 
 ```mermaid
 flowchart LR
@@ -100,23 +124,27 @@ maic(移动应用创新赛介绍) --> vp(Vision Pro介绍) --> example(体验示
 即将离开本站，前往腾讯文档填写活动报名表……
 
 <MagModal title="请选择您要报名的场次">
-  <template #trigger="{ open }">
-    <MagButton @click="open">🎉 点击报名</MagButton>
-    <MagButton variant="ghost" href="/competitions/maic/">👉 了解更多竞赛信息</MagButton>
-  </template>
+<template #trigger="{ open }">
+<MagButton @click="open">🎉 点击报名</MagButton>
+<MagButton variant="ghost" href="/competitions/maic/">👉 了解更多竞赛信息</MagButton>
+</template>
 
   请确认您已完整阅读本次活动说明，并了解提交 App 想法的要求。
 
   4月6日场：14:00-17:00
   4月7日场：18:00-21:00
 
-  <template #footer="{ close }">
-    <MagButton variant="ghost" @click="close">我再看看</MagButton>
-    <MagButton href="https://docs.qq.com/form/page/DTFVvQWlxRlN2eFhL">4月6日场</MagButton>
-    <MagButton href="https://docs.qq.com/form/page/DTHdnRVN1b0J4cG54">4月7日场</MagButton>
-  </template>
+<template #footer="{ close }">
+<MagButton variant="ghost" @click="close">我再看看</MagButton>
+<MagButton href="https://docs.qq.com/form/page/DTFVvQWlxRlN2eFhL">4月6日场</MagButton>
+<MagButton href="https://docs.qq.com/form/page/DTHdnRVN1b0J4cG54">4月7日场</MagButton>
+</template>
 </MagModal>
 
-### 🔥 加入2024-MAIC竞赛群
+### 加入2024-MAIC竞赛群 {#🔥-加入2024-maic竞赛群}
 
-![点击图片可放大](/competitions/maic/maic-qr.jpg)
+<MagFigure caption="点击图片可放大">
+<img src="/competitions/maic/maic-qr.jpg" alt="点击图片可放大" width="1284" height="2289" loading="lazy" decoding="async" />
+</MagFigure>
+
+</MagArticle>

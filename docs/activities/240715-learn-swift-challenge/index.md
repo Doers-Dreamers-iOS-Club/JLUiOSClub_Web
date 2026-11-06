@@ -1,13 +1,24 @@
 ---
-title: "Learn Swift! 暑期学习打卡挑战"
+title: |-
+  Learn Swift!
+  暑期学习打卡挑战
 description: "参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift吧！"
 icon: "📚"
 tags: [Swift, 打卡挑战]
+date: "2024-07-15"
+sidebar: true
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
 
-<MagHero eyebrow="Summer Challenge" title="Learn Swift! 暑期学习打卡挑战" />
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="06" category="暑期共学 · 2024" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: '2025 MAIC 宣讲会', href: '/activities/250511-maic-seminar/' }">
 
-来参与JLU iOS Club 的暑期学习打卡挑战，一起学习Swift吧！
+2024 年暑假，从 7 月 15 日到 8 月 11 日，JLU iOS Club 发起 Swift 学习打卡挑战。每天留下一点实践记录，用一个月的积累建立新的学习习惯。
 
 Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护，主要用于构建 Apple 平台的应用。但随着 Swift 语言的发展，开发者越来越多，Swift 应用的场景也越来越多。
 
@@ -17,7 +28,7 @@ Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护
 
 只要你有学习的热情，就可以开始挑战啦！打卡达标奖励丰富！
 
-## 💪 打卡目标
+## 打卡目标 {#💪-打卡目标}
 
 **7月15日 ～ 8月11日** （一个月）从以下三个目标中选择一个完成，期间完成打卡即可获得奖励：
 
@@ -35,7 +46,7 @@ Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护
 
 :::
 
-## 🤩 达标奖励
+## 达标奖励 {#🤩-达标奖励}
 
 累计打卡天数达标（可间断，在限定期间内完成即可），帽子、T恤、马克杯、帆布袋、…… 随你选～ **还有志愿时长相送！**
 
@@ -47,12 +58,18 @@ Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护
 
 打卡天数领先的同学，后续 Xcode 开放学习营可获得**优先入营机会！**
 
-![😉可选礼品（部分）](possible%20gifts.jpeg)
+<MagFigure caption="😉可选礼品（部分）">
+<img src="./possible gifts.jpeg" alt="😉可选礼品（部分）" width="1080" height="1920" loading="eager" decoding="async" />
+</MagFigure>
 
-## 🥺 加入我们的打卡群吧～
+## 加入我们的打卡群吧～ {#🥺-加入我们的打卡群吧}
 
 QQ 群号：[722408047](https://qm.qq.com/q/q57WUAgMYS)
 
 每日在群内打卡，即可获得奖励。并有社团同学助你学习～
 
-![点击可放大二维码](qrcode.jpg)
+<MagFigure caption="点击可放大二维码">
+<img src="./qrcode.jpg" alt="点击可放大二维码" width="1284" height="2289" loading="lazy" decoding="async" />
+</MagFigure>
+
+</MagArticle>

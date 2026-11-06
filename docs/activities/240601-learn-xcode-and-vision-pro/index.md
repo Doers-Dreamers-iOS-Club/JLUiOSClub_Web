@@ -1,10 +1,22 @@
 ---
-title: 深入了解 Vision Pro
+title: "深入了解 Vision Pro，第二期"
 icon: "🥽"
 tags: [Vision Pro, Xcode]
 description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
+date: "2024-06-01"
+sidebar: true
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
-<MagHero title="《深入了解 Vision Pro》系列活动" eyebrow="第二期" subtitle="🚀 Xcode实操大挑战：用Xcode编写宇宙星系模拟的visionOS 应用！🚀" />
+
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="05" category="空间计算 · 2024" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: 'Learn Swift! 暑期学习打卡挑战', href: '/activities/240715-learn-swift-challenge/' }">
+
+以宇宙星系模拟小程序为例，《深入了解 Vision Pro》第二期活动把编程与天文联系起来，带同学们在 Xcode 中亲手实践。这里保留当时的活动安排与资料。
 
 亲爱的同学们，
 
@@ -12,31 +24,35 @@ description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
 
 📣 吉林大学 Doers&Dreamers iOS Club（简称JLU iOS Club）在全校范围内组织举办的《深入了解Vision Pro》系列活动，**第二期**即将开启！
 
-## 📅 活动时间地点：
+## 活动时间地点： {#📅-活动时间地点}
 
-### 第二期活动 <Badge type="tip" text="NEW" />
+### 第二期活动 {#第二期活动}
 
 - 📅 时间： 2024年6月9日（周六）15:00~17:00
 - 📍 地点： 前卫南区计算机楼 B110 苹果机房
 - 👨‍💻 主讲人：高德昊
 
-![第二期活动海报（部分信息有更改，请以官网为准）](poster2.jpg)
+<MagFigure caption="第二期活动海报（部分信息有更改，请以官网为准）">
+<img src="./poster2.jpg" alt="第二期活动海报（部分信息有更改，请以官网为准）" width="1125" height="2000" loading="eager" decoding="async" />
+</MagFigure>
 
-## 🌟 活动亮点：
+## 活动亮点： {#🌟-活动亮点}
 
 1. 提升技能：通过实操Xcode，你将获得宝贵的编程经验，提升你的编程能力和解决问题的能力。
 2. 跨学科学习：本次活动将编程与天文知识相结合，让你在学习的同时，也能拓宽视野，增长见识。
 3. 创新创造：你将有机会亲手打造一款独一无二的宇宙星系模拟小程序，展示你的创意和编程才华，赢得同学们的赞赏和认可。
 
-## 🎁 活动福利：
+## 活动福利： {#🎁-活动福利}
 
 * 现场提供设备支持，并将有资深技术人员亲自指导，解答你的疑惑。
 * 活动中有机会体验到 Vision Pro，并获得 JLU iOS Club 定制好礼！
 
-## 📣 报名方式：
+## 报名方式： {#📣-报名方式}
 
 填写[第二期活动-在线报名表](https://docs.qq.com/form/page/DTGdNTHpyZXBieHdM)即可轻松报名！名额有限，先到先得！
 
-## 💪 行动起来！
+## 行动起来！ {#💪-行动起来}
 
 让我们一起深入探索 Apple Vision Pro 的奥秘，掌握 Xcode 开发工具，开启 VisionOS 应用之旅！这不仅是一次学习的机会，更是一次挑战自我、展现才华的舞台。我们期待你的加入！
+
+</MagArticle>

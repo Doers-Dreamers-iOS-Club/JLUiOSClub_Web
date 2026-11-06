@@ -6,23 +6,7 @@ export const chapters = [
   { id: '04', title: '改坏了、走偏了，怎样继续', summary: '复现问题、检查修复，把可用版本留下来。', label: '排错与恢复' },
   { id: '05', title: '把好用的方法变成 Skill', summary: '把重复的检查方法，整理成自己的技能。', label: '方法的复用' },
   { id: '06', title: '用 MCP 让 Agent 真正操作作品', summary: '连接浏览器工具，让检查真正发生。', label: '工具与行动' }
-]
-export const readingKey = 'jlu-ai-programming-reading-v1'
-export interface ReadingState { completed: string[]; last: string }
-export function readState(): ReadingState {
-  try {
-    const data = JSON.parse(localStorage.getItem(readingKey) || '{}')
-    const valid = chapters.map(c => c.id)
-    return {
-      completed: Array.isArray(data?.completed) ? [...new Set<string>(data.completed.filter((id: unknown) => typeof id === 'string' && valid.includes(id)))] : [],
-      last: valid.includes(data?.last) ? data.last : ''
-    }
-  } catch { return { completed: [], last: '' } }
-}
-export function saveState(state: ReadingState): boolean {
-  try {
-    localStorage.setItem(readingKey, JSON.stringify(state))
-    window.dispatchEvent(new Event('jlu-reading-change'))
-    return true
-  } catch { return false }
-}
+] as const
+
+export type ChapterId = typeof chapters[number]['id']
+export const chapterIds: readonly string[] = chapters.map(chapter => chapter.id)

@@ -1,5 +1,5 @@
-import {LocalSearchTranslations} from "vitepress/types/local-search";
-import {DefaultTheme} from "vitepress";
+import type { DefaultTheme } from "vitepress";
+type LocalSearchTranslations = NonNullable<DefaultTheme.LocalSearchOptions["translations"]>;
 
 export const themeTranslations: DefaultTheme.Config = {
     docFooter: {

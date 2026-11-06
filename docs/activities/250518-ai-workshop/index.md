@@ -1,19 +1,36 @@
 ---
-title: AI工作坊
+title: "AI 工作坊，从模型到应用"
 description: AI Agent揭秘&低代码实践
 icon: "🧠"
 tags: [AI, 工作坊]
+date: "2025-05-18"
+sidebar: true
+aside: false
+outline: false
+prev: false
+next: false
+lastUpdated: false
+editLink: false
+pageClass: mag-article-page
 ---
-<MagHero title="🤖 2025 | AI工作坊活动开启 🎉🎉" />
 
-<MagGrid :cols="4">
-  <MagCard icon="🗓️" title="日期">2025年<strong>05月18日</strong> (周日)</MagCard>
-  <MagCard icon="🕜" title="时间">下午 15:00</MagCard>
-  <MagCard icon="🏢" title="地点">南区计算机楼 B110</MagCard>
-  <MagCard icon="👩🏻‍💻" title="主讲人">iOS club技术支持部 季楷昊、黄子轩、李天麟</MagCard>
-</MagGrid>
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="02" category="技术实践 · 2025" kind="活动介绍" author="JLU iOS Club" date-label="记录日期" :next="{ title: 'Vibe Coding，与 AI 一起开发', href: '/activities/251018-vibe-coding/' }">
 
-## ✨ 活动亮点 ✨
+2025 年 5 月 18 日，AI 工作坊围绕本地模型、智能体、低代码工作流与微调展开。活动由技术支持部季楷昊、黄子轩、李天麟主讲，地点为南区计算机楼 B110。
+
+<div class="article-facts">
+
+**日期。** 2025年<strong>05月18日</strong> (周日)
+
+**时间。** 下午 15:00
+
+**地点。** 南区计算机楼 B110
+
+**主讲人。** iOS club技术支持部 季楷昊、黄子轩、李天麟
+
+</div>
+
+## 活动亮点 ✨ {#✨-活动亮点-✨}
 
 * 🧠 **揭秘AI Agent构建:** 深入了解 AI Agent 如何以大语言模型 (LLM) 为核心，结合工具调用、记忆存储与规划能力，在你的 Apple M系列芯片 Mac 上大放异彩，打造响应迅速、注重隐私的本地智能助理。
 * 💡 **低代码AI实战入门:** <mark> 0基础小白也能亲手体验！</mark> 利用 `Coze`、`n8n` 等可视化平台，无需编写复杂代码，轻松连接本地运行的 `Ollama` 大模型，一步步搭建属于你自己的 AI Workflow，例如构建一个能理解本地文档并进行智能问答的助手。
@@ -27,9 +44,7 @@ tags: [AI, 工作坊]
 > * 掌握让模型真正为你所用的关键技巧。
 > * 体验创造专属AI的乐趣与成就感！
 
----
-
-## 🤯 Mac上部署大模型？ -- 完全可行！
+## Mac上部署大模型？ -- 完全可行！ {#🤯-mac上部署大模型-完全可行}
 
 ::: tip 强劲M芯，本地AI新体验
 得益于 M 系列芯片的统一内存架构和高带宽设计，Mac 在 AI 本地部署中展现出强劲能力。
@@ -40,31 +55,27 @@ tags: [AI, 工作坊]
 * **卓越能效：** 实测显示，M4 Max 运行 70 亿参数模型时功耗仅约 35W，能效优异。
 * **成本可控：** 一套双机 M3 Ultra 配置，即可本地运行 DeepSeek R1，达到近似云端推理体验，成本却更可控。
 
----
+## AI Workshop 核心内容：AI Agent 揭秘 & 低代码实战 {#🛠️-ai-workshop-核心内容-ai-agent-揭秘-低代码实战}
 
-## 🛠️ AI Workshop 核心内容：AI Agent 揭秘 & 低代码实战
-
-### 🤖 AI Agent：你的智能大脑助理
+### AI Agent：你的智能大脑助理 {#🤖-ai-agent-你的智能大脑助理}
 本次活动，我们将深入剖析<u>AI Agent（人工智能体）</u>的构建奥秘：
 * 了解它如何以 LLM 为“大脑”🧠。
 * 结合“工具”调用 🔧、“记忆”存储 💾 与“规划”能力 🗺️。
 * 在你的<u>Apple M系列芯片Mac</u>上打造出响应迅速、保护隐私的本地智能助理。
 * 我们将探讨 `LangChain` 等框架，让你理解 AI Agent 如何改变未来！
 
-### 🧩 低代码AI实战：拖拽搭建你的AI应用
+### 低代码AI实战：拖拽搭建你的AI应用 {#🧩-低代码ai实战-拖拽搭建你的ai应用}
 更令人兴奋的是，我们将<u>手把手带你进入低代码AI实战环节！</u>
 * 你将学习如何利用 **`Coze`**, **`n8n`** 等可视化平台。
 * 无需深奥编程，轻松连接**本地运行的 `Ollama` 大模型**（充分发挥M芯片能效！）。
 * 一步步搭建**属于你自己的AI Workflow**——例如，一个能理解本地文档并进行智能问答的助手！
 
-### 🌟 更多精彩
+### 更多精彩 {#🌟-更多精彩}
 除了 AI Agents，社团成员还会分享我们平时深度使用的 AI 工具，并探讨 **Apple silicon** 对 AI 在移动端使用的巨大潜能。
 
 > **💡 Tips:** 计算机楼B110机房有丰富的Mac设备（M2Pro）供参与活动的人员使用！🥳🥳
 
----
-
-## 🧑‍🔬 模型调教现场课：从“会说话”到“懂你”
+## 模型调教现场课：从“会说话”到“懂你” {#🧑‍🔬-模型调教现场课-从-会说话-到-懂你}
 
 在活动最后，我们将带你体验模型训练最核心也最令人兴奋的一步：**赋予大模型独特能力！**
 
@@ -73,3 +84,5 @@ tags: [AI, 工作坊]
 这一环节将揭示“指令微调”的真正力量，并展示如何让模型从通用走向定制。你将不仅理解大模型，更能让它为你所用！
 
 ---
+
+</MagArticle>

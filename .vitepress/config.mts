@@ -3,7 +3,8 @@ import { fileURLToPath } from 'node:url'
 import { homeBoot } from './homeBoot'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import implicitFigures from 'markdown-it-implicit-figures'
-import { UserConfig } from 'vitepress/dist/node'
+import type { UserConfig } from 'vitepress'
+import { contentIcons } from './plugins/icons'
 
 import { themeTranslations, searchTranslations } from './translations'
 import sidebar from "./sidebar";
@@ -28,7 +29,7 @@ const viteConfig: UserConfig = {
     return pageData.relativePath === 'index.md'
       ? [['link', { rel: 'preload', href: '/fonts/instrument-serif/instrument-serif-latin.woff2', as: 'font', type: 'font/woff2', crossorigin: '' }]] : []
   },
-  srcExclude: ['**/_content/**', 'public/ai-programming/**', 'superpowers/**'],
+  srcExclude: ['**/AGENTS.md', '**/_content/**', 'public/**', 'superpowers/**'],
   lang: 'zh-Hans',
   title: "JLU iOS Club",
   description: "吉林大学Doers&Dreamers iOS CLub社团官方网站",
@@ -66,7 +67,8 @@ const viteConfig: UserConfig = {
       {
         text: '关于我们',
         items: [
-          { text: '了解社团', link: '/about-us/', activeMatch: '/competitions' },
+          { text: '了解社团', link: '/about-us/', activeMatch: '^/about-us/$' },
+          { text: '网页维护指南', link: '/about-us/maintenance/', activeMatch: '^/about-us/maintenance/' },
           { text: '加入我们', link: '/join-us/', activeMatch: '/join-us' },
         ]
       }
@@ -107,8 +109,10 @@ const viteConfig: UserConfig = {
     }
   },
   vite: {
+    plugins: [contentIcons(fileURLToPath(new URL('../', import.meta.url)))],
     resolve: {
       alias: [
+        { find: /^\.\/VPSidebarGroup\.vue$/, replacement: fileURLToPath(new URL('./theme/components/ClubSidebarGroup.vue', import.meta.url)) },
         { find: /^\.\/VPFlyout\.vue$/, replacement: fileURLToPath(new URL('./theme/components/ClubFlyout.vue', import.meta.url)) },
         { find: /^\.\/VPNavBarSearch\.vue$/, replacement: fileURLToPath(new URL('./theme/components/GooeySearch.vue', import.meta.url)) }
       ]
