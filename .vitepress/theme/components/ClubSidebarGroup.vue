@@ -4,10 +4,10 @@ import VPSidebarGroup from 'vitepress/dist/client/theme-default/components/VPSid
 import MagazineSidebar from './activities/MagazineSidebar.vue'
 
 defineProps<{ items: DefaultTheme.SidebarItem[] }>()
-const { frontmatter } = useData()
+const { frontmatter, page } = useData()
 </script>
 
 <template>
-  <MagazineSidebar v-if="frontmatter.pageClass === 'mag-article-page'" :items="items" />
+  <MagazineSidebar v-if="frontmatter.pageClass === 'mag-article-page' || page.relativePath.startsWith('resources/ai-programming/')" :items="items" />
   <VPSidebarGroup v-else :items="items" />
 </template>

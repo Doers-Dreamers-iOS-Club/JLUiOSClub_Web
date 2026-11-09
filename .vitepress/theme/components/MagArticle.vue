@@ -4,7 +4,7 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<{
   title: string
   description: string
-  date: string
+  date?: string
   issue: string
   category: string
   kind?: string
@@ -12,7 +12,12 @@ const props = withDefaults(defineProps<{
   dateLabel?: string
   numbered?: boolean
   next?: { title: string; href: string }
-}>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true })
+  indexHref?: string
+  indexLabel?: string
+  masthead?: string
+  edition?: string
+}>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true,
+  indexHref: '/activities/#activity-content', indexLabel: '返回活动目录', masthead: '社团活动 · 现场手记', edition: 'FIELD NOTES' })
 const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('\n'))
 </script>
 
@@ -20,8 +25,8 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
   <article class="mag-article" :class="{ 'mag-article--numbered': numbered }">
     <header class="mag-article__header">
       <div class="mag-article__masthead">
-        <a href="/activities/#activity-content">社团活动 · 现场手记</a>
-        <span lang="en">JLU iOS CLUB / FIELD NOTES</span>
+        <a :href="indexHref">{{ masthead }}</a>
+        <span lang="en">JLU iOS CLUB / {{ edition }}</span>
       </div>
       <div class="mag-article__opening">
         <div>
@@ -30,22 +35,22 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
           <p class="mag-article__description">{{ description }}</p>
         </div>
         <div class="mag-article__edition" aria-label="文章编号">
-          <span lang="en">FIELD NOTES</span>
+          <span lang="en">{{ edition }}</span>
           <span class="mag-article__number">{{ issue }}</span>
         </div>
       </div>
       <div class="mag-article__byline">
         <span>{{ author }}</span>
-        <time :datetime="date" :aria-label="`${dateLabel} ${date}`"><span v-if="dateLabel !== '活动日期'">{{ dateLabel }} · </span>{{ date.replaceAll('-', '.') }}</time>
+        <time v-if="date" :datetime="date" :aria-label="`${dateLabel} ${date}`"><span v-if="dateLabel !== '活动日期'">{{ dateLabel }} · </span>{{ date.replaceAll('-', '.') }}</time>
         <span>{{ kind }}</span>
       </div>
     </header>
     <div class="mag-article__body"><slot /></div>
     <footer class="mag-article__footer">
       <span class="mag-article__endmark" aria-hidden="true">■</span>
-      <p>{{ author }} <span lang="en">/ FIELD NOTES {{ issue }}</span></p>
+      <p>{{ author }} <span lang="en">/ {{ edition }} {{ issue }}</span></p>
       <nav aria-label="文章导航">
-        <a href="/activities/#activity-content">返回活动目录 <span aria-hidden="true">↗</span></a>
+        <a :href="indexHref">{{ indexLabel }} <span aria-hidden="true">↗</span></a>
         <a v-if="next" :href="next.href"><span class="mag-article__next-label">继续阅读</span>{{ next.title }} <span aria-hidden="true">→</span></a>
       </nav>
     </footer>

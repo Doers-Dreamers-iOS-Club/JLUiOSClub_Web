@@ -2,7 +2,7 @@
 import type { ChapterId } from '../../../data/course'
 import { computed, nextTick, ref, watch } from 'vue'
 
-type Chapter = ChapterId | 'api-setup'
+type Chapter = Exclude<ChapterId, '07'> | 'api-setup'
 const props = withDefaults(defineProps<{ chapter?: Chapter }>(), { chapter: '01' })
 const questions: Record<Chapter, { question: string; choices: string[]; answer: number; explanation: string }> = {
   '01': { question: 'AI 说“已经完成”，接下来应该做什么？', choices: ['直接认为需求已经实现', '查看改动并按需求验证结果', '让 AI 再说一次完成'], answer: 1, explanation: 'AI 的回答是工作说明。你还需要阅读实际改动、运行项目并检查预期行为，才能确认交付。' },

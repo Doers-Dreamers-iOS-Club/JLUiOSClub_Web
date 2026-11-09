@@ -14,6 +14,12 @@ pageClass: ai-course-article
 
 完整包保留原讲义目录，包含 README、连续阅读版、分章正文、随查与配套材料；解压后可在 Markdown 阅读器中使用。
 
+## 实践 · 太空射击游戏
+
+跟着[太空射击实践章节](/resources/ai-programming/chapters/07)，从首版逐步做到三个关卡。下载包包含《深空防线》的六轮 HTML、CSS、JavaScript 和已有测试；复制整个版本目录，再打开其中的 `index.html`。这些是保留当时行为的阶段版本，已知限制见实践正文。
+
+<a href="/ai-programming/space-shooter/space-shooter-versions.zip" download>下载六轮游戏源码</a>
+
 ## 第五章 · 小游戏检查 Skill
 
 这份技能组织“读规则、安排场景、记录现象、整理问题”的方法。安装位置按当前工具的约定选择。
