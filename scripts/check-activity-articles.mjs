@@ -49,6 +49,31 @@ try {
       await page.$$eval('.mag-article__body img', images => Promise.all(images.map(image => { image.loading = 'eager'; return image.decode() })))
     }
     await page.screenshot({ path: `${output}/${name}-desktop.png` })
+    await page.waitForSelector('.mag-article__outline-panel', { hidden: true })
+    await page.click('.article-sidebar-toggle')
+    await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
+    await page.waitForSelector('.mag-article__outline-panel', { hidden: true })
+    assert.equal(await page.$eval('.mag-article__header', el => {
+      const rect = el.getBoundingClientRect()
+      return rect.width <= 1080 && Math.abs((rect.left + rect.right) / 2 - innerWidth / 2) < 1
+    }), true, route + ' centered header retains margins')
+    await page.$eval('.mag-article__body h2', el => el.scrollIntoView({ block: 'start', behavior: 'instant' }))
+    await page.waitForSelector('.mag-article__outline-panel[data-state="visible"]', { visible: true })
+    assert.equal(await page.$$eval('.mag-article__outline .outline-link', links => links.length > 0 && links.every(link =>
+      document.getElementById(decodeURIComponent(link.hash.slice(1))) && getComputedStyle(link).opacity === '1')), true, route + ' populated outline with working targets')
+    await page.screenshot({ path: `${output}/${name}-outline.png` })
+    await page.$eval('.mag-article__outline .outline-link', el => el.click())
+    await page.waitForFunction(() => location.hash && document.querySelector('.mag-article__outline .outline-link.active')?.hash === location.hash)
+    await page.setViewport({ width: 1024, height: 844 })
+    await page.waitForSelector('.VPLocalNavOutlineDropdown', { visible: true })
+    await page.click('.VPLocalNavOutlineDropdown > button')
+    await page.waitForSelector('.VPLocalNavOutlineDropdown .items', { visible: true })
+    assert(await page.$('.VPLocalNavOutlineDropdown .outline-link'), route + ' narrow-screen outline')
+    await page.keyboard.press('Escape')
+    await page.setViewport({ width: 1440, height: 1000 })
+    await page.click('.article-sidebar-toggle')
+    await page.waitForSelector('.mag-article__outline-panel', { hidden: true })
+    await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
     if (images.length) {
       await page.$eval('.mag-article__body img', el => el.scrollIntoView({ block: 'center', behavior: 'instant' }))
       await page.screenshot({ path: `${output}/${name}-media.png` })
@@ -66,7 +91,7 @@ try {
     }
     await page.evaluate(() => document.documentElement.classList.remove('dark'))
     for (const href of await page.$$eval('.mag-article__footer a', links => links.map(link => link.href))) assert.equal((await fetch(href)).status, 200, href)
-    console.log(`PASS ${route}: article layout, media, contents, 1440/1280/1024/960/390/320px and dark mode`)
+    console.log(`PASS ${route}: contextual outline, anchors, narrow-screen dropdown, layout, media, 1440/1280/1024/960/390/320px and dark mode`)
   }
   await page.setViewport({ width: 1440, height: 1000 })
   await page.goto(base + '/activities/261025-idea-workshop/', { waitUntil: 'networkidle0' })

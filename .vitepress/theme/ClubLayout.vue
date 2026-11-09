@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, readonly, ref, watch } from 'vue'
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import { gsap } from 'gsap'
+import { articleSidebarCollapsedKey } from './composables/useArticleOutline'
 
 const { frontmatter, page } = useData()
 const sidebarCollapsed = ref(false)
+provide(articleSidebarCollapsedKey, readonly(sidebarCollapsed))
 const isArticle = computed(() => frontmatter.value.pageClass === 'mag-article-page')
 let articleMotion: gsap.core.Tween | undefined
 let desktop: MediaQueryList, reducedMotion: MediaQueryList
@@ -26,6 +28,8 @@ async function toggleSidebar() {
   sidebarCollapsed.value = !sidebarCollapsed.value
   await nextTick()
   syncSidebar()
+  // The native outline marker needs the restored aside's layout measurements.
+  window.dispatchEvent(new Event('scroll'))
   if (reducedMotion.matches) return
   articleMotion = gsap.fromTo(article, { x: left - article.getBoundingClientRect().left, willChange: 'transform' }, {
     x: 0, duration: .46, ease: 'power3.out', clearProps: 'transform,willChange',
@@ -69,6 +73,10 @@ onBeforeUnmount(() => {
 <style>
 .article-sidebar-toggle { display: none; }
 @media (min-width: 960px) {
+  .mag-article-page:not(.article-sidebar-collapsed) .VPLocalNav { display: none; }
+  .article-sidebar-collapsed .VPLocalNav.has-sidebar { padding-left: 0; }
+  .article-sidebar-collapsed .VPLocalNav .container { justify-content: flex-end; }
+  .article-sidebar-collapsed .VPLocalNavOutlineDropdown > .items { left: auto; right: 32px; }
   .Layout.mag-article-page { --article-sidebar-edge: calc(max(0px, (100vw - var(--vp-layout-max-width)) / 2) + var(--vp-sidebar-width)); --article-sidebar-ease: cubic-bezier(.22, 1, .36, 1); }
   .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 32px); width: 32px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
   .article-sidebar-toggle svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--article-sidebar-ease); }
@@ -81,6 +89,9 @@ onBeforeUnmount(() => {
   .article-sidebar-collapsed .article-sidebar-toggle { transform: translateX(calc(32px - var(--article-sidebar-edge))); }
   .article-sidebar-toggle[aria-expanded='false'] svg { transform: rotate(180deg); }
   .article-sidebar-toggle[aria-expanded='false']:hover svg { transform: translateX(2px) rotate(180deg); }
+}
+@media (max-width: 959px) {
+  .mag-article-page:has(.VPSidebar.open) .VPLocalNavOutlineDropdown { visibility: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { .Layout.mag-article-page .VPSidebar, .article-sidebar-toggle, .article-sidebar-toggle svg { transition: none; } }
 @media print { .article-sidebar-toggle { display: none; } }

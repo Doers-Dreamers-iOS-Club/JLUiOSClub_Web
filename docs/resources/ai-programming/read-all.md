@@ -8,7 +8,7 @@ outline: [2, 2]
 
 # 从想法到作品
 
-六章主线与 API 补充教程 · [切换到分章阅读](/resources/ai-programming/)
+六章基础与 API 补充教程 · [切换到分章阅读](/resources/ai-programming/)
 
 - [第一章｜先让一个想法动起来](#chapter-01)
 - [第二章｜让 Agent 沿着你的想法做](#chapter-02)
@@ -16,6 +16,7 @@ outline: [2, 2]
 - [第四章｜改坏了、走偏了，怎样继续](#chapter-04)
 - [第五章｜把好用的方法变成 Skill](#chapter-05)
 - [第六章｜用 MCP 让 Agent 真正操作作品](#chapter-06)
+- [第七章｜太空射击制作实践（独立章节）](/resources/ai-programming/chapters/07)
 - [补充教程｜在 DSH 中接入模型，认识 API 配置](#chapter-api-setup)
 
 

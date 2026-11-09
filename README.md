@@ -134,9 +134,10 @@ npm run preview
 
 ## AI 编程入门专题
 
-入口：`/resources/ai-programming/`。包含六章主线、API 补充、五篇随查、配套材料与连续阅读版。
+入口：`/resources/ai-programming/`。包含六章基础、一章太空射击实践、API 补充、五篇随查、配套材料与连续阅读版。
 
-- 在线正文只维护 `docs/resources/ai-programming/_content/`，分章页与连续阅读通过 Markdown include 共用。
+- 实践第七章集中在 `docs/resources/ai-programming/chapters/07.md`，真实截图与六轮源码包放在 `docs/public/ai-programming/space-shooter/`；章节共用活动详情的 `MagArticle` 和杂志式侧栏。
+- 基础章节在线正文只维护 `docs/resources/ai-programming/_content/`，分章页与连续阅读通过 Markdown include 共用。
 - 页面元信息、相关阅读与小题放在 `chapters/`；交互组件位于 `.vitepress/theme/components/learning/`，专题样式为 `styles/learning.css`。
 - `docs/public/ai-programming/files/` 保存可下载原文件。完整讲义 ZIP 保留原始目录；修改原材料后需要同步更新下载包。
 - 静态托管会隐藏点文件，因此 API 环境变量样例通过 `files/api/env.example` 提供，下载属性保留 `.env.example` 文件名；ZIP 内保留原名。

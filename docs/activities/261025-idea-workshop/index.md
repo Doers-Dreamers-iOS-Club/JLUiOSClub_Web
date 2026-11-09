@@ -4,7 +4,8 @@ description: 一颗星星代表一个 Idea。让分散的灵感相遇，让一�
 date: "2026-10-25"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

@@ -5,7 +5,8 @@ export const chapters = [
   { id: '03', title: '为了改好它，我们需要学什么', summary: '理解计时与状态，把暂停功能说准确。', label: '边做边学' },
   { id: '04', title: '改坏了、走偏了，怎样继续', summary: '复现问题、检查修复，把可用版本留下来。', label: '排错与恢复' },
   { id: '05', title: '把好用的方法变成 Skill', summary: '把重复的检查方法，整理成自己的技能。', label: '方法的复用' },
-  { id: '06', title: '用 MCP 让 Agent 真正操作作品', summary: '连接浏览器工具，让检查真正发生。', label: '工具与行动' }
+  { id: '06', title: '用 MCP 让 Agent 真正操作作品', summary: '连接浏览器工具，让检查真正发生。', label: '工具与行动' },
+  { id: '07', title: '实践：从零制作太空射击游戏', summary: '沿六轮迭代，完成飞船、Boss、暂停和三个关卡。', label: '游戏制作实践' }
 ] as const
 
 export type ChapterId = typeof chapters[number]['id']

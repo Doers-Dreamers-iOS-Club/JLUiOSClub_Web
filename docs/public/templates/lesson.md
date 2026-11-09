@@ -4,7 +4,8 @@ description: 认识状态与界面的关系，完成一个按钮计数器。
 date: "2026-11-06"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

@@ -6,7 +6,8 @@ description: "2024 百团大战纳新：果粉们看过来，JLU iOS Club 等你
 date: "2024-04-14"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

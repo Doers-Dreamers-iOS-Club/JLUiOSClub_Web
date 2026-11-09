@@ -7,11 +7,12 @@ const props = defineProps<{ items: DefaultTheme.SidebarItem[] }>()
 const { page } = useData()
 const currentPath = computed(() => '/' + page.value.relativePath.replace(/(?:index)?\.md$/, '').replace(/\/$/, ''))
 const isWorkshop = computed(() => currentPath.value.startsWith('/activities/260209-winter-swift/'))
+const isCourse = computed(() => currentPath.value.startsWith('/resources/ai-programming/'))
 const groups = computed(() => {
   let number = 0
   return props.items.map(group => ({
     title: group.text,
-    entries: group.items!.map(item => ({
+    entries: (group.items ?? []).filter(item => item.link).map(item => ({
       title: item.text!,
       href: item.link!,
       number: String(++number).padStart(2, '0'),
@@ -26,10 +27,10 @@ const groups = computed(() => {
     <header class="contents-masthead">
       <div class="contents-title"><span>目次</span><span lang="en">Contents<br><i>& stories.</i></span></div>
     </header>
-    <a class="contents-index" :href="withBase('/activities/#activity-content')"><RollText text="全部活动" /><span aria-hidden="true">↗</span></a>
+    <a class="contents-index" :href="withBase(isCourse ? '/resources/ai-programming/#course-content' : '/activities/#activity-content')"><RollText :text="isCourse ? '全部章节' : '全部活动'" /><span aria-hidden="true">↗</span></a>
     <a v-if="isWorkshop" class="contents-index" :href="withBase('/activities/260209-winter-swift/')"><RollText text="工作坊总览" /><span aria-hidden="true">↗</span></a>
-    <section v-for="(group, index) in groups" :key="group.title" class="contents-section" :aria-labelledby="`contents-section-${index}`">
-      <h2 :id="`contents-section-${index}`">{{ group.title }}</h2>
+    <section v-for="(group, index) in groups" :key="group.title || index" class="contents-section" :aria-labelledby="group.title ? `contents-section-${index}` : undefined">
+      <h2 v-if="group.title" :id="`contents-section-${index}`">{{ group.title }}</h2>
       <ol>
         <li v-for="entry in group.entries" :key="entry.href">
           <a class="contents-entry" :href="withBase(entry.href)" :aria-current="entry.active ? 'page' : undefined" :style="{ '--entry-order': Number(entry.number) - 1 }">

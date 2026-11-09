@@ -16,8 +16,7 @@ const sidebar: DefaultTheme.Sidebar = {
   '/resources/ai-programming/': {
     base: '/resources/ai-programming/',
     items: [
-      { text: '从想法到作品', link: '' },
-      { text: '主线课程', items: chapters.map(({ id, title }) => ({ text: `${id} · ${title}`, link: `chapters/${id}` })) },
+      { text: '课程章节', items: chapters.map(({ id, title }) => ({ text: title, link: `chapters/${id}` })) },
       { text: '补充学习', items: [
         { text: '在 DSH 中接入模型', link: 'chapters/api-setup' },
         { text: '选读 · Python 调用 API', link: 'reference/python-api' },
@@ -28,8 +27,10 @@ const sidebar: DefaultTheme.Sidebar = {
         { text: '术语与例子', link: 'reference/glossary' },
         { text: '案例与文档', link: 'reference/sources' },
       ] },
-      { text: '配套材料与下载', link: 'materials/' },
-      { text: '连续阅读版', link: 'read-all' },
+      { text: '阅读与材料', items: [
+        { text: '配套材料与下载', link: 'materials/' },
+        { text: '连续阅读版', link: 'read-all' },
+      ] },
     ]
   },
 

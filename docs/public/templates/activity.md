@@ -4,7 +4,8 @@ description: 用一两句话介绍活动主题与值得关注的内容。
 date: "2026-11-06"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

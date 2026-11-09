@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { useData } from 'vitepress'
+import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
+import { useArticleOutline } from '../composables/useArticleOutline'
+
+const { frontmatter } = useData()
+const hasOutline = computed(() => frontmatter.value.articleOutline === true)
+const header = ref<HTMLElement>()
+const outlinePanel = ref<HTMLElement>()
+useArticleOutline(header, outlinePanel)
 
 const props = withDefaults(defineProps<{
   title: string
   description: string
-  date: string
+  date?: string
   issue: string
   category: string
   kind?: string
@@ -12,16 +21,21 @@ const props = withDefaults(defineProps<{
   dateLabel?: string
   numbered?: boolean
   next?: { title: string; href: string }
-}>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true })
+  indexHref?: string
+  indexLabel?: string
+  masthead?: string
+  edition?: string
+}>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true,
+  indexHref: '/activities/#activity-content', indexLabel: '返回活动目录', masthead: '社团活动 · 现场手记', edition: 'FIELD NOTES' })
 const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('\n'))
 </script>
 
 <template>
-  <article class="mag-article" :class="{ 'mag-article--numbered': numbered }">
-    <header class="mag-article__header">
+  <article class="mag-article" :class="{ 'mag-article--numbered': numbered, 'mag-article--with-outline': hasOutline }">
+    <header ref="header" class="mag-article__header">
       <div class="mag-article__masthead">
-        <a href="/activities/#activity-content">社团活动 · 现场手记</a>
-        <span lang="en">JLU iOS CLUB / FIELD NOTES</span>
+        <a :href="indexHref">{{ masthead }}</a>
+        <span lang="en">JLU iOS CLUB / {{ edition }}</span>
       </div>
       <div class="mag-article__opening">
         <div>
@@ -30,22 +44,29 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
           <p class="mag-article__description">{{ description }}</p>
         </div>
         <div class="mag-article__edition" aria-label="文章编号">
-          <span lang="en">FIELD NOTES</span>
+          <span lang="en">{{ edition }}</span>
           <span class="mag-article__number">{{ issue }}</span>
         </div>
       </div>
       <div class="mag-article__byline">
         <span>{{ author }}</span>
-        <time :datetime="date" :aria-label="`${dateLabel} ${date}`"><span v-if="dateLabel !== '活动日期'">{{ dateLabel }} · </span>{{ date.replaceAll('-', '.') }}</time>
+        <time v-if="date" :datetime="date" :aria-label="`${dateLabel} ${date}`"><span v-if="dateLabel !== '活动日期'">{{ dateLabel }} · </span>{{ date.replaceAll('-', '.') }}</time>
         <span>{{ kind }}</span>
       </div>
     </header>
-    <div class="mag-article__body"><slot /></div>
+    <div class="mag-article__reading">
+      <div class="mag-article__body"><slot /></div>
+      <aside v-if="hasOutline" class="mag-article__outline" aria-label="页内导航">
+        <div ref="outlinePanel" class="mag-article__outline-panel" data-state="hidden" inert>
+          <VPDocAsideOutline />
+        </div>
+      </aside>
+    </div>
     <footer class="mag-article__footer">
       <span class="mag-article__endmark" aria-hidden="true">■</span>
-      <p>{{ author }} <span lang="en">/ FIELD NOTES {{ issue }}</span></p>
+      <p>{{ author }} <span lang="en">/ {{ edition }} {{ issue }}</span></p>
       <nav aria-label="文章导航">
-        <a href="/activities/#activity-content">返回活动目录 <span aria-hidden="true">↗</span></a>
+        <a :href="indexHref">{{ indexLabel }} <span aria-hidden="true">↗</span></a>
         <a v-if="next" :href="next.href"><span class="mag-article__next-label">继续阅读</span>{{ next.title }} <span aria-hidden="true">→</span></a>
       </nav>
     </footer>
@@ -54,6 +75,13 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 
 <style scoped>
 .mag-article { margin: 0 auto; max-width: 1080px; color: var(--mag-text); }
+.mag-article__reading { position: relative; }
+.mag-article__outline { display: none; }
+.mag-article__outline-panel { opacity: 0; visibility: hidden; }
+.mag-article__outline :deep(ul) { list-style: none; margin: 0; padding: 0; }
+.mag-article__outline :deep(li) { margin: 0; }
+.mag-article__outline :deep(a) { text-decoration: none; }
+.mag-article__outline :deep(.nested) { padding-left: 16px; }
 .mag-article__masthead { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 16px; border-bottom: 1px solid var(--mag-text); font-size: 12px; letter-spacing: .08em; }
 .mag-article__masthead a { color: inherit; text-decoration: none; }
 .mag-article__masthead > span { color: var(--mag-text-secondary); font: 10px var(--mag-font-mono); letter-spacing: .1em; }
@@ -150,9 +178,14 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 </style>
 
 <style>
+@media (min-width: 1280px) {
+  .article-sidebar-collapsed .mag-article__outline { display: block; position: absolute; inset: 0 auto 0 calc(50% + 372px); width: 224px; }
+  .mag-article__outline-panel { position: sticky; top: calc(var(--vp-nav-height) + 32px); max-height: calc(100svh - var(--vp-nav-height) - 64px); overflow-y: auto; }
+}
+@media print { .mag-article__outline { display: none !important; } }
 .mag-article-page .VPDoc { padding: 40px 48px 64px; }
 .mag-article-page .VPDoc > .container { max-width: 1080px; }
-.mag-article-page .VPDoc .content { padding: 0; max-width: 100%; }
+.mag-article-page .VPDoc > .container > .content { padding: 0; max-width: 100%; }
 .mag-article-page .VPDoc .content-container { max-width: 100%; }
 .mag-article-page .VPDocFooter { display: none; }
 @media (max-width: 600px) {

@@ -4,7 +4,8 @@ description: "第一讲讲义：SwiftUI 结构、布局、修饰符、ForEach �
 date: "2026-02-09"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false
