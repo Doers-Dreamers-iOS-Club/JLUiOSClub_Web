@@ -6,7 +6,8 @@ tags: [MAIC, 宣讲会]
 date: "2025-05-11"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

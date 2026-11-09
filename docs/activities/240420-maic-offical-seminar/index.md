@@ -6,7 +6,8 @@ tags: [MAIC, 官方宣讲]
 date: "2024-04-20"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

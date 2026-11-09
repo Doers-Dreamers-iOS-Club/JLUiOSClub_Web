@@ -4,7 +4,8 @@ description: "第二讲讲义：MVVM、Struct/Class、Enum/Optional、Closure、
 date: "2026-02-16"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

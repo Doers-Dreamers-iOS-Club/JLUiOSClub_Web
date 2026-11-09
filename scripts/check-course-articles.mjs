@@ -143,7 +143,17 @@ try {
       const style = getComputedStyle(el)
       return Number(style.opacity) < 1 && new DOMMatrixReadOnly(style.transform).m41 > 0
     }), true, 'Outline fades and slides into view')
+    await page.waitForFunction(() => {
+      const links = [...document.querySelectorAll('.mag-article__outline .outline-link')]
+      const first = getComputedStyle(links[0])
+      const last = getComputedStyle(links.at(-1))
+      const title = getComputedStyle(document.querySelector('.mag-article__outline .outline-title'))
+      return Number(first.opacity) > .1 && Number(first.opacity) < .95 && Number(first.opacity) > Number(last.opacity)
+        && new DOMMatrixReadOnly(first.transform).m42 > 0 && Number(title.opacity) > Number(first.opacity)
+    })
     await visibleOutline()
+    assert.equal(await page.$$eval('.mag-article__outline .outline-title, .mag-article__outline .outline-link', nodes =>
+      nodes.every(node => getComputedStyle(node).opacity === '1' && !node.style.transform && !node.style.willChange)), true, 'Text settles sharply without persistent compositor hints')
   }
   await checkEntrance()
   await page.click('.article-sidebar-toggle')
@@ -153,6 +163,12 @@ try {
   await checkEntrance()
   await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
   await checkReadingLayout()
+  // Reverse midway through an exit: text continues from its current frame.
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }))
+  await page.waitForSelector('.mag-article__outline-panel[data-state="exiting"]')
+  await page.$eval('#muzzles', el => el.scrollIntoView({ block: 'start', behavior: 'instant' }))
+  await visibleOutline()
+  assert.equal(await page.$eval('.mag-article__outline-panel', el => el.inert), false)
   await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }))
   await hideOutline()
   assert.equal(await page.$eval('.mag-article__outline-panel', el => el.inert), true)
@@ -160,6 +176,7 @@ try {
   await page.$eval('#muzzles', el => el.scrollIntoView({ block: 'start', behavior: 'instant' }))
   await visibleOutline()
   assert.equal(await page.$eval('.mag-article__outline-panel', el => getComputedStyle(el).opacity), '1')
+  assert.equal(await page.$$eval('.mag-article__outline .outline-link', nodes => nodes.every(node => getComputedStyle(node).opacity === '1' && !node.style.transform)), true)
 
   await page.setViewport({ width: 375, height: 844 })
   await go(course + 'chapters/07')

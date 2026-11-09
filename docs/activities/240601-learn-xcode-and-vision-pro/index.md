@@ -6,7 +6,8 @@ description: "深入了解 Vision Pro 与 Xcode 开发的第二场活动。"
 date: "2024-06-01"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

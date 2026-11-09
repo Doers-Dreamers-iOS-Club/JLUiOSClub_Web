@@ -4,7 +4,8 @@ description: 第十一届华为 ICT 大赛走进吉林大学。从赛道介绍�
 date: "2026-10-16"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

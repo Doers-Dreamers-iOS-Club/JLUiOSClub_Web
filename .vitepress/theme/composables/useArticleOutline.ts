@@ -19,40 +19,68 @@ export function useArticleOutline(header: Ref<HTMLElement | undefined>, panel: R
       const top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height')) + 32
       let passedHeader = heading.getBoundingClientRect().bottom <= top
       let shown = false
-      let tween: gsap.core.Tween | undefined
-      gsap.set(target, { autoAlpha: 0, x: 14, y: 6 })
+      let motion: gsap.core.Timeline | undefined
+      const textNodes = new Set<HTMLElement>()
+      gsap.set(target, { autoAlpha: 0, x: 12 })
       target.inert = true
       target.dataset.state = 'hidden'
 
-      const sync = () => {
-        const next = collapsed.value && passedHeader
-        if (next === shown) return
+      const sync = (refresh = false) => {
+        const title = target.querySelector<HTMLElement>('.outline-title')
+        const links = Array.from(target.querySelectorAll<HTMLElement>('.outline-link'))
+        const text = title ? [title, ...links] : links
+        for (const node of text) {
+          if (!textNodes.has(node)) {
+            gsap.set(node, { opacity: 0, y: 10 })
+            textNodes.add(node)
+          }
+        }
+        const next = collapsed.value && passedHeader && links.length > 0
+        if (next === shown && !refresh) return
         shown = next
-        tween?.kill()
+        motion?.kill()
         target.inert = !next
-        target.dataset.state = next ? 'entering' : 'hidden'
-        if (!next) {
-          gsap.set(target, { autoAlpha: 0, x: 14, y: 6, clearProps: 'willChange' })
+        const finish = () => {
+          target.dataset.state = next ? 'visible' : 'hidden'
+          gsap.set([target, ...text], { clearProps: next ? 'transform,willChange' : 'willChange' })
+        }
+        if (reduce) {
+          gsap.set(target, { autoAlpha: next ? 1 : 0, x: next ? 0 : 12 })
+          gsap.set(text, { opacity: next ? 1 : 0, y: next ? 0 : 10 })
+          finish()
           return
         }
-        tween = gsap.fromTo(target, { autoAlpha: 0, x: 14, y: 6, willChange: 'transform,opacity' }, {
-          autoAlpha: 1, x: 0, y: 0, duration: reduce ? 0 : .44, ease: 'power3.out',
-          clearProps: 'willChange',
-          onComplete: () => { target.dataset.state = 'visible' },
-        })
+        target.dataset.state = next ? 'entering' : 'exiting'
+        gsap.set([target, ...text], { willChange: 'transform,opacity' })
+        // Tween from the current frame, so reversing a scroll never resets the text.
+        motion = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: finish })
+          .to(target, { autoAlpha: next ? 1 : 0, x: next ? 0 : 12, duration: next ? .6 : .24 }, 0)
+        if (next) {
+          if (title) motion.to(title, { opacity: 1, y: 0, duration: .56 }, .04)
+          motion.to(links, {
+            opacity: 1, y: 0, duration: .56,
+            stagger: { amount: Math.min(.22, (links.length - 1) * .035) },
+          }, .1)
+        } else {
+          motion.to(text, { opacity: 0, y: 10, duration: .2 }, 0)
+        }
       }
       const observer = new IntersectionObserver(([entry]) => {
         passedHeader = entry.boundingClientRect.bottom <= (entry.rootBounds?.top ?? top)
         sync()
       }, { rootMargin: `-${top}px 0px 0px 0px`, threshold: 0 })
       observer.observe(heading)
-      const stop = watch(collapsed, sync, { flush: 'post' })
+      // Native VitePress headings can arrive after mounting (including hash visits).
+      const contentObserver = new MutationObserver(() => sync(true))
+      contentObserver.observe(target, { childList: true, subtree: true })
+      const stop = watch(collapsed, () => sync(), { flush: 'post' })
       sync()
       return () => {
         observer.disconnect()
+        contentObserver.disconnect()
         stop()
-        tween?.kill()
-        gsap.set(target, { clearProps: 'opacity,visibility,transform,willChange' })
+        motion?.kill()
+        gsap.set([target, ...textNodes], { clearProps: 'opacity,visibility,transform,willChange' })
         target.inert = true
         target.dataset.state = 'hidden'
       }

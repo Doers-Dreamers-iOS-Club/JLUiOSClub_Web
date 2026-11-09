@@ -4,7 +4,8 @@ description: 从 iOS Club 到大学生创新应用工坊，一次关于 AI、创
 date: "2026-10-11"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

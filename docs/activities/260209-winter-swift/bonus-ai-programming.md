@@ -4,7 +4,8 @@ description: "课程外补充讲义：LLM、Tool Calling、RAG、Agent、Skills�
 date: "2026-02-22"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

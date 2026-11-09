@@ -8,7 +8,8 @@ tags: [Swift, 打卡挑战]
 date: "2024-07-15"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

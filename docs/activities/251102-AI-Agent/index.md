@@ -6,7 +6,8 @@ tags: [AI, Agent, 工作坊]
 date: "2025-11-02"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false

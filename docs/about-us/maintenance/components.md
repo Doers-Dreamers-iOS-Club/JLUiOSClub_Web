@@ -41,7 +41,8 @@ description: 用一两句话介绍这次活动的主题与看点。
 date: "2026-10-25"
 sidebar: true
 aside: false
-outline: false
+articleOutline: true
+outline: [2, 3]
 prev: false
 next: false
 lastUpdated: false
