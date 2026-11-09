@@ -4,6 +4,7 @@ description: "通过 DSH 的模型配置，认识 API 字段并确认一次连�
 outline: [2, 3]
 pageClass: mag-article-page
 aside: false
+articleOutline: true
 sidebar: true
 lastUpdated: false
 editLink: false

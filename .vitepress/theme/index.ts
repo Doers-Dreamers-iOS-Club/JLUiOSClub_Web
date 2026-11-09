@@ -1,7 +1,6 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import ClubLayout from './ClubLayout.vue'
-import { registerContentComponents } from './components/register'
 import { usePageEnhancements } from './composables/usePageEnhancements'
 import { useRouteMotion } from './composables/useRouteMotion'
 
@@ -12,6 +11,7 @@ import './styles/motion.css'
 import './styles/artwork-motion.css'
 import './styles/learning.css'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
+import { registerContentComponents } from './components/register'
 
 export default {
   extends: DefaultTheme,

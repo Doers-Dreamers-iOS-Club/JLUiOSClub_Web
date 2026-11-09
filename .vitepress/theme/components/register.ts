@@ -1,8 +1,10 @@
 import { defineAsyncComponent, type App } from 'vue'
+import MagArticle from './MagArticle.vue'
 
 export const contentComponents = {
   ClubHome: defineAsyncComponent(() => import('./ClubHome.vue')),
-  MagArticle: defineAsyncComponent(() => import('./MagArticle.vue')),
+  // The native outline must subscribe before VitePress emits content-mounted.
+  MagArticle,
   MagHero: defineAsyncComponent(() => import('./MagHero.vue')),
   MagSection: defineAsyncComponent(() => import('./MagSection.vue')),
   MagGrid: defineAsyncComponent(() => import('./MagGrid.vue')),
