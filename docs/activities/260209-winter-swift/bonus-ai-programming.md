@@ -13,7 +13,7 @@ editLink: false
 pageClass: mag-article-page
 ---
 
-<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="03" category="Winter Swift · 补充讲座" kind="活动讲义" author="JLU iOS Club" date-label="记录日期" :numbered="false" :next="{ title: '冬季 Swift 培训总览', href: '/activities/260209-winter-swift/' }">
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="03" category="Winter Swift · 补充讲座" kind="活动讲义" author="JLU iOS Club" date-label="记录日期" :numbered="false" :prev="{ title: 'Swift 进阶，让游戏运转起来', href: '/activities/260209-winter-swift/second' }" :next="{ title: '冬季 Swift 培训总览', href: '/activities/260209-winter-swift/' }">
 
 从 LLM 到工具调用、检索与 Agent，再到 Skills 和 MCP，这份补充讲义整理现代 AI 编程的概念关系，并把讨论落回 iOS 开发与团队实践。
 

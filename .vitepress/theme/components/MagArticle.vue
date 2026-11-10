@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
+import { getPageNavigation } from '../../data/navigation'
 import { useArticleOutline } from '../composables/useArticleOutline'
 
-const { frontmatter } = useData()
+const { frontmatter, page } = useData()
 const hasOutline = computed(() => frontmatter.value.articleOutline === true)
 const header = ref<HTMLElement>()
 const outlinePanel = ref<HTMLElement>()
@@ -20,13 +21,34 @@ const props = withDefaults(defineProps<{
   author?: string
   dateLabel?: string
   numbered?: boolean
+  prev?: { title: string; href: string }
   next?: { title: string; href: string }
   indexHref?: string
   indexLabel?: string
   masthead?: string
   edition?: string
 }>(), { kind: '活动回顾', author: '大学生创新应用工坊', dateLabel: '活动日期', numbered: true,
-  indexHref: '/activities/#activity-content', indexLabel: '返回活动目录', masthead: '社团活动 · 现场手记', edition: 'FIELD NOTES' })
+  masthead: '社团活动 · 现场手记', edition: 'FIELD NOTES' })
+const navigation = computed(() => getPageNavigation(page.value.relativePath))
+const indexHref = computed(() => props.indexHref ?? navigation.value.index.href)
+const indexLabel = computed(() => props.indexLabel ?? navigation.value.index.title)
+const isSeries = computed(() => Boolean(navigation.value.series))
+const isWorkshop = computed(() => page.value.relativePath.startsWith('activities/260209-winter-swift/'))
+const routePath = (href: string) => href.split('#')[0].replace(/(?:index)?\.html$/, '').replace(/\/$/, '')
+const previous = computed(() => {
+  const value = props.prev ?? frontmatter.value.prev
+  if (!value || typeof value !== 'object') return
+  const title = value.title ?? value.text
+  const href = value.href ?? value.link
+  if (typeof title !== 'string' || typeof href !== 'string' || routePath(href) === routePath(indexHref.value)) return
+  return { title, href }
+})
+const nextArticle = computed(() => props.next && routePath(props.next.href) !== routePath(indexHref.value) ? props.next : undefined)
+const nextLabel = computed(() => {
+  if (!isSeries.value) return '相关阅读'
+  if (nextArticle.value && /(?:\/api-setup|\/reference\/|\/bonus-ai-programming)/.test(nextArticle.value.href)) return '选读补充'
+  return isWorkshop.value ? '下一讲' : '下一章'
+})
 const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('\n'))
 </script>
 
@@ -34,7 +56,10 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
   <article class="mag-article" :class="{ 'mag-article--numbered': numbered, 'mag-article--with-outline': hasOutline }">
     <header ref="header" class="mag-article__header">
       <div class="mag-article__masthead">
-        <a :href="indexHref">{{ masthead }}</a>
+        <nav class="mag-article__location" aria-label="所属栏目">
+          <a :href="withBase(navigation.section.href)">{{ navigation.section.title }}</a>
+          <template v-if="navigation.series"><span aria-hidden="true">/</span><a :href="withBase(navigation.series.href)">{{ navigation.series.title }}</a></template>
+        </nav>
         <span lang="en">JLU iOS CLUB / {{ edition }}</span>
       </div>
       <div class="mag-article__opening">
@@ -56,7 +81,7 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
     </header>
     <div class="mag-article__reading">
       <div class="mag-article__body"><slot /></div>
-      <aside v-if="hasOutline" class="mag-article__outline" aria-label="页内导航">
+      <aside v-if="hasOutline" class="mag-article__outline" aria-label="本页目录">
         <div ref="outlinePanel" class="mag-article__outline-panel" data-state="hidden" inert>
           <VPDocAsideOutline />
         </div>
@@ -65,9 +90,10 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
     <footer class="mag-article__footer">
       <span class="mag-article__endmark" aria-hidden="true">■</span>
       <p>{{ author }} <span lang="en">/ {{ edition }} {{ issue }}</span></p>
-      <nav aria-label="文章导航">
-        <a :href="indexHref">{{ indexLabel }} <span aria-hidden="true">↗</span></a>
-        <a v-if="next" :href="next.href"><span class="mag-article__next-label">继续阅读</span>{{ next.title }} <span aria-hidden="true">→</span></a>
+      <nav :aria-label="isSeries ? '课程导航' : '文章导航'" :class="{ 'mag-article__course-nav': isSeries }">
+        <a v-if="previous" class="mag-article__previous" :href="withBase(previous.href)"><span class="mag-article__next-label">{{ isSeries ? isWorkshop ? '上一讲' : '上一章' : '上一篇' }}</span><span aria-hidden="true">←</span> {{ previous.title }}</a>
+        <a class="mag-article__index" :href="withBase(indexHref)">{{ indexLabel }} <span aria-hidden="true">↗</span></a>
+        <a v-if="nextArticle" class="mag-article__next" :href="withBase(nextArticle.href)"><span class="mag-article__next-label">{{ nextLabel }}</span>{{ nextArticle.title }} <span aria-hidden="true">→</span></a>
       </nav>
     </footer>
   </article>
@@ -84,6 +110,8 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 .mag-article__outline :deep(.nested) { padding-left: 16px; }
 .mag-article__masthead { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 16px; border-bottom: 1px solid var(--mag-text); font-size: 12px; letter-spacing: .08em; }
 .mag-article__masthead a { color: inherit; text-decoration: none; }
+.mag-article__location { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.mag-article__location > span { color: var(--mag-text-secondary); }
 .mag-article__masthead > span { color: var(--mag-text-secondary); font: 10px var(--mag-font-mono); letter-spacing: .1em; }
 .mag-article__opening { display: grid; grid-template-columns: minmax(0, 1fr) 140px; gap: 48px; align-items: start; padding: 50px 0 36px; }
 .mag-article__category { margin: 0 0 24px; color: var(--mag-accent); font-size: 13px; letter-spacing: .06em; }
@@ -117,6 +145,10 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 .mag-article__footer nav a:hover { color: var(--mag-accent); }
 .mag-article__next-label { display: block; color: var(--mag-text-secondary); font-size: 11px; }
 .mag-article__footer nav a:last-child { text-align: right; }
+.mag-article__footer .mag-article__course-nav { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; }
+.mag-article__course-nav .mag-article__previous { grid-column: 1; text-align: left; }
+.mag-article__course-nav .mag-article__index { grid-column: 2; text-align: center; }
+.mag-article__course-nav .mag-article__next { grid-column: 3; text-align: right; }
 
 .mag-article__body :deep(.article-facts) { margin: 32px 0; padding: 20px 0; border-block: var(--mag-rule); color: var(--mag-text-secondary); }
 .mag-article__body :deep(.article-facts p) { margin: 8px 0; font-size: 14px; line-height: 1.9; }
@@ -168,6 +200,8 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
   .mag-article__body :deep(blockquote) { margin: 32px 0; padding: 20px 8px; }
   .mag-article__body :deep(blockquote p) { font-size: 21px; }
   .mag-article__footer nav { flex-direction: column; gap: 20px; }
+  .mag-article__footer .mag-article__course-nav { display: flex; }
+  .mag-article__course-nav .mag-article__index { text-align: left; }
 }
 @media print {
   .mag-article__footer nav { display: none; }
@@ -180,7 +214,7 @@ const titleLines = computed(() => props.title.replaceAll('，', '，\n').split('
 <style>
 @media (min-width: 1280px) {
   .article-sidebar-collapsed .mag-article__outline { display: block; position: absolute; inset: 0 auto 0 calc(50% + 372px); width: 224px; }
-  .mag-article__outline-panel { position: sticky; top: calc(var(--vp-nav-height) + 32px); max-height: calc(100svh - var(--vp-nav-height) - 64px); overflow-y: auto; }
+  .mag-article__outline-panel { position: sticky; top: calc(var(--vp-nav-height) + var(--article-local-nav-height, 0px) + 32px); max-height: calc(100svh - var(--vp-nav-height) - var(--article-local-nav-height, 0px) - 64px); overflow-y: auto; }
 }
 @media print { .mag-article__outline { display: none !important; } }
 .mag-article-page .VPDoc { padding: 40px 48px 64px; }

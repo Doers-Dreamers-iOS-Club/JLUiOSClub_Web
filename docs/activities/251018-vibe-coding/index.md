@@ -935,7 +935,7 @@ AI确实能够：
 
 **加入我们。** <a href="/join-us/">成为iOS Club成员</a>
 
-**问题求助。** <a href="/questions/">访问问答社区</a>
+**问题求助。** <a href="/join-us/#成为普通社员">加入社团群</a>
 
 </div>
 

@@ -5,8 +5,8 @@ import WinterSwiftCover from './WinterSwiftCover.vue'
 import WinterResourceArt from './WinterResourceArt.vue'
 const base = '/activities/260209-winter-swift/'
 const lessons = [
-  { number: '01', title: 'SwiftUI 入门', subtitle: 'CodeBreaker 基础界面', href: base + 'first/' },
-  { number: '02', title: 'Swift 进阶', subtitle: 'CodeBreaker 实战', href: base + 'second/' }
+  { number: '01', title: 'SwiftUI 入门', subtitle: 'CodeBreaker 基础界面', href: base + 'first' },
+  { number: '02', title: 'Swift 进阶', subtitle: 'CodeBreaker 实战', href: base + 'second' }
 ]
 const resources = [
   { title: '第一讲视频', href: 'https://www.bilibili.com/video/BV1geFmzvEgj/', kind: 'video' as const },
@@ -16,7 +16,7 @@ const resources = [
 </script>
 
 <template>
-  <ActivityOverview :title="['冬季', 'Swift。']" label="WINTER / 2026" contents-label="培训目录" :primary="{ title: '开始第一讲', href: base + 'first/' }" :secondary="{ title: '全部活动', href: '/activities/' }">
+  <ActivityOverview :title="['冬季', 'Swift。']" label="WINTER / 2026" contents-label="培训目录" :primary="{ title: '开始第一讲', href: base + 'first' }" :secondary="{ title: '全部活动', href: '/activities/#activity-content' }">
     <template #cover><WinterSwiftCover /></template>
     <template #artwork><WinterSwiftArtwork /></template>
     <section class="overview-section" aria-labelledby="winter-contents">
@@ -28,7 +28,7 @@ const resources = [
       </nav>
     </section>
     <section class="overview-section" aria-labelledby="winter-bonus">
-      <a class="overview-feature journal-feature" :href="base + 'bonus-ai-programming/'">
+      <a class="overview-feature journal-feature" :href="base + 'bonus-ai-programming'">
         <WinterResourceArt kind="ai" />
         <div><span class="overview-caption">补充讲座</span><h3 id="winter-bonus">现代 AI 编程全景</h3><span class="overview-arrow" aria-hidden="true">↗</span></div>
       </a>

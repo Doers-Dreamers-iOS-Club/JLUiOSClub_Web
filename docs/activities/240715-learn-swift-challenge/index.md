@@ -25,7 +25,7 @@ Swift 是 Apple 推出的编程语言，由 Apple 开发，与社区共同维护
 
 由于 Swift 简单易上手的特点，非常适合初学者，如果你有兴趣开放 iOS 移动应用，Swift 更将成为你的技术基础！
 
-没有 Mac 设备？没关系！我们提供了在 iPad、Windows 及其它平台上学习 Swift 的学习资源：[跳转链接](https://www.jluios.club/resources/#swift-学习资源)。
+没有 Mac 设备？没关系！我们提供了在 iPad、Windows 及其它平台上学习 Swift 的学习资源：[跳转链接](/resources/#swift-学习资源)。
 
 只要你有学习的热情，就可以开始挑战啦！打卡达标奖励丰富！
 

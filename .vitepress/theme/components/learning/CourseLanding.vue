@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import { useCourseScrollMotion } from '../../composables/useCourseScrollMotion'
 import { useCourseCover } from '../../composables/useCourseCover'
 import { animateCourseEntrance } from '../../composables/courseEntrance'
+import { useReadingProgress } from '../../composables/useReadingProgress'
 const journal = ref<HTMLElement | null>(null)
+const { last, completed, next, finished } = useReadingProgress()
 useCourseScrollMotion(journal)
 useCourseCover(journal, { animateEntrance: animateCourseEntrance })
 import { chapters, courseBase } from '../../../data/course'
@@ -35,7 +37,7 @@ const related = [
       <div class="journal-cover__spread">
         <div class="journal-cover__story">
           <h1 tabindex="-1"><span class="journal-title-line journal-title-line--idea"><span><span class="journal-title-prefix">从</span><span class="journal-title-keyword journal-title-keyword--idea">想法</span></span></span><span class="journal-title-line journal-title-line--work"><span><span class="journal-title-prefix">到</span><span class="journal-title-keyword journal-title-keyword--work">作品<span class="journal-period">。</span></span></span></span></h1>
-          <a class="journal-start" :href="courseBase + 'chapters/01'">开始第一章 <span aria-hidden="true">↗</span></a>
+          <a class="journal-start" :href="courseBase + 'chapters/' + next.id">{{ finished ? '回顾第一章' : last || completed.length ? '继续学习' : '开始第一章' }} <span aria-hidden="true">↗</span></a>
           <div class="journal-cover__links">
             <a :href="courseBase + 'reference/tools'">工具准备 <span aria-hidden="true">↗</span></a>
             <a :href="courseBase + 'read-all'">连续阅读 <span aria-hidden="true">→</span></a>

@@ -8,5 +8,5 @@ title: 转正答题
 
 我们会在收到您的答题情况后，通过您留下的联系方式联系您，请保持联系方式畅通~
 
-<MagButton href="/questions/test">👉 开始答题</MagButton>
+<MagButton href="https://ks.wjx.top/vm/mbkrxvr.aspx#">👉 开始答题</MagButton>
 <MagButton variant="ghost" href="/join-us/">了解更多</MagButton>
