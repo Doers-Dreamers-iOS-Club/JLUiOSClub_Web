@@ -58,8 +58,6 @@ const viteConfig: UserConfig = {
           { text: '资源总览', link: '/resources/', activeMatch: '^/resources/$' },
           { text: 'AI 编程入门', link: '/resources/ai-programming/', activeMatch: '^/resources/ai-programming/' },
           { text: 'Winter Swift', link: '/activities/260209-winter-swift/', activeMatch: '^/activities/260209-winter-swift/' },
-          { text: 'AI Agent 实战', link: '/activities/251102-AI-Agent/', activeMatch: '^/activities/251102-AI-Agent/' },
-          { text: 'Vibe Coding 工作坊', link: '/activities/251018-vibe-coding/', activeMatch: '^/activities/251018-vibe-coding/' },
         ]
       },
       {
