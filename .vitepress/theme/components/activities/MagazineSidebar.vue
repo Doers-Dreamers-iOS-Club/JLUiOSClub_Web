@@ -2,12 +2,12 @@
 import { computed } from 'vue'
 import { useData, withBase, type DefaultTheme } from 'vitepress'
 import RollText from '../RollText.vue'
+import { getPageNavigation } from '../../../data/navigation'
 
 const props = defineProps<{ items: DefaultTheme.SidebarItem[] }>()
 const { page } = useData()
 const currentPath = computed(() => '/' + page.value.relativePath.replace(/(?:index)?\.md$/, '').replace(/\/$/, ''))
-const isWorkshop = computed(() => currentPath.value.startsWith('/activities/260209-winter-swift/'))
-const isCourse = computed(() => currentPath.value.startsWith('/resources/ai-programming/'))
+const navigation = computed(() => getPageNavigation(page.value.relativePath))
 const groups = computed(() => {
   let number = 0
   return props.items.map(group => ({
@@ -27,8 +27,7 @@ const groups = computed(() => {
     <header class="contents-masthead">
       <div class="contents-title"><span>目次</span><span lang="en">Contents<br><i>& stories.</i></span></div>
     </header>
-    <a class="contents-index" :href="withBase(isCourse ? '/resources/ai-programming/#course-content' : '/activities/#activity-content')"><RollText :text="isCourse ? '全部章节' : '全部活动'" /><span aria-hidden="true">↗</span></a>
-    <a v-if="isWorkshop" class="contents-index" :href="withBase('/activities/260209-winter-swift/')"><RollText text="工作坊总览" /><span aria-hidden="true">↗</span></a>
+    <a class="contents-index" :href="withBase(navigation.index.href)"><RollText :text="navigation.index.title" /><span aria-hidden="true">↗</span></a>
     <section v-for="(group, index) in groups" :key="group.title || index" class="contents-section" :aria-labelledby="group.title ? `contents-section-${index}` : undefined">
       <h2 v-if="group.title" :id="`contents-section-${index}`">{{ group.title }}</h2>
       <ol>

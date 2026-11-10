@@ -8,8 +8,8 @@ description: 社团重点参与的竞赛，以及我们能提供的支持。
 <MagSection n="01" title="核心竞赛" />
 
 <MagGrid :cols="2">
-  <MagCard title="Swift 学生挑战赛" href="/competitions/swift/index"></MagCard>
-  <MagCard title="移动应用创新赛" href="/competitions/maic/index"></MagCard>
+  <MagCard title="Swift 学生挑战赛" href="/competitions/swift/"></MagCard>
+  <MagCard title="移动应用创新赛" href="/competitions/maic/"></MagCard>
 </MagGrid>
 
 <MagSection n="02" title="相关支持" />

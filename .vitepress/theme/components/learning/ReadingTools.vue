@@ -24,7 +24,7 @@ function toggle() {
 <template>
   <div class="reading-tools mag-no-reveal">
     <div class="reading-tools__actions">
-      <a :href="courseBase">全部章节</a>
+      <a :href="courseBase + '#course-content'">全部章节</a>
       <a :href="courseBase + 'materials/'">配套材料</a>
       <button v-if="main" type="button" :aria-pressed="complete" @click="toggle">{{ complete ? '已读 · 点击取消' : '标记为已读' }}</button>
     </div>

@@ -16,7 +16,7 @@ export function useArticleOutline(header: Ref<HTMLElement | undefined>, panel: R
     media.add({ desktop: '(min-width: 1280px)', reduce: '(prefers-reduced-motion: reduce)' }, context => {
       if (!context.conditions?.desktop) return
       const reduce = Boolean(context.conditions.reduce)
-      const top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height')) + 32
+      const top = parseFloat(getComputedStyle(target).top) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vp-nav-height')) + 32
       let passedHeader = heading.getBoundingClientRect().bottom <= top
       let shown = false
       let motion: gsap.core.Timeline | undefined

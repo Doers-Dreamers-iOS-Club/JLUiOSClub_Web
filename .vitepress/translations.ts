@@ -7,7 +7,7 @@ export const themeTranslations: DefaultTheme.Config = {
         next: '下一篇'
     },
     outline: {
-        label: '页内导航'
+        label: '本页目录'
     },
     lastUpdated: {
         text: '最后更新于',
@@ -21,7 +21,7 @@ export const themeTranslations: DefaultTheme.Config = {
     },
     langMenuLabel: '多语言',
     returnToTopLabel: '返回顶部',
-    sidebarMenuLabel: '目录',
+    sidebarMenuLabel: '栏目目录',
     darkModeSwitchLabel: '主题',
     lightModeSwitchTitle: '切换到浅色模式',
     darkModeSwitchTitle: '切换到深色模式',

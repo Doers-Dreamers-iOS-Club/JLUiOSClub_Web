@@ -1,6 +1,19 @@
 import { chapters } from './data/course'
 import type { DefaultTheme } from "vitepress";
 
+const learningSidebar: DefaultTheme.SidebarItem[] = [
+  {
+    text: '学习专题',
+    items: [
+      { text: 'AI 编程入门', link: '/resources/ai-programming/' },
+      { text: 'Winter Swift', link: '/activities/260209-winter-swift/' },
+      { text: 'AI Agent 实战', link: '/activities/251102-AI-Agent/' },
+      { text: 'Vibe Coding 工作坊', link: '/activities/251018-vibe-coding/' },
+      { text: 'AI 工作坊', link: '/activities/250518-ai-workshop/' },
+    ],
+  },
+]
+
 const sidebar: DefaultTheme.Sidebar = {
   '/about-us/maintenance/': [
     {
@@ -40,18 +53,21 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '培训主线',
         items: [
-          { text: '第一讲 · SwiftUI 入门', link: 'first/' },
-          { text: '第二讲 · Swift 实战', link: 'second/' },
+          { text: '第一讲 · SwiftUI 入门', link: 'first' },
+          { text: '第二讲 · Swift 实战', link: 'second' },
         ]
       },
       {
         text: '主线之外',
         items: [
-          { text: '补充 · AI 编程', link: 'bonus-ai-programming/' },
+          { text: '补充 · AI 编程', link: 'bonus-ai-programming' },
         ]
       }
     ]
   },
+  '/activities/251102-AI-Agent/': learningSidebar,
+  '/activities/251018-vibe-coding/': learningSidebar,
+  '/activities/250518-ai-workshop/': learningSidebar,
   '/activities/': {
     base: '/activities/',
     items: [
@@ -66,10 +82,6 @@ const sidebar: DefaultTheme.Sidebar = {
       {
         text: '往期活动',
         items: [
-          { text: 'Winter SwiftUI 工作坊', link: '260209-winter-swift/' },
-          { text: 'AI Agent 实战', link: '251102-AI-Agent/' },
-          { text: 'Vibe Coding 工作坊', link: '251018-vibe-coding/' },
-          { text: 'AI工作坊', link: '250518-ai-workshop/' },
           { text: 'MAIC 宣讲会', link: '250511-maic-seminar/' },
           { text: 'Swift 暑期挑战', link: '240715-learn-swift-challenge/' },
           { text: 'Vision Pro · 第二期', link: '240601-learn-xcode-and-vision-pro/' },

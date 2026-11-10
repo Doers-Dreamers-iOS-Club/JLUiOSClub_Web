@@ -13,7 +13,7 @@ editLink: false
 pageClass: mag-article-page
 ---
 
-<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="02" category="Winter Swift · 第二讲" kind="活动讲义" author="JLU iOS Club" date-label="记录日期" :numbered="false" :next="{ title: '现代 AI 编程全景', href: '/activities/260209-winter-swift/bonus-ai-programming' }">
+<MagArticle :title="$frontmatter.title" :description="$frontmatter.description" :date="$frontmatter.date" issue="02" category="Winter Swift · 第二讲" kind="活动讲义" author="JLU iOS Club" date-label="记录日期" :numbered="false" :prev="{ title: 'SwiftUI 入门，搭建游戏界面', href: '/activities/260209-winter-swift/first' }" :next="{ title: '现代 AI 编程全景', href: '/activities/260209-winter-swift/bonus-ai-programming' }">
 
 有了基础界面，下一步是让游戏真正运转。这一讲围绕 CodeBreaker 的数据模型、交互状态与匹配算法，练习如何组织代码并解释自己的设计。
 

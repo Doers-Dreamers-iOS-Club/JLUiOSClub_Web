@@ -43,7 +43,7 @@ try {
   await go('/activities/261025-idea-workshop/')
   assert.deepEqual(errors, [], 'Preview must serve the latest built styles')
   const activityType = await typography()
-  assert.equal(await page.$eval('.mag-article__masthead a', el => el.textContent), '社团活动 · 现场手记')
+  assert.deepEqual(await page.$$eval('.mag-article__location a', links => links.map(link => [link.textContent, link.getAttribute('href')])), [['活动与动态', '/activities/#activity-content']])
   assert.equal(await page.$$eval('.magazine-sidebar [aria-current="page"]', els => els.length), 1)
   await page.screenshot({ path: `${output}/activity-desktop.png` })
 
@@ -51,15 +51,18 @@ try {
     await go(course + 'chapters/' + chapter)
     assert.equal(await page.$$eval('h1', els => els.length), 1)
     assert.deepEqual(await typography(), activityType, chapter + ': shared editorial typography')
-    assert.equal(await page.$eval('.mag-article__masthead a', el => el.textContent), 'AI 编程入门 · 从想法到作品')
+    assert.deepEqual(await page.$$eval('.mag-article__location a', links => links.map(link => [link.textContent, link.getAttribute('href')])), [['学习中心', '/resources/'], ['AI 编程入门', course + '#course-content']])
     assert.equal(await page.$$eval('.magazine-sidebar [aria-current="page"]', els => els.length), 1)
     assert.equal(await page.$eval('.contents-entry[aria-current="page"]', el => el.getAttribute('href')), course + 'chapters/' + chapter)
     assert.equal(await page.$$eval('.contents-entry', els => els.some(el => /^(\d+)\s*\1\s*·/.test(el.textContent))), false)
-    assert.equal(await page.$eval('.mag-article__footer nav > a', el => el.getAttribute('href')), course + '#course-content')
+    assert.equal(await page.$eval('.mag-article__index', el => el.getAttribute('href')), course + '#course-content')
+    assert.equal(await page.$$eval('.mag-article__previous', links => links.length), chapter === '01' ? 0 : 1, chapter + ': previous chapter is available without duplicating the index')
+    assert.equal(await page.$eval('.article-sidebar-toggle', el => el.getAttribute('aria-label')), '收起课程章节')
     await page.waitForSelector('.mag-article__outline', { hidden: true })
     for (const width of [1440, 960, 375, 320]) {
       await page.setViewport({ width, height: 1000 })
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `${chapter}: overflow at ${width}`)
+      await page.waitForSelector('.VPLocalNavOutlineDropdown', { visible: true })
     }
     await page.setViewport({ width: 1440, height: 1000 })
     await page.click('.article-sidebar-toggle')
@@ -102,7 +105,7 @@ try {
   await page.waitForFunction(() => location.hash === '#muzzles' && document.querySelector('.VPDocAsideOutline a[href="#muzzles"]')?.classList.contains('active'))
   assert.equal(await page.$eval('.mag-article__outline-panel', el => {
     const top = el.getBoundingClientRect().top
-    const nav = document.querySelector('.VPNav').getBoundingClientRect().bottom
+    const nav = document.querySelector('.VPLocalNav').getBoundingClientRect().bottom
     return top >= nav && top <= nav + 33
   }), true, 'Outline stays beside the body while scrolling')
   await page.screenshot({ path: `${output}/chapter-07-outline-active.png` })
@@ -124,7 +127,11 @@ try {
   assert.equal(await page.$eval('.VPSidebar', el => el.inert), false)
   await page.waitForSelector('.mag-article__outline', { hidden: true })
   await page.setViewport({ width: 1024, height: 1000 })
-  await page.waitForSelector('.VPLocalNav', { hidden: true })
+  await page.waitForSelector('.VPLocalNav', { visible: true })
+  await page.click('.VPLocalNavOutlineDropdown > button')
+  await page.waitForSelector('.VPLocalNavOutlineDropdown .items', { visible: true })
+  assert(await page.$('.VPLocalNavOutlineDropdown a[href="#dock"]'), 'Expanded sidebar still exposes the page outline')
+  await page.keyboard.press('Escape')
   await page.setViewport({ width: 1440, height: 1000 })
   await page.click(`.contents-entry[href="${course}chapters/06"]`)
   await page.waitForFunction(() => document.querySelector('.contents-entry[aria-current="page"]')?.getAttribute('href')?.endsWith('/06'))
@@ -136,31 +143,52 @@ try {
   await page.click('.article-sidebar-toggle')
   await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
   await hideOutline()
-  await page.$eval('#muzzles', el => el.scrollIntoView({ block: 'start', behavior: 'instant' }))
-  const checkEntrance = async () => {
-    await page.waitForSelector('.mag-article__outline-panel[data-state="entering"]')
-    assert.equal(await page.$eval('.mag-article__outline-panel', el => {
-      const style = getComputedStyle(el)
-      return Number(style.opacity) < 1 && new DOMMatrixReadOnly(style.transform).m41 > 0
-    }), true, 'Outline fades and slides into view')
-    await page.waitForFunction(() => {
-      const links = [...document.querySelectorAll('.mag-article__outline .outline-link')]
-      const first = getComputedStyle(links[0])
-      const last = getComputedStyle(links.at(-1))
-      const title = getComputedStyle(document.querySelector('.mag-article__outline .outline-title'))
-      return Number(first.opacity) > .1 && Number(first.opacity) < .95 && Number(first.opacity) > Number(last.opacity)
-        && new DOMMatrixReadOnly(first.transform).m42 > 0 && Number(title.opacity) > Number(first.opacity)
-    })
+  const checkEntrance = async trigger => {
+    // Capture inside the page before the action; remote polling can miss the
+    // short stagger window while other browser checks are using the CPU.
+    const samples = await page.evaluate(trigger => new Promise((resolve, reject) => {
+      const panel = document.querySelector('.mag-article__outline-panel')
+      const links = [...panel.querySelectorAll('.outline-link')]
+      const title = panel.querySelector('.outline-title')
+      const samples = []
+      let frame = 0
+      const timeout = setTimeout(() => {
+        cancelAnimationFrame(frame)
+        reject(new Error('Outline entrance did not settle within 10 seconds'))
+      }, 10000)
+      const sample = () => {
+        const panelStyle = getComputedStyle(panel)
+        const firstStyle = getComputedStyle(links[0])
+        samples.push({
+          state: panel.dataset.state,
+          opacity: Number(panelStyle.opacity),
+          x: new DOMMatrixReadOnly(panelStyle.transform).m41,
+          first: Number(firstStyle.opacity),
+          last: Number(getComputedStyle(links.at(-1)).opacity),
+          title: Number(getComputedStyle(title).opacity),
+          y: new DOMMatrixReadOnly(firstStyle.transform).m42,
+        })
+        if (panel.dataset.state === 'visible') {
+          clearTimeout(timeout)
+          resolve(samples)
+        } else frame = requestAnimationFrame(sample)
+      }
+      sample()
+      if (trigger === 'scroll') document.querySelector('#muzzles').scrollIntoView({ block: 'start', behavior: 'instant' })
+      else document.querySelector('.article-sidebar-toggle').click()
+    }), trigger)
+    assert(samples.some(sample => sample.state === 'entering' && sample.opacity > 0 && sample.opacity < 1 && sample.x > 0), 'Outline fades and slides into view')
+    assert(samples.some(sample => sample.state === 'entering' && sample.first > .1 && sample.first < .95 && sample.first > sample.last
+      && sample.y > 0 && sample.title > sample.first), 'Outline title and links enter with their original translation and stagger')
     await visibleOutline()
     assert.equal(await page.$$eval('.mag-article__outline .outline-title, .mag-article__outline .outline-link', nodes =>
       nodes.every(node => getComputedStyle(node).opacity === '1' && !node.style.transform && !node.style.willChange)), true, 'Text settles sharply without persistent compositor hints')
   }
-  await checkEntrance()
+  await checkEntrance('scroll')
   await page.click('.article-sidebar-toggle')
   await hideOutline()
   await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
-  await page.click('.article-sidebar-toggle')
-  await checkEntrance()
+  await checkEntrance('sidebar')
   await page.waitForFunction(() => !document.querySelector('.mag-article').style.transform)
   await checkReadingLayout()
   // Reverse midway through an exit: text continues from its current frame.
@@ -180,6 +208,8 @@ try {
 
   await page.setViewport({ width: 375, height: 844 })
   await go(course + 'chapters/07')
+  assert.equal(await page.$eval('.VPLocalNav .menu-text', el => el.textContent.trim()), '课程章节')
+  assert.equal(await page.$eval('.VPLocalNavOutlineDropdown .menu-text', el => el.textContent.trim()), '本页目录')
   await page.screenshot({ path: `${output}/chapter-07-mobile.png` })
   await page.click('.VPLocalNav .menu')
   await page.waitForSelector('.VPSidebar.open')

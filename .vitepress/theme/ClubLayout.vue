@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, provide, readonly, ref, watch } from 'vue'
-import { useData } from 'vitepress'
+import { dataSymbol, useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import { gsap } from 'gsap'
 import { articleSidebarCollapsedKey } from './composables/useArticleOutline'
 
-const { frontmatter, page } = useData()
+const data = useData()
+const { frontmatter, page } = data
 const sidebarCollapsed = ref(false)
 provide(articleSidebarCollapsedKey, readonly(sidebarCollapsed))
 const isArticle = computed(() => frontmatter.value.pageClass === 'mag-article-page')
+const sidebarLabel = computed(() => /^(?:resources\/ai-programming|activities\/260209-winter-swift)\//.test(page.value.relativePath) ? '课程章节' : '栏目目录')
+// Keep the native mobile controls, with labels scoped to the current page.
+provide(dataSymbol, { ...data, theme: computed(() => ({ ...data.theme.value, sidebarMenuLabel: sidebarLabel.value })) })
 let articleMotion: gsap.core.Tween | undefined
 let desktop: MediaQueryList, reducedMotion: MediaQueryList
 
@@ -61,7 +65,7 @@ onBeforeUnmount(() => {
         type="button"
         :aria-expanded="!sidebarCollapsed"
         aria-controls="VPSidebarNav"
-        :aria-label="sidebarCollapsed ? '展开目录' : '收起目录'"
+        :aria-label="`${sidebarCollapsed ? '展开' : '收起'}${sidebarLabel}`"
         @click="toggleSidebar"
       >
         <svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="m13 4-6 6 6 6" /></svg>
@@ -72,13 +76,15 @@ onBeforeUnmount(() => {
 
 <style>
 .article-sidebar-toggle { display: none; }
+.Layout.mag-article-page { --article-local-nav-height: 48px; }
+.mag-article-page .VPLocalNav:not(.empty) { display: block; }
+html:has(.Layout.mag-article-page) { scroll-padding-top: 134px; }
 @media (min-width: 960px) {
-  .mag-article-page:not(.article-sidebar-collapsed) .VPLocalNav { display: none; }
   .article-sidebar-collapsed .VPLocalNav.has-sidebar { padding-left: 0; }
-  .article-sidebar-collapsed .VPLocalNav .container { justify-content: flex-end; }
-  .article-sidebar-collapsed .VPLocalNavOutlineDropdown > .items { left: auto; right: 32px; }
+  .mag-article-page .VPLocalNav .container { justify-content: flex-end; }
+  .mag-article-page .VPLocalNavOutlineDropdown > .items { left: auto; right: 32px; }
   .Layout.mag-article-page { --article-sidebar-edge: calc(max(0px, (100vw - var(--vp-layout-max-width)) / 2) + var(--vp-sidebar-width)); --article-sidebar-ease: cubic-bezier(.22, 1, .36, 1); }
-  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 32px); width: 32px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
+  .article-sidebar-toggle { display: grid; place-items: center; position: fixed; z-index: calc(var(--vp-z-index-sidebar) + 1); top: calc(var(--vp-nav-height) + var(--article-local-nav-height) + 36px); left: calc(var(--article-sidebar-edge) - 32px); width: 32px; height: 52px; color: var(--mag-text-secondary); cursor: pointer; transition: transform .46s var(--article-sidebar-ease), color .2s; }
   .article-sidebar-toggle svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--article-sidebar-ease); }
   .article-sidebar-toggle:hover svg { transform: translateX(-2px); }
   .article-sidebar-toggle:hover { color: var(--mag-accent); }

@@ -1,6 +1,7 @@
 ---
 title: 跳转中……
 lastUpdated: false
+search: false
 ---
 
 # 跳转中，请稍等～
@@ -9,14 +10,18 @@ lastUpdated: false
 
 如果此页长时间显示，请刷新本网页，或检查您的网络连接🥺
 
-<script setup>
-import {useRouter, useData} from 'vitepress';
-import {onBeforeMount} from "vue";
+<MagButton :href="latestActivity">社团活动</MagButton>
 
-const router = useRouter();
-const {theme} = useData();
-const link = theme.value.sidebar['/activities/'].items[0].items[0].link;
-onBeforeMount(() => {
-    router.go('activities/' + link)
+<script setup>
+import { useRouter, withBase } from 'vitepress'
+import { onMounted } from 'vue'
+import { data as activities } from '../.vitepress/data/activities.data.mts'
+
+const router = useRouter()
+const latestActivity = activities[0]?.url ?? '/activities/'
+onMounted(() => {
+  const target = withBase(latestActivity)
+  history.replaceState(history.state, '', target)
+  router.go(target)
 })
 </script>

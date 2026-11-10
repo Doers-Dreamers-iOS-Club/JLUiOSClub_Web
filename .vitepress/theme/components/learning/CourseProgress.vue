@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { chapters, courseBase } from '../../../data/course'
-import { readState } from '../../composables/readingState'
+import { useReadingProgress } from '../../composables/useReadingProgress'
 defineProps<{ editorial?: boolean }>()
-const completed = ref<string[]>([])
-const last = ref('')
-const next = computed(() => chapters.find(c => c.id === last.value && !completed.value.includes(c.id)) || chapters.find(c => !completed.value.includes(c.id)) || chapters[0])
-function sync() { const s = readState(); completed.value = s.completed; last.value = s.last }
-onMounted(() => { sync(); window.addEventListener('storage', sync); window.addEventListener('jlu-reading-change', sync) })
-onUnmounted(() => { window.removeEventListener('storage', sync); window.removeEventListener('jlu-reading-change', sync) })
+const { completed, last, next } = useReadingProgress()
 </script>
 <template>
   <section class="course-progress mag-no-reveal" :class="{ 'course-progress--editorial': editorial }" aria-label="主线阅读进度">
